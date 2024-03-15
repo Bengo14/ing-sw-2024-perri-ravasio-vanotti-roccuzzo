@@ -7,7 +7,7 @@ public class DescendingDiagonal extends Pattern {
     }
 
     @Override
-    public void checkPattern(Corner corner) {
-
+    public void checkPattern(PlayerTable playerTable){
+        /* todo */
     }
 }

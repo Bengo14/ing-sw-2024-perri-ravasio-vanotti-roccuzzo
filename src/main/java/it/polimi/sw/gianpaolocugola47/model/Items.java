@@ -15,14 +15,14 @@ public enum Items {
     @Override
     public String toString() {
         return "Items{" +
-                "name='" + name + '\'' +
-                ", imgPath='" + imgPath + '\'' +
+                "name: '" + name + '\'' +
+                ", imgPath: '" + imgPath + '\'' +
                 '}';
     }
-
     public String getName() {
         return name;
     }
-
-    public String getImgPath() { return imgPath; }
+    public String getImgPath() {
+        return imgPath;
+    }
 }

@@ -17,7 +17,6 @@ public enum Resources {
     public String getColour() {
         return colour;
     }
-
     public String getImgPath() {
         return imgPath;
     }

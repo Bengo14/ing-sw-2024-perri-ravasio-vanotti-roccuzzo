@@ -1,10 +1,20 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import java.util.ArrayList;
-
+/**
+ * This class represents all the starting cards.
+ */
 public class StartingCard extends PlaceableCard {
     private ArrayList<Resources> resourcesCentreBack;
     private Corner[] corners;
+    /**
+     * Corner constructor.
+     * @param resourcesCentreBack all the resources in the back of a card.
+     * @param corners all the 4 corners of the card.
+     * @param backImgPath refer to the image of the back.
+     * @param frontImgPath refer to the image of the front.
+     * @param isFront boolean that represent the front or back of a card.
+     */
 
     public StartingCard(boolean isFront, String backImgPath, String frontImgPath, ArrayList<Resources> resourcesCentreBack, Corner[] corners) {
         super(isFront, backImgPath, frontImgPath);

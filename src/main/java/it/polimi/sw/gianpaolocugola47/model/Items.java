@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
-
+/**
+ * This enumeration lists the items.
+ */
 public enum Items {
     QUILL("quill",""),
     INKWELL("inkwell",""),

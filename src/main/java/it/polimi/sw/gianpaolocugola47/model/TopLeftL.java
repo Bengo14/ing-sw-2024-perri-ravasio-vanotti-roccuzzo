@@ -6,6 +6,7 @@ public class TopLeftL extends LShape {
         super(mainResource, secondaryResource);
     }
 
+
     @Override
     public void checkPattern(PlayerTable playerTable){
         /* todo */

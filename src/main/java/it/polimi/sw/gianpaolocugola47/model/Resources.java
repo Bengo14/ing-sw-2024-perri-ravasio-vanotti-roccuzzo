@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
-
+/**
+ * This enumeration lists the resources of a card.
+ */
 public enum Resources {
     ANIMAL("blue",""),
     FUNGI("red",""),

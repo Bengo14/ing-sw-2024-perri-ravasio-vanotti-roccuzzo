@@ -2,7 +2,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 public class AscendingDiagonal extends Pattern {
 
-    public AscendingDiagonal(Resources mainResource) {
+    public AscendingDiagonal(Resources mainResource){
         super(mainResource);
     }
 

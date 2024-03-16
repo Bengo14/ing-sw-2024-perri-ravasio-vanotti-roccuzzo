@@ -9,71 +9,64 @@ public class MainTable {
     private boolean endGame;
     private ArrayList<GoldCard> goldCardsDeck;
     private ArrayList<ResourceCard> resourceCardsDeck;
-    private Colours playerColour;
-    private ArrayList<Integer> playerPositions;
-    private ArrayList<Integer> globalPlayerPoints;
+    private PlaceableCard[] cardsOnTable;
+    private int[] playerPoints;
+    private int[] globalPlayerPoints;
+    private PlayerTable[] playersTables;
+    private final int numOfPlayers;
     /**
      * Corner constructor.
      *
-     * @param endGame the boolean that start the end game.
-     * @param globalPlayerPoints all the points of a player.
-     * @param goldCardsDeck the deck of the gold cards on the board.
-     * @param playerColour the pawn of a player.
-     * @param playerPositions the points on the board of a player.
-     * @param resourceCardsDeck the deck of the resource cards on the board.
+     * @param numOfPlayers
+     *
      */
-    public MainTable(boolean endGame, ArrayList<GoldCard> goldCardsDeck, ArrayList<ResourceCard> resourceCardsDeck, Colours playerColour, ArrayList<Integer> playerPositions, ArrayList<Integer> globalPlayerPoints) {
-        this.endGame = endGame;
-        this.goldCardsDeck = goldCardsDeck;
-        this.resourceCardsDeck = resourceCardsDeck;
-        this.playerColour = playerColour;
-        this.playerPositions = playerPositions;
-        this.globalPlayerPoints = globalPlayerPoints;
+    public MainTable(int numOfPlayers) {
+        this.numOfPlayers = numOfPlayers;
+        this.endGame = false;
+        this.goldCardsDeck = new ArrayList<GoldCard>();
+        this.resourceCardsDeck = new ArrayList<ResourceCard>();
+        this.cardsOnTable = new PlaceableCard[4];
+        this.playerPoints = new int[]{0,0,0,0};
+        this.globalPlayerPoints = new int[]{0,0,0,0};
+        this.playersTables = new PlayerTable[numOfPlayers];
+        initDecksAndTable();
     }
 
+    private void initDecksAndTable(){
+        generateResourceCardsDeck();
+        generateGoldCardsDeck();
+        /*todo*/
+    }
+    private void generateResourceCardsDeck() {
+        /*todo*/
+    }
+    private void generateGoldCardsDeck() {
+        /*todo*/
+    }
     public boolean isEndGame() {
         return endGame;
     }
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
-    public ArrayList<GoldCard> getGoldCardsDeck() {
-        return goldCardsDeck;
-    }
-    public void setGoldCardsDeck(ArrayList<GoldCard> goldCardsDeck) {
-        this.goldCardsDeck = goldCardsDeck;
-    }
-    public ArrayList<ResourceCard> getResourceCardsDeck() {
-        return resourceCardsDeck;
-    }
-    public void setResourceCardsDeck(ArrayList<ResourceCard> resourceCardsDeck) {
-        this.resourceCardsDeck = resourceCardsDeck;
+    public void addPlayer(int id, String nickName){
+        /*todo*/
     }
     /**
-     * Returns the player's colour.
+     * Returns the player's points.
      *
-     * @return the player's colour.
+     * @return the player's points.
      */
-    public Colours getPlayerColour() {
-        return playerColour;
+    public int getPlayerPoints(int player) {
+        return playerPoints[player];
     }
-    public void setPlayerColour(Colours playerColour) {
-        this.playerColour = playerColour;
-    }/**
-     * Returns the player's position.
-     *
-     * @return the player's position.
-     */
-    public ArrayList<Integer> getPlayerPositions() {
-        return playerPositions;
+    public void addPlayerPoints(int player, int points) {
+        this.playerPoints[player] += points;
     }
-    public void setPlayerPositions(ArrayList<Integer> playerPositions) {
-        this.playerPositions = playerPositions;
+    public int getGlobalPlayerPoints(int player) {
+        return globalPlayerPoints[player];
     }
-    public ArrayList<Integer> getGlobalPlayerPoints() {
-        return globalPlayerPoints;
-    }
-    public void setGlobalPlayerPoints(ArrayList<Integer> globalPlayerPoints) {
-        this.globalPlayerPoints = globalPlayerPoints;
+    public void addGlobalPlayerPoints(int player, int points) {
+        this.globalPlayerPoints[player] += points;
     }
 }

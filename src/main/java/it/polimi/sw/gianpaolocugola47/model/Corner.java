@@ -8,74 +8,46 @@ public class Corner {
     private boolean isBuildable;
     private boolean isEmpty;
     private boolean isCovered;
-    private Corner overlappingCorner;
-    private Resources resourceType;
-    private Items itemType;
+    private Corner linkedCorner;
+    private Resources resource;
+    private Items item;
+
     /**
      * Corner constructor.
      *
      * @param isBuildable boolean of the possibility to build on it.
      * @param isEmpty boolean that represent the empty state of it.
-     * @param isCovered
-     * @param itemType the item on the corner.
-     * @param overlappingCorner
-     * @param resourceType the resource on the corner.
+     * @param item the item on the corner.
+     * @param resource the resource on the corner.
      */
-
-    public Corner(boolean isBuildable, boolean isEmpty, boolean isCovered, Corner overlappingCorner, Resources resourceType, Items itemType) {
+    public Corner(boolean isBuildable, boolean isEmpty, Resources resource, Items item) {
         this.isBuildable = isBuildable;
         this.isEmpty = isEmpty;
-        this.isCovered = isCovered;
-        this.overlappingCorner = overlappingCorner;
-        this.resourceType = resourceType;
-        this.itemType = itemType;
+        this.isCovered = false; //default
+        this.linkedCorner = null;
+        this.resource = resource;
+        this.item = item;
     }
 
     public boolean isBuildable() {
         return isBuildable;
     }
-
-    public void setBuildable(boolean buildable) {
-        isBuildable = buildable;
-    }
-
     public boolean isEmpty() {
         return isEmpty;
     }
-
-    public void setEmpty(boolean empty) {
-        isEmpty = empty;
-    }
-
     public boolean isCovered() {
         return isCovered;
     }
-
-    public void setCovered(boolean covered) {
-        isCovered = covered;
+    public Corner getLinkedCorner() {
+        return this.linkedCorner;
     }
-
-    public Corner getOverlappingCorner() {
-        return overlappingCorner;
+    public void setLinkedCorner(Corner corner) {
+        this.linkedCorner=corner;
     }
-
-    public void setOverlappingCorner(Corner overlappingCorner) {
-        this.overlappingCorner = overlappingCorner;
+    public Resources getResource() {
+        return resource;
     }
-
-    public Resources getResourceType() {
-        return resourceType;
-    }
-
-    public void setResourceType(Resources resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public Items getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(Items itemType) {
-        this.itemType = itemType;
+    public Items getItem() {
+        return item;
     }
 }

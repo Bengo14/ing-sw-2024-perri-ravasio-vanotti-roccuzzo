@@ -6,15 +6,15 @@ package it.polimi.sw.gianpaolocugola47.model;
  *
  */
 public class PlayerTable {
-    private int id;
-    private String nickName;
-    private Colours playerColour;
+    private final int id;
+    private final String nickName;
+    private final Colours playerColour;
     private boolean isFirst;
     private int objectivePoints;
     private int globalObjectivePoints;
     private int[] resourceCounter;
-    private Objectives secretObjective;
-    private StartingCard startingCard;
+    private final Objectives secretObjective;
+    private final StartingCard startingCard;
     private ResourceCard[] cardsOnHand;
 
     /**
@@ -48,14 +48,8 @@ public class PlayerTable {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getNickName() {
         return nickName;
-    }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
     public boolean isFirst() {
         return isFirst;

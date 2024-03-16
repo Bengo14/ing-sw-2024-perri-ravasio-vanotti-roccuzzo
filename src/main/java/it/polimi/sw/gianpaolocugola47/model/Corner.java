@@ -5,12 +5,12 @@ package it.polimi.sw.gianpaolocugola47.model;
  * the resources or the items on it.
  */
 public class Corner {
-    private boolean isBuildable;
-    private boolean isEmpty;
+    private final boolean isBuildable;
+    private final boolean isEmpty;
     private boolean isCovered;
     private Corner linkedCorner;
-    private Resources resource;
-    private Items item;
+    private final Resources resource;
+    private final Items item;
 
     /**
      * Corner constructor.
@@ -37,6 +37,9 @@ public class Corner {
     }
     public boolean isCovered() {
         return isCovered;
+    }
+    public void setIsCovered(){
+        this.isCovered = true;
     }
     public Corner getLinkedCorner() {
         return this.linkedCorner;

@@ -16,20 +16,16 @@ public class PlayerTable {
     private final Objectives secretObjective;
     private final StartingCard startingCard;
     private ResourceCard[] cardsOnHand;
+    private PlaceableCard[][] placedCards;
 
     /**
      * Class PlayerTable constructor.
      *
      * @param id the id of the player.
-     *
      * @param nickName the nickname chose by the player for a game.
-     *
      * @param isFirst a boolean that represent the first player.
-     *
      * @param secretObjective the player's secret objectives.
-     *
      * @param startingCard the first card of the player.
-     *
      * @param cardsOnHand the player's hand.
      */
     public PlayerTable(int id, Colours playerColour, String nickName, boolean isFirst, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
@@ -43,6 +39,8 @@ public class PlayerTable {
         this.secretObjective = secretObjective;
         this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
+        this.placedCards = new PlaceableCard[40][40];
+        this.placedCards[20][20] = this.startingCard;
     }
 
     public int getId() {

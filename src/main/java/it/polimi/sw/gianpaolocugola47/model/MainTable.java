@@ -54,7 +54,7 @@ public class MainTable {
     }
     /**
      * Returns the player's points.
-     *
+     * @param player player id
      * @return the player's points.
      */
     public int getPlayerPoints(int player) {

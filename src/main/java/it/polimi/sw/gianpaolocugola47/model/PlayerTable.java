@@ -6,20 +6,20 @@ package it.polimi.sw.gianpaolocugola47.model;
  *
  */
 public class PlayerTable {
+    private final int MATRIX_DIMENSION = 41;
+    private final int STARTING_CARD_POS = 20;
     private final int id;
     private final String nickName;
     private final Colours playerColour;
     private boolean isFirst;
-    private int objectivePoints;
-    private int globalObjectivePoints;
     private int[] resourceCounter;
     private final Objectives secretObjective;
     private final StartingCard startingCard;
-    private ResourceCard[] cardsOnHand;
+    private PlaceableCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
 
     /**
-     * Class PlayerTable constructor.
+     * Class PlayerTable's constructor.
      *
      * @param id the id of the player.
      * @param nickName the nickname chose by the player for a game.
@@ -33,14 +33,12 @@ public class PlayerTable {
         this.playerColour = playerColour;
         this.nickName = nickName;
         this.isFirst = isFirst;
-        this.objectivePoints = 0;
-        this.globalObjectivePoints = 0;
         this.resourceCounter = new int[]{0,0,0,0};
         this.secretObjective = secretObjective;
         this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
-        this.placedCards = new PlaceableCard[61][61];
-        this.placedCards[31][31] = startingCard;
+        this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
+        this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = startingCard;
     }
 
     public int getId() {
@@ -55,18 +53,6 @@ public class PlayerTable {
     public void setFirst(boolean first) {
         isFirst = first;
     }
-    public int getObjectivePoints() {
-        return objectivePoints;
-    }
-    private void addObjectivePoints(int objectivePoints) {
-        this.objectivePoints += objectivePoints;
-    }
-    public int getGlobalObjectivePoints() {
-        return globalObjectivePoints;
-    }
-    private void addGlobalObjectivePoints(int globalObjectivePoints) {
-        this.globalObjectivePoints += globalObjectivePoints;
-    }
     public int getResourceCounter(int position) {
         return resourceCounter[position];
     }
@@ -79,19 +65,21 @@ public class PlayerTable {
     public StartingCard getStartingCard() {
         return startingCard;
     }
-    public ResourceCard getCardOnHand(int position) {
+    public PlaceableCard getCardOnHand(int position) {
         return cardsOnHand[position];
     }
-    public void setCardOnHand(int position, ResourceCard card) {
+    public void setCardOnHandInTheEmptyPosition(PlaceableCard card) {
+        int position = 0;
+        /*todo*/
         this.cardsOnHand[position] = card;
     }
 
     /**
-     *This metod return TRUE if a HandCard is playable in a chosen position, FALSE if not
-     * @param onHandCard Card on player's hand.
-     * @param onTableCardX
-     * @param onTableCardY
-     * @param onTableCardCorner
+     *This method checks if a card can be placed on another one and in case places it.
+     * @param onHandCard Card on player's hand, to be placed.
+     * @param onTableCardX X coordinate of on table card.
+     * @param onTableCardY Y coordinate of on table card.
+     * @param onTableCardCorner corner's id from 0 to 3 (independently of front/back).
      * @return true if the card has been placed.
      */
     public boolean checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
@@ -105,22 +93,13 @@ public class PlayerTable {
     private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
         /*todo*/
     }
-
-    /**
-     *
-     * @param drawCode 0: first resource card
-     *                 1: second resource card
-     *                 2: first gold card
-     *                 3: second gold card
-     *                 4: draw from resource deck
-     *                 5: draw from gold deck
-     *
-     */
-    public void drawCard(int drawCode){
+    public int getGlobalObjectivePoints(Objectives[] objectives){
         /*todo*/
-        if(drawCode==0||drawCode==1||drawCode==2||drawCode==3){
-            MainTable.getInstance().replaceCardOnTable(drawCode);
-        }
+        return 0;
+    }
+    private int getSecretObjectivePoints(){
+        /*todo*/
+        return 0;
     }
 
 }

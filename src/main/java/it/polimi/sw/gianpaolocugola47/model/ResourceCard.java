@@ -24,15 +24,7 @@ public class ResourceCard extends PlaceableCard {
         return resourceCentreBack;
     }
 
-    public void setResourceCentreBack(Resources resourceCentreBack) {
-        this.resourceCentreBack = resourceCentreBack;
-    }
-
     public int getPoints() {
         return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 }

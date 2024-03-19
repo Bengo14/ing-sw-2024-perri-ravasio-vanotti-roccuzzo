@@ -12,8 +12,9 @@ public class MainTable {
     private ArrayList<GoldCard> goldCardsDeck;
     private ArrayList<ResourceCard> resourceCardsDeck;
     private PlaceableCard[] cardsOnTable;
-    private int[] playerPoints;
-    private int[] globalPlayerPoints;
+    private Objectives[] globalObjectives;
+    private int[] playersPoints;
+    private int[] globalPlayersPoints;
     private PlayerTable[] playersTables;
     private int numOfPlayers;
     private StartingCard[] startingCardsDeck;
@@ -29,9 +30,10 @@ public class MainTable {
         this.startingCardsDeck = new StartingCard[6];
         this.objectiveCardsDeck = new Objectives[16];
         this.cardsOnTable = new PlaceableCard[4];
-        this.playerPoints = new int[]{0,0,0,0};
-        this.globalPlayerPoints = new int[]{0,0,0,0};
+        this.playersPoints = new int[]{0,0,0,0};
+        this.globalPlayersPoints = new int[]{0,0,0,0};
         this.playersTables = new PlayerTable[4];
+        this.globalObjectives = new Objectives[2];
         initDecksAndTable();
     }
 
@@ -73,20 +75,59 @@ public class MainTable {
      * @param player player id
      * @return the player's points.
      */
-    public int getPlayerPoints(int player) {
-        return playerPoints[player];
+    public int getPlayersPoints(int player){
+        return playersPoints[player];
     }
-    public void addPlayerPoints(int player, int points) {
-        this.playerPoints[player] += points;
+    public void addPlayersPoints(int player, int points){
+        this.playersPoints[player] += points;
     }
-    public int getGlobalPlayerPoints(int player) {
-        return globalPlayerPoints[player];
+    public int getGlobalPlayersPoints(int player){
+        return globalPlayersPoints[player];
     }
-    public void addGlobalPlayerPoints(int player, int points) {
-        this.globalPlayerPoints[player] += points;
+    public void addGlobalPlayersPoints(int player, int points){
+        this.globalPlayersPoints[player] += points;
+    }
+    /**
+     * @param position 0: draw first resource card,
+     *                 1: draw second resource card,
+     *                 2: draw first gold card,
+     *                 3: draw second gold card,
+     *                 4: draw from resource deck,
+     *                 5: draw from gold deck,
+     * @param playerId the ID of the player who makes this action.
+     */
+    public void drawCardFrom(int position, int playerId){
+        PlaceableCard choice = null;
+
+        if(position==0||position==1||position==2||position==3){
+            choice = cardsOnTable[position];
+            cardsOnTable[position] = null;
+            replaceCardOnTable(position);
+        }
+        if(position == 4)
+            choice = drawCardFromResourceDeck();
+        if(position == 5)
+            choice = drawCardFromGoldDeck();
+
+        playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
+    }
+    private void replaceCardOnTable(int position){
+        if(position == 0 || position == 1)
+            cardsOnTable[position] = drawCardFromResourceDeck();
+        if(position == 2 || position == 3)
+            cardsOnTable[position] = drawCardFromGoldDeck();
+    }
+    private PlaceableCard drawCardFromResourceDeck(){
+        /*todo*/
+        return null;
+    }
+    private PlaceableCard drawCardFromGoldDeck(){
+        /*todo*/
+        return null;
     }
 
-    public void replaceCardOnTable(int drawCode){
+    /*todo*/
+    private void updatePlayerPoints(int playerId){
         /*todo*/
     }
 

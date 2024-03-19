@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class StartingCard extends PlaceableCard {
     private ArrayList<Resources> resourcesCentreBack;
     private Corner[] corners;
+    private int line;
+    private int column;
+
     /**
      * Corner constructor.
      * @param resourcesCentreBack all the resources in the back of a card.
@@ -15,11 +18,12 @@ public class StartingCard extends PlaceableCard {
      * @param frontImgPath refer to the image of the front.
      * @param isFront boolean that represent the front or back of a card.
      */
-
     public StartingCard(boolean isFront, String backImgPath, String frontImgPath, ArrayList<Resources> resourcesCentreBack, Corner[] corners) {
         super(isFront, backImgPath, frontImgPath);
         this.resourcesCentreBack = resourcesCentreBack;
         this.corners = corners;
+        this.line=31;
+        this.column=31;
     }
 
     public ArrayList<Resources> getResourcesCentreBack() {

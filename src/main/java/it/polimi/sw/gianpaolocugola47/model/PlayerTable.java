@@ -40,7 +40,7 @@ public class PlayerTable {
         this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[61][61];
-        this.placedCards[31][31] = this.startingCard;
+        this.placedCards[31][31] = startingCard;
     }
 
     public int getId() {
@@ -88,16 +88,39 @@ public class PlayerTable {
 
     /**
      *This metod return TRUE if a HandCard is playable in a chosen position, FALSE if not
-     * @param chosenHandCard
-     * @param x
-     * @param y
-     * @param chosenCorner
-     * @return
+     * @param onHandCard Card on player's hand.
+     * @param onTableCardX
+     * @param onTableCardY
+     * @param onTableCardCorner
+     * @return true if the card has been placed.
      */
-    public boolean isPlaceableCard(int chosenHandCard, int x, int y, int chosenCorner) {
-        boolean isPlaceable=false;
+    public boolean checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
+        boolean isPlaceable = false;
         /*todo*/
+        if(isPlaceable){
+            placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
+        }
         return isPlaceable;
+    }
+    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
+        /*todo*/
+    }
+
+    /**
+     *
+     * @param drawCode 0: first resource card
+     *                 1: second resource card
+     *                 2: first gold card
+     *                 3: second gold card
+     *                 4: draw from resource deck
+     *                 5: draw from gold deck
+     *
+     */
+    public void drawCard(int drawCode){
+        /*todo*/
+        if(drawCode==0||drawCode==1||drawCode==2||drawCode==3){
+            MainTable.getInstance().replaceCardOnTable(drawCode);
+        }
     }
 
 }

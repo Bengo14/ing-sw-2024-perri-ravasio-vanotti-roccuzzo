@@ -39,8 +39,8 @@ public class PlayerTable {
         this.secretObjective = secretObjective;
         this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
-        this.placedCards = new PlaceableCard[40][40];
-        this.placedCards[20][20] = this.startingCard;
+        this.placedCards = new PlaceableCard[61][61];
+        this.placedCards[31][31] = this.startingCard;
     }
 
     public int getId() {
@@ -70,7 +70,7 @@ public class PlayerTable {
     public int getResourceCounter(int position) {
         return resourceCounter[position];
     }
-    public void addResourceCounter(int position, int resource) {
+    private void addResourceCounter(int position, int resource) {
         this.resourceCounter[position] += resource;
     }
     public Objectives getSecretObjective() {
@@ -85,4 +85,21 @@ public class PlayerTable {
     public void setCardOnHand(int position, ResourceCard card) {
         this.cardsOnHand[position] = card;
     }
+
+    /**
+     *This metod return TRUE if a HandCard is playable in a chosen position, FALSE if not
+     * @param chosenHandCard
+     * @param x
+     * @param y
+     * @param chosenCorner
+     * @return
+     */
+    public boolean isPlaceableCard(int chosenHandCard, int x, int y, int chosenCorner) {
+        boolean isPlaceable=false;
+        /*todo*/
+        return isPlaceable;
+    }
+
 }
+
+

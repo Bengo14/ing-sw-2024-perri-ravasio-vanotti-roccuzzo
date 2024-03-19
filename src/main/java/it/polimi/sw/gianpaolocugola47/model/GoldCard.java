@@ -17,8 +17,9 @@ public class GoldCard extends ResourceCard {
      * @param points the points the card scores when played.
      * @param pointsForCorners the points the card scores covering angles when played.
      */
-    public GoldCard(String backImgPath, String frontImgPath, int points, boolean pointsForCorners) {
-        super(backImgPath, frontImgPath, points);
+    public GoldCard(String backImgPath, String frontImgPath, int points, boolean pointsForCorners, Resources resourceCentreBack, Items itemRequired) {
+        super(backImgPath, frontImgPath, points, resourceCentreBack);
+        this.itemRequired = itemRequired;
         this.pointsForCorners = pointsForCorners;
     }
 

@@ -14,9 +14,10 @@ public class ResourceCard extends PlaceableCard {
      * @param frontImgPath refer to the image of the front.
      * @param points the points the card scores when played.
      */
-    public ResourceCard(String backImgPath, String frontImgPath, int points) {
+    public ResourceCard(String backImgPath, String frontImgPath, int points, Resources resourceCentreBack) {
         super(backImgPath, frontImgPath);
         this.points = points;
+        this.resourceCentreBack = resourceCentreBack;
     }
 
     public Resources getResourceCentreBack() {

@@ -1,34 +1,23 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import java.util.ArrayList;
 /**
- * This class represents all the objectives in a game with their points,the reference at the front and back image
- * and the items,the resource and the pattern use for make the points.
+ * This class represents all the objectives in a game with their points,the reference at the front and back image.
  */
-public class Objectives {
+public abstract class Objectives {
     private int points;
     private String imgPathFront;
     private String imgPathBack;
-    private ArrayList<Items> items;
-    private ArrayList<Resources> resources;
-    private Pattern pattern;
     /**
      * Corner constructor.
      *
-     * @param points the points made by the card.
-     * @param imgPathBack the reference to the back's image.
-     * @param items the request for items to score points.
-     * @param pattern the request for disposition to score points.
-     * @param resources the request for resources to score points.
-     * @param imgPathFront the reference to the front's image.
+     * @param points        the points given by the card.
+     * @param imgPathFront  the reference to the front image's path.
+     * @param imgPathBack   the reference to the back image's path.
      */
-    public Objectives(int points, String imgPathFront, String imgPathBack, ArrayList<Items> items, ArrayList<Resources> resources, Pattern pattern) {
+    public Objectives(int points, String imgPathFront, String imgPathBack) {
         this.points = points;
         this.imgPathFront = imgPathFront;
         this.imgPathBack = imgPathBack;
-        this.items = items;
-        this.resources = resources;
-        this.pattern = pattern;
     }
 
     public int getPoints() {
@@ -55,27 +44,4 @@ public class Objectives {
         this.imgPathBack = imgPathBack;
     }
 
-    public ArrayList<Items> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<Items> items) {
-        this.items = items;
-    }
-
-    public ArrayList<Resources> getResources() {
-        return resources;
-    }
-
-    public void setResources(ArrayList<Resources> resources) {
-        this.resources = resources;
-    }
-
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
-    }
 }

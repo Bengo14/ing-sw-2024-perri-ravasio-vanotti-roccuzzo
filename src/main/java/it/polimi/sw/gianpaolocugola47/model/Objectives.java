@@ -17,12 +17,9 @@ public class Objectives {
      *
      * @param points the points made by the card.
      * @param imgPathBack the reference to the back's image.
-     * @param items the request for items to score points.
-     * @param pattern the request for disposition to score points.
-     * @param resources the request for resources to score points.
      * @param imgPathFront the reference to the front's image.
      */
-    public Objectives(int points, String imgPathFront, String imgPathBack, ArrayList<Items> items, ArrayList<Resources> resources, Pattern pattern) {
+    public Objectives(int points, String imgPathFront, String imgPathBack) {
         this.points = points;
         this.imgPathFront = imgPathFront;
         this.imgPathBack = imgPathBack;

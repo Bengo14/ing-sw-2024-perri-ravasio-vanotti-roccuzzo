@@ -28,10 +28,6 @@ public abstract class PlaceableCard {
         return isFront;
     }
 
-    public void setFront(boolean front) {
-        isFront = front;
-    }
-
     public String getBackImgPath() {
         return backImgPath;
     }
@@ -41,6 +37,6 @@ public abstract class PlaceableCard {
     }
 
     public void switchFrontBack() {
-        this.isFront = !this.isFront;
+        isFront = !isFront;
     }
 }

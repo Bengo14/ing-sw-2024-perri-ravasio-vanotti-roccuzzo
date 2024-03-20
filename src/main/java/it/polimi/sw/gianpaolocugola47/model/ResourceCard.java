@@ -5,14 +5,14 @@ package it.polimi.sw.gianpaolocugola47.model;
  */
 public class ResourceCard extends PlaceableCard {
     private Resources resourceCentreBack;
-    private int points;
+    private final int points;
 
     /**
      * Corner constructor.
      *
      * @param backImgPath refer to the image of the back.
      * @param frontImgPath refer to the image of the front.
-     * @param points the points the card scores when played.
+     * @param resourceCentreBack resource in the back side.
      */
     public ResourceCard(String backImgPath, String frontImgPath, int points, Resources resourceCentreBack) {
         super(backImgPath, frontImgPath);
@@ -24,7 +24,7 @@ public class ResourceCard extends PlaceableCard {
         return resourceCentreBack;
     }
 
-    public int getPoints() {
-        return points;
+    public int getPoints(PlaceableCard[][] board){
+        return this.points;
     }
 }

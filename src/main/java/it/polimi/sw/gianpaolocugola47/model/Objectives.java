@@ -75,7 +75,9 @@ public class Objectives {
         return pattern;
     }
 
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
+    public int checkPatternAndComputePoints(PlaceableCard[][] board){
+        int totalPoints = 0;
+        /*todo*/
+        return  totalPoints;
     }
 }

@@ -24,4 +24,5 @@ public class StartingCard extends PlaceableCard {
     public void setResourcesCentreBack(ArrayList<Resources> resourcesCentreBack) {
         this.resourcesCentreBack = resourcesCentreBack;
     }
+
 }

@@ -15,7 +15,7 @@ public class PlayerTable {
     private int[] resourceCounter;
     private final Objectives secretObjective;
     private final StartingCard startingCard;
-    private PlaceableCard[] cardsOnHand;
+    private ResourceCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
 
     /**
@@ -23,16 +23,15 @@ public class PlayerTable {
      *
      * @param id the id of the player.
      * @param nickName the nickname chose by the player for a game.
-     * @param isFirst a boolean that represent the first player.
      * @param secretObjective the player's secret objectives.
      * @param startingCard the first card of the player.
      * @param cardsOnHand the player's hand.
      */
-    public PlayerTable(int id, Colours playerColour, String nickName, boolean isFirst, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
+    public PlayerTable(int id, Colours playerColour, String nickName, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
         this.id = id;
         this.playerColour = playerColour;
         this.nickName = nickName;
-        this.isFirst = isFirst;
+        this.isFirst = this.id == 0;
         this.resourceCounter = new int[]{0,0,0,0};
         this.secretObjective = secretObjective;
         this.startingCard = startingCard;
@@ -68,38 +67,47 @@ public class PlayerTable {
     public PlaceableCard getCardOnHand(int position) {
         return cardsOnHand[position];
     }
-    public void setCardOnHandInTheEmptyPosition(PlaceableCard card) {
-        int position = 0;
-        /*todo*/
-        this.cardsOnHand[position] = card;
-    }
 
+    public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
+        for(int i=0; i<3; i++){
+            if(this.cardsOnHand[i] == null) {
+                this.cardsOnHand[i] = card;
+                return;
+            }
+        }
+    }
     /**
      *This method checks if a card can be placed on another one and in case places it.
      * @param onHandCard Card on player's hand, to be placed.
      * @param onTableCardX X coordinate of on table card.
      * @param onTableCardY Y coordinate of on table card.
      * @param onTableCardCorner corner's id from 0 to 3 (independently of front/back).
-     * @return true if the card has been placed.
+     * @return the points made by the player if the card has been placed, else returns -1.
      */
-    public boolean checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
+    public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         boolean isPlaceable = false;
+        int points = 0;
+        ResourceCard card = cardsOnHand[onHandCard];
         /*todo*/
-        if(isPlaceable){
+        if(isPlaceable)
             placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
-        }
-        return isPlaceable;
+        else return -1;
+        points = card.getPoints(this.placedCards);
+        cardsOnHand[onHandCard] = null; // card that will be replaced drawing
+        return points;
     }
     private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
         /*todo*/
     }
-    public int getGlobalObjectivePoints(Objectives[] objectives){
-        /*todo*/
-        return 0;
+    public int getObjectivePoints(Objectives[] objectives){
+        int points = getSecretObjectivePoints();
+        points += objectives[0].checkPatternAndComputePoints(placedCards);
+        points += objectives[1].checkPatternAndComputePoints(placedCards);
+        return points;
     }
     private int getSecretObjectivePoints(){
-        /*todo*/
-        return 0;
+        int points = this.secretObjective.checkPatternAndComputePoints(placedCards);
+        return points;
     }
 
 }

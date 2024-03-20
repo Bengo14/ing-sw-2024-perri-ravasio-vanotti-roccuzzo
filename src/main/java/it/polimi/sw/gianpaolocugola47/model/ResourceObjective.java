@@ -9,12 +9,11 @@ public class ResourceObjective extends Objectives{
     /**
      * Corner constructor.
      * @param resource      the resource needed to receive points.
-     * @param points        the points given by the card.
      * @param imgPathFront  the reference to the front image's path.
      * @param imgPathBack   the reference to the back image's path.
      */
-    public ResourceObjective(int points, String imgPathFront, String imgPathBack, Resources resource) {
-        super(points, imgPathFront, imgPathBack);
+    public ResourceObjective(String imgPathFront, String imgPathBack, Resources resource) {
+        super(2, imgPathFront, imgPathBack); //nb le carte obiettivo danno SEMPRE 2 punti indipendentemente dalla risorsa
         this.resource = resource;
     }
 

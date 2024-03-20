@@ -1,32 +1,26 @@
 package it.polimi.sw.gianpaolocugola47.model;
 /**
- * This class represent a corner of a card.
- * It contains the information of the corner's status:the possibility of building card or if is already build on it,the empty and covered state,
- * the resources or the items on it.
+ * This class represents a corner of a card.
+ * It contains the information of the corner's status, such as if the corner is covered ot not, if the corner can be
+ * covered by another card or if any resource/item is present. Information on the corner covering a particular instance
+ * of a given corner is also present.
  */
 public class Corner {
     private final boolean isBuildable;
-    private final boolean isEmpty;
+    private final boolean isEmpty; //nb forse in questo caso avrebbe senso inizializzarlo a true o togliere definitivamente il parametro che ora è superfluo
     private boolean isCovered;
     private Corner linkedCorner;
-    private final Resources resource;
-    private final Items item;
 
     /**
      * Corner constructor.
-     *
      * @param isBuildable boolean of the possibility to build on it.
      * @param isEmpty boolean that represent the empty state of it.
-     * @param item the item on the corner.
-     * @param resource the resource on the corner.
      */
-    public Corner(boolean isBuildable, boolean isEmpty, Resources resource, Items item) {
+    public Corner(boolean isBuildable, boolean isEmpty) {
         this.isBuildable = isBuildable;
         this.isEmpty = isEmpty;
         this.isCovered = false; //default
         this.linkedCorner = null;
-        this.resource = resource;
-        this.item = item;
     }
 
     public boolean isBuildable() {
@@ -47,10 +41,5 @@ public class Corner {
     public void setLinkedCorner(Corner corner) {
         this.linkedCorner=corner;
     }
-    public Resources getResource() {
-        return resource;
-    }
-    public Items getItem() {
-        return item;
-    }
+
 }

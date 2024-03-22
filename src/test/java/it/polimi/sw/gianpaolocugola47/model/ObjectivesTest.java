@@ -5,52 +5,55 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectivesTest {
-
     @Test
-    void getPoints() {
+    public void testConstructor() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        assertNotNull(o);
+        assertEquals(5, o.getPoints());
+        assertEquals("imgPathFront", o.getImgPathFront());
+        assertEquals("imgPathBack", o.getImgPathBack());
     }
+
 
     @Test
     void setPoints() {
     }
 
+
     @Test
-    void getImgPathFront() {
+    public void getItems() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        assertNotNull(o.getItems());
     }
 
     @Test
-    void setImgPathFront() {
+    public void setItems() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        o.setItems(null);
+        assertNull(o.getItems());
     }
 
     @Test
-    void getImgPathBack() {
+    public void getResources() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        assertNotNull(o.getResources());
     }
 
     @Test
-    void setImgPathBack() {
+    public void setResources() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        o.setResources(null);
+        assertNull(o.getResources());
     }
 
     @Test
-    void getItems() {
+    public void getPattern() {
+        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack");
+        assertNotNull(o.getPattern());
     }
 
     @Test
-    void setItems() {
-    }
+    public void checkPatternAndComputePoints() {
 
-    @Test
-    void getResources() {
-    }
-
-    @Test
-    void setResources() {
-    }
-
-    @Test
-    void getPattern() {
-    }
-
-    @Test
-    void checkPatternAndComputePoints() {
     }
 }

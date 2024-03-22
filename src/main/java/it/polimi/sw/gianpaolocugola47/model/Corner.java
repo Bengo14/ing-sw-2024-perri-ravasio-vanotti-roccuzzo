@@ -41,5 +41,7 @@ public class Corner {
     public void setLinkedCorner(Corner corner) {
         this.linkedCorner=corner;
     }
-
 }
+
+
+

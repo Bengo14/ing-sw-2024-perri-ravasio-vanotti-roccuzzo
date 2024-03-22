@@ -5,26 +5,37 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTableTest {
+    @Test
+    public void testConstructor() {
+        MainTable mainTable = MainTable.getInstance();
+        assertNotNull(mainTable);
+        assertFalse(mainTable.isEndGame());
+
+
+    }
+
 
     @Test
-    void isEndGame() {
+    void getInstance() {
     }
 
     @Test
-    void setEndGame() {
+    public void setEndGame() {
+        MainTable mainTable = MainTable.getInstance();
+        mainTable.setEndGame(true);
+        assertTrue(mainTable.isEndGame());
 
     }
 
     @Test
-    void setNumOfPlayers() {
+    public void setNumOfPlayers() {
+
     }
 
-    @Test
-    void addPlayer() {
-    }
 
     @Test
-    void getPlayersPoints() {
+    public void getPlayersPoints() {
+
     }
 
     @Test
@@ -40,10 +51,9 @@ class MainTableTest {
     }
 
     @Test
-    void drawCardFrom() {
+    public void drawCardFrom() {
+
     }
 
-    @Test
-    void getInstance() {
-    }
+
 }

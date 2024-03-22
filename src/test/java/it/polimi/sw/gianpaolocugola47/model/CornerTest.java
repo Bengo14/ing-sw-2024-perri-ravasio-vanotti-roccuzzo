@@ -1,33 +1,32 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 
 class CornerTest {
-
     @Test
-    void isBuildable() {
+    public void testConstructorAndGetterCorner() {
+        Corner c = new Corner(false,false);
+        assertNotNull(c);
+        assertFalse(c.isBuildable());
+        assertFalse(c.isEmpty());
+        assertFalse(c.isCovered());
+        assertTrue(c.isCovered());
+        assertNull(c.getLinkedCorner());
+        c.setLinkedCorner(new Corner(true,true));
+        assertNotNull(c.getLinkedCorner());
     }
-
     @Test
-    void isEmpty() {
+    public void testSetIsCovered() {
+        Corner c = new Corner(false,false);
+        assertFalse(c.isCovered());
+        c.setIsCovered();
+        assertTrue(c.isCovered());
     }
-
-    @Test
-    void isCovered() {
-    }
-
-    @Test
-    void setIsCovered() {
-    }
-
     @Test
     void getLinkedCorner() {
-    }
-
-    @Test
-    void setLinkedCorner() {
     }
 }

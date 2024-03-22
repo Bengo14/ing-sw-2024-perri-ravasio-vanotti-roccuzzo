@@ -2,20 +2,23 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PlaceableCardTest {
 
+
+
     @Test
-    void setCorners() {
+    public void setCorners() {
+
     }
 
     @Test
-    void getCorner() {
+    public void getCorner() {
+
     }
 
     @Test
-    void setCoordinates() {
+    public void setCoordinates() {
+
     }
 
     @Test

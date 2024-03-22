@@ -38,19 +38,21 @@ public class GoldCard extends ResourceCard {
     public Items getItemRequired() {
         return itemRequired;
     }
-    public boolean isPointsForCorners() {
+    protected boolean isPointsForCorners() {
         return pointsForCorners;
     }
-    public Items getItemThatGivesPoints() {
+    protected Items getItemThatGivesPoints() {
         return itemThatGivesPoints;
     }
-    public boolean isPointsForItems() {
+    protected boolean isPointsForItems() {
         return pointsForItems;
     }
+
     @Override
     public int getPoints(PlaceableCard[][] board) {
         int points = 0;
         /*todo*/
+        //vari controlli se dà punti per corners o items
         return points;
     }
 }

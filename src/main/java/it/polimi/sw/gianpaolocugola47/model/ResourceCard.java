@@ -26,5 +26,6 @@ public class ResourceCard extends PlaceableCard {
 
     public int getPoints(PlaceableCard[][] board){
         return this.points;
+        //nothing else needed
     }
 }

@@ -109,6 +109,19 @@ public class PlayerTable {
         int points = this.secretObjective.checkPatternAndComputePoints(placedCards);
         return points;
     }
+    public int getNumberOfAchievedObjectives(Objectives[] objectives){
+        int counter = 0;
+        int points = getSecretObjectivePoints();
+        if(points > 0)
+            counter++;
+        points = objectives[0].checkPatternAndComputePoints(placedCards);
+        if(points > 0)
+            counter++;
+        points = objectives[1].checkPatternAndComputePoints(placedCards);
+        if(points > 0)
+            counter++;
+        return counter;
+    }
 
 }
 

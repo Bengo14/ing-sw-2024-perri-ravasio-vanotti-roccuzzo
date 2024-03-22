@@ -124,16 +124,37 @@ public class MainTable {
     }
 
     public int computeWinnerAtEndGame(){
+
         int winnerPlayerId = 0;
         int max = 0;
         boardPoints = globalPoints;
         boolean draw = false;
+
         for(int i=0; i<numOfPlayers; i++){
             if(boardPoints[i] >= max){
                 if(boardPoints[i] == max){
                     draw = true;
                 }
                 else {
+                    max = boardPoints[i];
+                    winnerPlayerId = i;
+                    draw = false;
+                }
+            }
+        }
+        if(draw){
+            for(int i=0; i<numOfPlayers; i++){
+                if(boardPoints[i] == max){
+                    boardPoints[i] = playersTables[i].getNumberOfAchievedObjectives(globalObjectives);
+                }
+                else{
+                    boardPoints[i] = -1;
+                }
+            }
+            max=0;
+
+            for(int i=0; i<numOfPlayers; i++){
+                if(boardPoints[i] > max){
                     max = boardPoints[i];
                     winnerPlayerId = i;
                 }

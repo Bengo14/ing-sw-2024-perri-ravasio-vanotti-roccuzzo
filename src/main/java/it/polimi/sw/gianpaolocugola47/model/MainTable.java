@@ -20,7 +20,7 @@ public class MainTable {
     private Objectives[] objectiveCardsDeck;
 
 
-    private MainTable() {
+    public MainTable() {
         this.endGame = false;
         this.goldCardsDeck = new ArrayList<GoldCard>();
         this.resourceCardsDeck = new ArrayList<ResourceCard>();
@@ -155,7 +155,7 @@ public class MainTable {
     private void addGlobalPoints(int player, int points){
         this.globalPoints[player] += points;
     }
-    private void setEndGame() {
+    protected void setEndGame() {
         this.endGame = true;
     }
 

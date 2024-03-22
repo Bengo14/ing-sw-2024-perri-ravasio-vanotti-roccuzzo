@@ -7,22 +7,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTableTest {
     @Test
     public void testConstructor() {
-        MainTable mainTable = MainTable.getInstance();
+        MainTable mainTable = new MainTable();
         assertNotNull(mainTable);
         assertFalse(mainTable.isEndGame());
-
-
-    }
-
-
-    @Test
-    void getInstance() {
     }
 
     @Test
     public void setEndGame() {
-        MainTable mainTable = MainTable.getInstance();
-        mainTable.setEndGame(true);
+        MainTable mainTable = new MainTable();
+        mainTable.setEndGame();
         assertTrue(mainTable.isEndGame());
 
     }

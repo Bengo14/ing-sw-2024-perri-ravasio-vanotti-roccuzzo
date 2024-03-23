@@ -6,12 +6,14 @@ public abstract class PlaceableCard {
     private final String frontImgPath;
     private int line;
     private int column;
+    private boolean isFlaggedForObjective;
     private Corner[] corners;
 
     public PlaceableCard(String backImgPath, String frontImgPath) {
         this.isFront = true;
         this.backImgPath = backImgPath;
         this.frontImgPath = frontImgPath;
+        this.isFlaggedForObjective=false;
     }
 
     public void setCorners(Corner[] corners){
@@ -35,7 +37,12 @@ public abstract class PlaceableCard {
     public String getFrontImgPath() {
         return frontImgPath;
     }
-
+    public boolean getIsFlaggedForObjective(){
+        return isFlaggedForObjective;
+    }
+    public void setFlaggedForObjective(boolean flag){
+        this.isFlaggedForObjective=flag;
+    }
     public void switchFrontBack() {
         isFront = !isFront;
     }

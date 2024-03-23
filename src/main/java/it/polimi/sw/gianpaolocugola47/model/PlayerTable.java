@@ -6,7 +6,7 @@ package it.polimi.sw.gianpaolocugola47.model;
  *
  */
 public class PlayerTable {
-    private final int MATRIX_DIMENSION = 41;
+    private static final int MATRIX_DIMENSION = 41;
     private final int STARTING_CARD_POS = 20;
     private final int id;
     private final String nickName;
@@ -68,6 +68,15 @@ public class PlayerTable {
         return cardsOnHand[position];
     }
 
+    public static int getMatrixDimension() {
+        return MATRIX_DIMENSION;
+    }
+
+    public int getSTARTING_CARD_POS() {
+        int startingCardPos = STARTING_CARD_POS;
+        return startingCardPos;
+    }
+
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
         for(int i=0; i<3; i++){
             if(this.cardsOnHand[i] == null) {
@@ -122,7 +131,14 @@ public class PlayerTable {
             counter++;
         return counter;
     }
-
+    public PlaceableCard getElement(int xIndex, int yIndex) {
+        return placedCards[xIndex][yIndex];
+    }
+    boolean isStartingCard(int xIndex, int yIndex){
+        if(xIndex==STARTING_CARD_POS && yIndex==STARTING_CARD_POS) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
-
-

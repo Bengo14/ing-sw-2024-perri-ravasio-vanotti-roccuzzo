@@ -7,10 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class GoldCardTest {
     @Test
     public void testConstructorAndGetterGoldCard() {
-        GoldCard g = new GoldCard("back", "front", 5, true, Resources.FUNGI, Items.INKWELL, true, Items.INKWELL);
+        GoldCard g = new GoldCard("back","front",2,true,Resources.FUNGI,null,false,null);
         assertNotNull(g);
         assertEquals(Resources.FUNGI, g.getResourceCentreBack());
-        assertEquals(Items.INKWELL, g.getItemRequired());
         assertTrue(g.isPointsForCorners());
         assertTrue(g.isPointsForItems());
         assertEquals(Items.INKWELL, g.getItemThatGivesPoints());

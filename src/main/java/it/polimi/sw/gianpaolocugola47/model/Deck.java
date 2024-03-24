@@ -13,7 +13,7 @@ public class Deck {
     private static Random randomGenerator;
     private static int[] cardsInDeckCounters;
 
-    public static void initDeck(){
+    protected static void initDeck(){
         generateResourceCardsDeck();
         generateGoldCardsDeck();
         generateObjectiveCardsDeck();

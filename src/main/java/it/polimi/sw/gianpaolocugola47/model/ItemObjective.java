@@ -21,7 +21,13 @@ public class ItemObjective extends Objectives{
         this.itemsRequired = itemsRequired;
     }
 
-    public ArrayList<Items> getItemsRequired() {
+    protected ArrayList<Items> getItemsRequired() {
         return itemsRequired;
+    }
+
+    @Override
+    public int checkPatternAndComputePoints(PlayerTable playerTable) {
+        /*todo*/
+        return 0;
     }
 }

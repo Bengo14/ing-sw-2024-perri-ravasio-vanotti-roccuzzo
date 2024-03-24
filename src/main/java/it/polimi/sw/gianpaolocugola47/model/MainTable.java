@@ -143,22 +143,7 @@ public class MainTable {
             }
         }
         if(draw){
-            for(int i=0; i<numOfPlayers; i++){
-                if(boardPoints[i] == max){
-                    boardPoints[i] = playersTables[i].getNumberOfAchievedObjectives(globalObjectives);
-                }
-                else{
-                    boardPoints[i] = -1;
-                }
-            }
-            max=0;
 
-            for(int i=0; i<numOfPlayers; i++){
-                if(boardPoints[i] > max){
-                    max = boardPoints[i];
-                    winnerPlayerId = i;
-                }
-            }
         }
         return winnerPlayerId;
     }

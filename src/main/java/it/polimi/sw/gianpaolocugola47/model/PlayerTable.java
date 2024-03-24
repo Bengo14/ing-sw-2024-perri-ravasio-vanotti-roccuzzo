@@ -7,7 +7,7 @@ package it.polimi.sw.gianpaolocugola47.model;
  */
 public class PlayerTable {
     private static final int MATRIX_DIMENSION = 41;
-    private final int STARTING_CARD_POS = 20;
+    private static final int STARTING_CARD_POS = 20;
     private final int id;
     private final String nickName;
     private final Colours playerColour;
@@ -32,13 +32,18 @@ public class PlayerTable {
         this.playerColour = playerColour;
         this.nickName = nickName;
         this.isFirst = this.id == 0;
-        this.resourceCounter = new int[]{0,0,0,0};
+        this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.secretObjective = secretObjective;
         this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = startingCard;
     }
+
+    public static int getMatrixDimension() {
+        return MATRIX_DIMENSION;
+    }
+    public static int getStartingCardPos() {return STARTING_CARD_POS;}
 
     public int getId() {
         return id;
@@ -66,15 +71,6 @@ public class PlayerTable {
     }
     public PlaceableCard getCardOnHand(int position) {
         return cardsOnHand[position];
-    }
-
-    public static int getMatrixDimension() {
-        return MATRIX_DIMENSION;
-    }
-
-    public int getSTARTING_CARD_POS() {
-        int startingCardPos = STARTING_CARD_POS;
-        return startingCardPos;
     }
 
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
@@ -110,35 +106,22 @@ public class PlayerTable {
     }
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
-        points += objectives[0].checkPatternAndComputePoints(placedCards);
-        points += objectives[1].checkPatternAndComputePoints(placedCards);
+        points += objectives[0].checkPatternAndComputePoints(this);
+        points += objectives[1].checkPatternAndComputePoints(this);
         return points;
     }
     private int getSecretObjectivePoints(){
-        int points = this.secretObjective.checkPatternAndComputePoints(placedCards);
+        int points = this.secretObjective.checkPatternAndComputePoints(this);
         return points;
     }
-    public int getNumberOfAchievedObjectives(Objectives[] objectives){
-        int counter = 0;
-        int points = getSecretObjectivePoints();
-        if(points > 0)
-            counter++;
-        points = objectives[0].checkPatternAndComputePoints(placedCards);
-        if(points > 0)
-            counter++;
-        points = objectives[1].checkPatternAndComputePoints(placedCards);
-        if(points > 0)
-            counter++;
-        return counter;
+
+    public PlaceableCard getPlacedCard(int x, int y) {
+        return placedCards[x][y];
     }
-    public PlaceableCard getElement(int xIndex, int yIndex) {
-        return placedCards[xIndex][yIndex];
-    }
-    boolean isStartingCard(int xIndex, int yIndex){
-        if(xIndex==STARTING_CARD_POS && yIndex==STARTING_CARD_POS) {
+    boolean isStartingCard(int x, int y){
+        if(x==STARTING_CARD_POS && y==STARTING_CARD_POS)
             return true;
-        }else{
+            else
             return false;
-        }
     }
 }

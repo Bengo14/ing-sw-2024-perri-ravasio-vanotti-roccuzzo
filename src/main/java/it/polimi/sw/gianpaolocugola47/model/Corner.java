@@ -7,18 +7,20 @@ package it.polimi.sw.gianpaolocugola47.model;
  */
 public class Corner {
     private final boolean isBuildable;
-    private final boolean isEmpty; //nb forse in questo caso avrebbe senso inizializzarlo a true o togliere definitivamente il parametro che ora è superfluo
+    private final boolean isItem;
+    private final boolean isResource;
     private boolean isCovered;
     private Corner linkedCorner;
 
     /**
      * Corner constructor.
      * @param isBuildable boolean of the possibility to build on it.
-     * @param isEmpty boolean that represent the empty state of it.
+     * @param isItem boolean that represent the presence of an Item.
      */
-    public Corner(boolean isBuildable, boolean isEmpty) {
+    public Corner(boolean isBuildable, boolean isItem, boolean isResource) {
         this.isBuildable = isBuildable;
-        this.isEmpty = isEmpty;
+        this.isItem = isItem;
+        this.isResource = isResource;
         this.isCovered = false; //default
         this.linkedCorner = null;
     }
@@ -26,12 +28,13 @@ public class Corner {
     public boolean isBuildable() {
         return isBuildable;
     }
-    public boolean isEmpty() {
-        return isEmpty;
+    public boolean isResource() {
+        return isResource;
     }
     public boolean isCovered() {
         return isCovered;
     }
+    public boolean isItem(){return isItem;}
     public void setIsCovered(){
         this.isCovered = true;
     }
@@ -39,7 +42,7 @@ public class Corner {
         return this.linkedCorner;
     }
     public void setLinkedCorner(Corner corner) {
-        this.linkedCorner=corner;
+        this.linkedCorner = corner;
     }
 }
 

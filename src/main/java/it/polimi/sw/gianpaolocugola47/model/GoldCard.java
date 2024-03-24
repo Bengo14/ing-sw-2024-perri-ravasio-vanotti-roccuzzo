@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class GoldCard extends ResourceCard {
     private ArrayList<Resources> resourcesRequired;
-    private final Items itemRequired;
     private final boolean pointsForCorners;
     private final boolean pointsForItems;
     private final Items itemThatGivesPoints;
@@ -22,7 +21,6 @@ public class GoldCard extends ResourceCard {
     public GoldCard(String backImgPath, String frontImgPath, int points, boolean pointsForCorners, Resources resourceCentreBack,
                     Items itemRequired, boolean pointsForItems, Items itemThatGivesPoints) {
         super(backImgPath, frontImgPath, points, resourceCentreBack);
-        this.itemRequired = itemRequired;
         this.pointsForCorners = pointsForCorners;
         this.pointsForItems = pointsForItems;
         this.itemThatGivesPoints = itemThatGivesPoints;
@@ -35,9 +33,7 @@ public class GoldCard extends ResourceCard {
     public void setResourcesRequired(ArrayList<Resources> resourcesRequired) {
         this.resourcesRequired = resourcesRequired;
     }
-    public Items getItemRequired() {
-        return itemRequired;
-    }
+
     protected boolean isPointsForCorners() {
         return pointsForCorners;
     }
@@ -49,7 +45,7 @@ public class GoldCard extends ResourceCard {
     }
 
     @Override
-    public int getPoints(PlaceableCard[][] board) {
+    public int getPoints(PlayerTable playerTable) {
         int points = 0;
         /*todo*/
         //vari controlli se dà punti per corners o items

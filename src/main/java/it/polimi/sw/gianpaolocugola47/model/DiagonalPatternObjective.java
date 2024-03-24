@@ -4,10 +4,10 @@ package it.polimi.sw.gianpaolocugola47.model;
  * This class represents pattern-oriented objectives, i.e. objectives that give points only if a certain card
  * pattern is present on a given player table.
  */
-public class PatternObjectiveDiagonal extends Objectives {
+public class DiagonalPatternObjective extends Objectives {
 
-    private boolean isAscending;
-    private Resources mainResource;
+    private final boolean isAscending;
+    private final Resources resource;
 
     /**
      * Corner constructor.
@@ -15,10 +15,10 @@ public class PatternObjectiveDiagonal extends Objectives {
      * @param imgPathFront the reference to the front image's path.
      * @param imgPathBack  the reference to the back image's path.
      */
-    public PatternObjectiveDiagonal(int points, String imgPathFront, String imgPathBack, boolean isAscending, Resources mainResource) {
+    public DiagonalPatternObjective(int points, String imgPathFront, String imgPathBack, boolean isAscending, Resources mainResource) {
         super(points, imgPathFront, imgPathBack);
         this.isAscending = isAscending;
-        this.mainResource = mainResource;
+        this.resource = mainResource;
     }
 
     @Override

@@ -11,18 +11,22 @@ public class Corner {
     private final boolean isResource;
     private boolean isCovered;
     private Corner linkedCorner;
+    private final Items item;
+    private final Resources resource;
 
     /**
      * Corner constructor.
      * @param isBuildable boolean of the possibility to build on it.
      * @param isItem boolean that represent the presence of an Item.
      */
-    public Corner(boolean isBuildable, boolean isItem, boolean isResource) {
+    public Corner(boolean isBuildable, boolean isItem, boolean isResource, Items item, Resources resource) {
         this.isBuildable = isBuildable;
         this.isItem = isItem;
         this.isResource = isResource;
         this.isCovered = false; //default
         this.linkedCorner = null;
+        this.item = item;
+        this.resource = resource;
     }
 
     public boolean isBuildable() {

@@ -6,7 +6,7 @@ package it.polimi.sw.gianpaolocugola47.model;
  */
 public class ResourceObjective extends Objectives{
 
-    private final Resources mainResource;
+    private final Resources resource;
     /**
      * Corner constructor.
      * @param resource      the resource needed to receive points.
@@ -15,11 +15,11 @@ public class ResourceObjective extends Objectives{
      */
     public ResourceObjective(String imgPathFront, String imgPathBack, Resources resource) {
         super(2, imgPathFront, imgPathBack); //nb le carte obiettivo danno SEMPRE 2 punti indipendentemente dalla risorsa
-        this.mainResource = resource;
+        this.resource = resource;
     }
 
     public Resources getResource() {
-        return mainResource;
+        return resource;
     }
 
     @Override

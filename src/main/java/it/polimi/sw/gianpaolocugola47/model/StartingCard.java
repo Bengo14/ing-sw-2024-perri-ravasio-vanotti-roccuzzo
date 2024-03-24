@@ -14,7 +14,7 @@ public class StartingCard extends PlaceableCard {
      */
     public StartingCard(String backImgPath, String frontImgPath) {
         super(backImgPath, frontImgPath);
-        setCoordinates(31, 31);
+        setCoordinates(PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos());
     }
 
     public ArrayList<Resources> getResourcesCentreBack() {

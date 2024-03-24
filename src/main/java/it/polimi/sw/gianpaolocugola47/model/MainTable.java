@@ -42,7 +42,7 @@ public class MainTable {
         this.playersTables = new PlayerTable[numOfPlayers];
     }
 
-    public void addPlayer(int id, String nickName, Colours color, boolean isStartingCardFront){
+    public void addPlayer(int id, String nickName, Colours color, boolean isStartingCardFront, int chosenObjective){
 
         if(playersTables[id]==null){
             Objectives objective = Deck.drawCardFromObjectivesDeck();
@@ -143,7 +143,7 @@ public class MainTable {
             }
         }
         if(draw){
-
+            /*todo*/
         }
         return winnerPlayerId;
     }

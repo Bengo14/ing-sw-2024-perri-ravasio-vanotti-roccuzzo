@@ -72,6 +72,15 @@ public class PlayerTable {
     public PlaceableCard getCardOnHand(int position) {
         return cardsOnHand[position];
     }
+    public PlaceableCard getPlacedCard(int x, int y) {
+        return placedCards[x][y];
+    }
+    public boolean isStartingCard(int x, int y){
+        if(x==STARTING_CARD_POS && y==STARTING_CARD_POS)
+            return true;
+        else
+            return false;
+    }
 
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
         for(int i=0; i<3; i++){
@@ -113,15 +122,5 @@ public class PlayerTable {
     private int getSecretObjectivePoints(){
         int points = this.secretObjective.checkPatternAndComputePoints(this);
         return points;
-    }
-
-    public PlaceableCard getPlacedCard(int x, int y) {
-        return placedCards[x][y];
-    }
-    boolean isStartingCard(int x, int y){
-        if(x==STARTING_CARD_POS && y==STARTING_CARD_POS)
-            return true;
-            else
-            return false;
     }
 }

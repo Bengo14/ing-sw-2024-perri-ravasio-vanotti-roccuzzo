@@ -4,7 +4,7 @@ package it.polimi.sw.gianpaolocugola47.model;
  *
  */
 public class ResourceCard extends PlaceableCard {
-    private Resources resourceCentreBack;
+    private final Resources resourceCentreBack;
     private final int points;
 
     /**
@@ -24,7 +24,7 @@ public class ResourceCard extends PlaceableCard {
         return resourceCentreBack;
     }
 
-    public int getPoints(PlaceableCard[][] board){
+    public int getPoints(PlayerTable playerTable){
         return this.points;
         //nothing else needed
     }

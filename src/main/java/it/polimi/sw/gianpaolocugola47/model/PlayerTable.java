@@ -90,6 +90,9 @@ public class PlayerTable {
             }
         }
     }
+    public void turnAroundCardOnHand(int cardPosition){
+        this.cardsOnHand[cardPosition].switchFrontBack();
+    }
     /**
      *This method checks if a card can be placed on another one and in case places it.
      * @param onHandCard Card on player's hand, to be placed.

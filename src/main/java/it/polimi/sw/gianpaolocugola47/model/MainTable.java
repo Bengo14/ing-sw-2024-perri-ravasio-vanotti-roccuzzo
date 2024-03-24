@@ -42,9 +42,17 @@ public class MainTable {
         this.playersTables = new PlayerTable[numOfPlayers];
     }
 
+    public void drawTwoPossibleSecretObjectives(){
+        /*todo*/
+    }
+    public void drawStartingCard(){
+        /*todo*/
+    }
+
     public void addPlayer(int id, String nickName, Colours color, boolean isStartingCardFront, int chosenObjective){
 
         if(playersTables[id]==null){
+            /*todo*/
             Objectives objective = Deck.drawCardFromObjectivesDeck();
             StartingCard startingCard = Deck.drawCardFromStartingDeck();
             if(!isStartingCardFront)
@@ -55,6 +63,9 @@ public class MainTable {
             cardsOnHand[2] = Deck.drawCardFromGoldDeck();
             playersTables[id] = new PlayerTable(id, color, nickName, objective, startingCard, cardsOnHand);
         }
+    }
+    public void turnAroundCardOnHand(int playerId, int cardPosition){
+        playersTables[playerId].turnAroundCardOnHand(cardPosition);
     }
 
     public int getBoardPoints(int playerId){
@@ -127,23 +138,30 @@ public class MainTable {
 
         int winnerPlayerId = 0;
         int max = 0;
-        boardPoints = globalPoints;
         boolean draw = false;
+        int[] objectivePoints = new int[numOfPlayers];
 
         for(int i=0; i<numOfPlayers; i++){
-            if(boardPoints[i] >= max){
-                if(boardPoints[i] == max){
+            objectivePoints[i] = globalPoints[i]-boardPoints[i];
+            if(globalPoints[i] >= max){
+                if(globalPoints[i] == max){
                     draw = true;
                 }
                 else {
-                    max = boardPoints[i];
+                    max = globalPoints[i];
                     winnerPlayerId = i;
                     draw = false;
                 }
             }
         }
         if(draw){
-            /*todo*/
+            int max1 = 0;
+            for(int i=0; i<numOfPlayers; i++){
+                if(globalPoints[i]==max && objectivePoints[i]>max1){
+                    max1 = objectivePoints[i];
+                    winnerPlayerId = i;
+                }
+            }
         }
         return winnerPlayerId;
     }

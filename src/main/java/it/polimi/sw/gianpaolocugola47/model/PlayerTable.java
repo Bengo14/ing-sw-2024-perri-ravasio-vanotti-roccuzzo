@@ -106,7 +106,7 @@ public class PlayerTable {
         if(isPlaceable)
             placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
         else return -1;
-        points = card.getPoints(this.placedCards);
+        points = card.getPoints(this);
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }

@@ -9,11 +9,6 @@ public class DiagonalPatternObjective extends Objectives {
     private final boolean isAscending;
     private final Resources resource;
 
-    /**
-     * check if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective
-     * @param card card[i][j]
-     */
-
     public DiagonalPatternObjective(int points, String imgPathFront, String imgPathBack, boolean isAscending, Resources mainResource) {
         super(points, imgPathFront, imgPathBack);
         this.isAscending = isAscending;
@@ -73,6 +68,10 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return points*patternOccurrencies;
     }
+    /**
+     * check if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective
+     * @param card card[i][j]
+     */
     private boolean isResourceMatched(PlaceableCard card){
         return this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }

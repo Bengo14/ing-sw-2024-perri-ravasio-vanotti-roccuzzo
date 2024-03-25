@@ -6,8 +6,8 @@ package it.polimi.sw.gianpaolocugola47.model;
  *
  */
 public class PlayerTable {
-    private static final int MATRIX_DIMENSION = 41;
-    private static final int STARTING_CARD_POS = 20;
+    private static final int MATRIX_DIMENSION = 145;
+    private static final int STARTING_CARD_POS = 72;
     private final int id;
     private final String nickName;
     private final Colours playerColour;
@@ -44,7 +44,6 @@ public class PlayerTable {
         return MATRIX_DIMENSION;
     }
     public static int getStartingCardPos() {return STARTING_CARD_POS;}
-
     public int getId() {
         return id;
     }
@@ -72,27 +71,32 @@ public class PlayerTable {
     public PlaceableCard getPlacedCard(int x, int y) {
         return placedCards[x][y];
     }
+    public PlaceableCard getElement(int xIndex, int yIndex){
+        return this.placedCards[xIndex][yIndex];
+    }
 
     private void addResourceCounter(int position, int resource) {
         this.resourceCounter[position] += resource;
     }
-    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
-        /*todo*/
-    }
+
     private int getSecretObjectivePoints(){
         int points = this.secretObjective.checkPatternAndComputePoints(this);
         return points;
     }
+
     private boolean canPlay(PlaceableCard matrix){
         /*todo*/
         return true;
     }
-    public boolean isStartingCard(int x, int y){
-        if(x==STARTING_CARD_POS && y==STARTING_CARD_POS)
-            return true;
-        else
-            return false;
+
+    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
+        /*todo*/
     }
+
+    public boolean isStartingCard(int x, int y){
+        return x == STARTING_CARD_POS && y == STARTING_CARD_POS;
+    }
+
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
         for(int i=0; i<3; i++){
             if(this.cardsOnHand[i] == null) {

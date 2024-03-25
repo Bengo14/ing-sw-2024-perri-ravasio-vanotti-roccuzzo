@@ -60,9 +60,6 @@ public class PlayerTable {
     public int getResourceCounter(int position) {
         return resourceCounter[position];
     }
-    private void addResourceCounter(int position, int resource) {
-        this.resourceCounter[position] += resource;
-    }
     public Objectives getSecretObjective() {
         return secretObjective;
     }
@@ -75,13 +72,27 @@ public class PlayerTable {
     public PlaceableCard getPlacedCard(int x, int y) {
         return placedCards[x][y];
     }
+
+    private void addResourceCounter(int position, int resource) {
+        this.resourceCounter[position] += resource;
+    }
+    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
+        /*todo*/
+    }
+    private int getSecretObjectivePoints(){
+        int points = this.secretObjective.checkPatternAndComputePoints(this);
+        return points;
+    }
+    private boolean canPlay(PlaceableCard matrix){
+        /*todo*/
+        return true;
+    }
     public boolean isStartingCard(int x, int y){
         if(x==STARTING_CARD_POS && y==STARTING_CARD_POS)
             return true;
         else
             return false;
     }
-
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
         for(int i=0; i<3; i++){
             if(this.cardsOnHand[i] == null) {
@@ -93,6 +104,7 @@ public class PlayerTable {
     public void turnAroundCardOnHand(int cardPosition){
         this.cardsOnHand[cardPosition].switchFrontBack();
     }
+
     /**
      *This method checks if a card can be placed on another one and in case places it.
      * @param onHandCard Card on player's hand, to be placed.
@@ -113,17 +125,12 @@ public class PlayerTable {
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }
-    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
-        /*todo*/
-    }
+
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
         points += objectives[0].checkPatternAndComputePoints(this);
         points += objectives[1].checkPatternAndComputePoints(this);
         return points;
     }
-    private int getSecretObjectivePoints(){
-        int points = this.secretObjective.checkPatternAndComputePoints(this);
-        return points;
-    }
+
 }

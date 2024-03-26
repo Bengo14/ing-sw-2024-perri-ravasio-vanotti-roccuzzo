@@ -3,7 +3,10 @@ package it.polimi.sw.gianpaolocugola47.model;
 import org.junit.jupiter.api.Test;
 
 class PlaceableCardTest {
+   @Test
+    public void testconstructor() {
 
+    }
 
 
     @Test

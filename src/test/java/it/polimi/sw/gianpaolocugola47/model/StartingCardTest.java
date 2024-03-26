@@ -8,12 +8,11 @@ class StartingCardTest {
     public void testConstructor( ){
         StartingCard sc = new StartingCard("back", "front");
         assertNotNull(sc);
-    }
-    @Test
-    void getResourcesCentreBack() {
+        sc.setResourcesCentreBack(null);
+        assertNull(sc.getResourcesCentreBack());
+
     }
 
-    @Test
-    void setResourcesCentreBack() {
-    }
+
+
 }

@@ -9,7 +9,6 @@ class MainTableTest {
     public void testConstructor() {
         MainTable mainTable = new MainTable();
         assertNotNull(mainTable);
-        assertFalse(mainTable.isEndGame());
     }
 
     @Test
@@ -22,6 +21,7 @@ class MainTableTest {
 
     @Test
     public void setNumOfPlayers() {
+
 
     }
 

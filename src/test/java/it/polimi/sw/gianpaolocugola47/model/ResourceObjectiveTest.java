@@ -16,4 +16,8 @@ class ResourceObjectiveTest {
         ResourceObjective resource = new ResourceObjective("immpathFront", "imPathBack", Resources.FUNGI);
         assertNotEquals(Resources.ANIMAL, resource.getResource());
     }
+    @Test
+    public void checkPatternAndComputePoints() {
+
+    }
 }

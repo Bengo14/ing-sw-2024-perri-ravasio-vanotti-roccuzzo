@@ -1,5 +1,13 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,28 +22,45 @@ public class Deck {
     private static int[] cardsInDeckCounters;
 
     protected static void initDeck(){
-        generateResourceCardsDeck();
-        generateGoldCardsDeck();
-        generateObjectiveCardsDeck();
         generateStartingCardsDeck();
+        generateGoldCardsDeck();
+        generateResourceCardsDeck();
+        generateObjectiveCardsDeck();
         randomGenerator = new Random(System.currentTimeMillis());
         cardsInDeckCounters = new int[]{40,40,16,6};
     }
     private static void generateResourceCardsDeck() {
-        resourceCardsDeck = new ArrayList<ResourceCard>();
-        /*todo*/
+        Gson gson = new Gson();
+        try {
+            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {}.getType();
+            resourceCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json"),listOfCards);
+        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     private static void generateGoldCardsDeck() {
-        goldCardsDeck = new ArrayList<GoldCard>();
-        /*todo*/
+        Gson gson = new Gson();
+        try {
+            Type listOfCards = new TypeToken<ArrayList<GoldCard>>() {}.getType();
+            goldCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/goldCards.json"),listOfCards);
+        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     private static void generateObjectiveCardsDeck(){
         objectiveCardsDeck = new ArrayList<Objectives>();
         /*todo*/
     }
     private static void generateStartingCardsDeck(){
-        startingCardsDeck = new ArrayList<StartingCard>();
-        /*todo*/
+        Gson gson = new Gson();
+        try {
+            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {}.getType();
+            startingCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json"),listOfCards);
+            String json = gson.toJson(startingCardsDeck);
+            System.out.println(json);
+        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     protected static ResourceCard drawCardFromResourceDeck(){
         int position = randomGenerator.nextInt(cardsInDeckCounters[0]);

@@ -1,0 +1,72 @@
+[
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 5,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT"
+    ],
+    "pointsForCorners": "false",
+    "pointsForItems": "false",
+    "itemThatGivesPoints": null
+  }
+]

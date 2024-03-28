@@ -1,0 +1,69 @@
+[
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": true,
+        "item" : null,
+        "resource" : "INSECTS"
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": true,
+        "item" : null,
+        "resource" : "FUNGI"
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": true,
+        "item" : null,
+        "resource" : "PLANT"
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : "ANIMAL"
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesCentreBack" : [
+      "ANIMAL",
+      "INSECTS",
+      "PLANT"
+    ]
+  }
+]

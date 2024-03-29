@@ -63,10 +63,2840 @@
       }
     ],
     "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT",
+      "PLANT",
       "PLANT"
     ],
-    "pointsForCorners": "false",
-    "pointsForItems": "false",
+    "pointsForCorners": false,
+    "pointsForItems": false,
     "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS",
+      "ANIMAL"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "MANUSCRIPT"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "QUILL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "INKWELL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 5,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI",
+      "FUNGI",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "INKWELL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI",
+      "ANIMAL"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT",
+      "ANIMAL"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT",
+      "FUNGI"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI",
+      "PLANT"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL",
+      "PLANT"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI",
+      "INSECTS"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS",
+      "PLANT"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS",
+      "FUNGI"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL",
+      "INSECTS"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "QUILL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "QUILL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "MANUSCRIPT"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "FUNGI"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "QUILL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "FUNGI",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "FUNGI",
+      "FUNGI",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "INKWELL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 5,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS",
+      "INSECTS",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL",
+      "FUNGI"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "QUILL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "INSECTS"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 5,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "INSECTS",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "INSECTS",
+      "INSECTS",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "MANUSCRIPT"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 3,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "INKWELL",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "ANIMAL"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "INKWELL"
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "PLANT",
+    "points": 2,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "PLANT",
+      "PLANT",
+      "PLANT",
+      "INSECTS"
+    ],
+    "pointsForCorners": true,
+    "pointsForItems": false,
+    "itemThatGivesPoints": null
+  },
+  {
+    "backImgPath": "pathBck",
+    "frontImgPath": "pathFrn",
+    "resourceCentreBack": "ANIMAL",
+    "points": 1,
+    "corners" : [
+      {
+        "isBuildable" : false,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : true,
+        "isResource": false,
+        "item" : "MANUSCRIPT",
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      },
+      {
+        "isBuildable" : true,
+        "isItem" : false,
+        "isResource": false,
+        "item" : null,
+        "resource" : null
+      }
+    ],
+    "resourcesRequired": [
+      "ANIMAL",
+      "ANIMAL",
+      "PLANT"
+    ],
+    "pointsForCorners": false,
+    "pointsForItems": true,
+    "itemThatGivesPoints": "MANUSCRIPT"
   }
 ]

@@ -1,0 +1,136 @@
+[
+  {
+    "itemsRequired" : [
+      "MANUSCRIPT"
+    ],
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ItemObjective"
+  },
+  {
+    "itemsRequired" : [
+      "INKWELL"
+    ],
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ItemObjective"
+  },
+  {
+    "itemsRequired" : [
+      "QUILL"
+    ],
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ItemObjective"
+  },
+  {
+    "itemsRequired" : [
+      "MANUSCRIPT",
+      "INKWELL",
+      "QUILL"
+    ],
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ItemObjective"
+  },
+  {
+    "resource" : "PLANT",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective"
+  },
+  {
+    "resource" : "INSECTS",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective"
+  },
+  {
+    "resource" : "FUNGI",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective"
+  },
+  {
+    "resource" : "ANIMAL",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective"
+  },
+  {
+    "isAscending" : true,
+    "resource" : "FUNGI",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective"
+  },
+  {
+    "isAscending" : true,
+    "resource" : "ANIMAL",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective"
+  },
+  {
+    "isAscending" : false,
+    "resource" : "PLANT",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective"
+  },
+  {
+    "isAscending" : false,
+    "resource" : "INSECTS",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective"
+  },
+  {
+    "orientation" : "bottomRight",
+    "mainResource" : "FUNGI",
+    "secondaryResource" : "PLANT",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective"
+  },
+  {
+    "orientation" : "topRight",
+    "mainResource" : "ANIMAL",
+    "secondaryResource" : "FUNGI",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective"
+  },
+  {
+    "orientation" : "topLeft",
+    "mainResource" : "INSECTS",
+    "secondaryResource" : "ANIMAL",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective"
+  },
+  {
+    "orientation" : "bottomLeft",
+    "mainResource" : "PLANT",
+    "secondaryResource" : "INSECTS",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective"
+  }
+]

@@ -1,9 +1,11 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.sw.gianpaolocugola47.utils.ObjectiveDeserializer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -48,16 +50,27 @@ public class Deck {
         }
     }
     private static void generateObjectiveCardsDeck(){
-        objectiveCardsDeck = new ArrayList<Objectives>();
-        /*todo*/
+        ObjectiveDeserializer deserializer = new ObjectiveDeserializer("type");
+        deserializer.registerObjectiveType("ItemObjective", ItemObjective.class);
+        deserializer.registerObjectiveType("ResourceObjective",ResourceObjective.class);
+        deserializer.registerObjectiveType("LShapePatternObjective",LShapePatternObjective.class);
+        deserializer.registerObjectiveType("DiagonalPatternObjective",DiagonalPatternObjective.class);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Objectives.class, deserializer)
+                .create();
+        try {
+            objectiveCardsDeck =  gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json"),new TypeToken<List<Objectives>>(){}.getType());
+            String json = gson.toJson(objectiveCardsDeck);
+            System.out.println(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     private static void generateStartingCardsDeck(){
         Gson gson = new Gson();
         try {
             Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {}.getType();
             startingCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json"),listOfCards);
-            String json = gson.toJson(startingCardsDeck);
-            System.out.println(json);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }

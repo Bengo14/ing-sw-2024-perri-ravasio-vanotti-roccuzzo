@@ -14,12 +14,15 @@ public class MainTable {
     private int[] globalPoints;
     private PlayerTable[] playersTables;
     private int numOfPlayers;
+    private Objectives[] possibleSecretObjectives;
+    private StartingCard chosenStartingCard;
 
 
     public MainTable() {
         this.endGame = false;
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
+        this.possibleSecretObjectives = new Objectives[2];
         Deck.initDeck();
         initTable();
     }
@@ -44,29 +47,35 @@ public class MainTable {
     }
 
     public void drawTwoPossibleSecretObjectives(){
-        /*todo*/
+        this.possibleSecretObjectives[0] = Deck.drawCardFromObjectivesDeck();
+        this.possibleSecretObjectives[1] = Deck.drawCardFromObjectivesDeck();
+        //update view
     }
     public void drawStartingCard(){
-        /*todo*/
+        this.chosenStartingCard = Deck.drawCardFromStartingDeck();
+        //update view
+    }
+
+    public void switchCardOnHandFrontBack(int playerId, int position){
+        this.playersTables[playerId].turnCardOnHand(position);
     }
 
     public void addPlayer(int id, String nickName, Colours color, boolean isStartingCardFront, int chosenObjective){
 
         if(playersTables[id]==null){
-            /*todo*/
-            Objectives objective = Deck.drawCardFromObjectivesDeck();
-            StartingCard startingCard = Deck.drawCardFromStartingDeck();
+
+            Objectives objective = possibleSecretObjectives[chosenObjective];
             if(!isStartingCardFront)
-                startingCard.switchFrontBack();
+                chosenStartingCard.switchFrontBack();
             ResourceCard[] cardsOnHand = new ResourceCard[3];
             cardsOnHand[0] = Deck.drawCardFromResourceDeck();
             cardsOnHand[1] = Deck.drawCardFromResourceDeck();
             cardsOnHand[2] = Deck.drawCardFromGoldDeck();
-            playersTables[id] = new PlayerTable(id, color, nickName, objective, startingCard, cardsOnHand);
+            playersTables[id] = new PlayerTable(id, color, nickName, objective, chosenStartingCard, cardsOnHand);
         }
     }
-    public void turnAroundCardOnHand(int playerId, int cardPosition){
-        playersTables[playerId].turnAroundCardOnHand(cardPosition);
+    public void turnCardOnHand(int playerId, int cardPosition){
+        playersTables[playerId].turnCardOnHand(cardPosition);
     }
 
     public int getBoardPoints(int playerId){

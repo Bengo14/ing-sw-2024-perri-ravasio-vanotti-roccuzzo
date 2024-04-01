@@ -38,6 +38,11 @@ public class PlayerTable {
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = startingCard;
+        updateResourceCounterByCard(startingCard);
+    }
+
+    private void updateResourceCounterByCard(PlaceableCard card){
+        /*todo*/
     }
 
     public static int getMatrixDimension() {
@@ -53,8 +58,8 @@ public class PlayerTable {
     public boolean isFirst() {
         return isFirst;
     }
-    public void setFirst(boolean first) {
-        isFirst = first;
+    public void setFirst() {
+        isFirst = true;
     }
     public int getResourceCounter(int position) {
         return resourceCounter[position];
@@ -75,23 +80,6 @@ public class PlayerTable {
         return this.placedCards[xIndex][yIndex];
     }
 
-    private void addResourceCounter(int position, int resource) {
-        this.resourceCounter[position] += resource;
-    }
-
-    private int getSecretObjectivePoints(){
-        int points = this.secretObjective.checkPatternAndComputePoints(this);
-        return points;
-    }
-
-    private boolean canPlay(PlaceableCard matrix){
-        /*todo*/
-        return true;
-    }
-
-    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
-        /*todo*/
-    }
 
     public boolean isStartingCard(int x, int y){
         return x == STARTING_CARD_POS && y == STARTING_CARD_POS;
@@ -105,7 +93,7 @@ public class PlayerTable {
             }
         }
     }
-    public void turnAroundCardOnHand(int cardPosition){
+    public void turnCardOnHand(int cardPosition){
         this.cardsOnHand[cardPosition].switchFrontBack();
     }
 
@@ -121,7 +109,9 @@ public class PlayerTable {
         boolean isPlaceable = false;
         int points = 0;
         ResourceCard card = cardsOnHand[onHandCard];
+
         /*todo*/
+
         if(isPlaceable)
             placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
         else return -1;
@@ -129,11 +119,21 @@ public class PlayerTable {
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }
+    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
+        /*todo*/
+    }
+    private void addResourceCounter(int position, int resource) {
+        this.resourceCounter[position] += resource;
+    }
 
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
         points += objectives[0].checkPatternAndComputePoints(this);
         points += objectives[1].checkPatternAndComputePoints(this);
+        return points;
+    }
+    private int getSecretObjectivePoints(){
+        int points = this.secretObjective.checkPatternAndComputePoints(this);
         return points;
     }
 

@@ -38,11 +38,7 @@ public class PlayerTable {
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = startingCard;
-        updateResourceCounterByCard(startingCard);
-    }
-
-    private void updateResourceCounterByCard(PlaceableCard card){
-        /*todo*/
+        startingCard.updateResourceCounter(resourceCounter);
     }
 
     public static int getMatrixDimension() {

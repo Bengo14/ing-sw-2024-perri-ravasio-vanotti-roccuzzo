@@ -48,6 +48,12 @@ public class Corner {
     public void setLinkedCorner(Corner corner) {
         this.linkedCorner = corner;
     }
+    public Resources getResource(){
+        return this.resource;
+    }
+    public Items getItem(){
+        return this.item;
+    }
 }
 
 

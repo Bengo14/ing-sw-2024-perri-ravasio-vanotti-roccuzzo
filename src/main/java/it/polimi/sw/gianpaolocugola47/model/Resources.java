@@ -15,11 +15,11 @@ public enum Resources {
         this.colour = colour;
         this.imgPath = imgPath;
     }
-
     public String getColour() {
         return colour;
     }
     public String getImgPath() {
         return imgPath;
     }
+
 }

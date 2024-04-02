@@ -24,5 +24,23 @@ public class StartingCard extends PlaceableCard {
     public void setResourcesCentreBack(ArrayList<Resources> resourcesCentreBack) {
         this.resourcesCentreBack = resourcesCentreBack;
     }
+    @Override
+    public void updateResourceCounter(int[] counter){
+        if(isFront()){
+            for(int i=0; i<4; i++)
+                counter[i]++;
+        }
+        else{
+            for(int i=4; i<8; i++){
+                if(getCorner(i).isResource()){
+                   Corner corner = getCorner(i);
+                   counter[corner.getResource().ordinal()]++;
+                }
+            }
+            for(Resources resource : resourcesCentreBack){
+                counter[resource.ordinal()]++;
+            }
+        }
+    }
 
 }

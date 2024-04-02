@@ -46,4 +46,5 @@ public abstract class PlaceableCard {
     public void switchFrontBack() {
         isFront = !isFront;
     }
+    public abstract void updateResourceCounter(int[] counter);
 }

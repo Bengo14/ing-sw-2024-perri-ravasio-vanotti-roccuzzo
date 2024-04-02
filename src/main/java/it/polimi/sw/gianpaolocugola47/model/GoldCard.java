@@ -45,6 +45,22 @@ public class GoldCard extends ResourceCard {
     }
 
     @Override
+    public void updateResourceCounter(int[] counter){
+        if(isFront()){
+            for(int i=0; i<4; i++){
+                Corner corner = getCorner(i);
+                if(corner.isItem()){
+                    counter[corner.getItem().ordinal() + 4]++;
+                    break;
+                }
+            }
+        }
+        else{
+            counter[getResourceCentreBack().ordinal()]++;
+        }
+    }
+
+    @Override
     public int getPoints(PlayerTable playerTable) {
         int points = 0;
         /*todo*/

@@ -10,8 +10,8 @@ public class ResourceCard extends PlaceableCard {
     /**
      * Corner constructor.
      *
-     * @param backImgPath refer to the image of the back.
-     * @param frontImgPath refer to the image of the front.
+     * @param backImgPath refers to the image in the back.
+     * @param frontImgPath refers to the image in the front.
      * @param resourceCentreBack resource in the back side.
      */
     public ResourceCard(String backImgPath, String frontImgPath, int points, Resources resourceCentreBack) {
@@ -27,5 +27,21 @@ public class ResourceCard extends PlaceableCard {
     public int getPoints(PlayerTable playerTable){
         return this.points;
         //nothing else needed
+    }
+    @Override
+    public void updateResourceCounter(int[] counter){
+        if(isFront()){
+            for(int i=0; i<4; i++){
+                Corner corner = getCorner(i);
+                if(corner.isResource()){
+                    counter[corner.getResource().ordinal()]++;
+                } else if (corner.isItem()) {
+                    counter[corner.getItem().ordinal() + 4]++;
+                }
+            }
+        }
+        else{
+            counter[resourceCentreBack.ordinal()]++;
+        }
     }
 }

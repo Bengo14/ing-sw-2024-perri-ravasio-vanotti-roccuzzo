@@ -60,8 +60,6 @@ public class Deck {
                 .create();
         try {
             objectiveCardsDeck =  gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json"),new TypeToken<List<Objectives>>(){}.getType());
-            String json = gson.toJson(objectiveCardsDeck);
-            System.out.println(json);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

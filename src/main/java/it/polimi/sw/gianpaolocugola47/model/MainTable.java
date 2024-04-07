@@ -60,7 +60,7 @@ public class MainTable {
         this.playersTables[playerId].turnCardOnHand(position);
     }
 
-    public void addPlayer(int id, String nickName, Colours color, boolean isStartingCardFront, int chosenObjective){
+    public void addPlayer(int id, String nickName, boolean isStartingCardFront, int chosenObjective){
 
         if(playersTables[id]==null){
 
@@ -71,7 +71,7 @@ public class MainTable {
             cardsOnHand[0] = Deck.drawCardFromResourceDeck();
             cardsOnHand[1] = Deck.drawCardFromResourceDeck();
             cardsOnHand[2] = Deck.drawCardFromGoldDeck();
-            playersTables[id] = new PlayerTable(id, color, nickName, objective, chosenStartingCard, cardsOnHand);
+            playersTables[id] = new PlayerTable(id, nickName, objective, chosenStartingCard, cardsOnHand);
         }
     }
     public void turnCardOnHand(int playerId, int cardPosition){
@@ -114,6 +114,10 @@ public class MainTable {
             cardsOnTable[position] = Deck.drawCardFromResourceDeck();
         if(position == 2 || position == 3)
             cardsOnTable[position] = Deck.drawCardFromGoldDeck();
+    }
+
+    public boolean checkIfCanPlay(int playerId){
+        return playersTables[playerId].checkIfCanPlay();
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){

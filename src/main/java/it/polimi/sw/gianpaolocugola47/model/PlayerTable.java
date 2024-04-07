@@ -10,7 +10,6 @@ public class PlayerTable {
     private static final int STARTING_CARD_POS = 72;
     private final int id;
     private final String nickName;
-    private final Colours playerColour;
     private boolean isFirst;
     private int[] resourceCounter;
     private final Objectives secretObjective;
@@ -27,9 +26,8 @@ public class PlayerTable {
      * @param startingCard the first card of the player.
      * @param cardsOnHand the player's hand.
      */
-    public PlayerTable(int id, Colours playerColour, String nickName, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
+    public PlayerTable(int id, String nickName, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
         this.id = id;
-        this.playerColour = playerColour;
         this.nickName = nickName;
         this.isFirst = this.id == 0;
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
@@ -118,8 +116,12 @@ public class PlayerTable {
     private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
         /*todo*/
     }
-    private void addResourceCounter(int position, int resource) {
-        this.resourceCounter[position] += resource;
+    private void decreaseResourceCounter(Corner corner) {
+        if(corner.isResource()){
+            this.resourceCounter[corner.getResource().ordinal()]--;
+        } else if (corner.isItem()) {
+            this.resourceCounter[corner.getItem().ordinal() + 4]--;
+        }
     }
 
     public int getObjectivePoints(Objectives[] objectives){
@@ -129,8 +131,12 @@ public class PlayerTable {
         return points;
     }
     private int getSecretObjectivePoints(){
-        int points = this.secretObjective.checkPatternAndComputePoints(this);
-        return points;
+        return this.secretObjective.checkPatternAndComputePoints(this);
+    }
+
+    public boolean checkIfCanPlay(){
+        /*todo*/
+        return false;
     }
 
 }

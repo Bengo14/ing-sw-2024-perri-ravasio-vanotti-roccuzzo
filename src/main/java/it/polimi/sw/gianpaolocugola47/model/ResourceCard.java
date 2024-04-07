@@ -21,7 +21,7 @@ public class ResourceCard extends PlaceableCard {
     }
 
     public Resources getResourceCentreBack() {
-        return resourceCentreBack;
+        return this.resourceCentreBack;
     }
 
     public int getPoints(PlayerTable playerTable){
@@ -31,8 +31,9 @@ public class ResourceCard extends PlaceableCard {
     @Override
     public void updateResourceCounter(int[] counter){
         if(isFront()){
+            Corner[] visibleCorners = getVisibleCorners();
             for(int i=0; i<4; i++){
-                Corner corner = getCorner(i);
+                Corner corner = visibleCorners[i];
                 if(corner.isResource()){
                     counter[corner.getResource().ordinal()]++;
                 } else if (corner.isItem()) {
@@ -41,7 +42,7 @@ public class ResourceCard extends PlaceableCard {
             }
         }
         else{
-            counter[resourceCentreBack.ordinal()]++;
+            counter[getResourceCentreBack().ordinal()]++;
         }
     }
 }

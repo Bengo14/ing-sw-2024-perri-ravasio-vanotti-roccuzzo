@@ -18,12 +18,9 @@ public class StartingCard extends PlaceableCard {
     }
 
     public ArrayList<Resources> getResourcesCentreBack() {
-        return resourcesCentreBack;
+        return this.resourcesCentreBack;
     }
 
-    public void setResourcesCentreBack(ArrayList<Resources> resourcesCentreBack) {
-        this.resourcesCentreBack = resourcesCentreBack;
-    }
     @Override
     public void updateResourceCounter(int[] counter){
         if(isFront()){
@@ -31,13 +28,13 @@ public class StartingCard extends PlaceableCard {
                 counter[i]++;
         }
         else{
-            for(int i=4; i<8; i++){
-                if(getCorner(i).isResource()){
-                   Corner corner = getCorner(i);
-                   counter[corner.getResource().ordinal()]++;
+            Corner[] visibleCorners = getVisibleCorners();
+            for(int i=0; i<4; i++){
+                if(visibleCorners[i].isResource()){
+                   counter[visibleCorners[i].getResource().ordinal()]++;
                 }
             }
-            for(Resources resource : resourcesCentreBack){
+            for(Resources resource : getResourcesCentreBack()){
                 counter[resource.ordinal()]++;
             }
         }

@@ -21,7 +21,6 @@ public class Deck {
     private static List<StartingCard> startingCardsDeck;
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
-    private static int[] cardsInDeckCounters;
 
     protected static void initDeck(){
         generateStartingCardsDeck();
@@ -29,8 +28,8 @@ public class Deck {
         generateResourceCardsDeck();
         generateObjectiveCardsDeck();
         randomGenerator = new Random(System.currentTimeMillis());
-        cardsInDeckCounters = new int[]{40,40,16,6};
     }
+
     private static void generateResourceCardsDeck() {
         Gson gson = new Gson();
         try {
@@ -73,28 +72,21 @@ public class Deck {
             e.printStackTrace();
         }
     }
+
     protected static ResourceCard drawCardFromResourceDeck(){
-        int position = randomGenerator.nextInt(cardsInDeckCounters[0]);
-        ResourceCard card = resourceCardsDeck.remove(position);
-        cardsInDeckCounters[0]--;
-        return card;
+        int position = randomGenerator.nextInt(resourceCardsDeck.size());
+        return resourceCardsDeck.remove(position);
     }
     protected static GoldCard drawCardFromGoldDeck(){
-        int position = randomGenerator.nextInt(cardsInDeckCounters[1]);
-        GoldCard card = goldCardsDeck.remove(position);
-        cardsInDeckCounters[1]--;
-        return card;
+        int position = randomGenerator.nextInt(goldCardsDeck.size());
+        return goldCardsDeck.remove(position);
     }
     protected static Objectives drawCardFromObjectivesDeck(){
-        int position = randomGenerator.nextInt(cardsInDeckCounters[2]);
-        Objectives objective = objectiveCardsDeck.remove(position);
-        cardsInDeckCounters[2]--;
-        return objective;
+        int position = randomGenerator.nextInt(objectiveCardsDeck.size());
+        return objectiveCardsDeck.remove(position);
     }
     protected static StartingCard drawCardFromStartingDeck(){
-        int position = randomGenerator.nextInt(cardsInDeckCounters[3]);
-        StartingCard card = startingCardsDeck.remove(position);
-        cardsInDeckCounters[3]--;
-        return card;
+        int position = randomGenerator.nextInt(startingCardsDeck.size());
+        return startingCardsDeck.remove(position);
     }
 }

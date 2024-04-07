@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import java.util.Arrays;
+
 public abstract class PlaceableCard {
     private boolean isFront;
     private final String backImgPath;
@@ -7,7 +9,7 @@ public abstract class PlaceableCard {
     private int line;
     private int column;
     private boolean isFlaggedForObjective;
-    private Corner[] corners;
+    private Corner[] corners = new Corner[8];
 
     public PlaceableCard(String backImgPath, String frontImgPath) {
         this.isFront = true;
@@ -16,12 +18,12 @@ public abstract class PlaceableCard {
         this.isFlaggedForObjective=false;
     }
 
-    public void setCorners(Corner[] corners){
-        this.corners = corners;
+    public Corner[] getVisibleCorners(){
+        if(isFront)
+            return Arrays.copyOfRange(corners, 0, 3);
+        else return Arrays.copyOfRange(corners, 4, 7);
     }
-    public Corner getCorner(int num){
-        return this.corners[num];
-    }
+
     public void setCoordinates(int line, int column){
         this.line = line;
         this.column = column;

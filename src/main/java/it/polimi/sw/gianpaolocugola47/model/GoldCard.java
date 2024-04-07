@@ -30,10 +30,6 @@ public class GoldCard extends ResourceCard {
         return resourcesRequired;
     }
 
-    public void setResourcesRequired(ArrayList<Resources> resourcesRequired) {
-        this.resourcesRequired = resourcesRequired;
-    }
-
     protected boolean isPointsForCorners() {
         return pointsForCorners;
     }
@@ -47,8 +43,9 @@ public class GoldCard extends ResourceCard {
     @Override
     public void updateResourceCounter(int[] counter){
         if(isFront()){
+            Corner[] visibleCorners = getVisibleCorners();
             for(int i=0; i<4; i++){
-                Corner corner = getCorner(i);
+                Corner corner = visibleCorners[i];
                 if(corner.isItem()){
                     counter[corner.getItem().ordinal() + 4]++;
                     break;

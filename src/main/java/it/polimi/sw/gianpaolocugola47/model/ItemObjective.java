@@ -1,6 +1,8 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * This class represents item-oriented objectives, i.e. objectives that give points only if a certain combination of
  * items is present on a given player table.
@@ -27,7 +29,19 @@ public class ItemObjective extends Objectives{
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
-        /*todo*/
-        return 0;
+        int itemOccurrences=0;
+        //looking for a PAIR of the same items
+        if(itemsRequired.size()<2){
+            itemOccurrences=playerTable.getResourceCounter(itemsRequired.getFirst().ordinal()+4)/2;
+        }else{
+        //looking for a TREBLE of all different items
+            for(int i = 0; i< itemsRequired.size(); i++){
+                int[] array = new int[itemsRequired.size()];
+                array[i]=playerTable.getResourceCounter(i+4);
+                Arrays.sort(array);
+                itemOccurrences=array[0];
+            }
+        }
+        return this.getPoints()*itemOccurrences;
     }
 }

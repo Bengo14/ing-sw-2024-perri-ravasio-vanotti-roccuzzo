@@ -13,8 +13,8 @@ public class LShapePatternObjective extends Objectives{
     /**
      * LShapePatternObjective CONSTRUCTOR
      * @param points 3
-     * @param imgPathFront ...
-     * @param imgPathBack ...
+     * @param imgPathFront the reference to the back's image.
+     * @param imgPathBack the reference to the back image's path.
      * @param orientation "bottomRight" "bottomLeft" "topRight" "topLeft"
      * @param mainResource is the resource that appears 2 times
      * @param secondaryResource is the resource that appears 1 time
@@ -35,8 +35,8 @@ public class LShapePatternObjective extends Objectives{
                 matrix[i][j] = playerTable.getElement(i, j);
             }
         }
-        int patternOccurrencies=0;
-        //looking for pattern occurrencies
+        int patternOccurrences=0;
+        //looking for pattern occurrences
         if(this.orientation.equals("bottomRight")){
             for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
                 for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
@@ -49,7 +49,7 @@ public class LShapePatternObjective extends Objectives{
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i+2][j].setFlaggedForObjective(true);
                                 matrix[i+3][j+1].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
@@ -68,7 +68,7 @@ public class LShapePatternObjective extends Objectives{
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i + 2][j].setFlaggedForObjective(true);
                                 matrix[i + 3][j - 1].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
@@ -87,7 +87,7 @@ public class LShapePatternObjective extends Objectives{
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i + 2][j-1].setFlaggedForObjective(true);
                                 matrix[i + 3][j - 1].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
@@ -106,14 +106,14 @@ public class LShapePatternObjective extends Objectives{
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i+2][j+1].setFlaggedForObjective(true);
                                 matrix[i+3][j+1].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
                 }
             }
         }
-        return this.getPoints()*patternOccurrencies;
+        return this.getPoints()*patternOccurrences;
     }
     /**
      * checks if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective

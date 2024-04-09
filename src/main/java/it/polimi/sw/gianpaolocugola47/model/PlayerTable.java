@@ -74,7 +74,6 @@ public class PlayerTable {
         return this.placedCards[xIndex][yIndex];
     }
 
-
     public boolean isStartingCard(int x, int y){
         return x == STARTING_CARD_POS && y == STARTING_CARD_POS;
     }
@@ -101,7 +100,7 @@ public class PlayerTable {
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         boolean isPlaceable = false;
-        int points = 0;
+        int points;
         ResourceCard card = cardsOnHand[onHandCard];
 
         /*todo*/

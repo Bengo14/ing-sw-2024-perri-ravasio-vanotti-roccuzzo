@@ -12,10 +12,10 @@ public class DiagonalPatternObjective extends Objectives {
     /**
      * DiagonalPatternObjective CONSTRUCTOR
      * @param points 2
-     * @param imgPathFront ...
-     * @param imgPathBack ...
+     * @param imgPathFront the reference to the back's image.
+     * @param imgPathBack the reference to the back image's path.
      * @param isAscending boolean
-     * @param mainResource the reource that appears 3 times
+     * @param mainResource the resource that appears 3 times
      */
     public DiagonalPatternObjective(int points, String imgPathFront, String imgPathBack, boolean isAscending, Resources mainResource) {
         super(points, imgPathFront, imgPathBack);
@@ -32,8 +32,8 @@ public class DiagonalPatternObjective extends Objectives {
                 matrix[i][j] = playerTable.getElement(i, j);
             }
         }
-        int patternOccurrencies=0;
-        //looking for pattern occurrencies
+        int patternOccurrences=0;
+        //looking for pattern occurrences
         if(this.isAscending) {
             for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
                 for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
@@ -46,7 +46,7 @@ public class DiagonalPatternObjective extends Objectives {
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i+1][j-1].setFlaggedForObjective(true);
                                 matrix[i+2][j-2].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
@@ -64,14 +64,14 @@ public class DiagonalPatternObjective extends Objectives {
                                 matrix[i][j].setFlaggedForObjective(true);
                                 matrix[i+1][j+1].setFlaggedForObjective(true);
                                 matrix[i+2][j+2].setFlaggedForObjective(true);
-                                patternOccurrencies++;
+                                patternOccurrences++;
                             }
                         }
                     }
                 }
             }
         }
-        return this.getPoints()*patternOccurrencies;
+        return this.getPoints()*patternOccurrences;
     }
     /**
      * checks if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective

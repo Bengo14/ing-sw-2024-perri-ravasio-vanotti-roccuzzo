@@ -14,7 +14,7 @@ public class ResourceObjective extends Objectives{
      * @param imgPathBack   the reference to the back image's path.
      */
     public ResourceObjective(String imgPathFront, String imgPathBack, Resources resource) {
-        super(2, imgPathFront, imgPathBack); //nb le carte obiettivo danno SEMPRE 2 punti indipendentemente dalla risorsa
+        super(2, imgPathFront, imgPathBack); //always 2 points for 3 resource occurrences
         this.resource = resource;
     }
 
@@ -24,7 +24,8 @@ public class ResourceObjective extends Objectives{
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
-        /*todo*/
-        return 0; //sempre 2 punti per 2 risorse
+        int resourceTrebleOccurrences;
+        resourceTrebleOccurrences=playerTable.getResourceCounter(this.resource.ordinal())/3;
+        return this.getPoints()*resourceTrebleOccurrences;
     }
 }

@@ -116,8 +116,11 @@ public class MainTable {
             cardsOnTable[position] = Deck.drawCardFromGoldDeck();
     }
 
-    public boolean checkIfCanPlay(int playerId){
-        return playersTables[playerId].checkIfCanPlay();
+    public boolean checkIfPlayerCanPlay(int playerId){
+        if(playersTables[playerId].getCanPlay()) {
+            playersTables[playerId].checkIfCanPlay();
+        }
+        return playersTables[playerId].getCanPlay();
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){

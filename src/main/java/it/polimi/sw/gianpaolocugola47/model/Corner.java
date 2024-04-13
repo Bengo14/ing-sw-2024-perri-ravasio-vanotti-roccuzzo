@@ -16,6 +16,7 @@ public class Corner {
 
     /**
      * Corner constructor.
+     *
      * @param isBuildable boolean of the possibility to build on it.
      * @param isItem boolean that represent the presence of an Item.
      */

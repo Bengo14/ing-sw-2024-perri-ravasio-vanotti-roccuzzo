@@ -12,8 +12,9 @@ public class ItemObjective extends Objectives{
     private final ArrayList<Items> itemsRequired;
 
     /**
-     * Corner constructor.
-     * @param itemsRequired arrayList containing the items (up to three) needed to receive points.
+     * ItemObjective constructor.
+     *
+     * @param itemsRequired ArrayList containing the items (up to three) needed to receive points.
      * @param points        the points given by the card.
      * @param imgPathFront  the reference to the front image's path.
      * @param imgPathBack   the reference to the back image's path.

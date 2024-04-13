@@ -8,7 +8,7 @@ public class ResourceCard extends PlaceableCard {
     private final int points;
 
     /**
-     * Corner constructor.
+     * ResourceCard constructor.
      *
      * @param backImgPath refers to the image in the back.
      * @param frontImgPath refers to the image in the front.

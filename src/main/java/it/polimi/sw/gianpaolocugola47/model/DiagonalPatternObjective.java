@@ -10,7 +10,8 @@ public class DiagonalPatternObjective extends Objectives {
     private final Resources resource;
 
     /**
-     * DiagonalPatternObjective CONSTRUCTOR
+     * DiagonalPatternObjective constructor.
+     *
      * @param points 2
      * @param imgPathFront the reference to the back's image.
      * @param imgPathBack the reference to the back image's path.

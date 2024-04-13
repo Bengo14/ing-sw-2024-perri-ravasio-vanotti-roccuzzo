@@ -11,7 +11,7 @@ public abstract class Objectives {
     private final String imgPathFront;
     private final String imgPathBack;
     /**
-     * Corner constructor.
+     * Objectives constructor.
      *
      * @param points the points made by the card.
      * @param imgPathBack the reference to the back's image.

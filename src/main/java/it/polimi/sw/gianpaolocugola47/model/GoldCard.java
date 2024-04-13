@@ -11,7 +11,7 @@ public class GoldCard extends ResourceCard {
     private final boolean pointsForItems;
     private final Items itemThatGivesPoints;
     /**
-     * Corner constructor.
+     * GoldCard constructor.
      *
      * @param backImgPath refer to the image of the back.
      * @param frontImgPath refer to the image of the front.

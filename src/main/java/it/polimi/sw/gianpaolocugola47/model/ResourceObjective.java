@@ -8,7 +8,7 @@ public class ResourceObjective extends Objectives{
 
     private final Resources resource;
     /**
-     * Corner constructor.
+     * ResoruceObjective constructor.
      * @param resource      the resource needed to receive points.
      * @param imgPathFront  the reference to the front image's path.
      * @param imgPathBack   the reference to the back image's path.

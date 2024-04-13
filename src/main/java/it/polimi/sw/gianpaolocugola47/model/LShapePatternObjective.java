@@ -11,7 +11,8 @@ public class LShapePatternObjective extends Objectives{
     private final Resources secondaryResource;
 
     /**
-     * LShapePatternObjective CONSTRUCTOR
+     * LShapePatternObjective constructor.
+     *
      * @param points 3
      * @param imgPathFront the reference to the back's image.
      * @param imgPathBack the reference to the back image's path.

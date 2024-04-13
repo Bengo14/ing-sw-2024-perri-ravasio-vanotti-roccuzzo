@@ -105,9 +105,10 @@ public class PlayerTable {
         boolean isPlaceable = false;
         int points;
         ResourceCard card = cardsOnHand[onHandCard];
-
-        /*todo*/
-
+        if(onTableCardCorner==0 && checkCorner0(onTableCardX, onTableCardY)) isPlaceable = true;
+        if(onTableCardCorner==1 && checkCorner1(onTableCardX, onTableCardY)) isPlaceable = true;
+        if(onTableCardCorner==2 && checkCorner2(onTableCardX, onTableCardY)) isPlaceable = true;
+        if(onTableCardCorner==3 && checkCorner3(onTableCardX, onTableCardY)) isPlaceable = true;
         if(isPlaceable)
             placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
         else return -1;
@@ -116,8 +117,66 @@ public class PlayerTable {
         return points;
     }
     private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
-        /*todo*/
+        if(onTableCardCorner==0){placeOnCorner0(onHandCard, onTableCardX, onTableCardY);}
+        if(onTableCardCorner==1){placeOnCorner1(onHandCard, onTableCardX, onTableCardY);}
+        if(onTableCardCorner==2){placeOnCorner2(onHandCard, onTableCardX, onTableCardY);}
+        if(onTableCardCorner==3){placeOnCorner3(onHandCard, onTableCardX, onTableCardY);}
     }
+    private void placeOnCorner0(int onHandCard, int x, int y){
+        this.placedCards[x-1][y-1] = this.cardsOnHand[onHandCard];
+        this.placedCards[x][y].getCorners()[0].setIsCovered();
+        this.placedCards[x][y].getCorners()[0].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[3]);
+        this.placedCards[x-1][y-1].getCorners()[3].setLinkedCorner(this.placedCards[x][y].getCorners()[0]);
+        this.cardsOnHand[onHandCard].updateResourceCounter(this.resourceCounter);
+        decreaseResourceCounter(this.placedCards[x][y].getCorners()[0]);
+        if(y>=2 && this.placedCards[x][y-2]!=null){
+            this.placedCards[x][y-2].getCorners()[1].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x][y-2].getCorners()[1]);
+            this.placedCards[x-1][y-1].getCorners()[2].setLinkedCorner(this.placedCards[x][y-2].getCorners()[1]);
+            this.placedCards[x][y-2].getCorners()[1].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[2]);
+        }
+        if(x>=2 && this.placedCards[x-2][y]!=null){
+            this.placedCards[x-2][y].getCorners()[2].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x][y-2].getCorners()[2]);
+            this.placedCards[x-1][y-1].getCorners()[1].setLinkedCorner(this.placedCards[x][y-2].getCorners()[2]);
+            this.placedCards[x][y-2].getCorners()[2].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[1]);
+        }
+        if(x>=2 && y>=2 && this.placedCards[x-2][y-2]!=null){
+            this.placedCards[x-2][y-2].getCorners()[3].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x-2][y-2].getCorners()[3]);
+            this.placedCards[x-1][y-1].getCorners()[0].setLinkedCorner(this.placedCards[x-2][y-2].getCorners()[3]);
+            this.placedCards[x-2][y-2].getCorners()[3].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[0]);
+        }
+    }
+    private void placeOnCorner1(int onHandCard, int x, int y){
+        this.placedCards[x-1][y+1] = this.cardsOnHand[onHandCard];
+        this.placedCards[x][y].getCorners()[1].setIsCovered();
+        this.placedCards[x][y].getCorners()[1].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[2]);
+        this.placedCards[x-1][y+1].getCorners()[2].setLinkedCorner(this.placedCards[x][y].getCorners()[1]);
+        this.cardsOnHand[onHandCard].updateResourceCounter(this.resourceCounter);
+        decreaseResourceCounter(this.placedCards[x][y].getCorners()[1]);
+        if(y<=(MATRIX_DIMENSION-3) && this.placedCards[x][y+2]!=null){
+            this.placedCards[x][y+2].getCorners()[0].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x][y+2].getCorners()[0]);
+            this.placedCards[x-1][y+1].getCorners()[3].setLinkedCorner(this.placedCards[x][y+2].getCorners()[0]);
+            this.placedCards[x][y+2].getCorners()[0].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[2]);
+        }
+        if(x>=2 && this.placedCards[x-2][y]!=null){
+            this.placedCards[x-2][y].getCorners()[3].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x-2][y].getCorners()[3]);
+            this.placedCards[x-1][y+1].getCorners()[0].setLinkedCorner(this.placedCards[x-2][y].getCorners()[3]);
+            this.placedCards[x-2][y].getCorners()[3].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[0]);
+        }
+        if(x>=2 && y<=(MATRIX_DIMENSION-3) && this.placedCards[x-2][y+2]!=null){
+            this.placedCards[x-2][y+2].getCorners()[2].setIsCovered();
+            decreaseResourceCounter(this.placedCards[x-2][y+2].getCorners()[2]);
+            this.placedCards[x-1][y+1].getCorners()[1].setLinkedCorner(this.placedCards[x-2][y+2].getCorners()[2]);
+            this.placedCards[x-2][y+2].getCorners()[2].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[1]);
+        }
+    }
+    private void placeOnCorner2(int onHandCard, int x, int y){/*todo*/}
+    private void placeOnCorner3(int onHandCard, int x, int y){/*todo*/}
+
     private void decreaseResourceCounter(Corner corner) {
         if(corner.isResource()){
             this.resourceCounter[corner.getResource().ordinal()]--;
@@ -164,7 +223,7 @@ public class PlayerTable {
         }
     return false; //if return false there is an error in the code
     }
-    public boolean checkCorner0(int x, int y){
+    private boolean checkCorner0(int x, int y){
         if(x!=0 || y!=0){
             if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[0].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[0].isCovered() && this.placedCards[x-1][y-1]==null){
                 if(x==1 && y==1)
@@ -179,7 +238,7 @@ public class PlayerTable {
         }
         return false;
     }
-    public boolean checkCorner1(int x, int y){
+    private boolean checkCorner1(int x, int y){
         if(x!=0 || y!=(getMatrixDimension()-1)){
             if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[1].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[1].isCovered() && this.placedCards[x+1][y+1]==null){
                 if(x==1 && y==(getMatrixDimension()-2))
@@ -197,7 +256,7 @@ public class PlayerTable {
         }
         return false;
     }
-    public boolean checkCorner2(int x, int y){
+    private boolean checkCorner2(int x, int y){
         if(x!=(getMatrixDimension()-1) || y!=0){
             if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[2].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[2].isCovered() && this.placedCards[x+1][y-1]==null) {
                 if (x == (getMatrixDimension() - 2) && y == 1)
@@ -215,7 +274,7 @@ public class PlayerTable {
         }
         return false;
     }
-    public boolean checkCorner3(int x, int y){
+    private boolean checkCorner3(int x, int y){
         if (x!=(getMatrixDimension()-1) && y!=getMatrixDimension()-1) {
             if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[3].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3].isCovered() && this.placedCards[x+1][y+1]==null){
                 if(x==getMatrixDimension()-2 && y==getMatrixDimension()-2)

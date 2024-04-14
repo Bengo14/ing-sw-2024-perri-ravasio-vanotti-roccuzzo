@@ -52,6 +52,7 @@ public class PlayerTable {
         return nickName;
     }
     public boolean getCanPlay(){return canPlay;}
+    private void unsetCanPlay(){this.canPlay = false;}
     public boolean isFirst() {
         return isFirst;
     }
@@ -102,81 +103,98 @@ public class PlayerTable {
      * @return the points made by the player if the card has been placed, else returns -1.
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
-        boolean isPlaceable = false;
         int points;
         ResourceCard card = cardsOnHand[onHandCard];
-        if(onTableCardCorner==0 && checkCorner0(onTableCardX, onTableCardY)) isPlaceable = true;
-        if(onTableCardCorner==1 && checkCorner1(onTableCardX, onTableCardY)) isPlaceable = true;
-        if(onTableCardCorner==2 && checkCorner2(onTableCardX, onTableCardY)) isPlaceable = true;
-        if(onTableCardCorner==3 && checkCorner3(onTableCardX, onTableCardY)) isPlaceable = true;
-        if(isPlaceable)
-            placeCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
-        else return -1;
+        if(checkSurroundingCorners(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner )))
+            placeCard(onTableCardX, onTableCardY,onTableCardCorner, card);
+        else
+            return -1;
         points = card.getPoints(this);
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }
-    private void placeCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner){
-        if(onTableCardCorner==0){placeOnCorner0(onHandCard, onTableCardX, onTableCardY);}
-        if(onTableCardCorner==1){placeOnCorner1(onHandCard, onTableCardX, onTableCardY);}
-        if(onTableCardCorner==2){placeOnCorner2(onHandCard, onTableCardX, onTableCardY);}
-        if(onTableCardCorner==3){placeOnCorner3(onHandCard, onTableCardX, onTableCardY);}
+    public int setXCoordinate(int x, int corner){
+        if(corner==0||corner==1)
+            return x-1;
+        if(corner==2||corner==3)
+            return x+1;
+        else
+            return -1;
     }
-    private void placeOnCorner0(int onHandCard, int x, int y){
-        this.placedCards[x-1][y-1] = this.cardsOnHand[onHandCard];
-        this.placedCards[x][y].getCorners()[0].setIsCovered();
-        this.placedCards[x][y].getCorners()[0].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[3]);
-        this.placedCards[x-1][y-1].getCorners()[3].setLinkedCorner(this.placedCards[x][y].getCorners()[0]);
-        this.cardsOnHand[onHandCard].updateResourceCounter(this.resourceCounter);
-        decreaseResourceCounter(this.placedCards[x][y].getCorners()[0]);
-        if(y>=2 && this.placedCards[x][y-2]!=null){
-            this.placedCards[x][y-2].getCorners()[1].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x][y-2].getCorners()[1]);
-            this.placedCards[x-1][y-1].getCorners()[2].setLinkedCorner(this.placedCards[x][y-2].getCorners()[1]);
-            this.placedCards[x][y-2].getCorners()[1].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[2]);
+    public int setYCoordinate(int y, int corner){
+        if(corner==0||corner==2)
+            return y-1;
+        if(corner==1||corner==3)
+            return y+1;
+        else
+            return -1;
+    }
+    private boolean checkSurroundingCorners(int x, int y) {
+        int cornersVerified = 0;
+        for(int corner=0; corner<4; corner++){
+            if (checkCorner(x, y, corner))
+                    cornersVerified++;
         }
-        if(x>=2 && this.placedCards[x-2][y]!=null){
-            this.placedCards[x-2][y].getCorners()[2].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x][y-2].getCorners()[2]);
-            this.placedCards[x-1][y-1].getCorners()[1].setLinkedCorner(this.placedCards[x][y-2].getCorners()[2]);
-            this.placedCards[x][y-2].getCorners()[2].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[1]);
+        return cornersVerified == 4;
+    }
+    private boolean checkCorner(int x, int y, int corner){
+        if(corner==0){
+            if(x!=0 && y!=0 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+                return this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isBuildable() && !this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isCovered();
+            }else
+                return true;
         }
-        if(x>=2 && y>=2 && this.placedCards[x-2][y-2]!=null){
-            this.placedCards[x-2][y-2].getCorners()[3].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x-2][y-2].getCorners()[3]);
-            this.placedCards[x-1][y-1].getCorners()[0].setLinkedCorner(this.placedCards[x-2][y-2].getCorners()[3]);
-            this.placedCards[x-2][y-2].getCorners()[3].setLinkedCorner(this.placedCards[x-1][y-1].getCorners()[0]);
+        if(corner==1){
+            if(x!=0 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+                return this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isBuildable() && !this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isCovered();
+            }else
+                return true;
+        }
+        if(corner==2){
+            if(x<=getMatrixDimension()-2 && y!=0 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+                return this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isBuildable() && !this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isCovered();
+            }else
+                return true;
+        }
+        if(corner==3){
+            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+                return this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isBuildable() && !this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3 - corner].isCovered();
+            }else
+                return true;
+        }
+        return false;
+    }
+    private void placeCard(int x,int y, int onTableCardCorner, ResourceCard card) {
+        this.placedCards[setXCoordinate(x,onTableCardCorner)][setYCoordinate(y,onTableCardCorner)]=card;
+        card.updateResourceCounter(this.resourceCounter);
+        for (int corner = 0; corner < 4; corner++)
+            linkCards(setXCoordinate(x,onTableCardCorner), setYCoordinate(y,onTableCardCorner), corner);
+    }
+    private void linkCards(int x,int y, int corner){
+        if(corner==0){
+            if(x!=0 && y!=0 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+                linkCard(x, y,corner);
+            }
+        }
+        if(corner==1){
+            if(x!=0 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+                linkCard(x, y,corner);
+        }
+        if(corner==2){
+            if(x<=getMatrixDimension()-2 && y!=0 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+                linkCard(x, y,corner);
+        }
+        if(corner==3){
+            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+                linkCard(x, y,corner);
         }
     }
-    private void placeOnCorner1(int onHandCard, int x, int y){
-        this.placedCards[x-1][y+1] = this.cardsOnHand[onHandCard];
-        this.placedCards[x][y].getCorners()[1].setIsCovered();
-        this.placedCards[x][y].getCorners()[1].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[2]);
-        this.placedCards[x-1][y+1].getCorners()[2].setLinkedCorner(this.placedCards[x][y].getCorners()[1]);
-        this.cardsOnHand[onHandCard].updateResourceCounter(this.resourceCounter);
-        decreaseResourceCounter(this.placedCards[x][y].getCorners()[1]);
-        if(y<=(MATRIX_DIMENSION-3) && this.placedCards[x][y+2]!=null){
-            this.placedCards[x][y+2].getCorners()[0].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x][y+2].getCorners()[0]);
-            this.placedCards[x-1][y+1].getCorners()[3].setLinkedCorner(this.placedCards[x][y+2].getCorners()[0]);
-            this.placedCards[x][y+2].getCorners()[0].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[2]);
-        }
-        if(x>=2 && this.placedCards[x-2][y]!=null){
-            this.placedCards[x-2][y].getCorners()[3].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x-2][y].getCorners()[3]);
-            this.placedCards[x-1][y+1].getCorners()[0].setLinkedCorner(this.placedCards[x-2][y].getCorners()[3]);
-            this.placedCards[x-2][y].getCorners()[3].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[0]);
-        }
-        if(x>=2 && y<=(MATRIX_DIMENSION-3) && this.placedCards[x-2][y+2]!=null){
-            this.placedCards[x-2][y+2].getCorners()[2].setIsCovered();
-            decreaseResourceCounter(this.placedCards[x-2][y+2].getCorners()[2]);
-            this.placedCards[x-1][y+1].getCorners()[1].setLinkedCorner(this.placedCards[x-2][y+2].getCorners()[2]);
-            this.placedCards[x-2][y+2].getCorners()[2].setLinkedCorner(this.placedCards[x-1][y+1].getCorners()[1]);
-        }
+    private void linkCard(int x, int y, int corner){
+        this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3-corner].setIsCovered();
+        decreaseResourceCounter(this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3-corner]);
+        this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3-corner].setLinkedCorner(this.placedCards[x][y].getCorners()[corner]);
+        this.placedCards[x][y].getCorners()[corner].setLinkedCorner(this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)].getCorners()[3-corner]);
     }
-    private void placeOnCorner2(int onHandCard, int x, int y){/*todo*/}
-    private void placeOnCorner3(int onHandCard, int x, int y){/*todo*/}
-
     private void decreaseResourceCounter(Corner corner) {
         if(corner.isResource()){
             this.resourceCounter[corner.getResource().ordinal()]--;
@@ -195,104 +213,26 @@ public class PlayerTable {
         return this.secretObjective.checkPatternAndComputePoints(this);
     }
 
-    public boolean checkIfCanPlay(){
-        for (int i=0; i<MATRIX_DIMENSION; i++){
-            for (int j=0; j<MATRIX_DIMENSION; j++){
+    public void checkIfCanPlay(){
+        for (int i=0; i<getMatrixDimension(); i++){
+            for (int j=0; j<getMatrixDimension(); j++){
                 {
-                    if((i==0 && j==0) || (i==getMatrixDimension()-1 && j==0)){
-                        j++;
+                    if(i==getMatrixDimension()-1 && j==getMatrixDimension()-1) { //last card
+                        unsetCanPlay();
+                        return;
                     }
-                    if(i==0 && j==getMatrixDimension()-1){
-                        i++;
-                        j=0;
-                    }
-                    if(i==getMatrixDimension()-1 && j==getMatrixDimension()-1){ //last card
-                        this.canPlay=false;
-                        return true;
-                    }
-                    //check corner 0
-                    if(checkCorner0(i, j)) return true;
-                    //check corner 1
-                    if(checkCorner1(i, j)) return true;
-                    //check corner 2
-                    if(checkCorner2(i, j)) return true;
-                    //check corner 3
-                    if(checkCorner3(i, j)) return true;
+                    if(checkInnerCorners(i, j))
+                        return;
                 }
             }
         }
-    return false; //if return false there is an error in the code
     }
-    private boolean checkCorner0(int x, int y){
-        if(x!=0 || y!=0){
-            if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[0].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[0].isCovered() && this.placedCards[x-1][y-1]==null){
-                if(x==1 && y==1)
-                    return true;
-                if(x==1 && y>=2 && ((this.placedCards[x][y-2]==null) || (this.placedCards[x][y-2]!=null && this.placedCards[x][y-2].getVisibleCorners()[1].isBuildable() && !this.placedCards[x][y-2].getVisibleCorners()[1].isCovered())))
-                    return true;
-                if(x>=2 && y==1 && ((this.placedCards[x-2][y]==null) || (this.placedCards[x-2][y]!=null && this.placedCards[x-2][y].getVisibleCorners()[2].isBuildable() && !this.placedCards[x-2][y].getVisibleCorners()[2].isCovered())))
-                    return true;
-                if(x>=2 && y>=2 && ((this.placedCards[x][y-2]==null) || (this.placedCards[x][y-2]!=null && this.placedCards[x][y-2].getVisibleCorners()[1].isBuildable() && !this.placedCards[x][y-2].getVisibleCorners()[1].isCovered())) && ((this.placedCards[x-2][y-2]==null) || (this.placedCards[x-2][y-2]!=null && this.placedCards[x-2][y-2].getVisibleCorners()[3].isBuildable() && !this.placedCards[x-2][y-2].getVisibleCorners()[3].isCovered())) && ((this.placedCards[x-2][y]==null) || (this.placedCards[x-2][y]!=null && this.placedCards[x-2][y].getVisibleCorners()[2].isBuildable() && !this.placedCards[x-2][y].getVisibleCorners()[2].isCovered())))
+    private boolean checkInnerCorners(int onTableCardX, int onTableCardY){
+        if (this.placedCards[onTableCardX][onTableCardY]!=null){
+            for (int onTableCardCorner=0; onTableCardCorner<4; onTableCardCorner++){
+                if(checkCorner(setXCoordinate(onTableCardX, onTableCardCorner),setYCoordinate(onTableCardY,onTableCardCorner),onTableCardCorner))
                     return true;
             }
-        }
-        return false;
+        }return false;
     }
-    private boolean checkCorner1(int x, int y){
-        if(x!=0 || y!=(getMatrixDimension()-1)){
-            if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[1].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[1].isCovered() && this.placedCards[x+1][y+1]==null){
-                if(x==1 && y==(getMatrixDimension()-2))
-                    return true;
-                if(x==1 && y<=(getMatrixDimension()-3) && ((this.placedCards[x][y+2]==null) || (this.placedCards[x][y+2]!=null && this.placedCards[x][y+2].getVisibleCorners()[0].isBuildable() && !this.placedCards[x][y+2].getVisibleCorners()[0].isCovered()))){
-                    return true;
-                }
-                if(x>=2 && y==(getMatrixDimension()-2) && ((this.placedCards[x-2][y]==null) || (this.placedCards[x-2][y]!=null && this.placedCards[x-2][y].getVisibleCorners()[3].isBuildable() && !this.placedCards[x-2][y].getVisibleCorners()[3].isCovered()))){
-                    return true;
-                }
-                if(x>=2 && y<=(getMatrixDimension()-3) && ((this.placedCards[x][y+2]==null) || (this.placedCards[x][y+2]!=null && this.placedCards[x][y+2].getVisibleCorners()[0].isBuildable() && !this.placedCards[x][y+2].getVisibleCorners()[0].isCovered())) && ((this.placedCards[x-2][y+2]==null) || (this.placedCards[x-2][y+2]!=null && this.placedCards[x-2][y+2].getVisibleCorners()[2].isBuildable() && !this.placedCards[x-2][y+2].getVisibleCorners()[2].isCovered())) && ((this.placedCards[x-2][y]==null) || (this.placedCards[x-2][y]!=null && this.placedCards[x-2][y].getVisibleCorners()[3].isBuildable() && !this.placedCards[x-2][y].getVisibleCorners()[3].isCovered()))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    private boolean checkCorner2(int x, int y){
-        if(x!=(getMatrixDimension()-1) || y!=0){
-            if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[2].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[2].isCovered() && this.placedCards[x+1][y-1]==null) {
-                if (x == (getMatrixDimension() - 2) && y == 1)
-                    return true;
-                if (x == (getMatrixDimension() - 2) && y>=2 && ((this.placedCards[x][y-2]==null) || (this.placedCards[x][y-2]!=null && this.placedCards[x][y-2].getVisibleCorners()[3].isBuildable() && !this.placedCards[x][y-2].getVisibleCorners()[3].isCovered()))) {
-                    return true;
-                }
-                if(x<=(getMatrixDimension()-3) && y==1 && ((this.placedCards[x+2][y]==null) || (this.placedCards[x+2][y]!=null && this.placedCards[x+2][y].getVisibleCorners()[0].isBuildable() && !this.placedCards[x+2][y].getVisibleCorners()[0].isCovered()))){
-                    return true;
-                }
-                if(x<=(getMatrixDimension()-3) && y>=2 && ((this.placedCards[x][y-2]==null) || (this.placedCards[x][y-2]!=null && this.placedCards[x][y-2].getVisibleCorners()[3].isBuildable() && !this.placedCards[x][y-2].getVisibleCorners()[3].isCovered())) && ((this.placedCards[x+2][y-2]==null) || (this.placedCards[x+2][y-2]!=null && this.placedCards[x+2][y-2].getVisibleCorners()[1].isBuildable() && !this.placedCards[x+2][y-2].getVisibleCorners()[1].isCovered())) && ((this.placedCards[x+2][y]==null) || (this.placedCards[x+2][y]!=null && this.placedCards[x+2][y].getVisibleCorners()[0].isBuildable() && !this.placedCards[x+2][y].getVisibleCorners()[0].isCovered()))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    private boolean checkCorner3(int x, int y){
-        if (x!=(getMatrixDimension()-1) && y!=getMatrixDimension()-1) {
-            if(this.placedCards[x][y]!=null && this.placedCards[x][y].getVisibleCorners()[3].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3].isCovered() && this.placedCards[x+1][y+1]==null){
-                if(x==getMatrixDimension()-2 && y==getMatrixDimension()-2)
-                    return true;
-                if(x==(getMatrixDimension()-2) && y<=(getMatrixDimension()-3) && ((this.placedCards[x][y+2]==null) || (this.placedCards[x][y+2]!=null && this.placedCards[x][y+2].getVisibleCorners()[2].isBuildable() && !this.placedCards[x][y+2].getVisibleCorners()[2].isCovered()))){
-                    return true;
-                }
-                if(x<=(getMatrixDimension()-3) && y==(getMatrixDimension()-2) && ((this.placedCards[x+2][y]==null) || (this.placedCards[x+2][y]!=null && this.placedCards[x+2][y].getVisibleCorners()[1].isBuildable() && !this.placedCards[x+2][y].getVisibleCorners()[1].isCovered()))){
-                    return true;
-                }
-                if(x<=(getMatrixDimension()-3) && y<=(getMatrixDimension()-3) && ((this.placedCards[x][y+2]==null) || (this.placedCards[x][y+2]!=null && this.placedCards[x][y+2].getVisibleCorners()[2].isBuildable() && !this.placedCards[x][y+2].getVisibleCorners()[2].isCovered())) && ((this.placedCards[x+2][y+2]==null) || (this.placedCards[x+2][y+2]!=null && this.placedCards[x+2][y+2].getVisibleCorners()[0].isBuildable() && !this.placedCards[x+2][y+2].getVisibleCorners()[0].isCovered())) && ((this.placedCards[x+2][y]==null) || (this.placedCards[x+2][y]!=null && this.placedCards[x+2][y].getVisibleCorners()[1].isBuildable() && !this.placedCards[x+2][y].getVisibleCorners()[1].isCovered()))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
-
 }

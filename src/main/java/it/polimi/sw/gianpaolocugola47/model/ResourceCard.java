@@ -24,7 +24,7 @@ public class ResourceCard extends PlaceableCard {
         return this.resourceCentreBack;
     }
 
-    public int getPoints(){
+    public int getPoints(PlayerTable playerTable, int x, int y){
         return this.points;
         //nothing else needed
     }

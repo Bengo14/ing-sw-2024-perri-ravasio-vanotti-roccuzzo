@@ -26,58 +26,47 @@ public class DiagonalPatternObjective extends Objectives {
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
-        //creating a copy of the matrix
-        PlaceableCard[][] matrix = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
+        int corner;
+        int cardMatches=0;
+        if(this.isAscending) {
+            corner=2;
+        }else{
+            corner=1;
+        }
+        return this.getPoints()*patternsCounter(playerTable, corner);
+    }
+    private int patternsCounter(PlayerTable playerTable, int corner) {
+        int patternsCounter=0;
+        int cardsRequired=3;
+        int cardsMatch=0;
         for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
-                matrix[i][j] = playerTable.getElement(i, j);
-            }
-        }
-        int patternOccurrences=0;
-        //looking for pattern occurrences
-        if(this.isAscending) {
-            for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
-                for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
-                    if (playerTable.isStartingCard(i,j)){
-                        j++;
-                    }
-                    if(isResourceMatched(matrix[i][j]) && i<(PlayerTable.getMatrixDimension()-2) && j>1){
-                        if(isResourceMatched(matrix[i+1][j-1]) && !playerTable.isStartingCard(i+1, j-1)){
-                            if(isResourceMatched(matrix[i+2][j-2]) && !playerTable.isStartingCard(i+2,j-2)){
-                                matrix[i][j].setFlaggedForObjective(true);
-                                matrix[i+1][j-1].setFlaggedForObjective(true);
-                                matrix[i+2][j-2].setFlaggedForObjective(true);
-                                patternOccurrences++;
-                            }
-                        }
+                if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
+                    j++;
+                }
+                int x=i;
+                int y=j;
+                for (int k = 0; k < cardsRequired; k++) {
+                    if(isResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
+                        cardsMatch++;
+                        x=(playerTable.setXCoordinate(x,corner));
+                        y=(playerTable.setYCoordinate(y,corner));
                     }
                 }
-            }
-        }else{
-            for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
-                for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
-                    if (playerTable.isStartingCard(i,j)){
-                        j++;
-                    }
-                    if(isResourceMatched(matrix[i][j]) && i<(PlayerTable.getMatrixDimension()-2) && j<(PlayerTable.getMatrixDimension()-2)){
-                        if(isResourceMatched(matrix[i+1][j+1]) && !playerTable.isStartingCard(i+1, j+1)){
-                            if(isResourceMatched(matrix[i+2][j+2]) && !playerTable.isStartingCard(i+2,j+2)){
-                                matrix[i][j].setFlaggedForObjective(true);
-                                matrix[i+1][j+1].setFlaggedForObjective(true);
-                                matrix[i+2][j+2].setFlaggedForObjective(true);
-                                patternOccurrences++;
-                            }
-                        }
+                if(cardsMatch==cardsRequired){
+                    patternsCounter++;
+                    x=i;
+                    y=j;
+                    for(int k = 0; k < cardsRequired; k++){
+                        playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
+                        x=(playerTable.setXCoordinate(x,corner));
+                        y=(playerTable.setYCoordinate(y,corner));
                     }
                 }
             }
         }
-        return this.getPoints()*patternOccurrences;
+        return patternsCounter;
     }
-    /**
-     * checks if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective
-     * @param card card[i][j]
-     */
     private boolean isResourceMatched(PlaceableCard card){
         return this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }

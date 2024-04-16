@@ -56,21 +56,22 @@ public class GoldCard extends ResourceCard {
             counter[getResourceCentreBack().ordinal()]++;
         }
     }
-
-    public int getCardPoints(PlayerTable playerTable, int x, int y) {
+    @Override
+    public int getPoints(PlayerTable playerTable, int x, int y) {
         int points;
         if(this.isPointsForCorners()){
+            int pointsForCorner=2;
             int coveredCorners=0;
             for(int corner=0; corner<4; corner++){
                 if(checkIfCovers(x, y, corner, playerTable))
                     coveredCorners++;
             }
-            return 2*coveredCorners;
+            return pointsForCorner*coveredCorners;
         }
         if(this.isPointsForItems()){
             return playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4);
         }
-        return this.getPoints();
+        return -1; // incorrect GoldCard initialization
     }
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){
         return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner].getLinkedCorner() == playerTable.getPlacedCard(x, y).getCorners()[corner];

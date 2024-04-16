@@ -81,10 +81,6 @@ public class PlayerTable {
         return this.placedCards[xIndex][yIndex];
     }
 
-    public boolean isStartingCard(int x, int y){
-        return x == STARTING_CARD_POS && y == STARTING_CARD_POS;
-    }
-
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
         for(int i=0; i<3; i++){
             if(this.cardsOnHand[i] == null) {
@@ -107,12 +103,17 @@ public class PlayerTable {
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         int points;
-        GoldCard card = (GoldCard)cardsOnHand[onHandCard];
-        if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner)) && isCheap(card))
-            placeCard(setXCoordinate(onTableCardX, onTableCardCorner),setYCoordinate(onTableCardY, onTableCardCorner), card);
-        else
-            return -1; // not placeable
-        points = card.getCardPoints(this, setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner));
+        ResourceCard card = cardsOnHand[onHandCard];
+        if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
+            if(card instanceof GoldCard){
+                if(isCheap((GoldCard) card))
+                    placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
+                else return -1; // not enough Resources on the table
+            }else
+                placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
+        }else
+            return -1; //not placeable here
+        points = card.getPoints(this, setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner));
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }
@@ -141,7 +142,7 @@ public class PlayerTable {
         sort(resCounter);
         return resCounter[0] >= 0;
     }
-    private boolean isPlaceable(int x, int y) {
+    public boolean isPlaceable(int x, int y) {
         if(this.placedCards[x][y] == null){
             int cornersVerified = 0;
             for(int corner=0; corner<4; corner++){
@@ -217,10 +218,17 @@ public class PlayerTable {
             this.resourceCounter[corner.getItem().ordinal() + 4]--;
         }
     }
+
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
-        points += objectives[0].checkPatternAndComputePoints(this);
-        points += objectives[1].checkPatternAndComputePoints(this);
+        for (Objectives objective : objectives) {
+            points += objective.checkPatternAndComputePoints(this);
+            for (int i = 0; i < getMatrixDimension(); i++) {
+                for (int j = 0; j < getMatrixDimension(); j++) {
+                    this.placedCards[i][j].setFlaggedForObjective(false);
+                }
+            }
+        }
         return points;
     }
     private int getSecretObjectivePoints(){
@@ -235,13 +243,14 @@ public class PlayerTable {
                         unsetCanPlay(); // last card, no playable position found
                         return;
                     }
-                    if(checkInnerCorners(i, j))
+                    if(isPlaceable(i, j))
                         return; // playable position found
                 }
             }
         }
     }
-    private boolean checkInnerCorners(int x, int y){
+
+    private boolean checkIfCanPlayOnCard(int x, int y){
         if (this.placedCards[x][y]!=null){
             for (int corner=0; corner<4; corner++){
                 if(isPlaceable(setXCoordinate(x, corner),setYCoordinate(y,corner)))

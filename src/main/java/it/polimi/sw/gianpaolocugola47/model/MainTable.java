@@ -108,6 +108,10 @@ public class MainTable {
             choice = Deck.drawCardFromGoldDeck();
 
         playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
+        /*todo
+        if(both decks are empty)
+            setEndGame();
+        */
     }
     private void replaceCardOnTable(int position){
         if(position == 0 || position == 1)
@@ -121,6 +125,21 @@ public class MainTable {
             playersTables[playerId].checkIfCanPlay();
         }
         return playersTables[playerId].getCanPlay();
+    }
+
+    public void checkAllPlayablePositions(PlayerTable playerTable){
+        for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
+            for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
+                if(playerTable.isPlaceable(i, j))
+                    showPlayablePosition(i,j);
+            }
+        }
+    }
+    private void showPlayablePosition(int x, int y){
+        ResourceCard card=new ResourceCard("none","none",0, null);
+        card.setCoordinates(x,y);
+        /*todo*/
+        // update view
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){

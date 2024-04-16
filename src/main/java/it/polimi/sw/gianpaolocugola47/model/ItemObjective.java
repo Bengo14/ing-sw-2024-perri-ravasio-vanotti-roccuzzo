@@ -35,7 +35,7 @@ public class ItemObjective extends Objectives{
         if(itemsRequired.size()<2){
             itemOccurrences=playerTable.getResourceCounter(itemsRequired.getFirst().ordinal()+4)/2;
         }else{
-        //looking for a TREBLE of all different items
+        //looking for a COMPLETE SET of all different items
             for(int i = 0; i< itemsRequired.size(); i++){
                 int[] array = new int[itemsRequired.size()];
                 array[i]=playerTable.getResourceCounter(i+4);

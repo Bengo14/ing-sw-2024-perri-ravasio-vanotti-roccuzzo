@@ -217,7 +217,6 @@ public class PlayerTable {
             this.resourceCounter[corner.getItem().ordinal() + 4]--;
         }
     }
-
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
         points += objectives[0].checkPatternAndComputePoints(this);

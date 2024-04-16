@@ -11,7 +11,7 @@ class ResourceCardTest {
         ResourceCard rc = new ResourceCard( "back", "front", 1, Resources.FUNGI);
         assertNotNull(rc);
         assertEquals(r.getResourceCentreBack(), rc.getResourceCentreBack());
-        assertEquals(1, rc.getPoints(null));
+        assertEquals(r.getPoints(), rc.getPoints());
     }
 
 

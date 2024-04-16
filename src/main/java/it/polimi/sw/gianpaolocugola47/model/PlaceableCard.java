@@ -20,8 +20,8 @@ public abstract class PlaceableCard {
 
     public Corner[] getVisibleCorners(){
         if(isFront)
-            return Arrays.copyOfRange(corners, 0, 3);
-        else return Arrays.copyOfRange(corners, 4, 7);
+            return Arrays.copyOfRange(corners, 0, 4);
+        else return Arrays.copyOfRange(corners, 4, 8);
     }
 
     public void setCoordinates(int line, int column){

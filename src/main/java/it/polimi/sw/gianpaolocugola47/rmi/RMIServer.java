@@ -43,12 +43,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         String name = "VirtualServer";
         System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
         try {
-            System.out.println("Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
             VirtualServer stub = new RMIServer(new Controller());
             Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
             registry.rebind(name, stub);
         } catch (RemoteException e){
             e.printStackTrace();
         }
+        System.err.println("Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
     }
 }

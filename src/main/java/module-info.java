@@ -3,6 +3,7 @@ module it.polimi.sw.gianpaolocugola47 {
     requires javafx.fxml;
     requires org.controlsfx.controls;
     requires com.google.gson;
+    requires java.rmi;
     opens it.polimi.sw.gianpaolocugola47 to javafx.fxml;
     opens it.polimi.sw.gianpaolocugola47.model to com.google.gson;
     exports it.polimi.sw.gianpaolocugola47;

@@ -123,19 +123,17 @@ public class MainTable {
         return playersTables[playerId].getCanPlay();
     }
 
-    public void checkAllPlayablePositions(PlayerTable playerTable){
+    public boolean[][] checkAllPlayablePositions(int playerId){
+        PlayerTable playerTable = playersTables[playerId];
+        boolean[][] matrix = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
             for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
                 if(playerTable.isPlaceable(i, j))
-                    showPlayablePosition(i,j);
+                    matrix[i][j] = true;
+                else matrix[i][j] = false;
             }
         }
-    }
-    private void showPlayablePosition(int x, int y){
-        ResourceCard card = new ResourceCard("none","none",0, null);
-        card.setCoordinates(x,y);
-        /*todo*/
-        // update view
+        return matrix;
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){

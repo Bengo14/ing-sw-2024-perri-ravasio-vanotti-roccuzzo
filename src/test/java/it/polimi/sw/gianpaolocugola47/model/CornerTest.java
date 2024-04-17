@@ -26,7 +26,12 @@ class CornerTest {
         c.setIsCovered();
         assertTrue(c.isCovered());
     }
-    @Test
-    void getLinkedCorner() {
+   @Test
+    public void testGetResourceAndGetItem() {
+        Corner c_resource = new Corner(false,false,true,null,Resources.INSECTS);
+        assertEquals(Resources.INSECTS, c_resource.getResource());
+       Corner c_item = new Corner(false,true,false,Items.INKWELL,null);
+       assertEquals(Items.INKWELL, c_item.getItem());
     }
+
 }

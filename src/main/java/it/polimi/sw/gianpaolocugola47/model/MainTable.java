@@ -194,4 +194,8 @@ public class MainTable {
         }
         return winnerPlayerId;
     }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
 }

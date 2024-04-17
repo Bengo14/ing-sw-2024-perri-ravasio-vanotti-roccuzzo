@@ -19,4 +19,9 @@ class ItemObjectiveTest {
         assertEquals("imgPathBack", i.getImgPathBack());
         assertEquals(items, i.getItemsRequired());
     }
+    @Test
+    public void testCheckPatternAndComputePoints(){
+
+
+    }
 }

@@ -24,6 +24,14 @@ public class DiagonalPatternObjective extends Objectives {
         this.resource = mainResource;
     }
 
+    public Resources getResource() {
+        return resource;
+    }
+
+    public boolean isAscending() {
+        return isAscending;
+    }
+
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int corner;
@@ -67,7 +75,7 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return patternsCounter;
     }
-    private boolean isResourceMatched(PlaceableCard card){
+    protected boolean isResourceMatched(PlaceableCard card){
         return this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
 }

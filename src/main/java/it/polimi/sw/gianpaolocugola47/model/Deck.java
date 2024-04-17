@@ -74,18 +74,26 @@ public class Deck {
     }
 
     protected static ResourceCard drawCardFromResourceDeck(){
+        if(resourceCardsDeck.isEmpty())
+            return null;
         int position = randomGenerator.nextInt(resourceCardsDeck.size());
         return resourceCardsDeck.remove(position);
     }
     protected static GoldCard drawCardFromGoldDeck(){
+        if(goldCardsDeck.isEmpty())
+            return null;
         int position = randomGenerator.nextInt(goldCardsDeck.size());
         return goldCardsDeck.remove(position);
     }
     protected static Objectives drawCardFromObjectivesDeck(){
+        if(objectiveCardsDeck.isEmpty())
+            return null;
         int position = randomGenerator.nextInt(objectiveCardsDeck.size());
         return objectiveCardsDeck.remove(position);
     }
     protected static StartingCard drawCardFromStartingDeck(){
+        if(startingCardsDeck.isEmpty())
+            return null;
         int position = randomGenerator.nextInt(startingCardsDeck.size());
         return startingCardsDeck.remove(position);
     }

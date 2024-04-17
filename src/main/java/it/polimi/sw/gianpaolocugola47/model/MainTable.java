@@ -14,15 +14,12 @@ public class MainTable {
     private int[] globalPoints;
     private PlayerTable[] playersTables;
     private int numOfPlayers;
-    private Objectives[] possibleSecretObjectives;
-    private StartingCard chosenStartingCard;
 
 
     public MainTable() {
         this.endGame = false;
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
-        this.possibleSecretObjectives = new Objectives[2];
         Deck.initDeck();
         initTable();
     }
@@ -46,32 +43,31 @@ public class MainTable {
         this.playersTables = new PlayerTable[numOfPlayers];
     }
 
-    public void drawTwoPossibleSecretObjectives(){
-        this.possibleSecretObjectives[0] = Deck.drawCardFromObjectivesDeck();
-        this.possibleSecretObjectives[1] = Deck.drawCardFromObjectivesDeck();
-        //update view
+    public Objectives[] drawTwoPossibleSecretObjectives(){
+        return new Objectives[]{Deck.drawCardFromObjectivesDeck(), Deck.drawCardFromObjectivesDeck()};
     }
-    public void drawStartingCard(){
-        this.chosenStartingCard = Deck.drawCardFromStartingDeck();
-        //update view
+    public StartingCard drawStartingCard(){
+        return Deck.drawCardFromStartingDeck();
+    }
+    public void setPlayerStartingCard(int playerId, StartingCard startingCard){
+        this.playersTables[playerId].setStartingCard(startingCard);
+    }
+    public void setPlayerSecretObjective(int playerId, Objectives secretObjective){
+        this.playersTables[playerId].setSecretObjective(secretObjective);
     }
 
     public void switchCardOnHandFrontBack(int playerId, int position){
         this.playersTables[playerId].turnCardOnHand(position);
     }
 
-    public void addPlayer(int id, String nickName, boolean isStartingCardFront, int chosenObjective){
+    public void addPlayer(int id, String nickName){
 
         if(playersTables[id]==null){
-
-            Objectives objective = possibleSecretObjectives[chosenObjective];
-            if(!isStartingCardFront)
-                chosenStartingCard.switchFrontBack();
             ResourceCard[] cardsOnHand = new ResourceCard[3];
             cardsOnHand[0] = Deck.drawCardFromResourceDeck();
             cardsOnHand[1] = Deck.drawCardFromResourceDeck();
             cardsOnHand[2] = Deck.drawCardFromGoldDeck();
-            playersTables[id] = new PlayerTable(id, nickName, objective, chosenStartingCard, cardsOnHand);
+            playersTables[id] = new PlayerTable(id, nickName, cardsOnHand);
         }
     }
     public void turnCardOnHand(int playerId, int cardPosition){
@@ -104,15 +100,15 @@ public class MainTable {
         }
         if(position == 4)
             choice = Deck.drawCardFromResourceDeck();
+
         if(position == 5)
             choice = Deck.drawCardFromGoldDeck();
 
-        playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
-        /*todo
-        if(both decks are empty)
+        if(choice == null)
             setEndGame();
-        */
+        else playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
     }
+
     private void replaceCardOnTable(int position){
         if(position == 0 || position == 1)
             cardsOnTable[position] = Deck.drawCardFromResourceDeck();
@@ -136,7 +132,7 @@ public class MainTable {
         }
     }
     private void showPlayablePosition(int x, int y){
-        ResourceCard card=new ResourceCard("none","none",0, null);
+        ResourceCard card = new ResourceCard("none","none",0, null);
         card.setCoordinates(x,y);
         /*todo*/
         // update view

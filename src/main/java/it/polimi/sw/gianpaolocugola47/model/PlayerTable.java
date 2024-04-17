@@ -16,8 +16,8 @@ public class PlayerTable {
     private boolean isFirst;
     private boolean canPlay;
     private int[] resourceCounter;
-    private final Objectives secretObjective;
-    private final StartingCard startingCard;
+    private Objectives secretObjective;
+    private StartingCard startingCard;
     private ResourceCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
 
@@ -26,22 +26,23 @@ public class PlayerTable {
      *
      * @param id the id of the player.
      * @param nickName the nickname chose by the player for a game.
-     * @param secretObjective the player's secret objectives.
-     * @param startingCard the first card of the player.
      * @param cardsOnHand the player's hand.
      */
-    public PlayerTable(int id, String nickName, Objectives secretObjective, StartingCard startingCard, ResourceCard[] cardsOnHand) {
+    public PlayerTable(int id, String nickName, ResourceCard[] cardsOnHand) {
         this.id = id;
         this.nickName = nickName;
         this.isFirst = this.id == 0;
         this.canPlay=true;  //default
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
-        this.secretObjective = secretObjective;
-        this.startingCard = startingCard;
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
-        this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = startingCard;
-        startingCard.updateResourceCounter(resourceCounter);
+    }
+
+    protected void setStartingCard(StartingCard startingCard){
+        this.startingCard = startingCard;
+    }
+    protected void setSecretObjective(Objectives objective){
+        this.secretObjective = objective;
     }
 
     public static int getMatrixDimension() {
@@ -223,11 +224,9 @@ public class PlayerTable {
         int points = getSecretObjectivePoints();
         for (Objectives objective : objectives) {
             points += objective.checkPatternAndComputePoints(this);
-            for (int i = 0; i < getMatrixDimension(); i++) {
-                for (int j = 0; j < getMatrixDimension(); j++) {
+            for (int i = 0; i < getMatrixDimension(); i++)
+                for (int j = 0; j < getMatrixDimension(); j++)
                     this.placedCards[i][j].setFlaggedForObjective(false);
-                }
-            }
         }
         return points;
     }

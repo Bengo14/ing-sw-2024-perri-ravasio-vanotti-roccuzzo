@@ -28,6 +28,7 @@ public class ResourceCard extends PlaceableCard {
         return this.points;
         //nothing else needed
     }
+
     @Override
     public void updateResourceCounter(int[] counter){
         if(isFront()){

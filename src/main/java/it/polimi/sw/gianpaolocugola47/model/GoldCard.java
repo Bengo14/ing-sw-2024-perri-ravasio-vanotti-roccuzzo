@@ -60,8 +60,8 @@ public class GoldCard extends ResourceCard {
     public int getPoints(PlayerTable playerTable, int x, int y) {
         int points;
         if(this.isPointsForCorners()){
-            int pointsForCorner=2;
-            int coveredCorners=0;
+            int pointsForCorner = 2;
+            int coveredCorners = 0;
             for(int corner=0; corner<4; corner++){
                 if(checkIfCovers(x, y, corner, playerTable))
                     coveredCorners++;

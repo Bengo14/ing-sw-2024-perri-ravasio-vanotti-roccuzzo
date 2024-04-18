@@ -21,5 +21,4 @@ public enum Resources {
     public String getImgPath() {
         return imgPath;
     }
-
 }

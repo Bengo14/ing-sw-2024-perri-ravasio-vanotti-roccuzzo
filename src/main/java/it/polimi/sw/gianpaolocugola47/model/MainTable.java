@@ -201,4 +201,8 @@ public class MainTable {
     {
         return playersTables[index];
     }
+
+    public void setPlayerTable(int i, PlayerTable player) {
+        playersTables[i] = player;
+    }
 }

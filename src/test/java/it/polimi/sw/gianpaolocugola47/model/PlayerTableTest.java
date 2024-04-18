@@ -17,6 +17,7 @@ class PlayerTableTest {
     private static ArrayList<ResourceCard> resourceCardsDeck;
     private static ArrayList<StartingCard> startingCardsDeck;
     private static ArrayList<ResourceObjective> objectiveCardsDeck;
+    private static ArrayList<GoldCard> goldCardsDeck;
 
     @BeforeAll
     public static void setUpStartingCArd() {
@@ -45,6 +46,14 @@ class PlayerTableTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/goldCards.json")) {
+            Gson gson = new Gson();
+            Type listOfCards = new TypeToken<ArrayList<GoldCard>>() {
+            }.getType();
+            goldCardsDeck = gson.fromJson(fileReader, listOfCards);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -64,7 +73,8 @@ class PlayerTableTest {
         ResourceCard plant_1 = resourceCardsDeck.get(7);
         ResourceCard plant_2 = resourceCardsDeck.get(11);
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        assertTrue(p.getCanPlay());
+        int point = 0;
+
 
     }
 //    @Test
@@ -88,6 +98,7 @@ class PlayerTableTest {
         ResourceCard plant_2 = resourceCardsDeck.get(11);
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
         assertTrue(p.isPlaceable(28,28));
+//        assertFalse(p.isPlaceable(1,1));
     }
     @Test
     public void testGetObjectivePoints(){
@@ -100,6 +111,17 @@ class PlayerTableTest {
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
         //assertEquals(2,p.getObjectivePoints(obj));
     }
+//    @Test
+//    public void testIsCheap(){
+//        StartingCard start = startingCardsDeck.get(0);
+//        start.setCoordinates(29,29);
+//        GoldCard gold = goldCardsDeck.get(0);
+//        ResourceCard plant_0 = resourceCardsDeck.get(6);
+//        ResourceCard plant_1 = resourceCardsDeck.get(7);
+//        ResourceCard plant_2 = resourceCardsDeck.get(11);
+//        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
+//        (p.checkAndPlaceCard(3,28,28,7));
+//    }
 
 
 

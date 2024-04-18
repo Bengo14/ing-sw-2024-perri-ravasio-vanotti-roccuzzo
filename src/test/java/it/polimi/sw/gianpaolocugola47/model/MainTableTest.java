@@ -80,13 +80,71 @@ class MainTableTest {
         assertNotNull(start);
     }
 
-//    @Test
-//    public void testSetPlayerStartingCard(){
-//        MainTable table = new MainTable();
-//        table.setNumOfPlayers(2);
-//        PlayerTable player = new PlayerTable(0,"name",new ResourceCard[]{});
-//        table.setPlayerStartingCard(0, startingCardsDeck.get(0));
-//    }
+    @Test
+    public void testSetPlayerStartingCard() {
+
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
+        MainTable table = new MainTable();
+        table.setNumOfPlayers(2);
+        table.setPlayerTable(0, player);
+        StartingCard start = table.drawStartingCard();
+        table.setPlayerStartingCard(0, start);
+        table.getPlayerTable(0);
+        assertEquals(start, table.getPlayerTable(0).getStartingCard());
+        boolean[][] matrix = table.checkAllPlayablePositions(0);
+        assertEquals(PlayerTable.getMatrixDimension(), matrix.length);
+        assertEquals(PlayerTable.getMatrixDimension(), matrix[0].length);
+        // Verifica che tutti i valori nella matrice siano false tranne quelli adiacenti alla StartingCard
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (player.isPlaceable(i, j)) {
+                    assertTrue(matrix[i][j]);
+                } else {
+                    assertFalse(matrix[i][j]);
+                }
+            }
+        }
+    }
+    @Test
+    public void testDrawCardFrom(){
+        MainTable mainTable = new MainTable();
+        ResourceCard res_1 = resourceCardsDeck.get(0);
+        ResourceCard res_2 = resourceCardsDeck.get(1);
+        ResourceCard res_3 = resourceCardsDeck.get(2);
+        mainTable.setNumOfPlayers(2);
+        Deck.initDeck();
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1,res_2,res_3});
+        mainTable.setPlayerTable(0, player);
+        StartingCard start = mainTable.drawStartingCard();
+        mainTable.setPlayerStartingCard(0, start);
+        player.checkAndPlaceCard(0,28,28,1);
+        mainTable.drawCardFrom(0,0);
+        assertFalse(mainTable.getPlayerTable(0).getCardOnHand(1).isFront());
+    }
+    @Test
+    public void testSetPlayerSecretObjective(){
+        MainTable mainTable = new MainTable();
+        Objectives obj = objectiveCardsDeck.get(0);
+        Objectives obj2 = objectiveCardsDeck.get(1);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
+        mainTable.setNumOfPlayers(2);
+        mainTable.setPlayerTable(0, player);
+        mainTable.setPlayerSecretObjective(0, obj);
+        assertEquals(obj, mainTable.getPlayerTable(0).getSecretObjective());
+        assertNotEquals(obj2, mainTable.getPlayerTable(0).getSecretObjective());
+    }
+    @Test
+    public void testSwitchCardOnHandFrontBack(){
+        MainTable mainTable = new MainTable();
+        ResourceCard res_1 = resourceCardsDeck.get(0);
+        ResourceCard res_2 = resourceCardsDeck.get(1);
+        ResourceCard res_3 = resourceCardsDeck.get(2);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1, res_2, res_3});
+        mainTable.setNumOfPlayers(2);
+        mainTable.setPlayerTable(0, player);
+        mainTable.switchCardOnHandFrontBack(0, 0);
+        assertFalse(mainTable.getPlayerTable(0).getCardOnHand(2).isFront());
+    }
 
 
 

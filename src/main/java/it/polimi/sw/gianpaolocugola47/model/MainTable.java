@@ -196,4 +196,9 @@ public class MainTable {
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
+
+    public PlayerTable getPlayerTable(int index)
+    {
+        return playersTables[index];
+    }
 }

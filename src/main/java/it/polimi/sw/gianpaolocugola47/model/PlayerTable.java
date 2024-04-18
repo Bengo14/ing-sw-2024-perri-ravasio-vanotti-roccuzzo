@@ -9,8 +9,8 @@ import static java.util.Arrays.sort;
  *
  */
 public class PlayerTable {
-    private static final int MATRIX_DIMENSION = 60;
-    private static final int STARTING_CARD_POS = 29;
+    private static final int MATRIX_DIMENSION = 61; // should be 145
+    private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
     private final int id;
     private final String nickName;
     private boolean isFirst;

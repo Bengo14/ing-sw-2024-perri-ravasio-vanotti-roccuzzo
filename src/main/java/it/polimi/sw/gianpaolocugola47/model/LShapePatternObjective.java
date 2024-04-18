@@ -60,37 +60,48 @@ public class LShapePatternObjective extends Objectives{
                 if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
                     j++;
                 }
-                int x=i;
-                int y=j;
-                for (int k = 0; k < verticalCardsRequired; k++) {
-                    if(isMainResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
-                        verticalCardsMatch++;
-                        x=x+shift;
-                    }
-                }
-                if(verticalCardsMatch==verticalCardsRequired){
-                    for (int k = 0; k < diagonalCardsRequired; k++) {
-                        if(isSecondaryResourceMatched(playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner))) && !((playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner))) instanceof StartingCard)){
-                            diagonalCardsMatch++;
-                            x=(playerTable.setXCoordinate(x,corner));
-                            y=(playerTable.setYCoordinate(j,corner));
-                        }
-                    }
-                }
-                if(verticalCardsMatch==verticalCardsRequired && diagonalCardsMatch==diagonalCardsRequired){
-                    patternsCounter++;
-                    x=i;
-                    y=j;
+                if(isMainResourceMatched(playerTable.getPlacedCard(i,j))){
+                    int x=i;
+                    int y=j;
                     for (int k = 0; k < verticalCardsRequired; k++) {
-                        if(isMainResourceMatched(playerTable.getPlacedCard(i+shift,y)) && !(playerTable.getPlacedCard(i+shift,y) instanceof StartingCard)){
-                            playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
+                        if(isMainResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
                             verticalCardsMatch++;
                             x=x+shift;
                         }
                     }
-                    for (int k = 0; k < diagonalCardsRequired; k++) {
-                        if(isSecondaryResourceMatched(playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner))) && !((playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner))) instanceof StartingCard)){
-                            playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).setFlaggedForObjective(true);
+                    x=x-shift;
+                    if(verticalCardsMatch==verticalCardsRequired && playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).getCorners()[3-corner]){
+                        x=playerTable.setXCoordinate(x,corner);
+                        y=playerTable.setYCoordinate(y,corner);
+                        for (int k = 0; k < diagonalCardsRequired; k++) {
+                            if(isSecondaryResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
+                                if(diagonalCardsMatch<diagonalCardsRequired-1){
+                                   if(playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).getCorners()[3-corner]){
+                                       diagonalCardsMatch++;
+                                       x=(playerTable.setXCoordinate(x,corner));
+                                       y=(playerTable.setYCoordinate(j,corner));
+                                   }
+                                }else{
+                                    diagonalCardsMatch++;
+                                    x=(playerTable.setXCoordinate(x,corner));
+                                    y=(playerTable.setYCoordinate(j,corner));
+                                }
+                            }
+                        }
+                    }
+                    if(verticalCardsMatch==verticalCardsRequired && diagonalCardsMatch==diagonalCardsRequired){
+                        patternsCounter++;
+                        x=i;
+                        y=j;
+                        for (int k = 0; k < verticalCardsRequired; k++) {
+                                playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
+                                x=x+shift;
+                        }
+                        x=x-shift;
+                        x=playerTable.setXCoordinate(x,corner);
+                        y=playerTable.setYCoordinate(y,corner);
+                        for (int k = 0; k < diagonalCardsRequired; k++) {
+                            playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
                             x=(playerTable.setXCoordinate(x,corner));
                             y=(playerTable.setYCoordinate(y,corner));
                         }

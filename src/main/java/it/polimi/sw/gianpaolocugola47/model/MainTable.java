@@ -128,9 +128,7 @@ public class MainTable {
         boolean[][] matrix = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
             for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
-                if(playerTable.isPlaceable(i, j))
-                    matrix[i][j] = true;
-                else matrix[i][j] = false;
+                matrix[i][j] = playerTable.isPlaceable(i, j); // boolean
             }
         }
         return matrix;

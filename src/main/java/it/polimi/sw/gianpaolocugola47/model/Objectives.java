@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import java.util.ArrayList;
 /**
  * This class represents all the objectives in a game with their points,the reference at the front and back image
  * and the items,the resource and the pattern use for make the points.

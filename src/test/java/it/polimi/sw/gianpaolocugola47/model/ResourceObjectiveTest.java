@@ -74,14 +74,14 @@ class ResourceObjectiveTest {
 
     @Test
     public void checkPatternAndComputePoints() {
-        StartingCard start = startingCardsDeck.get(0);
+        StartingCard start = startingCardsDeck.getFirst();
         //control the points of the objective card
         // put the starting card in the front side
 
         start.setCoordinates(29,29);
         ResourceObjective plant = objectiveCardsDeck.get(4);
-        //control the points of the objective cardù
-        //inizialize counter
+        //control the points of the objective card
+        //initialize counter
         int [] counter = new int[7];
         for(int i=0; i<7; i++){
             counter[i]=0;

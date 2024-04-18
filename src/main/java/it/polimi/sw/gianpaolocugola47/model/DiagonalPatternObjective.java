@@ -39,7 +39,7 @@ public class DiagonalPatternObjective extends Objectives {
         if(this.isAscending) {
             corner=2;
         }else{
-            corner=1;
+            corner=3;
         }
         return this.getPoints()*patternsCounter(playerTable, corner);
     }
@@ -52,23 +52,34 @@ public class DiagonalPatternObjective extends Objectives {
                 if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
                     j++;
                 }
-                int x=i;
-                int y=j;
-                for (int k = 0; k < cardsRequired; k++) {
-                    if(isResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
-                        cardsMatch++;
-                        x=(playerTable.setXCoordinate(x,corner));
-                        y=(playerTable.setYCoordinate(y,corner));
+                if(isResourceMatched(playerTable.getPlacedCard(i,j))){
+                    int x=i;
+                    int y=j;
+                    for (int k = 0; k < cardsRequired; k++) {
+                        if(isResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
+                            if(cardsMatch<cardsRequired-1) {
+                                if(playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).getCorners()[3-corner]){
+                                    cardsMatch++;
+                                    x=(playerTable.setXCoordinate(x,corner));
+                                    y=(playerTable.setYCoordinate(y,corner));
+                                }
+                            }else{
+                                // last card of pattern
+                                cardsMatch++;
+                                x=(playerTable.setXCoordinate(x,corner));
+                                y=(playerTable.setYCoordinate(y,corner));
+                            }
+                        }
                     }
-                }
-                if(cardsMatch==cardsRequired){
-                    patternsCounter++;
-                    x=i;
-                    y=j;
-                    for(int k = 0; k < cardsRequired; k++){
-                        playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
-                        x=(playerTable.setXCoordinate(x,corner));
-                        y=(playerTable.setYCoordinate(y,corner));
+                    if(cardsMatch==cardsRequired){
+                        patternsCounter++;
+                        x=i;
+                        y=j;
+                        for(int k = 0; k < cardsRequired; k++){
+                            playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
+                            x=(playerTable.setXCoordinate(x,corner));
+                            y=(playerTable.setYCoordinate(y,corner));
+                        }
                     }
                 }
             }

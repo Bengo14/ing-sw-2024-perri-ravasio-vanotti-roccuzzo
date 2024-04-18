@@ -242,13 +242,12 @@ public class PlayerTable {
                         unsetCanPlay(); // last card, no playable position found
                         return;
                     }
-                    if(isPlaceable(i, j))
+                    if(checkIfCanPlayOnCard(i, j))
                         return; // playable position found
                 }
             }
         }
     }
-
     private boolean checkIfCanPlayOnCard(int x, int y){
         if (this.placedCards[x][y]!=null){
             for (int corner=0; corner<4; corner++){

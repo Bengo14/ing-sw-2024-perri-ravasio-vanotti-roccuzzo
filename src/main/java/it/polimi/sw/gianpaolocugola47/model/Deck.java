@@ -22,7 +22,7 @@ public class Deck {
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
 
-    protected static void initDeck(){
+    public static void initDeck(){
         generateStartingCardsDeck();
         generateGoldCardsDeck();
         generateResourceCardsDeck();
@@ -97,20 +97,19 @@ public class Deck {
         int position = randomGenerator.nextInt(startingCardsDeck.size());
         return startingCardsDeck.remove(position);
     }
-
     public static List<GoldCard> getGoldCardsDeck() {
         return goldCardsDeck;
     }
-
     public static List<ResourceCard> getResourceCardsDeck() {
         return resourceCardsDeck;
     }
-
     public static List<StartingCard> getStartingCardsDeck() {
         return startingCardsDeck;
     }
-
     public static List<Objectives> getObjectiveCardsDeck() {
         return objectiveCardsDeck;
+    }
+    protected static boolean areDecksEmpty() {
+        return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
     }
 }

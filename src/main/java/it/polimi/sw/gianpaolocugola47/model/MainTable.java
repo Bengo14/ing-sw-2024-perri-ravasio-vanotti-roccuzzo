@@ -100,13 +100,13 @@ public class MainTable {
         }
         if(position == 4)
             choice = Deck.drawCardFromResourceDeck();
-
         if(position == 5)
             choice = Deck.drawCardFromGoldDeck();
 
-        if(choice == null)
+        if(choice != null)
+            playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
+        if(Deck.areDecksEmpty())
             setEndGame();
-        else playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
     }
 
     private void replaceCardOnTable(int position){

@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
+import it.polimi.sw.gianpaolocugola47.view.CLI;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -9,27 +11,90 @@ import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
-    private VirtualServer server;
+    private final VirtualServer server;
+    private int id;
+    private volatile boolean terminate = false;
+    private CLI cli;
+    private boolean isCliChosen = false;
 
     public RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
     }
 
     private void run() throws RemoteException{
-        this.server.connect(this);
-        System.err.println("Client connected");
-        runCli();
-    }
-    private void runCli() throws RemoteException {
-        System.out.println("Welcome to Codex Naturalis!");
-        /*todo*/
-        Scanner scan = new Scanner(System.in);
-        while (true) {
-            System.out.print("> ");
-            int command = scan.nextInt();
-            if (command == 0) {
-                server.reset();
+        try {
+            this.id = this.server.connect(this);
+            if(id == -1){
+                System.err.println("Connection refused: match already started/full or number of players not set...");
+                System.exit(0);
             }
+            System.err.println("Client connected with id: "+id);
+            terminationCheckerStart();
+            runCli();
+        } catch (RemoteException e) {
+            server.terminateGame(this.id);
+            terminate();
+        }
+    }
+    private void terminationCheckerStart(){
+        new Thread(()->{
+            while (!terminate) {
+                Thread.onSpinWait();
+            }
+            System.exit(0);
+        }).start();
+    }
+
+    private void runCli() throws RemoteException {
+
+        System.out.println("Welcome to Codex Naturalis!");
+        System.out.println("Just a little patience, choose the interface: \n1 = CLI\n2 = GUI");
+        Scanner scan = new Scanner(System.in);
+        String command = scan.next();
+        while (!command.equals("1") && !command.equals("2")) {
+            System.out.print("Invalid input, try again: ");
+            command = scan.next();
+        }
+        if(command.equals("1"))
+            this.isCliChosen = true;
+
+        if(this.id == 0) {
+            System.out.print("You are the first to connect, so choose the number of players (2-4): ");
+            command = scan.next();
+            while (!command.equals("2") && !command.equals("3") && !command.equals("4")) {
+                System.out.print("Invalid input, try again: ");
+                command = scan.next();
+            }
+            int numOfPlayers = Integer.parseInt(command);
+            this.server.setNumOfPlayers(numOfPlayers);
+            System.out.print("Okay, now insert your nickname: ");
+        }
+        else {
+            System.out.println("A game is already starting, you connected to the server with id: "+this.id);
+            System.out.print("Insert your nickname: ");
+        }
+        String nickname = scan.next();
+        System.out.println("You joined the game! Waiting for other players...");
+        this.server.addPlayer(this.id, nickname);
+    }
+
+    @Override
+    public void terminate() throws RemoteException{
+        System.err.println("\nTerminating the game, because something went wrong...");
+        this.terminate = true;
+    }
+    @Override
+    public void ping() throws RemoteException{
+        //do nothing, liveness check only
+    }
+    @Override
+    public void startGame() throws RemoteException {
+        if(isCliChosen) {
+            this.cli = new CLI(this);
+            this.cli.start();
+        }
+        else {
+            /*todo GUI*/
         }
     }
 

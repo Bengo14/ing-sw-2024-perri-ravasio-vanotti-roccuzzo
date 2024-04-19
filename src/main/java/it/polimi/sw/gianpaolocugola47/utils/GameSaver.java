@@ -12,13 +12,11 @@ import java.io.IOException;
 
 public class GameSaver {
     private final MainTable game;
-    private final Deck deck;
     private final Gson gson;
     private final String[] filePaths;
 
-    public GameSaver(MainTable game, Deck deck) {
+    public GameSaver(MainTable game) {
         this.game = game;
-        this.deck = deck;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -36,16 +34,16 @@ public class GameSaver {
     }
 
     private boolean generateDeckStatusJson() throws IOException {
-        if(this.deck.getGoldCardsDeck() == null || this.deck.getObjectiveCardsDeck() == null ||
-                this.deck.getStartingCardsDeck() == null || this.deck.getResourceCardsDeck() == null)
+        if(Deck.getGoldCardsDeck() == null || Deck.getObjectiveCardsDeck() == null ||
+                Deck.getStartingCardsDeck() == null || Deck.getResourceCardsDeck() == null)
         {
             return false; //Game hasn't started yet!
         }
-        try {
-            gson.toJson(this.deck, new FileWriter(filePaths[1]));
+        /*try {
+            gson.toJson( , new FileWriter(filePaths[1]));
         } catch (JsonIOException e) {
             e.printStackTrace();
-        }
+        }*/
         return true;
     }
     private void saveGameStatus() throws GameNotStartedException{

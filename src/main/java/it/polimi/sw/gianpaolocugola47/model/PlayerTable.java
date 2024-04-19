@@ -38,10 +38,10 @@ public class PlayerTable {
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
 
-    protected void setStartingCard(StartingCard startingCard){
+    public void setStartingCard(StartingCard startingCard){
         this.startingCard = startingCard;
     }
-    protected void placeStartingCard(){
+    public void placeStartingCard(){
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS]=this.startingCard;
     }
 
@@ -224,19 +224,19 @@ public class PlayerTable {
     private void linkCards(int x,int y, int corner){
         // mirror-links ONE corner for 2 cards, if need to link 4 corners it is to be called 4 times
         if(corner==0){
-            if(x>=0 && y>=0 && this.placedCards[x][y]!=null)
+            if(x>=1 && y>=1 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
                 linkCard(x, y, corner);
         }
         if(corner==1){
-            if(x>=0 && y<=getMatrixDimension()-2 && this.placedCards[x][y]!=null)
+            if(x>=1 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
                 linkCard(x, y, corner);
         }
         if(corner==2){
-            if(x<=getMatrixDimension()-2 && y>=0 && this.placedCards[x][y]!=null)
+            if(x<=getMatrixDimension()-2 && y>=1 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
                 linkCard(x, y, corner);
         }
         if(corner==3){
-            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[x][y]!=null)
+            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
                 linkCard(x, y, corner);
         }
     }

@@ -98,19 +98,19 @@ public class Deck {
         return startingCardsDeck.remove(position);
     }
 
-    public List<GoldCard> getGoldCardsDeck() {
+    public static List<GoldCard> getGoldCardsDeck() {
         return goldCardsDeck;
     }
 
-    public List<ResourceCard> getResourceCardsDeck() {
+    public static List<ResourceCard> getResourceCardsDeck() {
         return resourceCardsDeck;
     }
 
-    public List<StartingCard> getStartingCardsDeck() {
+    public static List<StartingCard> getStartingCardsDeck() {
         return startingCardsDeck;
     }
 
-    public List<Objectives> getObjectiveCardsDeck() {
+    public static List<Objectives> getObjectiveCardsDeck() {
         return objectiveCardsDeck;
     }
 }

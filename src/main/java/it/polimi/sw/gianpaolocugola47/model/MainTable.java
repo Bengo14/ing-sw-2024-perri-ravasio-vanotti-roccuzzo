@@ -121,7 +121,6 @@ public class MainTable {
             if (playersTable.getCanPlay())
                 return true;
         }
-        setEndGame();
         return false; // nobody can play --> setEndGame()
     }
 

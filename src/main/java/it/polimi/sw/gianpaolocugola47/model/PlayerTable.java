@@ -170,7 +170,7 @@ public class PlayerTable {
                 return false; // all surrounding cards are null
             x=setXCoordinate(x, corner);
             y=setYCoordinate(y, corner);
-            if(!(placedCards[x][y] == null)){
+            if(placedCards[x][y] != null){
                 return true; // a surrounding card is not null
             }else{
                 x=setXCoordinate(x, 3-corner);

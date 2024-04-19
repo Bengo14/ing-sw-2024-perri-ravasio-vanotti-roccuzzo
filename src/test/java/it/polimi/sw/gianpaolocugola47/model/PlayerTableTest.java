@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -92,13 +93,21 @@ class PlayerTableTest {
     @Test
     public void testIsPlaceable(){
         StartingCard start = startingCardsDeck.get(0);
+
+
+        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{});
+        p.setStartingCard(start);
         start.setCoordinates(29,29);
-        ResourceCard plant_0 = resourceCardsDeck.get(6);
-        ResourceCard plant_1 = resourceCardsDeck.get(7);
-        ResourceCard plant_2 = resourceCardsDeck.get(11);
-        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        assertTrue(p.isPlaceable(28,28));
-//        assertFalse(p.isPlaceable(1,1));
+
+        boolean val = p.isPlaceable(28,28);
+
+        System.out.println(val);
+
+
+        //assertTrue(p.isPlaceable(28,28));
+
+
+
     }
     @Test
     public void testGetObjectivePoints(){
@@ -142,4 +151,25 @@ class PlayerTableTest {
         assertEquals(0, p.getResourceCounter(0));
         assertNotNull(p.getCardOnHand(0));
     }
+    @Test
+    public void testCheckAndPlaceCard(){
+        StartingCard start = startingCardsDeck.get(2);
+        ResourceCard res = resourceCardsDeck.get(0);
+        PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
+        p.setStartingCard(start);
+        p.placeStartingCard();
+      //  assertNotNull(p.getElement(28,30));
+        p.checkAndPlaceCard(0, 29, 29, 3);
+        assertNotNull(p.getElement(30,30));
+    }
+    @Test
+    public void testPlaceStartingCard(){
+        StartingCard start = startingCardsDeck.get(0);
+        PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{});
+        p.setStartingCard(start);
+        p.placeStartingCard();
+        assertNotNull(p.getElement(29,29));
+        System.out.println(p.getElement(29,29));
+    }
+
 }

@@ -168,6 +168,7 @@ public class PlayerTable {
                 corner++;
             if(corner==3 && (x==getMatrixDimension()-1 || y==getMatrixDimension()-1))
                 return false; // all surrounding cards are null
+
             x=setXCoordinate(x, corner);
             y=setYCoordinate(y, corner);
             if(placedCards[x][y] != null){

@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ObjectiveDeserializer implements JsonDeserializer<Objectives> {
-    private String objectiveTypeElementName;
-    private Gson gson;
-    private Map<String, Class<? extends Objectives>> objectiveTypeRegistry;
+    private final String objectiveTypeElementName;
+    private final Gson gson;
+    private final Map<String, Class<? extends Objectives>> objectiveTypeRegistry;
 
     public ObjectiveDeserializer(String objectiveTypeElementName) {
         this.objectiveTypeElementName = objectiveTypeElementName;

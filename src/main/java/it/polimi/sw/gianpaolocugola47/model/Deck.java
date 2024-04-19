@@ -97,4 +97,20 @@ public class Deck {
         int position = randomGenerator.nextInt(startingCardsDeck.size());
         return startingCardsDeck.remove(position);
     }
+
+    public List<GoldCard> getGoldCardsDeck() {
+        return goldCardsDeck;
+    }
+
+    public List<ResourceCard> getResourceCardsDeck() {
+        return resourceCardsDeck;
+    }
+
+    public List<StartingCard> getStartingCardsDeck() {
+        return startingCardsDeck;
+    }
+
+    public List<Objectives> getObjectiveCardsDeck() {
+        return objectiveCardsDeck;
+    }
 }

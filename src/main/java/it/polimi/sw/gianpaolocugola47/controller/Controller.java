@@ -27,7 +27,7 @@ public class Controller {
         return currentPlayer;
     }
 
-    public void updateCurrentPlayer(){
+    public void updateCurrentPlayer() {
         int id = currentPlayer.getId();
         if(id == mainTable.getNumOfPlayers()-1)
             this.currentPlayer = mainTable.getPlayerTable(0);

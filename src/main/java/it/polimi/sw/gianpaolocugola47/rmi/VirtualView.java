@@ -9,4 +9,5 @@ public interface VirtualView extends Remote {
     public void terminate() throws RemoteException;
     public void ping() throws RemoteException;
     public void startGame() throws RemoteException;
+
 }

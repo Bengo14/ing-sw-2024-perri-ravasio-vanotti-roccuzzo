@@ -40,7 +40,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
             }
         }
     }
-    private void pingStart(){
+    private void pingStart() {
        new Thread(()->{
            while(true) {
                while (terminated)
@@ -110,7 +110,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
             }
         }
     }
-    private void startGame() throws RemoteException{
+    private void startGame() throws RemoteException {
         synchronized (this.clients){
             for(VirtualView client : this.clients){
                 client.startGame();

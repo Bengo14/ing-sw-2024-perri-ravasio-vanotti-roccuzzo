@@ -69,7 +69,8 @@ public class DiagonalPatternObjective extends Objectives {
                                 x=(playerTable.setXCoordinate(x,corner));
                                 y=(playerTable.setYCoordinate(y,corner));
                             }
-                        }
+                        }else
+                            break;
                     }
                     if(cardsMatch==cardsRequired){
                         patternsCounter++;

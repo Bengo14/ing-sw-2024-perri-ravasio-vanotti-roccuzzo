@@ -116,11 +116,21 @@ public class MainTable {
             cardsOnTable[position] = Deck.drawCardFromGoldDeck();
     }
 
+    public boolean checkIfAnyPlayerCanPlay(){
+        for (PlayerTable playersTable : playersTables) {
+            if (playersTable.getCanPlay())
+                return true;
+        }
+        setEndGame();
+        return false; // nobody can play --> setEndGame()
+    }
+
     public boolean checkIfPlayerCanPlay(int playerId){
         if(playersTables[playerId].getCanPlay()) {
             playersTables[playerId].checkIfCanPlay();
         }
         return playersTables[playerId].getCanPlay();
+        // if canPlay=false it can't be set to true again
     }
 
     public boolean[][] checkAllPlayablePositions(int playerId){
@@ -135,18 +145,20 @@ public class MainTable {
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){
-        int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
-        if(points == -1)
-            return false;
-        addBoardPoints(playerId, points);
-        int objectivePoints = playersTables[playerId].getObjectivePoints(this.globalObjectives);
-        int globalPoints = objectivePoints + points;
-        addGlobalPoints(playerId, globalPoints);
-        if(getBoardPoints(playerId)>=20)
-            setEndGame();
-        return true;
+        if(!(playersTables[playerId].getElement(onTableCardX, onTableCardY)==null)){
+            int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
+            if(points == -1)
+                return false; // GoldCard requisites not matched OR position is not buildable OR incorrect GoldCard initialization
+            addBoardPoints(playerId, points);
+            int objectivePoints = playersTables[playerId].getObjectivePoints(this.globalObjectives);
+            int globalPoints = points + objectivePoints;
+            addGlobalPoints(playerId, globalPoints);
+            if(getBoardPoints(playerId)>=20)
+                setEndGame();
+            return true;
+        }else
+            return false; // incorrect input: onTableCard is null
     }
-
     private void addBoardPoints(int player, int points){
         this.boardPoints[player] += points;
     }

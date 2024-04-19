@@ -60,6 +60,7 @@ public class LShapePatternObjective extends Objectives{
                 if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
                     j++;
                 }
+                //looking for vertical cards
                 if(isMainResourceMatched(playerTable.getPlacedCard(i,j))){
                     int x=i;
                     int y=j;
@@ -67,9 +68,11 @@ public class LShapePatternObjective extends Objectives{
                         if(isMainResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
                             verticalCardsMatch++;
                             x=x+shift;
-                        }
+                        }else
+                            break;
                     }
                     x=x-shift;
+                    //looking for diagonal cards
                     if(verticalCardsMatch==verticalCardsRequired && playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).getCorners()[3-corner]){
                         x=playerTable.setXCoordinate(x,corner);
                         y=playerTable.setYCoordinate(y,corner);
@@ -86,7 +89,8 @@ public class LShapePatternObjective extends Objectives{
                                     x=(playerTable.setXCoordinate(x,corner));
                                     y=(playerTable.setYCoordinate(j,corner));
                                 }
-                            }
+                            }else
+                                break;
                         }
                     }
                     if(verticalCardsMatch==verticalCardsRequired && diagonalCardsMatch==diagonalCardsRequired){

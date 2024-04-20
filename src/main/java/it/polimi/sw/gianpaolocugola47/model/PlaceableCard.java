@@ -15,16 +15,16 @@ public abstract class PlaceableCard {
         this.isFront = true;
         this.backImgPath = backImgPath;
         this.frontImgPath = frontImgPath;
-        this.isFlaggedForObjective=false;
+        this.isFlaggedForObjective = false;
     }
 
-    public Corner[] getVisibleCorners(){
+    public Corner[] getVisibleCorners() {
         if(isFront)
             return Arrays.copyOfRange(corners, 0, 4);
         else return Arrays.copyOfRange(corners, 4, 8);
     }
 
-    public void setCoordinates(int line, int column){
+    public void setCoordinates(int line, int column) {
         this.line = line;
         this.column = column;
     }

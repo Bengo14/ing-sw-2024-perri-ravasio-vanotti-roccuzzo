@@ -8,7 +8,7 @@ public class CLI {
 
     private final RMIClient client;
 
-    public CLI(RMIClient client){
+    public CLI(RMIClient client) {
         this.client = client;
     }
     public void start() {

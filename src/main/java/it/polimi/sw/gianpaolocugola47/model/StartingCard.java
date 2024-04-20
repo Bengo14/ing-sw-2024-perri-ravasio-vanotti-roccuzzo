@@ -23,12 +23,12 @@ public class StartingCard extends PlaceableCard {
     }
 
     @Override
-    public void updateResourceCounter(int[] counter){
-        if(isFront()){
+    public void updateResourceCounter(int[] counter) {
+        if(isFront()) {
             for(int i=0; i<4; i++)
                 counter[i]++;
         }
-        else{
+        else {
             Corner[] visibleCorners = getVisibleCorners();
             for(int i=0; i<4; i++){
                 if(visibleCorners[i].isResource()){
@@ -40,5 +40,4 @@ public class StartingCard extends PlaceableCard {
             }
         }
     }
-
 }

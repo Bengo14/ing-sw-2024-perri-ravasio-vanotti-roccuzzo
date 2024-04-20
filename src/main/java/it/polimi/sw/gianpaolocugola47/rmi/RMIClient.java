@@ -21,10 +21,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.server = server;
     }
 
-    private void run() throws RemoteException{
+    private void run() throws RemoteException {
         try {
             this.id = this.server.connect(this);
-            if(id == -1){
+            if(id == -1) {
                 System.err.println("Connection refused: match already started/full or number of players not set...");
                 System.exit(0);
             }
@@ -32,7 +32,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             terminationCheckerStart();
             runCli();
         } catch (RemoteException e) {
-            server.terminateGame(this.id);
             terminate();
         }
     }

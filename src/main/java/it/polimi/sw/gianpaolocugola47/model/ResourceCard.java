@@ -34,7 +34,7 @@ public class ResourceCard extends PlaceableCard {
     }
 
     @Override
-    public void updateResourceCounter(int[] counter){
+    public void updateResourceCounter(int[] counter) {
         if(isFront()){
             Corner[] visibleCorners = getVisibleCorners();
             for(int i=0; i<4; i++){

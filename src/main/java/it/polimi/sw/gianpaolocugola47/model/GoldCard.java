@@ -66,7 +66,6 @@ public class GoldCard extends ResourceCard {
             int coveredCorners = 0;
             int x=this.getLine();
             int y=this.getColumn();
-
             for(int corner=0; corner<4; corner++){
                 if(checkIfCovers(x, y, corner, playerTable))
                     coveredCorners++;
@@ -79,6 +78,6 @@ public class GoldCard extends ResourceCard {
         return -1; // incorrect GoldCard initialization
     }
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){
-        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner].getLinkedCorner() == playerTable.getPlacedCard(x, y).getCorners()[corner];
+        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner), playerTable.setYCoordinate(y, corner)).getCorners()[3-corner];
     }
 }

@@ -36,6 +36,7 @@ public class DiagonalPatternObjective extends Objectives {
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int corner;
         int cardMatches=0;
+        // checks from top to bottom
         if(this.isAscending) {
             corner=2;
         }else{
@@ -47,30 +48,29 @@ public class DiagonalPatternObjective extends Objectives {
         int patternsCounter=0;
         int cardsRequired=3;
         int cardsMatch=0;
+        // scroll placedCards[i][j]
         for (int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
                 if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
-                    j++;
+                    j++; // skip StartingCard
                 }
-                if(isResourceMatched(playerTable.getPlacedCard(i,j))){
+                if(isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j))){
+                    // found first card BUT not yet counted
                     int x=i;
                     int y=j;
                     for (int k = 0; k < cardsRequired; k++) {
-                        if(isResourceMatched(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
-                            if(cardsMatch<cardsRequired-1) {
+                        if(isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
+                            cardsMatch++;
+                            if(cardsMatch<=cardsRequired-1) {
                                 if(playerTable.getPlacedCard(x,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner),playerTable.setYCoordinate(y,corner)).getCorners()[3-corner]){
-                                    cardsMatch++;
-                                    x=(playerTable.setXCoordinate(x,corner));
+                                    x=(playerTable.setXCoordinate(x,corner)); //set coordinates to next card
                                     y=(playerTable.setYCoordinate(y,corner));
+                                }else {
+                                    break; // card is not linked to next card
                                 }
-                            }else{
-                                // last card of pattern
-                                cardsMatch++;
-                                x=(playerTable.setXCoordinate(x,corner));
-                                y=(playerTable.setYCoordinate(y,corner));
                             }
                         }else
-                            break;
+                            break; // found StartingCard OR resource is not matched OR card is already flaggedForObjective
                     }
                     if(cardsMatch==cardsRequired){
                         patternsCounter++;
@@ -87,7 +87,7 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return patternsCounter;
     }
-    protected boolean isResourceMatched(PlaceableCard card){
-        return this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
+    protected boolean isResourceMatchedAndNotFlagged(PlaceableCard card){
+        return this.resource.equals(((ResourceCard)card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
 }

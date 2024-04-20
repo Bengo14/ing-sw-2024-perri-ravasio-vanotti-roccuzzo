@@ -144,32 +144,32 @@ public class MainTable {
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){
-        if(!(playersTables[playerId].getElement(onTableCardX, onTableCardY)==null)){
+        if(playersTables[playerId].getElement(onTableCardX, onTableCardY)!=null){
             int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable OR incorrect GoldCard initialization
             addBoardPoints(playerId, points);
             int objectivePoints = playersTables[playerId].getObjectivePoints(this.globalObjectives);
-            int globalPoints = points + objectivePoints;
-            addGlobalPoints(playerId, globalPoints);
-            if(getBoardPoints(playerId)>=20)
+            int globalPoints = this.getBoardPoints(playerId) + objectivePoints;
+            setGlobalPoints(playerId, globalPoints);
+            if(getBoardPoints(playerId)>=20 && !isEndGame())
                 setEndGame();
-            return true;
+            return true; // correct placement and points added
         }else
             return false; // incorrect input: onTableCard is null
     }
     private void addBoardPoints(int player, int points){
         this.boardPoints[player] += points;
     }
-    private void addGlobalPoints(int player, int points){
-        this.globalPoints[player] += points;
+    private void setGlobalPoints(int player, int points){
+        this.globalPoints[player] = points;
     }
 
     protected void setEndGame() {
         this.endGame = true;
     }
     public boolean isEndGame() {
-        return endGame;
+        return this.endGame;
     }
 
     public int computeWinnerAtEndGame(){

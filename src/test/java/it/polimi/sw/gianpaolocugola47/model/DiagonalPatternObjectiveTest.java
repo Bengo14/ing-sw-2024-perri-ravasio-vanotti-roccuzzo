@@ -62,7 +62,7 @@ class DiagonalPatternObjectiveTest {
         assertEquals(Resources.INSECTS, i.getResource());
     }
     @Test
-    public void isResourceMatched() {
+    public void isResourceMatchedAndNotFlagged() {
         DiagonalPatternObjective obj = (DiagonalPatternObjective) objectiveCardsDeck.get(11);
         PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{});
 
@@ -70,19 +70,19 @@ class DiagonalPatternObjectiveTest {
 
     }
     @Test
-    void testIsResourceMatched() {
+    void testIsResourceMatchedAndNotFlagged() {
         // Test when the resource matches and the card is not flagged
         DiagonalPatternObjective obj = (DiagonalPatternObjective) objectiveCardsDeck.get(11);
         ResourceCard resourceCard = new ResourceCard("back", "front", 1, Resources.INSECTS);
-        assertTrue(obj.isResourceMatched(resourceCard));
+        assertTrue(obj.isResourceMatchedAndNotFlagged(resourceCard));
 
         // Test when the resource does not match
         ResourceCard differentResourceCard = new ResourceCard("back", "front", 1, Resources.ANIMAL);
-        assertFalse(obj.isResourceMatched(differentResourceCard));
+        assertFalse(obj.isResourceMatchedAndNotFlagged(differentResourceCard));
 
         // Test when the card is flagged
         resourceCard.setFlaggedForObjective(true);
-        assertFalse(obj.isResourceMatched(resourceCard));
+        assertFalse(obj.isResourceMatchedAndNotFlagged(resourceCard));
     }
 }
 //    @Test

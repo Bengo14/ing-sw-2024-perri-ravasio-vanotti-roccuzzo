@@ -24,8 +24,9 @@ public class ResourceObjective extends Objectives{
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
-        int resourceTrebleOccurrences;
-        resourceTrebleOccurrences=playerTable.getResourceCounter(this.resource.ordinal())/3;
-        return this.getPoints()*resourceTrebleOccurrences;
+        // 1 resourceSet is 3 resources
+        int resourceSetCounter;
+        resourceSetCounter =playerTable.getResourceCounter(this.resource.ordinal())/3;
+        return this.getPoints()* resourceSetCounter;
     }
 }

@@ -129,7 +129,7 @@ public class PlayerTable {
         if(corner==2||corner==3)
             return x+1;
         else
-            return -1;
+            return -1; // incorrect input: corner!=0,1,2,3
     }
     public int setYCoordinate(int y, int corner){
         if(corner==0||corner==2)
@@ -137,7 +137,7 @@ public class PlayerTable {
         if(corner==1||corner==3)
             return y+1;
         else
-            return -1;
+            return -1; // incorrect input: corner!=0,1,2,3
     }
     private boolean isCheap(GoldCard card){
         int[] resCounter = new int[Resources.values().length];
@@ -223,21 +223,19 @@ public class PlayerTable {
     }
     private void linkCards(int x,int y, int corner){
         // mirror-links ONE corner for 2 cards, if need to link 4 corners it is to be called 4 times
-        if(corner==0){
-            if(x>=1 && y>=1 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+        if(this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null){
+            if(corner==0 && x>=1 && y>=1){
                 linkCard(x, y, corner);
-        }
-        if(corner==1){
-            if(x>=1 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+            }
+            if(corner==1 && x>=1 && y<=getMatrixDimension()-2){
                 linkCard(x, y, corner);
-        }
-        if(corner==2){
-            if(x<=getMatrixDimension()-2 && y>=1 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+            }
+            if(corner==2 && x<=getMatrixDimension()-2 && y>=1){
                 linkCard(x, y, corner);
-        }
-        if(corner==3){
-            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null)
+            }
+            if(corner==3 && x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2){
                 linkCard(x, y, corner);
+            }
         }
     }
     private void linkCard(int x, int y, int corner){
@@ -257,11 +255,16 @@ public class PlayerTable {
 
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
+        for (int i = 0; i < getMatrixDimension(); i++){
+            for (int j = 0; j < getMatrixDimension(); j++)
+                this.placedCards[i][j].setFlaggedForObjective(false);
+        }
         for (Objectives objective : objectives) {
             points += objective.checkPatternAndComputePoints(this);
-            for (int i = 0; i < getMatrixDimension(); i++)
+            for (int i = 0; i < getMatrixDimension(); i++){
                 for (int j = 0; j < getMatrixDimension(); j++)
                     this.placedCards[i][j].setFlaggedForObjective(false);
+            }
         }
         return points;
     }

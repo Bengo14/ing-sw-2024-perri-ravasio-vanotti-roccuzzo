@@ -30,19 +30,19 @@ public class ItemObjective extends Objectives{
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
-        int itemOccurrences=0;
-        //looking for a PAIR of the same items
-        if(itemsRequired.size()<2){
-            itemOccurrences=playerTable.getResourceCounter(itemsRequired.getFirst().ordinal()+4)/2;
+        int itemsSetCounter;
+        //looking for a PAIR of the same item
+        if(itemsRequired.size()<=1){
+            itemsSetCounter =playerTable.getResourceCounter(itemsRequired.getFirst().ordinal()+4)/2;
         }else{
         //looking for a COMPLETE SET of all different items
             int[] array = new int[itemsRequired.size()];
             for(int i = 0; i<itemsRequired.size(); i++){
                 array[i]=playerTable.getResourceCounter(i+4);
-                Arrays.sort(array);
-                itemOccurrences=array[0];
             }
+            Arrays.sort(array);
+            itemsSetCounter =array[0];
         }
-        return this.getPoints()*itemOccurrences;
+        return this.getPoints()* itemsSetCounter;
     }
 }

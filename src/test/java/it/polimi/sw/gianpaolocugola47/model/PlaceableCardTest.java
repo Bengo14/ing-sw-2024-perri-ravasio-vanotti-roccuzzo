@@ -1,8 +1,27 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 class PlaceableCardTest {
+    private static ArrayList<StartingCard> startingCardsDeck;
+    @BeforeAll
+    public static void setUp(){
+        try(FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")){
+            Gson gson = new Gson();
+            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {}.getType();
+            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
    /*@Test
     public void testConstructor() {
     PlaceableCard p = new PlaceableCard("back", "front");

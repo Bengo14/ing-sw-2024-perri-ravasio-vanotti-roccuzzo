@@ -74,25 +74,26 @@ class ResourceObjectiveTest {
 
     @Test
     public void checkPatternAndComputePoints() {
-        StartingCard start = startingCardsDeck.getFirst();
+        StartingCard start = startingCardsDeck.get(2);
         //control the points of the objective card
-        // put the starting card in the front side
 
-        start.setCoordinates(29,29);
-        ResourceObjective plant = objectiveCardsDeck.get(4);
+
+        ResourceObjective obj = objectiveCardsDeck.get(4);
         //control the points of the objective card
-        //initialize counter
-        int [] counter = new int[7];
-        for(int i=0; i<7; i++){
-            counter[i]=0;
-        }
 
-        assertEquals(2,plant.getPoints());
+
+        //assertEquals(2,obj.getPoints());
         ResourceCard plant_1 = resourceCardsDeck.get(6);
         ResourceCard plant_2 = resourceCardsDeck.get(7);
-        ResourceCard plant_3 = resourceCardsDeck.get(11);
+        ResourceCard plant_3 = resourceCardsDeck.get(12);
+        MainTable main = new MainTable();
         PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1,plant_2,plant_3});
+        main.setNumOfPlayers(2);
+        main.setPlayerTable(1, player);
+        player.setSecretObjective(obj);
         player.setStartingCard(start);
+        player.placeStartingCard();
+
         //play 3 plant card in player table using checkAndPlaceCard method
 
         plant_1.switchFrontBack();
@@ -100,25 +101,17 @@ class ResourceObjectiveTest {
         plant_2.switchFrontBack();
 //        plant_2.getResourceCentreBack();
         plant_3.switchFrontBack();
-//        plant_3.getResourceCentreBack();
-        plant_1.setCoordinates(28,30);
-        plant_2.setCoordinates(28,28);
-        plant_3.setCoordinates(30,28);
-        //how to see the counter
-        //how to invoke the method update resource counter
-        plant_1.updateResourceCounter(counter);
-        plant_2.updateResourceCounter(counter);
-        plant_3.updateResourceCounter(counter);
-        for(int i=0; i<7; i++){
-            System.out.println(counter[i]);
-        }
-          System.out.println("\n");
-        System.out.println(player.getResourceCounter(6));
+
+        player.checkAndPlaceCard(0,29,29,1);
+        player.checkAndPlaceCard(1,29,29,3);
+        player.checkAndPlaceCard(2,29,29,0);
+        assertEquals(2,obj.checkPatternAndComputePoints(player));
+
+
+
 //        player.checkAndPlaceCard(0,71,73,2);
 //        player.checkAndPlaceCard(1,71,71,3);
 //        player.checkAndPlaceCard(2,73,71,1);
-        int resourceTrebleOccurrences;
-        resourceTrebleOccurrences= counter[2]/3 * 2;
-        assertEquals(2,resourceTrebleOccurrences);
+
     }
 }

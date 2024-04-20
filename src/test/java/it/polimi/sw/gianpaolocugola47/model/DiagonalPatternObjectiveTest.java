@@ -14,16 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class DiagonalPatternObjectiveTest {
-    //create a list of 16 objectives from json file
     private static ArrayList<DiagonalPatternObjective> objectiveCardsDeck;
-
+    private static ArrayList<ResourceCard> resourceCardsDeck;
+    private static ArrayList<StartingCard> startingCardsDeck;
     @BeforeAll
-    public static void setUpObjectives() {
+    public static void setUpCardsDeck() {
         try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json")) {
             Gson gson = new Gson();
             Type listOfCards = new TypeToken<ArrayList<DiagonalPatternObjective>>() {
             }.getType();
             objectiveCardsDeck = gson.fromJson(fileReader, listOfCards);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json")) {
+            Gson gson = new Gson();
+            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {
+            }.getType();
+            resourceCardsDeck = gson.fromJson(fileReader, listOfCards);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")) {
+            Gson gson = new Gson();
+            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {
+            }.getType();
+            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,12 +100,38 @@ class DiagonalPatternObjectiveTest {
         resourceCard.setFlaggedForObjective(true);
         assertFalse(obj.isResourceMatchedAndNotFlagged(resourceCard));
     }
+
+    @Test
+    public void testCheckPatternAndComputePoints(){
+        DiagonalPatternObjective obj = (DiagonalPatternObjective) objectiveCardsDeck.get(10);
+        StartingCard start = startingCardsDeck.get(2);
+        ResourceCard plant_1 = resourceCardsDeck.get(6);
+        plant_1.switchFrontBack();
+        ResourceCard plant_2 = resourceCardsDeck.get(7);
+        plant_2.switchFrontBack();
+        ResourceCard plant_3 = resourceCardsDeck.get(12);
+        plant_3.switchFrontBack();
+        ResourceCard res_1 = resourceCardsDeck.get(13);
+        ResourceCard res_2 = resourceCardsDeck.get(14);
+        ResourceCard res_3 = resourceCardsDeck.get(15);
+        MainTable main = new MainTable();
+        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1, plant_2, plant_3});
+        main.setNumOfPlayers(2);
+        main.setPlayerTable(1, player);
+        player.setStartingCard(start);
+        player.placeStartingCard();
+        assertNotNull(player.getElement(29,29));
+        player.checkAndPlaceCard(0, 29, 29, 3);
+        player.setCardOnHandInTheEmptyPosition(res_1);
+        assertNotNull(player.getElement(30,30));
+        player.checkAndPlaceCard(1, 30, 30, 3);
+        player.setCardOnHandInTheEmptyPosition(res_2);
+        assertNotNull(player.getElement(31,31));
+        player.checkAndPlaceCard(2, 31,31 , 3);
+        player.setCardOnHandInTheEmptyPosition(res_3);
+        //assertNotNull(player.getElement(32,32));
+
+        assertEquals(2, obj.checkPatternAndComputePoints(player));
+    }
+
 }
-//    @Test
-//    public void testCheckPatternAndComputePoints(){
-//        PlayerTable player = new PlayerTable(1,"name",);
-//    }
-//}
-
-
-    //create a test class for DiagonalPattern using the objectives taken from the json file

@@ -54,7 +54,13 @@ public class DiagonalPatternObjective extends Objectives {
                 if (playerTable.getPlacedCard(i,j) instanceof StartingCard){
                     j++; // skip StartingCard
                 }
-                if(isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j))){
+                if(playerTable.getElement(i,j)==null){
+                    int x=i;
+                    int y=j;
+                    x=(playerTable.setXCoordinate(x,corner)); //set coordinates to next card
+                    y=(playerTable.setYCoordinate(y,corner));
+                }
+                else if(isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j))){
                     // found first card BUT not yet counted
                     int x=i;
                     int y=j;

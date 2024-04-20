@@ -63,25 +63,37 @@ class GoldCardTest {
         assertFalse(g.isPointsForItems());
         assertNotEquals(Items.INKWELL, g.getItemThatGivesPoints());
     }
+    @Test
+    public void testGetresourcedRequired() {
+        GoldCard gold = goldCardDeck.get(0);
+        gold.getResourcesRequired();
+        System.out.println(gold.getResourcesRequired());
+    }
 
-//    @Test
-//    public void testGetCardPointForCorners() {
-//        //create gold card and 2 resource card from json
-//        GoldCard g = goldCardDeck.get(1);
-//        ResourceCard r1 = resourceCardsDeck.get(0);
-//        ResourceCard r2 = resourceCardsDeck.get(1);
-//        ResourceCard r3 = resourceCardsDeck.get(2);
-//        StartingCard start = startingCardsDeck.get(0);
-//        PlayerTable p = new PlayerTable(1, "name", new ResourceCard[]{r1, r2, r3});
-//        start.setCoordinates(29, 29);
-//        p.setStartingCard(start);
-//        r1.setCoordinates(30, 30);
-//        r2.setCoordinates(30, 28);
-//        g.setCoordinates(31, 29);
-//        g.getPoints(p, 31, 29);
-//        System.out.println(g.getPoints(p, 31, 29));
-//        //assertEquals(2, g.getPoints(p, 31, 29));
-//    }
+    @Test
+    public void testGetCardPointForCorners() {
+
+        GoldCard g = goldCardDeck.get(0);
+        ResourceCard plant_1 = resourceCardsDeck.get(6);
+        ResourceCard plant_2 = resourceCardsDeck.get(7);
+        ResourceCard plant_3 = resourceCardsDeck.get(12);
+        StartingCard start = startingCardsDeck.get(5);
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        PlayerTable p = new PlayerTable(1, "name", new ResourceCard[]{plant_3, plant_2, g});
+        main.setPlayerTable(1,p);
+        p.setStartingCard(start);
+        p.placeStartingCard();
+        p.checkAndPlaceCard(0,29,29,1);
+        p.checkAndPlaceCard(1,29,29,3);
+        p.checkAndPlaceCard(2,30,30,3);
+
+        //assertEquals(4,g.getPoints(p));
+        //System.out.println(g.getPoints(p));
+
+
+
+    }
 
         //    @Test
 //    public void testGetCardPointForCorners() {

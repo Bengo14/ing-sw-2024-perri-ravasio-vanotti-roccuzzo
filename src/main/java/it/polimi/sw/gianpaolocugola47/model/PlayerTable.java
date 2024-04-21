@@ -188,35 +188,38 @@ public class PlayerTable {
         // this method checks only ONE corner, if need to check all corners it is to be called 4 times
         x=setXCoordinate(x, corner);
         y=setYCoordinate(y, corner);
-        if(corner==0){
-            if(x>=1 && y>=1 && this.placedCards[x][y]!=null) {
-                return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
-            } else {
-                return true;
+        if(this.placedCards!=null){
+            if(corner==0){
+                if(x>=1 && y>=1) {
+                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                } else {
+                    return true; // card is on matrix's edge
+                }
             }
-        }
-        if(corner==1){
-            if(x>=1 && y<=getMatrixDimension()-2 && this.placedCards[x][y]!=null) {
-                return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
-            } else {
-                return true;
+            if(corner==1){
+                if(x>=1 && y<=getMatrixDimension()-2) {
+                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                } else {
+                    return true; // card is on matrix's edge
+                }
             }
-        }
-        if(corner==2){
-            if(x<=getMatrixDimension()-2 && y>=1 && this.placedCards[x][y]!=null) {
-                return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
-            } else {
-                return true;
+            if(corner==2){
+                if(x<=getMatrixDimension()-2 && y>=1) {
+                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                } else {
+                    return true; // card is on matrix's edge
+                }
             }
-        }
-        if(corner==3){
-            if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2 && this.placedCards[x][y]!=null) {
-                return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
-            } else {
-                return true;
+            if(corner==3){
+                if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2) {
+                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                } else {
+                    return true; // card is on matrix's edge
+                }
             }
-        }
-        return false;
+            return false; // corner!=0,1,2,3
+        }else
+            return false; // card is null
     }
     private void placeCard(int x,int y, ResourceCard card) {
         this.placedCards[x][y]=card;

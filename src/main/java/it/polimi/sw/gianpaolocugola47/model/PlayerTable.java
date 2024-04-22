@@ -43,6 +43,7 @@ public class PlayerTable {
     }
     public void placeStartingCard(){
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS]=this.startingCard;
+        this.startingCard.setCoordinates(STARTING_CARD_POS, STARTING_CARD_POS);
     }
 
     protected void setSecretObjective(Objectives objective){
@@ -188,7 +189,7 @@ public class PlayerTable {
         // this method checks only ONE corner, if need to check all corners it is to be called 4 times
         x=setXCoordinate(x, corner);
         y=setYCoordinate(y, corner);
-        if(this.placedCards!=null){
+        if(this.placedCards[x][y]!=null){
             if(corner==0){
                 if(x>=1 && y>=1) {
                     return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
@@ -219,7 +220,7 @@ public class PlayerTable {
             }
             return false; // corner!=0,1,2,3
         }else
-            return false; // card is null
+            return true; // card is null
     }
     private void placeCard(int x,int y, ResourceCard card) {
         this.placedCards[x][y]=card;

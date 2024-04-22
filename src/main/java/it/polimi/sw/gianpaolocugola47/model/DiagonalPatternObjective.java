@@ -53,7 +53,7 @@ public class DiagonalPatternObjective extends Objectives {
                 if (playerTable.getPlacedCard(i, j) instanceof StartingCard) {
                     j++; // skip StartingCard
                 }
-                if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j)) && cardsRequired>0) {
+                if (playerTable.getPlacedCard(i,j)!=null && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j)) && cardsRequired>0) {
                     // found first card BUT not yet counted
                     if(corner==2 && i<=PlayerTable.getMatrixDimension()-cardsRequired && j>=cardsRequired-1){
                         if(diagonalPatternVerifier(i,j,cardsRequired, corner,playerTable)){
@@ -73,7 +73,7 @@ public class DiagonalPatternObjective extends Objectives {
         return patternsCounter;
     }
     protected boolean isResourceMatchedAndNotFlagged(PlaceableCard card) {
-        return this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective() && card != null;
+        return card!=null && this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     private boolean diagonalPatternVerifier(int x, int y, int cardsRequired, int corner, PlayerTable playerTable){
         int cardsMatch=0;
@@ -81,7 +81,7 @@ public class DiagonalPatternObjective extends Objectives {
             if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y)) && !(playerTable.getPlacedCard(x, y) instanceof StartingCard)) {
                 cardsMatch++;
                 if (cardsMatch <= cardsRequired - 1) {
-                    if (playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
+                    if (playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
                         y = (playerTable.setYCoordinate(y, corner));
                     } else {

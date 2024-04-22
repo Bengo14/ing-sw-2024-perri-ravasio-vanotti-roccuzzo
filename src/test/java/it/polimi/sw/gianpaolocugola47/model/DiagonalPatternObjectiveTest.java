@@ -46,7 +46,7 @@ class DiagonalPatternObjectiveTest {
     }
 
     @Test
-    public void testConstriuctorFungi() {
+    public void testConstructorFungi() {
         //create the card from json file
         DiagonalPatternObjective f = (DiagonalPatternObjective) objectiveCardsDeck.get(8);
         assertNotNull(f);
@@ -54,7 +54,7 @@ class DiagonalPatternObjectiveTest {
         assertEquals(Resources.FUNGI, f.getResource());
     }
     @Test
-    public void testConstriuctorAnimal() {
+    public void testConstructorAnimal() {
         //create the card from json file
         DiagonalPatternObjective a = (DiagonalPatternObjective) objectiveCardsDeck.get(9);
         assertNotNull(a);
@@ -62,7 +62,7 @@ class DiagonalPatternObjectiveTest {
         assertEquals(Resources.ANIMAL, a.getResource());
     }
     @Test
-    public void testConstriuctorPlant() {
+    public void testConstructorPlant() {
         //create the card from json file
         DiagonalPatternObjective p = (DiagonalPatternObjective) objectiveCardsDeck.get(10);
         assertNotNull(p);
@@ -70,7 +70,7 @@ class DiagonalPatternObjectiveTest {
         assertEquals(Resources.PLANT, p.getResource());
     }
     @Test
-    public void testConstriuctor() {
+    public void testConstructor() {
         //create the card from json file
         DiagonalPatternObjective i = (DiagonalPatternObjective) objectiveCardsDeck.get(11);
         assertNotNull(i);
@@ -129,7 +129,7 @@ class DiagonalPatternObjectiveTest {
         assertNotNull(player.getElement(31,31));
         player.checkAndPlaceCard(2, 31,31 , 3);
         player.setCardOnHandInTheEmptyPosition(res_3);
-        //assertNotNull(player.getElement(32,32));
+        assertNotNull(player.getElement(32,32));
 
         assertEquals(2, obj.checkPatternAndComputePoints(player));
     }

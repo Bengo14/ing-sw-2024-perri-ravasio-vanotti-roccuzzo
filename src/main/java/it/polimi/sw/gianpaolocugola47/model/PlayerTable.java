@@ -108,7 +108,7 @@ public class PlayerTable {
      * @return the points made by the player if the card has been placed, else returns -1.
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
-        int points;
+        int points=0;
         ResourceCard card = cardsOnHand[onHandCard];
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
             if(card instanceof GoldCard && card.isFront()){
@@ -120,7 +120,8 @@ public class PlayerTable {
                 placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
         }else
             return -1; // incorrect input: position is not buildable
-        points = card.getPoints(this);
+        if(card.isFront())
+            points = card.getPoints(this);
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }

@@ -111,7 +111,7 @@ public class PlayerTable {
         int points;
         ResourceCard card = cardsOnHand[onHandCard];
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
-            if(card instanceof GoldCard){
+            if(card instanceof GoldCard && card.isFront()){
                 if(isCheap((GoldCard) card))
                     placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
                 else
@@ -142,7 +142,7 @@ public class PlayerTable {
     }
     private boolean isCheap(GoldCard card){
         int[] resCounter = new int[Resources.values().length];
-        System.arraycopy(this.resourceCounter, 0, resCounter, 0, resCounter.length); // resCounter only of Resources
+        System.arraycopy(this.resourceCounter, 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
         for(int i=0; i<card.getResourcesRequired().toArray().length; i++){
             resCounter[card.getResourcesRequired().get(i).ordinal()]--; // decrease required resource
         }

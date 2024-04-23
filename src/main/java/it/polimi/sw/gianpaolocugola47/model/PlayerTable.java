@@ -40,10 +40,10 @@ public class PlayerTable {
 
     public void setStartingCard(StartingCard startingCard){
         this.startingCard = startingCard;
-    }
-    public void placeStartingCard(){
         this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS]=this.startingCard;
         this.startingCard.setCoordinates(STARTING_CARD_POS, STARTING_CARD_POS);
+        startingCard.updateResourceCounter(this.resourceCounter);
+
     }
 
     protected void setSecretObjective(Objectives objective){

@@ -14,47 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class ItemObjectiveTest {
-    private static ArrayList<ResourceCard> resourceCardsDeck;
-    private static ArrayList<StartingCard> startingCardsDeck;
-    private static ArrayList<ItemObjective> objectiveCardsDeck;
-    private static ArrayList<GoldCard> goldCardsDeck;
 
-    @BeforeAll
-    public static void setUpStartingCArd() {
-
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ItemObjective>>() {
-            }.getType();
-            objectiveCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {
-            }.getType();
-            resourceCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {
-            }.getType();
-            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/goldCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<GoldCard>>() {
-            }.getType();
-            goldCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @Test
     public void testConstructorAndGetterItemObjective() {
         ArrayList<Items> items = new ArrayList<>();
@@ -68,36 +28,30 @@ class ItemObjectiveTest {
     }
     @Test
     public void testCheckPatternAndComputePoints(){
-    StartingCard start = startingCardsDeck.get(0);
-    ResourceCard res1 = resourceCardsDeck.get(2);
-    ResourceCard res2 = resourceCardsDeck.get(16);
-    ResourceCard res3 = resourceCardsDeck.get(0);
-    ResourceCard res4 = resourceCardsDeck.get(1);
+//        MainTable main = new MainTable();
+//        main.setNumOfPlayers(2);
+//        StartingCard start = Deck.getStartingCardsDeck().get(0);
+//        ResourceCard res1 = Deck.getResourceCardsDeck().get(2);
+//        ResourceCard res2 = Deck.getResourceCardsDeck().get(16);
+//        ResourceCard res3 = Deck.getResourceCardsDeck().get(0);
+//        ResourceCard res4 = Deck.getResourceCardsDeck().get(1);
+//        ItemObjective i = (ItemObjective) Deck.getObjectiveCardsDeck().get(0);
+//        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{});
+//        main.setPlayerTable(1,player);
+//        main.setPlayerStartingCard(1,start);
+//        player.setStartingCard(start);
+//        main.setPlayerSecretObjective(1,i);
+//        main.playCardAndUpdatePoints(0,29,29,1,1);
+//        main.playCardAndUpdatePoints(1,29,29,3,1);
+//        player.setCardOnHandInTheEmptyPosition(res4);
+//        main.playCardAndUpdatePoints(2,29,29,0,1);
 
-    ItemObjective i = objectiveCardsDeck.get(0);
-    PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{});
 
-    start.isFront();
-    start.setCoordinates(29,29);
-    res1.isFront();
-    res2.isFront();
-    res3.isFront();
-    res3.switchFrontBack();
-    res4.isFront();
-    res4.switchFrontBack();
 
-    res1.setCoordinates(28,28);
-    res2.setCoordinates(28,30);
-    res3.setCoordinates(30,28);
-    res4.setCoordinates(30,30);
-    player.getElement(28,28);
-    player.getElement(28,30);
-    player.getElement(30,28);
-    player.getElement(30,30);
-    int point = i.checkPatternAndComputePoints(player);
-    System.out.println(point);
-    //deve ritornare due ma ritorna sempre zero non capisco il motivo
 
-    //assertEquals(2,i.checkPatternAndComputePoints(player));
+
+
+
+
     }
 }

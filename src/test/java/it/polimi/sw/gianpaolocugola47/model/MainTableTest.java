@@ -13,36 +13,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTableTest {
-    private static ArrayList<ResourceObjective> objectiveCardsDeck;
-    private static ArrayList<ResourceCard> resourceCardsDeck;
-    private static ArrayList<StartingCard> startingCardsDeck;
-    @BeforeAll
-    public static void setUpCardsDeck() {
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceObjective>>() {
-            }.getType();
-            objectiveCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {
-            }.getType();
-            resourceCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {
-            }.getType();
-            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     @Test
     public void testConstructor() {
         MainTable mainTable = new MainTable();
@@ -108,9 +79,9 @@ class MainTableTest {
     @Test
     public void testDrawCardFrom(){
         MainTable mainTable = new MainTable();
-        ResourceCard res_1 = resourceCardsDeck.get(0);
-        ResourceCard res_2 = resourceCardsDeck.get(1);
-        ResourceCard res_3 = resourceCardsDeck.get(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
         mainTable.setNumOfPlayers(2);
         Deck.initDeck();
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1,res_2,res_3});
@@ -124,8 +95,8 @@ class MainTableTest {
     @Test
     public void testSetPlayerSecretObjective(){
         MainTable mainTable = new MainTable();
-        Objectives obj = objectiveCardsDeck.get(0);
-        Objectives obj2 = objectiveCardsDeck.get(1);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj2 = Deck.getObjectiveCardsDeck().get(1);
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
         mainTable.setNumOfPlayers(2);
         mainTable.setPlayerTable(0, player);
@@ -136,9 +107,9 @@ class MainTableTest {
     @Test
     public void testSwitchCardOnHandFrontBack(){
         MainTable mainTable = new MainTable();
-        ResourceCard res_1 = resourceCardsDeck.get(0);
-        ResourceCard res_2 = resourceCardsDeck.get(1);
-        ResourceCard res_3 = resourceCardsDeck.get(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1, res_2, res_3});
         mainTable.setNumOfPlayers(2);
         mainTable.setPlayerTable(0, player);

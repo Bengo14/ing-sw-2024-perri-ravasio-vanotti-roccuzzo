@@ -11,17 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 class PlaceableCardTest {
-    private static ArrayList<StartingCard> startingCardsDeck;
-    @BeforeAll
-    public static void setUp(){
-        try(FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")){
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {}.getType();
-            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
    /*@Test
     public void testConstructor() {
     PlaceableCard p = new PlaceableCard("back", "front");
@@ -64,5 +54,26 @@ class PlaceableCardTest {
         for (int i = 0; i < 8; i++) {
             assert(c[i] == p.getCorners()[i]);
         }
+    }
+    @Test
+    public void testSetCoordinates(){
+        PlaceableCard p = new PlaceableCard("back", "front") {
+            @Override
+            public void updateResourceCounter(int[] counter) {
+            }
+        };
+        p.setCoordinates(1, 2);
+        assert(p.getLine() == 1);
+        assert(p.getColumn() == 2);
+    }
+    @Test
+    public void testGetImgPath(){
+        PlaceableCard p = new PlaceableCard("back", "front") {
+            @Override
+            public void updateResourceCounter(int[] counter) {
+            }
+        };
+        assert(p.getBackImgPath().equals("back"));
+        assert(p.getFrontImgPath().equals("front"));
     }
 }

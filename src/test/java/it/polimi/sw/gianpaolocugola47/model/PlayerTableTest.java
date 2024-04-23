@@ -15,69 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class PlayerTableTest {
-    private static ArrayList<ResourceCard> resourceCardsDeck;
-    private static ArrayList<StartingCard> startingCardsDeck;
-    private static ArrayList<ResourceObjective> objectiveCardsDeck;
-    private static ArrayList<GoldCard> goldCardsDeck;
-
-    @BeforeAll
-    public static void setUpStartingCArd() {
-
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceObjective>>() {
-            }.getType();
-            objectiveCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {
-            }.getType();
-            resourceCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {
-            }.getType();
-            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/goldCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<GoldCard>>() {
-            }.getType();
-            goldCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 
     @Test
     void setCardOnHandInTheEmptyPosition() {
-        ResourceCard plant_0 = resourceCardsDeck.get(6);
-        ResourceCard plant_1 = resourceCardsDeck.get(7);
-        ResourceCard plant_2 = resourceCardsDeck.get(11);
+        Deck.initDeck();
+        ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        p.setCardOnHandInTheEmptyPosition(resourceCardsDeck.get(0));
+        p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().get(0));
         assertNotNull(p.getCardOnHand(2));
     }
-    @Test
-    public void testGetCanPlay(){
-        ResourceCard plant_0 = resourceCardsDeck.get(6);
-        ResourceCard plant_1 = resourceCardsDeck.get(7);
-        ResourceCard plant_2 = resourceCardsDeck.get(11);
-        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        int point = 0;
 
-
-    }
 //    @Test
 //    public void testGetelement(){
 //        StartingCard start = startingCardsDeck.get(0);
@@ -92,7 +43,8 @@ class PlayerTableTest {
 
     @Test
     public void testIsPlaceable(){
-        StartingCard start = startingCardsDeck.get(0);
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(0);
 
 
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{});
@@ -107,19 +59,8 @@ class PlayerTableTest {
         //assertTrue(p.isPlaceable(28,28));
 
 
+    }
 
-    }
-    @Test
-    public void testGetObjectivePoints(){
-        StartingCard start = startingCardsDeck.get(0);
-        Objectives obj = objectiveCardsDeck.get(4);
-        start.setCoordinates(29,29);
-        ResourceCard plant_0 = resourceCardsDeck.get(6);
-        ResourceCard plant_1 = resourceCardsDeck.get(7);
-        ResourceCard plant_2 = resourceCardsDeck.get(11);
-        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        //assertEquals(2,p.getObjectivePoints(obj));
-    }
 //    @Test
 //    public void testIsCheap(){
 //        StartingCard start = startingCardsDeck.get(0);
@@ -137,9 +78,10 @@ class PlayerTableTest {
 
     @Test
     public void testConstructorAndGetterPlayerTable(){
-        ResourceCard plant_0 = resourceCardsDeck.get(6);
-        ResourceCard plant_1 = resourceCardsDeck.get(7);
-        ResourceCard plant_2 = resourceCardsDeck.get(11);
+        Deck.initDeck();
+        ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
 
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
 
@@ -153,21 +95,22 @@ class PlayerTableTest {
     }
     @Test
     public void testCheckAndPlaceCard(){
-        StartingCard start = startingCardsDeck.get(2);
-        ResourceCard res = resourceCardsDeck.get(0);
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        ResourceCard res = Deck.getResourceCardsDeck().get(0);
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
-        p.placeStartingCard();
+
       //  assertNotNull(p.getElement(28,30));
         p.checkAndPlaceCard(0, 29, 29, 3);
         assertNotNull(p.getElement(30,30));
     }
     @Test
     public void testPlaceStartingCard(){
-        StartingCard start = startingCardsDeck.get(0);
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(0);
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{});
         p.setStartingCard(start);
-        p.placeStartingCard();
         assertNotNull(p.getElement(29,29));
         System.out.println(p.getElement(29,29));
     }

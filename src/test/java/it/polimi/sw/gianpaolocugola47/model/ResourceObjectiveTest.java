@@ -13,105 +13,63 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceObjectiveTest {
-    private static ArrayList<ResourceObjective> objectiveCardsDeck;
-    private static ArrayList<ResourceCard> resourceCardsDeck;
-    private static ArrayList<StartingCard> startingCardsDeck;
-    @BeforeAll
-    public static void setUpObjectives() {
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceObjective>>() {
-            }.getType();
-            objectiveCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {
-            }.getType();
-            resourceCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileReader fileReader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json")) {
-            Gson gson = new Gson();
-            Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {
-            }.getType();
-            startingCardsDeck = gson.fromJson(fileReader, listOfCards);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     @Test
     public void testConstructorPlant(){
-        //create card from json file
-        ResourceObjective plant = objectiveCardsDeck.get(4);
+        Deck.initDeck();
+        ResourceObjective plant = (ResourceObjective) Deck.getObjectiveCardsDeck().get(4);
+        assertEquals(Resources.PLANT,plant.getResource());
         assertNotNull(plant);
-        assertEquals(Resources.PLANT, plant.getResource());
     }
     @Test
     public void testConstructorInsect(){
-        //create card from json file
-        ResourceObjective insect = objectiveCardsDeck.get(5);
+        Deck.initDeck();
+        ResourceObjective insect = (ResourceObjective) Deck.getObjectiveCardsDeck().get(5);
+        assertEquals(Resources.INSECTS,insect.getResource());
         assertNotNull(insect);
-        assertEquals(Resources.INSECTS, insect.getResource());
     }
+
     @Test
     public void testConstructorFungi(){
-        //create card from json file
-        ResourceObjective fungi = objectiveCardsDeck.get(6);
+        Deck.initDeck();
+        ResourceObjective fungi = (ResourceObjective) Deck.getObjectiveCardsDeck().get(6);
+        assertEquals(Resources.FUNGI,fungi.getResource());
         assertNotNull(fungi);
-        assertEquals(Resources.FUNGI, fungi.getResource());
     }
     @Test
     public void testConstructorAnimal(){
-        ResourceObjective animal = objectiveCardsDeck.get(7);
+        Deck.initDeck();
+        ResourceObjective animal = (ResourceObjective) Deck.getObjectiveCardsDeck().get(7);
+        assertEquals(Resources.ANIMAL,animal.getResource());
         assertNotNull(animal);
-        assertEquals(Resources.ANIMAL, animal.getResource());
+        ResourceObjective obj = new ResourceObjective("front","back",Resources.ANIMAL);
     }
 
 
     @Test
     public void checkPatternAndComputePoints() {
-        StartingCard start = startingCardsDeck.get(2);
-        //control the points of the objective card
-
-
-        ResourceObjective obj = objectiveCardsDeck.get(4);
-        //control the points of the objective card
-
-
-        //assertEquals(2,obj.getPoints());
-        ResourceCard plant_1 = resourceCardsDeck.get(6);
-        ResourceCard plant_2 = resourceCardsDeck.get(7);
-        ResourceCard plant_3 = resourceCardsDeck.get(12);
         MainTable main = new MainTable();
-        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1,plant_2,plant_3});
         main.setNumOfPlayers(2);
-        main.setPlayerTable(1, player);
-        player.setSecretObjective(obj);
-        player.setStartingCard(start);
-        player.placeStartingCard();
-
-        //play 3 plant card in player table using checkAndPlaceCard method
-
-        plant_1.switchFrontBack();
-//        plant_1.getResourceCentreBack();
-        plant_2.switchFrontBack();
-//        plant_2.getResourceCentreBack();
-        plant_3.switchFrontBack();
-
-        player.checkAndPlaceCard(0,29,29,1);
-        player.checkAndPlaceCard(1,29,29,3);
-        player.checkAndPlaceCard(2,29,29,0);
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(4);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
+        ResourceCard plant_3 = Deck.getResourceCardsDeck().get(12);
+        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1,plant_2,plant_3});
+        main.setPlayerTable(1,player);
+        main.setPlayerStartingCard(1,start);
+        main.setPlayerSecretObjective(1,obj);
+        main.playCardAndUpdatePoints(0,29,29,1,1);
+        //verify if the card is played
+        assertNotNull(player.getElement(28,30));
+        //System.out.println(player.getResourceCounter(2));
+        main.playCardAndUpdatePoints(1,29,29,3,1);
+        assertNotNull(player.getElement(30,30));
+        //System.out.println(player.getResourceCounter(2));
+        main.playCardAndUpdatePoints(2,29,29,0,1);
+        //System.out.println(player.getResourceCounter(2));
+        //System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(2,obj.checkPatternAndComputePoints(player));
 
-
-
-//        player.checkAndPlaceCard(0,71,73,2);
-//        player.checkAndPlaceCard(1,71,71,3);
-//        player.checkAndPlaceCard(2,73,71,1);
-
-    }
+   }
 }

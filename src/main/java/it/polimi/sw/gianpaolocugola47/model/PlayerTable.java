@@ -261,14 +261,18 @@ public class PlayerTable {
     public int getObjectivePoints(Objectives[] objectives){
         int points = getSecretObjectivePoints();
         for (int i = 0; i < getMatrixDimension(); i++){
-            for (int j = 0; j < getMatrixDimension(); j++)
-                this.placedCards[i][j].setFlaggedForObjective(false);
+            for (int j = 0; j < getMatrixDimension(); j++){
+                if(this.placedCards[i][j]!=null)
+                    this.placedCards[i][j].setFlaggedForObjective(false);
+            }
         }
         for (Objectives objective : objectives) {
             points += objective.checkPatternAndComputePoints(this);
-            for (int i = 0; i < getMatrixDimension(); i++){
-                for (int j = 0; j < getMatrixDimension(); j++)
-                    this.placedCards[i][j].setFlaggedForObjective(false);
+            for (int i = 0; i < getMatrixDimension(); i++) {
+                for (int j = 0; j < getMatrixDimension(); j++) {
+                    if (this.placedCards[i][j] != null)
+                        this.placedCards[i][j].setFlaggedForObjective(false);
+                }
             }
         }
         return points;

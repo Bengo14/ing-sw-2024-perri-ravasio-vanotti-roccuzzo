@@ -88,8 +88,6 @@ class PlayerTableTest {
         assertNotNull(p);
         assertEquals(1, p.getId());
         assertEquals("name", p.getNickName());
-        p.setFirst();
-        assertTrue(p.isFirst());
         assertEquals(0, p.getResourceCounter(0));
         assertNotNull(p.getCardOnHand(0));
     }

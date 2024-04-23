@@ -45,7 +45,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
            while(true) {
                while (terminated)
                    Thread.onSpinWait();
-               System.err.println("Ping control");
+               //System.err.println("Ping control");
                VirtualView view = null;
                try {
                    synchronized (this.clients) {

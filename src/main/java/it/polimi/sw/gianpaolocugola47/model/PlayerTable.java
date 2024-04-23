@@ -13,7 +13,6 @@ public class PlayerTable {
     private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
     private final int id;
     private final String nickName;
-    private boolean isFirst;
     private boolean canPlay;
     private int[] resourceCounter;
     private Objectives secretObjective;
@@ -31,7 +30,6 @@ public class PlayerTable {
     public PlayerTable(int id, String nickName, ResourceCard[] cardsOnHand) {
         this.id = id;
         this.nickName = nickName;
-        this.isFirst = this.id == 0;
         this.canPlay=true;  //default
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.cardsOnHand = cardsOnHand;
@@ -40,10 +38,9 @@ public class PlayerTable {
 
     public void setStartingCard(StartingCard startingCard){
         this.startingCard = startingCard;
-        this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS]=this.startingCard;
+        this.placedCards[STARTING_CARD_POS][STARTING_CARD_POS] = this.startingCard;
         this.startingCard.setCoordinates(STARTING_CARD_POS, STARTING_CARD_POS);
         startingCard.updateResourceCounter(this.resourceCounter);
-
     }
 
     protected void setSecretObjective(Objectives objective){
@@ -62,12 +59,6 @@ public class PlayerTable {
     }
     public boolean getCanPlay(){return canPlay;}
     private void unsetCanPlay(){this.canPlay = false;}
-    public boolean isFirst() {
-        return isFirst;
-    }
-    public void setFirst() {
-        isFirst = true;
-    }
     public int getResourceCounter(int position) {
         return resourceCounter[position];
     }

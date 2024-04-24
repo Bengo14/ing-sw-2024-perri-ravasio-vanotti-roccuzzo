@@ -29,6 +29,7 @@ public class LShapePatternObjective extends Objectives{
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
+        int patterns;
         int shiftX =0;
         int corner=0;
         if(this.orientation.equals("topLeft")){
@@ -47,7 +48,14 @@ public class LShapePatternObjective extends Objectives{
             shiftX++;
             corner=3;
         }
-        return this.getPoints()* LShapePatternsCounter(playerTable, shiftX, corner);
+        patterns=LShapePatternsCounter(playerTable, shiftX, corner);
+        for(int i=0; i<PlayerTable.getMatrixDimension(); i++){
+            for(int j=i+1; j<PlayerTable.getMatrixDimension(); j++){
+                if(playerTable.getPlacedCard(i,j)!=null)
+                    playerTable.getPlacedCard(i,j).setFlaggedForObjective(false);
+            }
+        }
+        return this.getPoints()* patterns;
     }
     private int LShapePatternsCounter(PlayerTable playerTable, int shift , int corner){
         int patternsCounter=0;
@@ -60,7 +68,7 @@ public class LShapePatternObjective extends Objectives{
                     j++; // skip StartingCard
                 }
                 //looking for vertical cards
-                if(isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j)) && isSecondaryResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i+verticalCardsRequired, playerTable.setYCoordinate(j,corner))) && verticalCardsRequired>0 && diagonalCardsRequired>0){
+                if(isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j)) && verticalCardsRequired>0 && diagonalCardsRequired>0){
                     // found vertical card BUT not yet counted
                     if(shift<0 && corner==0 && i>=verticalCardsRequired+diagonalCardsRequired-1 && j>=diagonalCardsRequired){
                         if(LShapePatternVerifier(i, j, verticalCardsRequired, diagonalCardsRequired, shift, corner, playerTable)){
@@ -95,7 +103,10 @@ public class LShapePatternObjective extends Objectives{
      * checks if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective
      */
     private boolean isMainResourceMatchedAndNotFlagged(PlaceableCard card){
-        return this.mainResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective() && card!=null;
+        return card!=null && this.mainResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
+    }
+    private boolean isSecondaryResourceMatchedAndNotFlagged(PlaceableCard card){
+        return card!=null && this.secondaryResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     private boolean LShapePatternVerifier(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         if(verticalPatternVerifier(x, y, verticalCardsRequired,shift,playerTable) && diagonalCardsRequired>0 && playerTable.getPlacedCard(x+verticalCardsRequired-1,y).getCorners()[corner].getLinkedCorner()==playerTable.getPlacedCard(x, playerTable.setYCoordinate(y, corner)).getCorners()[3-corner]){
@@ -111,7 +122,7 @@ public class LShapePatternObjective extends Objectives{
     private boolean verticalPatternVerifier(int x, int y, int verticalCardsRequired, int shift, PlayerTable playerTable){
         int verticalCardsMatch=0;
         for (int i = 0; i < verticalCardsRequired; i++) {
-            if(isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x,y)) && !(playerTable.getPlacedCard(x,y) instanceof StartingCard)){
+            if(!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x,y))){
                 verticalCardsMatch++;
                 x=x+shift; // set coordinates to next vertical card
             }else
@@ -136,9 +147,6 @@ public class LShapePatternObjective extends Objectives{
                 return false; // found StartingCard OR resource is not matched OR card is already flaggedForObjective OR card is null
         }
         return diagonalCardsMatch == diagonalCardsRequired;
-    }
-    private boolean isSecondaryResourceMatchedAndNotFlagged(PlaceableCard card){
-        return this.secondaryResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective() && card!=null;
     }
     private void LShapePatternFlagger(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         verticalPatternFlagger(x,y,verticalCardsRequired,shift,playerTable);

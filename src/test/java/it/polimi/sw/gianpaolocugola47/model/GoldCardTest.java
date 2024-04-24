@@ -34,7 +34,7 @@ class GoldCardTest {
     }
 
     @Test
-    public void testGetCardPointForCorners() {
+    public void testGetCardPointForPlacing() {
         MainTable main = new MainTable();
         GoldCard g = Deck.getGoldCardsDeck().get(0);
 
@@ -56,6 +56,7 @@ class GoldCardTest {
 //        p.placeStartingCard();
 
         main.playCardAndUpdatePoints(0,29,29,1,1);
+        System.out.println(p.getResourceCounter(2));
         main.playCardAndUpdatePoints(1,29,29,3,1);
         System.out.println(p.getResourceCounter(2));
         main.playCardAndUpdatePoints(2,30,30,3,1);

@@ -34,6 +34,7 @@ public class DiagonalPatternObjective extends Objectives {
 
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
+        int patterns;
         int corner;
         int cardMatches = 0;
         // checks from top to bottom
@@ -42,7 +43,14 @@ public class DiagonalPatternObjective extends Objectives {
         } else {
             corner = 3;
         }
-        return this.getPoints() * diagonalPatternsCounter(playerTable, corner);
+        patterns=diagonalPatternsCounter(playerTable, corner);
+        for(int i=0; i<PlayerTable.getMatrixDimension(); i++){
+            for(int j=i+1; j<PlayerTable.getMatrixDimension(); j++){
+                if(playerTable.getPlacedCard(i,j)!=null)
+                    playerTable.getPlacedCard(i,j).setFlaggedForObjective(false);
+            }
+        }
+        return this.getPoints()* patterns;
     }
     private int diagonalPatternsCounter(PlayerTable playerTable, int corner) {
         int patternsCounter = 0;
@@ -53,7 +61,7 @@ public class DiagonalPatternObjective extends Objectives {
                 if (playerTable.getPlacedCard(i, j) instanceof StartingCard) {
                     j++; // skip StartingCard
                 }
-                if (playerTable.getPlacedCard(i,j)!=null && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j)) && cardsRequired>0) {
+                if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j)) && cardsRequired>0) {
                     // found first card BUT not yet counted
                     if(corner==2 && i<=PlayerTable.getMatrixDimension()-cardsRequired && j>=cardsRequired-1){
                         if(diagonalPatternVerifier(i,j,cardsRequired, corner,playerTable)){
@@ -78,10 +86,10 @@ public class DiagonalPatternObjective extends Objectives {
     private boolean diagonalPatternVerifier(int x, int y, int cardsRequired, int corner, PlayerTable playerTable){
         int cardsMatch=0;
         for (int i = 0; i < cardsRequired; i++) {
-            if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y)) && !(playerTable.getPlacedCard(x, y) instanceof StartingCard)) {
+            if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 cardsMatch++;
                 if (cardsMatch <= cardsRequired - 1) {
-                    if (playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
+                    if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
                         y = (playerTable.setYCoordinate(y, corner));
                     } else {

@@ -55,6 +55,20 @@ class DeckTest {
         assertNotNull(Deck.getObjectiveCardsDeck());
         assertFalse(Deck.getObjectiveCardsDeck().isEmpty());
     }
+    @Test
+    public void testAreDecksEmpty() {
+        Deck.initDeck();
+        Deck.areDecksEmpty();
+        Deck.getStartingCardsDeck().clear();
+        Deck.getResourceCardsDeck().clear();
+        Deck.getGoldCardsDeck().clear();
+        Deck.getObjectiveCardsDeck().clear();
+        assertEquals(null, Deck.drawCardFromResourceDeck());
+        assertEquals(null, Deck.drawCardFromGoldDeck());
+        assertEquals(null, Deck.drawCardFromStartingDeck());
+        assertEquals(null, Deck.drawCardFromObjectivesDeck());
+        assertTrue(Deck.areDecksEmpty());
+    }
 }
 
 

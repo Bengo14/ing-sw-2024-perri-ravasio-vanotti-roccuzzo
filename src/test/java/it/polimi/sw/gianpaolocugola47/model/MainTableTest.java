@@ -116,6 +116,22 @@ class MainTableTest {
         mainTable.switchCardOnHandFrontBack(0, 0);
         assertFalse(mainTable.getPlayerTable(0).getCardOnHand(2).isFront());
     }
+    @Test
+    public void testCheckIfPlayerCanPlay(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
+        PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{});
+        main.setPlayerTable(0, player);
+        main.setPlayerTable(1, player2);
+        StartingCard start = main.drawStartingCard();
+        StartingCard start2 = main.drawStartingCard();
+        main.setPlayerStartingCard(0, start);
+        main.setPlayerStartingCard(1, start2);
+        assertEquals(true,main.checkIfPlayerCanPlay(0));
+
+    }
+
 
 
 

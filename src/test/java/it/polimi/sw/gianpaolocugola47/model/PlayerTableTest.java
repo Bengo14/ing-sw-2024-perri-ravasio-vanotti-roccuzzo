@@ -1,15 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,18 +22,6 @@ class PlayerTableTest {
         p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().get(0));
         assertNotNull(p.getCardOnHand(2));
     }
-
-//    @Test
-//    public void testGetelement(){
-//        StartingCard start = startingCardsDeck.get(0);
-//        start.setCoordinates(29,29);
-//        ResourceCard plant_0 = resourceCardsDeck.get(6);
-//        ResourceCard plant_1 = resourceCardsDeck.get(7);
-//        ResourceCard plant_2 = resourceCardsDeck.get(11);
-//        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-//        assertNotNull(p.getElement(29,29));
-//    }
-
 
     @Test
     public void testIsPlaceable(){
@@ -60,21 +42,6 @@ class PlayerTableTest {
 
 
     }
-
-//    @Test
-//    public void testIsCheap(){
-//        StartingCard start = startingCardsDeck.get(0);
-//        start.setCoordinates(29,29);
-//        GoldCard gold = goldCardsDeck.get(0);
-//        ResourceCard plant_0 = resourceCardsDeck.get(6);
-//        ResourceCard plant_1 = resourceCardsDeck.get(7);
-//        ResourceCard plant_2 = resourceCardsDeck.get(11);
-//        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-//        (p.checkAndPlaceCard(3,28,28,7));
-//    }
-
-
-
 
     @Test
     public void testConstructorAndGetterPlayerTable(){
@@ -111,6 +78,22 @@ class PlayerTableTest {
         p.setStartingCard(start);
         assertNotNull(p.getElement(29,29));
         System.out.println(p.getElement(29,29));
+    }
+    @Test
+    public void testIsCheap(){
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
+        GoldCard gold = Deck.getGoldCardsDeck().get(2);
+        start.switchFrontBack();
+        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,gold});
+        p.setStartingCard(start);
+
+        p.checkAndPlaceCard(0, 29, 29, 3);
+        p.checkAndPlaceCard(1, 29, 29, 1);
+        gold.switchFrontBack();
+        p.checkAndPlaceCard(2, 29, 29, 0);
     }
 
 }

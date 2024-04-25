@@ -1,5 +1,6 @@
 [
   {
+    "id": 100,
     "itemsRequired" : [
       "MANUSCRIPT"
     ],
@@ -9,6 +10,7 @@
     "type" : "ItemObjective"
   },
   {
+    "id": 101,
     "itemsRequired" : [
       "INKWELL"
     ],
@@ -18,6 +20,7 @@
     "type" : "ItemObjective"
   },
   {
+    "id": 102,
     "itemsRequired" : [
       "QUILL"
     ],
@@ -27,6 +30,7 @@
     "type" : "ItemObjective"
   },
   {
+    "id": 99,
     "itemsRequired" : [
       "MANUSCRIPT",
       "INKWELL",
@@ -38,6 +42,7 @@
     "type" : "ItemObjective"
   },
   {
+    "id": 96,
     "resource" : "PLANT",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -45,6 +50,7 @@
     "type" : "ResourceObjective"
   },
   {
+    "id": 98,
     "resource" : "INSECTS",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -52,6 +58,7 @@
     "type" : "ResourceObjective"
   },
   {
+    "id": 95,
     "resource" : "FUNGI",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -59,6 +66,7 @@
     "type" : "ResourceObjective"
   },
   {
+    "id": 97,
     "resource" : "ANIMAL",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -66,6 +74,7 @@
     "type" : "ResourceObjective"
   },
   {
+    "id": 87,
     "isAscending" : true,
     "resource" : "FUNGI",
     "points" : 2,
@@ -74,6 +83,7 @@
     "type" : "DiagonalPatternObjective"
   },
   {
+    "id": 89,
     "isAscending" : true,
     "resource" : "ANIMAL",
     "points" : 2,
@@ -82,6 +92,7 @@
     "type" : "DiagonalPatternObjective"
   },
   {
+    "id": 88,
     "isAscending" : false,
     "resource" : "PLANT",
     "points" : 2,
@@ -90,6 +101,7 @@
     "type" : "DiagonalPatternObjective"
   },
   {
+    "id": 90,
     "isAscending" : false,
     "resource" : "INSECTS",
     "points" : 2,
@@ -98,6 +110,7 @@
     "type" : "DiagonalPatternObjective"
   },
   {
+    "id": 91,
     "orientation" : "bottomRight",
     "mainResource" : "FUNGI",
     "secondaryResource" : "PLANT",
@@ -107,6 +120,7 @@
     "type" : "LShapePatternObjective"
   },
   {
+    "id": 93,
     "orientation" : "topRight",
     "mainResource" : "ANIMAL",
     "secondaryResource" : "FUNGI",
@@ -116,6 +130,7 @@
     "type" : "LShapePatternObjective"
   },
   {
+    "id": 94,
     "orientation" : "topLeft",
     "mainResource" : "INSECTS",
     "secondaryResource" : "ANIMAL",
@@ -125,6 +140,7 @@
     "type" : "LShapePatternObjective"
   },
   {
+    "id": 92,
     "orientation" : "bottomLeft",
     "mainResource" : "PLANT",
     "secondaryResource" : "INSECTS",

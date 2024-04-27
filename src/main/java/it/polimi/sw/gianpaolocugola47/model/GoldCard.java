@@ -58,23 +58,26 @@ public class GoldCard extends ResourceCard {
     }
     @Override
     public int getPoints(PlayerTable playerTable) {
-        int points=this.getThisPoints();
-        if(!this.isPointsForCorners() && !this.isPointsForItems()){
-            return points; // default points
-        }
-        if(this.isPointsForCorners()){
-            int coveredCorners = 0;
-            int x=this.getLine();
-            int y=this.getColumn();
-            for(int corner=0; corner<4; corner++){
-                if(checkIfCovers(x, y, corner, playerTable))
-                    coveredCorners++;
+        if(this.isFront()){
+            int points=this.getThisPoints();
+            if(!this.isPointsForCorners() && !this.isPointsForItems()){
+                return points; // default points
             }
-            return points*coveredCorners; // 2*coveredCorners
-        }
-        if(this.isPointsForItems()){
-            return points*playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
-        }
+            if(this.isPointsForCorners()){
+                int coveredCorners = 0;
+                int x=this.getLine();
+                int y=this.getColumn();
+                for(int corner=0; corner<4; corner++){
+                    if(checkIfCovers(x, y, corner, playerTable))
+                        coveredCorners++;
+                }
+                return points*coveredCorners; // 2*coveredCorners
+            }
+            if(this.isPointsForItems()){
+                return points*playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
+            }
+        }else
+            return 0;
         return -1; // incorrect GoldCard initialization
     }
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){

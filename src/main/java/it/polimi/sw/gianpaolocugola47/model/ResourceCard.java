@@ -25,12 +25,18 @@ public class ResourceCard extends PlaceableCard {
     }
 
     public int getPoints(PlayerTable playerTable){
-        return this.points;
+        if(this.isFront())
+            return this.points;
+        else
+            return 0;
         // nothing else needed
     }
 
     public int getThisPoints(){
-        return this.points;
+        if(this.isFront())
+            return this.points;
+        else
+            return 0;
     }
 
     @Override

@@ -135,6 +135,7 @@ public class LShapePatternObjective extends Objectives{
         for (int i = 0; i < diagonalCardsRequired; i++) {
             if (isSecondaryResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y)) && !(playerTable.getPlacedCard(x, y) instanceof StartingCard)) {
                 diagonalCardsMatch++;
+                /*
                 if (diagonalCardsMatch <= diagonalCardsRequired - 1) {
                     if (playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
@@ -143,6 +144,7 @@ public class LShapePatternObjective extends Objectives{
                         return false; // card is not linked to next card
                     }
                 }
+                 */
             } else
                 return false; // found StartingCard OR resource is not matched OR card is already flaggedForObjective OR card is null
         }

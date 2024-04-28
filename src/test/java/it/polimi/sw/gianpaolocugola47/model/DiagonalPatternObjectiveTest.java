@@ -95,7 +95,7 @@ class DiagonalPatternObjectiveTest {
         main.playCardAndUpdatePoints(0,29,29,1,1);
         main.playCardAndUpdatePoints(1,28,30,3,1);
         main.playCardAndUpdatePoints(2,29,31,3,1);
-        //System.out.println(obj.checkPatternAndComputePoints(player));
+        System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(2, obj.checkPatternAndComputePoints(player));
     }
 

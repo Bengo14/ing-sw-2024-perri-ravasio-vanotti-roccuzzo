@@ -21,10 +21,5 @@ public enum Items {
                 ", imgPath: '" + imgPath + '\'' +
                 '}';
     }
-    public String getName() {
-        return name;
-    }
-    public String getImgPath() {
-        return imgPath;
-    }
+
 }

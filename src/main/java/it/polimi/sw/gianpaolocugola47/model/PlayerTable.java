@@ -9,7 +9,7 @@ import static java.util.Arrays.sort;
  *
  */
 public class PlayerTable {
-    private static final int MATRIX_DIMENSION = 58; // should be 141
+    private static final int MATRIX_DIMENSION = 59; // should be 141
     private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
     private final int id;
     private final String nickName;
@@ -132,16 +132,6 @@ public class PlayerTable {
         else
             return -1; // incorrect input: corner!=0,1,2,3
     }
-    private boolean isCheap(GoldCard card){
-        int[] resCounter = new int[Resources.values().length];
-        System.arraycopy(this.resourceCounter, 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
-        for(int i=0; i<card.getResourcesRequired().toArray().length; i++){
-            resCounter[card.getResourcesRequired().get(i).ordinal()]--; // decrease required resource
-        }
-        sort(resCounter);
-        return resCounter[0] >= 0; // true: I have enough resources
-                                // false: I don't have enough resources
-    }
     public boolean isPlaceable(int x, int y) {
         if(this.placedCards[x][y] == null && hasAtLeastOneSurroundingCard(x,y)){
                 int cornersVerified = 0;
@@ -184,28 +174,28 @@ public class PlayerTable {
         if(this.placedCards[x][y]!=null){
             if(corner==0){
                 if(x>=1 && y>=1) {
-                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==1){
                 if(x>=1 && y<=getMatrixDimension()-2) {
-                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==2){
                 if(x<=getMatrixDimension()-2 && y>=1) {
-                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==3){
                 if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2) {
-                    return this.placedCards[x][y].getCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getCorners()[3 - corner].isCovered();
+                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
@@ -213,6 +203,16 @@ public class PlayerTable {
             return false; // corner!=0,1,2,3
         }else
             return true; // card is null
+    }
+    private boolean isCheap(GoldCard card){
+        int[] resCounter = new int[Resources.values().length];
+        System.arraycopy(this.resourceCounter, 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
+        for(int i=0; i<card.getResourcesRequired().toArray().length; i++){
+            resCounter[card.getResourcesRequired().get(i).ordinal()]--; // decrease required resource
+        }
+        sort(resCounter);
+        return resCounter[0] >= 0; // true: I have enough resources
+        // false: I don't have enough resources
     }
     private void placeCard(int x,int y, ResourceCard card) {
         this.placedCards[x][y]=card;
@@ -236,10 +236,10 @@ public class PlayerTable {
     }
     private void linkCard(int x, int y, int corner){
         // links corner AND decrease ResourceCounter[]
-        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getCorners()[3-corner].setIsCovered();
-        decreaseResourceCounter(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getCorners()[3-corner]);
-        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getCorners()[3-corner].setLinkedCorner(this.placedCards[x][y].getCorners()[corner]);
-        this.placedCards[x][y].getCorners()[corner].setLinkedCorner(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getCorners()[3-corner]);
+        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner].setIsCovered();
+        decreaseResourceCounter(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner]);
+        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner].setLinkedCorner(this.placedCards[x][y].getVisibleCorners()[corner]);
+        this.placedCards[x][y].getVisibleCorners()[corner].setLinkedCorner(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner]);
     }
     private void decreaseResourceCounter(Corner corner) {
         if(corner.isResource()){

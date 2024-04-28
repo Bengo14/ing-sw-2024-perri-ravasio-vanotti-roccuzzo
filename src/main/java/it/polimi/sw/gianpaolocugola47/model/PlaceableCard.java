@@ -49,8 +49,6 @@ public abstract class PlaceableCard {
         this.isFlaggedForObjective=flag;
     }
 
-    public Corner[] getCorners() {return this.corners;}
-
     public void switchFrontBack() {
         isFront = !isFront;
     }

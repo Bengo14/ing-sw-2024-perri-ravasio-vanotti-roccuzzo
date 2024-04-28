@@ -89,7 +89,7 @@ public class DiagonalPatternObjective extends Objectives {
             if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 cardsMatch++;
                 if (cardsMatch <= cardsRequired - 1) {
-                    if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
+                    if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3 - corner]) {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
                         y = (playerTable.setYCoordinate(y, corner));
                     } else {

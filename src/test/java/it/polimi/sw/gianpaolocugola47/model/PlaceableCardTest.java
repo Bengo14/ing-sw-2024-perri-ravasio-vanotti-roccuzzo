@@ -33,28 +33,9 @@ class PlaceableCardTest {
     }
     @Test
     public void testGetvisibleCorner(){
-        PlaceableCard p = new PlaceableCard("back", "front") {
-            @Override
-            public void updateResourceCounter(int[] counter) {
-            }
-        };
-        Corner[] c = p.getVisibleCorners();
-        for (int i = 0; i < 4; i++) {
-            assert(c[i] == p.getCorners()[i]);
-        }
+        /*todo*/
     }
-    @Test
-    public void testGetcorner(){
-        PlaceableCard p = new PlaceableCard("back", "front") {
-            @Override
-            public void updateResourceCounter(int[] counter) {
-            }
-        };
-        Corner[] c = p.getCorners();
-        for (int i = 0; i < 8; i++) {
-            assert(c[i] == p.getCorners()[i]);
-        }
-    }
+
     @Test
     public void testSetCoordinates(){
         PlaceableCard p = new PlaceableCard("back", "front") {

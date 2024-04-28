@@ -73,7 +73,7 @@ class GoldCardTest {
         System.out.println(p.getResourceCounter(3));
 
         System.out.println(main.getBoardPoints(1));
-
+        assertEquals(5, main.getBoardPoints(1));
 
 
 

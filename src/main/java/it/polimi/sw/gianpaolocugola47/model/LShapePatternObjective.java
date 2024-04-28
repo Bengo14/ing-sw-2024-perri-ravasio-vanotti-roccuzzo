@@ -33,19 +33,19 @@ public class LShapePatternObjective extends Objectives{
         int shiftX =0;
         int corner=0;
         if(this.orientation.equals("topLeft")){
-            shiftX--;
+            shiftX-=2;
             corner=0;
         }
         if(this.orientation.equals("topRight")) {
-            shiftX--;
+            shiftX-=2;
             corner=1;
         }
         if(this.orientation.equals("bottomLeft")) {
-            shiftX++;
+            shiftX+=2;
             corner=2;
         }
         if(this.orientation.equals("bottomRight")){
-            shiftX++;
+            shiftX+=2;
             corner=3;
         }
         patterns=LShapePatternsCounter(playerTable, shiftX, corner);
@@ -110,7 +110,12 @@ public class LShapePatternObjective extends Objectives{
     }
     private boolean LShapePatternVerifier(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         if(verticalPatternVerifier(x, y, verticalCardsRequired,shift,playerTable) && verticalCardsRequired>0){
-            x=x+verticalCardsRequired;
+            if(shift>0){
+                x=x+(shift*verticalCardsRequired-1);
+            }
+            if(shift<0){
+                x=x-(shift*verticalCardsRequired+1);
+            }
             y=playerTable.setYCoordinate(y,corner);
             if(diagonalPatternVerifier(x,y,diagonalCardsRequired,corner,playerTable) && diagonalCardsRequired>0){
                 return true; // LShapePattern verified
@@ -133,7 +138,7 @@ public class LShapePatternObjective extends Objectives{
     private boolean diagonalPatternVerifier(int x, int y, int diagonalCardsRequired, int corner, PlayerTable playerTable){
         int diagonalCardsMatch =0;
         for (int i = 0; i < diagonalCardsRequired; i++) {
-            if (isSecondaryResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y)) && !(playerTable.getPlacedCard(x, y) instanceof StartingCard)) {
+            if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isSecondaryResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 diagonalCardsMatch++;
                 /* ONLY NEEDED IF diagonalCardsRequired>1
                 if (diagonalCardsMatch <= diagonalCardsRequired - 1) {
@@ -152,7 +157,12 @@ public class LShapePatternObjective extends Objectives{
     }
     private void LShapePatternFlagger(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         verticalPatternFlagger(x,y,verticalCardsRequired,shift,playerTable);
-        x=x+verticalCardsRequired;
+        if(shift>0){
+            x=x+(shift*verticalCardsRequired-1);
+        }
+        if(shift<0){
+            x=x-(shift*verticalCardsRequired+1);
+        }
         y=playerTable.setYCoordinate(y,corner);
         diagonalPatternFlagger(x,y,diagonalCardsRequired,corner,playerTable);
     }

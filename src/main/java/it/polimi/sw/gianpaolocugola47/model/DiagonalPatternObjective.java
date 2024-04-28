@@ -45,7 +45,7 @@ public class DiagonalPatternObjective extends Objectives {
         }
         patterns=diagonalPatternsCounter(playerTable, corner);
         for(int i=0; i<PlayerTable.getMatrixDimension(); i++){
-            for(int j=i+1; j<PlayerTable.getMatrixDimension(); j++){
+            for(int j=0; j<PlayerTable.getMatrixDimension(); j++){
                 if(playerTable.getPlacedCard(i,j)!=null)
                     playerTable.getPlacedCard(i,j).setFlaggedForObjective(false);
             }

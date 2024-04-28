@@ -36,33 +36,44 @@ class GoldCardTest {
     @Test
     public void testGetCardPointForPlacing() {
         MainTable main = new MainTable();
+        Deck.initDeck();
         GoldCard g = Deck.getGoldCardsDeck().get(0);
 
-        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(6);
+
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(12);
+
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
-        ResourceCard plant_3 = Deck.getResourceCardsDeck().get(12);
-        StartingCard start = Deck.getStartingCardsDeck().get(5);
-        start.switchFrontBack();
+
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+
 
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         main.setNumOfPlayers(2);
-//       main.addPlayer(1, "name");
+
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
+
         main.setPlayerTable(1,p);
+        main.switchCardOnHandFrontBack(1,1);
+        main.switchCardOnHandFrontBack(1,0);
+        main.switchCardOnHandFrontBack(1,2);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
-//        p.setSecretObjective(obj);
-//        p.setStartingCard(start);
-//        p.placeStartingCard();
 
-        main.playCardAndUpdatePoints(0,29,29,1,1);
+
+        main.playCardAndUpdatePoints(0,29,29,0,1);
+        System.out.println(p.getResourceCounter(0));
+        main.playCardAndUpdatePoints(1,29,29,1,1);
+        System.out.println(p.getResourceCounter(0));
+        main.playCardAndUpdatePoints(2,29,29,2,1);
+        System.out.println(p.getResourceCounter(0));
+        System.out.println("stampo tutti i valori degli elementi");
+        System.out.println(p.getResourceCounter(0));
+        System.out.println(p.getResourceCounter(1));
         System.out.println(p.getResourceCounter(2));
-        main.playCardAndUpdatePoints(1,29,29,3,1);
-        System.out.println(p.getResourceCounter(2));
-        main.playCardAndUpdatePoints(2,30,30,3,1);
-        System.out.println(p.getResourceCounter(2));
-        //assertEquals(4,g.getPoints(p));
+        System.out.println(p.getResourceCounter(3));
+
         System.out.println(main.getBoardPoints(1));
+
 
 
 

@@ -20,6 +20,7 @@ class ResourceCardTest {
     @Test
     public void testUpdateResourceCounterAndGetPoints() {
         MainTable main = new MainTable();
+        Deck.initDeck();
         main.setNumOfPlayers(2);
         StartingCard start = Deck.getStartingCardsDeck().get(2);
         Objectives obj = Deck.getObjectiveCardsDeck().get(4);
@@ -35,6 +36,24 @@ class ResourceCardTest {
         main.playCardAndUpdatePoints(1,29,29,3,1);
         res.switchFrontBack();
         main.playCardAndUpdatePoints(2,29,29,0,1);
+        System.out.println(obj.checkPatternAndComputePoints(player));
+        assertEquals(2,obj.checkPatternAndComputePoints(player));
+    }
+    @Test
+    public void testElse(){
+        Deck.initDeck();
+        ResourceCard res = Deck.drawCardFromResourceDeck();
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(4);
+        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{res});
+        main.setPlayerTable(1,player);
+        main.setPlayerStartingCard(1,start);
+        main.setPlayerSecretObjective(1,obj);
+        main.playCardAndUpdatePoints(0,29,29,0,1);
+        assertEquals(0,res.getThisPoints());
+        assertEquals(0,res.getPoints(player));
     }
 
 }

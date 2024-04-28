@@ -90,7 +90,7 @@ class MainTableTest {
         mainTable.setPlayerStartingCard(0, start);
         player.checkAndPlaceCard(0,28,28,1);
         mainTable.drawCardFrom(0,0);
-        assertFalse(mainTable.getPlayerTable(0).getCardOnHand(1).isFront());
+        assertEquals(false,mainTable.getPlayerTable(0).getCardOnHand(1).isFront());
     }
     @Test
     public void testSetPlayerSecretObjective(){
@@ -114,7 +114,7 @@ class MainTableTest {
         mainTable.setNumOfPlayers(2);
         mainTable.setPlayerTable(0, player);
         mainTable.switchCardOnHandFrontBack(0, 0);
-        assertFalse(mainTable.getPlayerTable(0).getCardOnHand(2).isFront());
+        assertEquals(false,mainTable.getPlayerTable(0).getCardOnHand(2).isFront());
     }
     @Test
     public void testCheckIfPlayerCanPlay(){
@@ -131,15 +131,69 @@ class MainTableTest {
         assertEquals(true,main.checkIfPlayerCanPlay(0));
 
     }
+    @Test
+    public void testTurnCardOnHand(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1, res_2, res_3});
+        main.setPlayerTable(0, player);
+        main.switchCardOnHandFrontBack(0, 0);
+        main.turnCardOnHand(0,1);
+        assertEquals(true,main.getPlayerTable(0).getCardOnHand(0).isFront());
+    }
+    @Test
+    public void TestAddPlayer(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
+        main.addPlayer(0, "name");
+        assertNotNull(main.getPlayerTable(0));
+    }
+    @Test
+    public void testCheckIfAnyPlayerCanPlay(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
+        PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{});
+        main.setPlayerTable(0, player);
+        main.setPlayerTable(1, player2);
+        StartingCard start = main.drawStartingCard();
+        StartingCard start2 = main.drawStartingCard();
+        main.setPlayerStartingCard(0, start);
+        main.setPlayerStartingCard(1, start2);
+        assertEquals(true,main.checkIfAnyPlayerCanPlay());
+    }
+    @Test
+    public void testComputeWinnerAtEndGame(){
+        MainTable main = new MainTable();
+        Deck.initDeck();
+        main.setNumOfPlayers(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(3);
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1});
+        PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{res_2});
 
+        main.setPlayerTable(0, player);
+        main.setPlayerTable(1, player2);
 
+        StartingCard start = main.drawStartingCard();
+        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj2 = Deck.getObjectiveCardsDeck().get(1);
+        main.setPlayerSecretObjective(0, obj);
+        main.setPlayerSecretObjective(1, obj2);
+        StartingCard start2 = main.drawStartingCard();
+        start.switchFrontBack();
+        res_1.switchFrontBack();
+        res_2.switchFrontBack();
+        main.setPlayerStartingCard(0, start);
+        main.setPlayerStartingCard(1, start2);
+        main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
+        main.playCardAndUpdatePoints(0, 29, 29, 3, 1);
+        System.out.println(main.computeWinnerAtEndGame());
 
-
-//    @Test
-//    public void drawCardFrom() {
-//        MainTable mainTable = new MainTable();
-//        mainTable.drawCardFrom(Deck.getGoldDeck());
-//    }
-
+    }
 
 }

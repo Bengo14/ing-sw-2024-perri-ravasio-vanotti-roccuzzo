@@ -1,14 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Test;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,7 +66,7 @@ class DiagonalPatternObjectiveTest {
 
         // Test when the resource matches and the card is not flagged
         DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(11);
-        ResourceCard resourceCard = new ResourceCard("back", "front", 1, Resources.INSECTS);
+        ResourceCard resourceCard = Deck.getResourceCardsDeck().get(2);
         assertTrue(obj.isResourceMatchedAndNotFlagged(resourceCard));
 
         // Test when the resource does not match
@@ -84,34 +79,24 @@ class DiagonalPatternObjectiveTest {
     }
 
     @Test
-    public void testCheckPatternAndComputePoints(){// da rivedere
+    public void testCheckPatternAndComputePoints(){
         MainTable main = new MainTable();
-        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(10);
+        Deck.initDeck();
         StartingCard start = Deck.getStartingCardsDeck().get(2);
+        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(10);
         ResourceCard plant_1 = Deck.getResourceCardsDeck().get(6);
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
         ResourceCard plant_3 = Deck.getResourceCardsDeck().get(12);
-        ResourceCard res_1 = Deck.getResourceCardsDeck().get(13);
-        ResourceCard res_2 = Deck.getResourceCardsDeck().get(14);
-        ResourceCard res_3 = Deck.getResourceCardsDeck().get(15);
-
-        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1, plant_2, plant_3});
         main.setNumOfPlayers(2);
+        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1, plant_2, plant_3});
         main.setPlayerTable(1, player);
-        player.setStartingCard(start);
-
-        assertNotNull(player.getElement(29,29));
-        player.checkAndPlaceCard(0, 29, 29, 3);
-        player.setCardOnHandInTheEmptyPosition(res_1);
-        assertNotNull(player.getElement(30,30));
-        player.checkAndPlaceCard(1, 30, 30, 3);
-        player.setCardOnHandInTheEmptyPosition(res_2);
-        assertNotNull(player.getElement(31,31));
-        player.checkAndPlaceCard(2, 31,31 , 3);
-        player.setCardOnHandInTheEmptyPosition(res_3);
-        assertNotNull(player.getElement(32,32));
-
-        //assertEquals(2, obj.checkPatternAndComputePoints(player));
+        main.setPlayerStartingCard(1, start);
+        main.setPlayerSecretObjective(1, obj);
+        main.playCardAndUpdatePoints(0,29,29,1,1);
+        main.playCardAndUpdatePoints(1,28,30,3,1);
+        main.playCardAndUpdatePoints(2,29,31,3,1);
+        //System.out.println(obj.checkPatternAndComputePoints(player));
+        assertEquals(2, obj.checkPatternAndComputePoints(player));
     }
 
 }

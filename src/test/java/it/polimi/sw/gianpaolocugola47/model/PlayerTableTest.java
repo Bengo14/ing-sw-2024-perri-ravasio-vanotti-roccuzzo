@@ -38,10 +38,11 @@ class PlayerTableTest {
         System.out.println(val);
 
 
-        //assertTrue(p.isPlaceable(28,28));
+        assertEquals(true,p.isPlaceable(28,28));
 
 
     }
+
 
     @Test
     public void testConstructorAndGetterPlayerTable(){

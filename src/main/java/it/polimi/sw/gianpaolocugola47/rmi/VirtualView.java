@@ -1,13 +1,22 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
+import it.polimi.sw.gianpaolocugola47.model.*;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface VirtualView extends Remote {
     /*todo metodi remoti della view, invocati dal server*/
 
-    public void terminate() throws RemoteException;
-    public void ping() throws RemoteException;
-    public void startGame() throws RemoteException;
+    void terminate() throws RemoteException;
+    void ping() throws RemoteException;
+    void startGame() throws RemoteException;
+    void secretObjectivesDrawn(Objectives[] obj) throws RemoteException;
+    void startingCardDrawn(StartingCard card) throws RemoteException;
+    void showTurn() throws RemoteException;
+    void setViewFixedParams(String[] nicknames, Objectives[] globalObj, Objectives secretObj) throws RemoteException;
+    void updateView(ResourceCard[] cardsOnHand, PlaceableCard[][] placedCards) throws RemoteException;
+    void updateView(int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) throws RemoteException;
+
 
 }

@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
+import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 
 import java.rmi.NotBoundException;
@@ -15,9 +16,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private int id;
     private volatile boolean terminate = false;
     private CLI cli;
-    private boolean isCliChosen = false;
+    private boolean isCliChosen;
+    private int numOfPlayers;
 
-    public RMIClient(VirtualServer server) throws RemoteException {
+    private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
     }
 
@@ -64,7 +66,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 System.out.print("Invalid input, try again: ");
                 command = scan.next();
             }
-            int numOfPlayers = Integer.parseInt(command);
+            this.numOfPlayers = Integer.parseInt(command);
             this.server.setNumOfPlayers(numOfPlayers);
             System.out.print("Okay, now insert your nickname: ");
         }
@@ -96,6 +98,31 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             /*todo GUI*/
         }
     }
+    @Override
+    public void secretObjectivesDrawn(Objectives[] obj) throws RemoteException {
+        /*todo update cli/gui*/
+    }
+    @Override
+    public void startingCardDrawn(StartingCard card) throws RemoteException{
+        /*todo*/
+    }
+    @Override
+    public void showTurn(){
+        /*todo*/
+    }
+    @Override
+    public void setViewFixedParams(String[] nicknames, Objectives[] globalObj, Objectives secretObj) throws RemoteException {
+        /*todo*/
+    }
+    @Override
+    public void updateView(ResourceCard[] cardsOnHand, PlaceableCard[][] placedCards) throws RemoteException {
+        /*todo*/
+    }
+    @Override
+    public void updateView(int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) throws RemoteException {
+        /*todo*/
+    }
+
 
     public static void main(String[] args){
 

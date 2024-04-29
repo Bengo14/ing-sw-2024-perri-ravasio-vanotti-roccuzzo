@@ -68,11 +68,15 @@ public class PlayerTable {
     public StartingCard getStartingCard() {
         return startingCard;
     }
-    public PlaceableCard getCardOnHand(int position) {
+    public ResourceCard getCardOnHand(int position) {
         return cardsOnHand[position];
     }
+    public ResourceCard[] getCardsOnHand(){return cardsOnHand;}
     public PlaceableCard getPlacedCard(int x, int y) {
         return placedCards[x][y];
+    }
+    public PlaceableCard[][] getPlacedCards(){
+        return placedCards;
     }
     public PlaceableCard getElement(int xIndex, int yIndex){
         return this.placedCards[xIndex][yIndex];

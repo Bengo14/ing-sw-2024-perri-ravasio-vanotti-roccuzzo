@@ -1,14 +1,17 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
+import it.polimi.sw.gianpaolocugola47.model.Objectives;
+import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface VirtualServer extends Remote {
 
-    public int connect(VirtualView client) throws RemoteException;
-    public void terminateGame(int deadClientId) throws RemoteException;
-    public void setNumOfPlayers(int num) throws RemoteException;
-    public void addPlayer(int id, String nickname) throws RemoteException;
-
-    //todo metodi remoti server, invocati dal client
+    int connect(VirtualView client) throws RemoteException;
+    void terminateGame(int deadClientId) throws RemoteException;
+    void setNumOfPlayers(int num) throws RemoteException;
+    void addPlayer(int id, String nickname) throws RemoteException;
+    void setStartingCard(int playerId, StartingCard card) throws RemoteException;
+    void setSecretObjective(int playerId, Objectives obj) throws RemoteException;
 }

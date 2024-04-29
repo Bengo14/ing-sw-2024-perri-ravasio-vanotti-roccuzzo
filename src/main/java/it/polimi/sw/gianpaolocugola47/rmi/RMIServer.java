@@ -1,7 +1,10 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
-import it.polimi.sw.gianpaolocugola47.model.Deck;
+import it.polimi.sw.gianpaolocugola47.model.Objectives;
+import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
+import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
+import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -14,14 +17,27 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
 
     public static final int SERVER_PORT = 1234;
     public static final String SERVER_ADDRESS = "127.0.0.1";
+    private static RMIServer server;
     private final Controller controller;
-    private final List<VirtualView> clients = new ArrayList<>();
+    private final List<VirtualView> clients;
     private int numOfPlayers = -1;
     private volatile boolean terminated = false;
 
-    public RMIServer(Controller controller) throws RemoteException {
+    public static RMIServer getServer() {
+        if (RMIServer.server == null) {
+            try {
+                RMIServer.server = new RMIServer();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return RMIServer.server;
+    }
+
+    private RMIServer() throws RemoteException {
         super(0);
-        this.controller = controller;
+        this.controller = new Controller();
+        this.clients = new ArrayList<>();
         pingStart();
     }
 
@@ -104,16 +120,93 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
             this.controller.addPlayer(id, nickname);
             System.out.println("Player "+nickname+" added with id "+id);
             if (this.controller.getNumOfPlayersCurrentlyAdded() == numOfPlayers) {
-                this.controller.startGame();
                 System.out.println("Game started");
                 startGame();
             }
         }
     }
     private void startGame() throws RemoteException {
-        synchronized (this.clients){
-            for(VirtualView client : this.clients){
+        synchronized (this.clients) {
+            for(VirtualView client : this.clients) {
                 client.startGame();
+            }
+        }
+        this.controller.drawStartingCards();
+    }
+
+    public void startingCardDrawn(StartingCard card, int playerId) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(playerId).startingCardDrawn(card);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void setStartingCard(int playerId, StartingCard card) throws RemoteException{
+        this.controller.setStartingCardAndDrawObjectives(playerId, card);
+    }
+    public void secretObjectivesDrawn(Objectives[] obj, int playerId) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(playerId).secretObjectivesDrawn(obj);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void setSecretObjective(int playerId, Objectives obj) throws RemoteException{
+        this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
+    }
+
+    public void setViewFixedParams(PlayerTable[] tables, Objectives[] globalObj) {
+        String[] nicknames = new String[numOfPlayers];
+        for(int i = 0; i<numOfPlayers; i++)
+            nicknames[i] = tables[i].getNickName();
+
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : clients) {
+                        int i = clients.indexOf(view);
+                        view.setViewFixedParams(nicknames, globalObj, tables[i].getSecretObjective());
+                    }
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    public void updateView(PlayerTable[] tables, int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : clients) {
+                        int i = clients.indexOf(view);
+                        view.updateView(tables[i].getCardsOnHand(), tables[i].getPlacedCards());
+                        view.updateView(boardPoints, globalPoints, cardsOnTable);
+                    }
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    public void updateView(PlayerTable table, int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(table.getId()).updateView(table.getCardsOnHand(), table.getPlacedCards());
+                    for(VirtualView view : clients)
+                        view.updateView(boardPoints, globalPoints, cardsOnTable);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    public void showTurn(int playerId) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(playerId).showTurn();
+                } catch (RemoteException ignored) {}
             }
         }
     }
@@ -123,9 +216,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         String name = "VirtualServer";
         System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
         try {
-            VirtualServer stub = new RMIServer(new Controller());
+            RMIServer.server = new RMIServer();
             Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
-            registry.rebind(name, stub);
+            registry.rebind(name, RMIServer.server);
         } catch (RemoteException e){
             e.printStackTrace();
         }

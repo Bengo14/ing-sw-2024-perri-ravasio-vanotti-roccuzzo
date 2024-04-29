@@ -1,18 +1,13 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.junit.jupiter.api.BeforeAll;
+import it.polimi.sw.gianpaolocugola47.rmi.RMIServer;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTableTest {
+
+    RMIServer stub = RMIServer.getServer();
 
     @Test
     public void testConstructor() {
@@ -25,29 +20,25 @@ class MainTableTest {
         MainTable mainTable = new MainTable();
         mainTable.setEndGame();
         assertTrue(mainTable.isEndGame());
-
     }
 
     @Test
     public void setNumOfPlayers() {
         MainTable mainTable = new MainTable();
         mainTable.setNumOfPlayers(2);
-    assertEquals(2, mainTable.getNumOfPlayers());
+        assertEquals(2, mainTable.getNumOfPlayers());
     }
     @Test
     public void drawTwoPossibleSecretObjectives() {
         MainTable mainTable = new MainTable();
-        Objectives[] objectives = mainTable.drawTwoPossibleSecretObjectives();
+        Objectives[] objectives = mainTable.drawTwoPossibleSecretObjectives(0);
         assertNotNull(objectives);
         assertEquals(2, objectives.length);
     }
-
-
-
     @Test
     public void drawStartingCard() {
         MainTable mainTable = new MainTable();
-        StartingCard start = mainTable.drawStartingCard();
+        StartingCard start = mainTable.drawStartingCard(0);
         assertNotNull(start);
     }
 
@@ -58,7 +49,7 @@ class MainTableTest {
         MainTable table = new MainTable();
         table.setNumOfPlayers(2);
         table.setPlayerTable(0, player);
-        StartingCard start = table.drawStartingCard();
+        StartingCard start = table.drawStartingCard(0);
         table.setPlayerStartingCard(0, start);
         table.getPlayerTable(0);
         assertEquals(start, table.getPlayerTable(0).getStartingCard());
@@ -86,7 +77,7 @@ class MainTableTest {
         Deck.initDeck();
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1,res_2,res_3});
         mainTable.setPlayerTable(0, player);
-        StartingCard start = mainTable.drawStartingCard();
+        StartingCard start = mainTable.drawStartingCard(0);
         mainTable.setPlayerStartingCard(0, start);
         player.checkAndPlaceCard(0,28,28,1);
         mainTable.drawCardFrom(0,0);
@@ -124,8 +115,8 @@ class MainTableTest {
         PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{});
         main.setPlayerTable(0, player);
         main.setPlayerTable(1, player2);
-        StartingCard start = main.drawStartingCard();
-        StartingCard start2 = main.drawStartingCard();
+        StartingCard start = main.drawStartingCard(0);
+        StartingCard start2 = main.drawStartingCard(0);
         main.setPlayerStartingCard(0, start);
         main.setPlayerStartingCard(1, start2);
         assertEquals(true,main.checkIfPlayerCanPlay(0));
@@ -153,20 +144,6 @@ class MainTableTest {
         assertNotNull(main.getPlayerTable(0));
     }
     @Test
-    public void testCheckIfAnyPlayerCanPlay(){
-        MainTable main = new MainTable();
-        main.setNumOfPlayers(2);
-        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{});
-        PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{});
-        main.setPlayerTable(0, player);
-        main.setPlayerTable(1, player2);
-        StartingCard start = main.drawStartingCard();
-        StartingCard start2 = main.drawStartingCard();
-        main.setPlayerStartingCard(0, start);
-        main.setPlayerStartingCard(1, start2);
-        assertEquals(true,main.checkIfAnyPlayerCanPlay());
-    }
-    @Test
     public void testComputeWinnerAtEndGame(){
         MainTable main = new MainTable();
         Deck.initDeck();
@@ -179,12 +156,12 @@ class MainTableTest {
         main.setPlayerTable(0, player);
         main.setPlayerTable(1, player2);
 
-        StartingCard start = main.drawStartingCard();
+        StartingCard start = main.drawStartingCard(0);
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         Objectives obj2 = Deck.getObjectiveCardsDeck().get(1);
         main.setPlayerSecretObjective(0, obj);
         main.setPlayerSecretObjective(1, obj2);
-        StartingCard start2 = main.drawStartingCard();
+        StartingCard start2 = main.drawStartingCard(0);
         start.switchFrontBack();
         res_1.switchFrontBack();
         res_2.switchFrontBack();

@@ -42,13 +42,10 @@ class DiagonalPatternObjectiveTest {
     }
     @Test
     public void testConstructor() {
-        Deck.initDeck();
-
-        //create the card from json file
-        DiagonalPatternObjective i = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(11);
-        assertNotNull(i);
-        assertEquals(false, i.isAscending());
-        assertEquals(Resources.INSECTS, i.getResource());
+        DiagonalPatternObjective obj = new DiagonalPatternObjective(2, "imgPathFront", "imgPathBack", false, Resources.INSECTS);
+        assertNotNull(obj);
+        assertEquals(false, obj.isAscending());
+        assertEquals(Resources.INSECTS, obj.getResource());
     }
     @Test
     public void isResourceMatchedAndNotFlagged() {

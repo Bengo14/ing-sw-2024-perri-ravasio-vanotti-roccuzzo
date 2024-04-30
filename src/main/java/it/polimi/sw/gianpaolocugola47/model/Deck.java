@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -23,11 +24,12 @@ public class Deck {
     private static Random randomGenerator;
 
     public static void initDeck(){
+        randomGenerator = new Random(System.currentTimeMillis());
         generateStartingCardsDeck();
         generateGoldCardsDeck();
         generateResourceCardsDeck();
         generateObjectiveCardsDeck();
-        randomGenerator = new Random(System.currentTimeMillis());
+
     }
 
     private static void generateResourceCardsDeck() {
@@ -35,7 +37,8 @@ public class Deck {
         try {
             Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {}.getType();
             resourceCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json"),listOfCards);
-        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+        }
+        catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -76,26 +79,22 @@ public class Deck {
     protected static ResourceCard drawCardFromResourceDeck(){
         if(resourceCardsDeck.isEmpty())
             return null;
-        int position = randomGenerator.nextInt(resourceCardsDeck.size());
-        return resourceCardsDeck.remove(position);
+        return resourceCardsDeck.removeLast();
     }
     protected static GoldCard drawCardFromGoldDeck(){
         if(goldCardsDeck.isEmpty())
             return null;
-        int position = randomGenerator.nextInt(goldCardsDeck.size());
-        return goldCardsDeck.remove(position);
+        return goldCardsDeck.removeLast();
     }
     protected static Objectives drawCardFromObjectivesDeck(){
         if(objectiveCardsDeck.isEmpty())
             return null;
-        int position = randomGenerator.nextInt(objectiveCardsDeck.size());
-        return objectiveCardsDeck.remove(position);
+        return objectiveCardsDeck.removeLast();
     }
     protected static StartingCard drawCardFromStartingDeck(){
         if(startingCardsDeck.isEmpty())
             return null;
-        int position = randomGenerator.nextInt(startingCardsDeck.size());
-        return startingCardsDeck.remove(position);
+        return startingCardsDeck.removeLast();
     }
     public static List<GoldCard> getGoldCardsDeck() {
         return goldCardsDeck;
@@ -111,5 +110,23 @@ public class Deck {
     }
     protected static boolean areDecksEmpty() {
         return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
+    }
+    public static GoldCard getGoldCardOnTop(){
+        return goldCardsDeck.getLast();
+    }
+    public static ResourceCard getResourceCardOnTop(){
+        return resourceCardsDeck.getLast();
+    }
+
+    public static void shuffleDeck() {
+        Collections.shuffle(goldCardsDeck,randomGenerator);
+        Collections.shuffle(resourceCardsDeck,randomGenerator);
+        Collections.shuffle(startingCardsDeck,randomGenerator);
+        Collections.shuffle(objectiveCardsDeck,randomGenerator);
+    }
+
+    public static void initAndShuffleDeck(){
+        initDeck();
+        shuffleDeck();
     }
 }

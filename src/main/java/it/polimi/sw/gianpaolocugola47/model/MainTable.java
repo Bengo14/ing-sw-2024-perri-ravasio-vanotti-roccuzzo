@@ -22,7 +22,8 @@ public class MainTable {
         this.endGame = false;
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
-        Deck.initDeck();
+        //Deck.initDeck();
+        Deck.initAndShuffleDeck();
         initTable();
     }
 

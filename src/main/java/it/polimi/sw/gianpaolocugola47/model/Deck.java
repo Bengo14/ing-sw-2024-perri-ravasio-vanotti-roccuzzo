@@ -91,7 +91,7 @@ public class Deck {
             return null;
         return objectiveCardsDeck.removeLast();
     }
-    protected static StartingCard drawCardFromStartingDeck(){
+    public static StartingCard drawCardFromStartingDeck(){
         if(startingCardsDeck.isEmpty())
             return null;
         return startingCardsDeck.removeLast();

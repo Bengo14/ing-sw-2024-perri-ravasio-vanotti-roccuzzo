@@ -96,5 +96,17 @@ class PlayerTableTest {
         gold.switchFrontBack();
         p.checkAndPlaceCard(2, 29, 29, 0);
     }
+    @Test
+    public void testGetCardsOnHand(){
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        ResourceCard res = Deck.getResourceCardsDeck().get(0);
+        PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
+        p.setStartingCard(start);
+        assertNotNull(p.getCardsOnHand());
+        p.checkAndPlaceCard(0, 29, 29, 3);
+        assertNotNull(p.getPlacedCards());
+    }
+
 
 }

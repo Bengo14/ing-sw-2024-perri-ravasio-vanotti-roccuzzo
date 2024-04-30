@@ -170,7 +170,28 @@ class MainTableTest {
         main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
         main.playCardAndUpdatePoints(0, 29, 29, 3, 1);
         System.out.println(main.computeWinnerAtEndGame());
+    }
+    @Test
+    public void testGetGlobalPoints(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        ResourceCard res = Deck.getResourceCardsDeck().get(0);
+        res.switchFrontBack();
+        PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res});
+        main.setPlayerTable(0, player);
+        main.setPlayerStartingCard(0, start);
+        main.setPlayerSecretObjective(0, obj);
+        main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
+        assertEquals(1, main.getGlobalPoints(0));
+    }
+    @Test
+    public void testSetViewFixedParams(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        main.setViewFixedParams();
 
     }
-
 }

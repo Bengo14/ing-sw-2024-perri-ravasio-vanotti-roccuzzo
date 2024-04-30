@@ -17,6 +17,9 @@ public interface VirtualView extends Remote {
     void setViewFixedParams(String[] nicknames, Objectives[] globalObj, Objectives secretObj) throws RemoteException;
     void updateView(ResourceCard[] cardsOnHand, PlaceableCard[][] placedCards) throws RemoteException;
     void updateView(int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) throws RemoteException;
+    void showPlayablePositions(boolean [][] matrix) throws RemoteException;
+    void gameOver() throws RemoteException;
+    void showWinner() throws RemoteException;
 
 
 }

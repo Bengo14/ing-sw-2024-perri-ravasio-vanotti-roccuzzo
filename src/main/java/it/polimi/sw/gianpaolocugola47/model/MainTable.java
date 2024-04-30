@@ -88,25 +88,35 @@ public class MainTable {
             RMIServer.getServer().updateView(playersTables, boardPoints, globalPoints, cardsOnTable);
         }).start();
     }
-    public void updateView(int playerId) {
+    protected void updateView(int playerId) {
         new Thread(()->{
             RMIServer.getServer().updateView(getPlayerTable(playerId), boardPoints, globalPoints, cardsOnTable);
         }).start();
     }
-    public void showTurn(int playerId){
+    public void showTurn(int playerId) {
         new Thread(()->{
             RMIServer.getServer().showTurn(playerId);
         }).start();
     }
+    protected void showWinner(int winner) {
+        new Thread(()->{
+            RMIServer.getServer().showWinner(winner);
+        }).start();
+    }
+    protected void showPlayablePositions(int playerId, boolean[][] matrix) {
+        new Thread(()->{
+            RMIServer.getServer().showPlayablePositions(playerId, matrix);
+        }).start();
+    }
 
-    public void turnCardOnHand(int playerId, int cardPosition){
+    public void turnCardOnHand(int playerId, int cardPosition) {
         playersTables[playerId].turnCardOnHand(cardPosition);
     }
 
-    public int getBoardPoints(int playerId){
+    public int getBoardPoints(int playerId) {
         return boardPoints[playerId];
     }
-    public int getGlobalPoints(int playerId){
+    public int getGlobalPoints(int playerId) {
         return globalPoints[playerId];
     }
 
@@ -119,7 +129,7 @@ public class MainTable {
      *                 5: draw from gold deck,
      * @param playerId the ID of the player who makes this action.
      */
-    public void drawCardFrom(int position, int playerId){
+    public void drawCardFrom(int position, int playerId) {
         ResourceCard choice = null;
 
         if(position==0||position==1||position==2||position==3){
@@ -136,6 +146,7 @@ public class MainTable {
             playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
         if(Deck.areDecksEmpty())
             setEndGame();
+        this.updateView(playerId);
     }
 
     private void replaceCardOnTable(int position){
@@ -161,11 +172,12 @@ public class MainTable {
                 matrix[i][j] = playerTable.isPlaceable(i, j); // boolean
             }
         }
+        this.showPlayablePositions(playerId, matrix);
         return matrix;
     }
 
-    public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){
-        if(playersTables[playerId].getPlacedCard(onTableCardX, onTableCardY)!=null){
+    public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+        if(playersTables[playerId].getPlacedCard(onTableCardX, onTableCardY) != null) {
             int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable
@@ -175,14 +187,16 @@ public class MainTable {
             setGlobalPoints(playerId, globalPoints);
             if(getBoardPoints(playerId)>=20 && !isEndGame())
                 setEndGame();
+            this.updateView(playerId);
             return true; // correct placement and points added
-        }else
+        } else {
             return false; // incorrect input: onTableCard is null
+        }
     }
-    private void addBoardPoints(int player, int points){
+    private void addBoardPoints(int player, int points) {
         this.boardPoints[player] += points;
     }
-    private void setGlobalPoints(int player, int points){
+    private void setGlobalPoints(int player, int points) {
         this.globalPoints[player] = points;
     }
 
@@ -195,8 +209,7 @@ public class MainTable {
     public int getNumOfPlayers() {
         return this.numOfPlayers;
     }
-    public PlayerTable getPlayerTable(int index)
-    {
+    protected PlayerTable getPlayerTable(int index) {
         return this.playersTables[index];
     }
 
@@ -229,6 +242,7 @@ public class MainTable {
                 }
             }
         }
+        this.showWinner(winnerPlayerId);
         return winnerPlayerId;
     }
 

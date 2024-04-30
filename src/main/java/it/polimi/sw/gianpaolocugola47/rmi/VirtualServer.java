@@ -9,7 +9,6 @@ import java.rmi.RemoteException;
 public interface VirtualServer extends Remote {
 
     int connect(VirtualView client) throws RemoteException;
-    void terminateGame(int deadClientId) throws RemoteException;
     void setNumOfPlayers(int num) throws RemoteException;
     void addPlayer(int id, String nickname) throws RemoteException;
     void setStartingCard(int playerId, StartingCard card) throws RemoteException;

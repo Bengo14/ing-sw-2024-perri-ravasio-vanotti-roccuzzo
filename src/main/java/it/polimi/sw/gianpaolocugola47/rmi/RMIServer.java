@@ -73,7 +73,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
                } catch (RemoteException e) {
                    synchronized (this.clients) {
                        try {
-                           terminateGame(clients.indexOf(view));
+                           terminateGame(false, clients.indexOf(view));
                        } catch (RemoteException ex) {
                            e.printStackTrace();
                        }
@@ -87,14 +87,20 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
            }
        }).start();
     }
-    @Override
-    public void terminateGame(int deadClientId) throws RemoteException {
+    private void terminateGame(boolean gameOver, int clientId) throws RemoteException {
         System.err.println("terminating the game...");
         this.terminated = true;
+
         synchronized (this.clients) {
-            for (int i=0; i<clients.size(); i++)
-                if(i!=deadClientId)
-                    clients.get(i).terminate();
+            if(gameOver) {
+                for (int i=0; i<clients.size(); i++)
+                    if (i != clientId)
+                        clients.get(i).gameOver();
+            } else {
+                for (int i = 0; i < clients.size(); i++)
+                    if (i != clientId)
+                        clients.get(i).terminate();
+            }
         }
         resetGame();
     }
@@ -206,6 +212,25 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
             if (!this.clients.isEmpty()) {
                 try {
                     this.clients.get(playerId).showTurn();
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    public void showPlayablePositions(int playerId, boolean[][] matrix) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(playerId).showPlayablePositions(matrix);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    public void showWinner(int winner) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    this.clients.get(winner).showWinner();
+                    terminateGame(true, winner);
                 } catch (RemoteException ignored) {}
             }
         }

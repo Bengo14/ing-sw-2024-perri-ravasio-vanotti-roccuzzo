@@ -53,8 +53,9 @@ public class Controller {
         }
     }
 
-    public void getPlayablePositions() {
-        /*todo*/
+    public void getPlayablePositions(int playerId) {
+        if(playerId == currentPlayerId)
+            mainTable.checkAllPlayablePositions(playerId);
     }
     public void playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
         if(playerId == currentPlayerId)
@@ -78,7 +79,7 @@ public class Controller {
                 this.isLastTurn = true;
             }
         }
-        for(int i=0; i<mainTable.getNumOfPlayers(); i++){
+        for(int i=0; i<mainTable.getNumOfPlayers(); i++) {
             if(!mainTable.checkIfPlayerCanPlay(currentPlayerId))
                 updateCurrentPlayer();
             else {

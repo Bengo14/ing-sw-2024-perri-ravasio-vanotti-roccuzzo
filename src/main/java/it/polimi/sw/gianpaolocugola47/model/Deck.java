@@ -23,13 +23,22 @@ public class Deck {
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
 
-    public static void initDeck(){
+    protected static void initAndShuffleDeck() {
+        initDeck();
+        shuffleDeck();
+    }
+    public static void initDeck() {
         randomGenerator = new Random(System.currentTimeMillis());
         generateStartingCardsDeck();
         generateGoldCardsDeck();
         generateResourceCardsDeck();
         generateObjectiveCardsDeck();
-
+    }
+    private static void shuffleDeck() {
+        Collections.shuffle(goldCardsDeck,randomGenerator);
+        Collections.shuffle(resourceCardsDeck,randomGenerator);
+        Collections.shuffle(startingCardsDeck,randomGenerator);
+        Collections.shuffle(objectiveCardsDeck,randomGenerator);
     }
 
     private static void generateResourceCardsDeck() {
@@ -118,15 +127,4 @@ public class Deck {
         return resourceCardsDeck.getLast();
     }
 
-    public static void shuffleDeck() {
-        Collections.shuffle(goldCardsDeck,randomGenerator);
-        Collections.shuffle(resourceCardsDeck,randomGenerator);
-        Collections.shuffle(startingCardsDeck,randomGenerator);
-        Collections.shuffle(objectiveCardsDeck,randomGenerator);
-    }
-
-    public static void initAndShuffleDeck(){
-        initDeck();
-        shuffleDeck();
-    }
 }

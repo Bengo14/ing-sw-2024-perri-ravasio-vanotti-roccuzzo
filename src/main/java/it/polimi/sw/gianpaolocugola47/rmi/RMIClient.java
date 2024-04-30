@@ -89,6 +89,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         //do nothing, liveness check only
     }
     @Override
+    public void gameOver() {
+        System.err.println("\nGame Over!");
+        this.terminate = true;
+    }
+    @Override
+    public void showWinner(){
+        System.out.println("\nYou won the game!");
+        this.terminate = true;
+    }
+    @Override
     public void startGame() throws RemoteException {
         if(isCliChosen) {
             this.cli = new CLI(this);
@@ -120,6 +130,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
     @Override
     public void updateView(int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) throws RemoteException {
+        /*todo*/
+    }
+    @Override
+    public void showPlayablePositions(boolean [][] matrix) throws RemoteException {
         /*todo*/
     }
 

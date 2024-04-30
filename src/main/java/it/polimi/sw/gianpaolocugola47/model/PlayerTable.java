@@ -73,13 +73,10 @@ public class PlayerTable {
     }
     public ResourceCard[] getCardsOnHand(){return cardsOnHand;}
     public PlaceableCard getPlacedCard(int x, int y) {
-        return placedCards[x][y];
+        return this.placedCards[x][y];
     }
     public PlaceableCard[][] getPlacedCards(){
         return placedCards;
-    }
-    public PlaceableCard getElement(int xIndex, int yIndex){
-        return this.placedCards[xIndex][yIndex];
     }
 
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {

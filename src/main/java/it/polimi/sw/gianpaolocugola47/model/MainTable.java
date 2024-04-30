@@ -164,7 +164,7 @@ public class MainTable {
     }
 
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId){
-        if(playersTables[playerId].getElement(onTableCardX, onTableCardY)!=null){
+        if(playersTables[playerId].getPlacedCard(onTableCardX, onTableCardY)!=null){
             int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable OR incorrect GoldCard initialization

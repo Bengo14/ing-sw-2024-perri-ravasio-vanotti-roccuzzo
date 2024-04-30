@@ -38,7 +38,7 @@ class PlayerTableTest {
         System.out.println(val);
 
 
-        assertEquals(true,p.isPlaceable(28,28));
+        assertTrue(p.isPlaceable(28, 28));
 
 
     }
@@ -67,9 +67,9 @@ class PlayerTableTest {
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
 
-      //  assertNotNull(p.getElement(28,30));
+      //  assertNotNull(p.getPlacedCard(28,30));
         p.checkAndPlaceCard(0, 29, 29, 3);
-        assertNotNull(p.getElement(30,30));
+        assertNotNull(p.getPlacedCard(30,30));
     }
     @Test
     public void testPlaceStartingCard(){
@@ -77,8 +77,8 @@ class PlayerTableTest {
         StartingCard start = Deck.getStartingCardsDeck().get(0);
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{});
         p.setStartingCard(start);
-        assertNotNull(p.getElement(29,29));
-        System.out.println(p.getElement(29,29));
+        assertNotNull(p.getPlacedCard(29,29));
+        System.out.println(p.getPlacedCard(29,29));
     }
     @Test
     public void testIsCheap(){

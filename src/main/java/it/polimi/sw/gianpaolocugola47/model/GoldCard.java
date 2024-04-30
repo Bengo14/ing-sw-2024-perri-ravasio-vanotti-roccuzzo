@@ -76,9 +76,8 @@ public class GoldCard extends ResourceCard {
             if(this.isPointsForItems()){
                 return points*playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
             }
-        }else
-            return 0;
-        return -1; // incorrect GoldCard initialization
+        }
+        return 0; // GoldCard is not front
     }
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){
         return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x,y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3-corner];

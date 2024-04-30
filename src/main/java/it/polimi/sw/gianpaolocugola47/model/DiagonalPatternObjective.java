@@ -44,6 +44,7 @@ public class DiagonalPatternObjective extends Objectives {
             corner = 3;
         }
         patterns=diagonalPatternsCounter(playerTable, corner);
+        // unflagger
         for(int i=0; i<PlayerTable.getMatrixDimension(); i++){
             for(int j=0; j<PlayerTable.getMatrixDimension(); j++){
                 if(playerTable.getPlacedCard(i,j)!=null)
@@ -61,7 +62,7 @@ public class DiagonalPatternObjective extends Objectives {
                 if (playerTable.getPlacedCard(i, j) instanceof StartingCard) {
                     j++; // skip StartingCard
                 }
-                if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j)) && cardsRequired>0) {
+                if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i, j))) {
                     // found first card BUT not yet counted
                     if(corner==2 && i<=PlayerTable.getMatrixDimension()-cardsRequired && j>=cardsRequired-1){
                         if(diagonalPatternVerifier(i,j,cardsRequired, corner,playerTable)){
@@ -93,7 +94,7 @@ public class DiagonalPatternObjective extends Objectives {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
                         y = (playerTable.setYCoordinate(y, corner));
                     } else {
-                        return false; // card is not linked to next card
+                        return false; // found starting card OR NEXT card is null OR card is not linked to next card
                     }
                 }
             } else

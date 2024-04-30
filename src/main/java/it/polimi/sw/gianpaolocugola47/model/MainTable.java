@@ -168,7 +168,7 @@ public class MainTable {
         if(playersTables[playerId].getPlacedCard(onTableCardX, onTableCardY)!=null){
             int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
-                return false; // GoldCard requisites not matched OR position is not buildable OR incorrect GoldCard initialization
+                return false; // GoldCard requisites not matched OR position is not buildable
             addBoardPoints(playerId, points);
             int objectivePoints = playersTables[playerId].getObjectivePoints(this.globalObjectives);
             int globalPoints = this.getBoardPoints(playerId) + objectivePoints;

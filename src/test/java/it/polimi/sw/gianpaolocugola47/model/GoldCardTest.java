@@ -79,8 +79,8 @@ class GoldCardTest {
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
         main.turnCardOnHand(1,2);
-        main.playCardAndUpdatePoints(0, 29, 29, 0, 1);
-        main.playCardAndUpdatePoints(1, 29, 29, 1, 1);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
+        main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
         main.playCardAndUpdatePoints(2, 28, 28, 1, 1);
         assertEquals(4, main.getBoardPoints(1));
     }
@@ -107,6 +107,22 @@ class GoldCardTest {
         main.playCardAndUpdatePoints(2, 28, 30, 0, 1);
         assertEquals(2, main.getBoardPoints(1));
         assertEquals(2,player.getResourceCounter(6));
+    }
+    @Test
+    public void testIsNotFront(){
+        MainTable main = new MainTable();
+        Deck.initDeck();
+        GoldCard g = Deck.getGoldCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().get(1);
+        start.switchFrontBack();
+        main.setNumOfPlayers(2);
+        PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{g});
+        main.setPlayerTable(1, player);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        main.setPlayerStartingCard(1, start);
+        main.setPlayerSecretObjective(1,obj);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
+        assertEquals(0, main.getBoardPoints(1));
     }
     @Test
     public void testUpdateResourceCounter(){

@@ -49,6 +49,7 @@ public class LShapePatternObjective extends Objectives{
             corner=3;
         }
         patterns=LShapePatternsCounter(playerTable, shiftX, corner);
+        // unflagger
         for(int i=0; i<PlayerTable.getMatrixDimension(); i++){
             for(int j=0; j<PlayerTable.getMatrixDimension(); j++){
                 if(playerTable.getPlacedCard(i,j)!=null)
@@ -68,7 +69,7 @@ public class LShapePatternObjective extends Objectives{
                     j++; // skip StartingCard
                 }
                 //looking for vertical cards
-                if(isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j)) && verticalCardsRequired>0 && diagonalCardsRequired>0){
+                if(isMainResourceMatchedAndNotFlagged(playerTable.getPlacedCard(i,j))){
                     // found vertical card BUT not yet counted
                     if(shift<0 && corner==0 && i>=verticalCardsRequired+diagonalCardsRequired-1 && j>=diagonalCardsRequired){
                         if(LShapePatternVerifier(i, j, verticalCardsRequired, diagonalCardsRequired, shift, corner, playerTable)){
@@ -109,7 +110,7 @@ public class LShapePatternObjective extends Objectives{
         return card!=null && this.secondaryResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     private boolean LShapePatternVerifier(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
-        if(verticalPatternVerifier(x, y, verticalCardsRequired,shift,playerTable) && verticalCardsRequired>0){
+        if(verticalPatternVerifier(x, y, verticalCardsRequired,shift,playerTable)){
             if(shift>0){
                 x=x+(shift*verticalCardsRequired-1);
             }
@@ -117,7 +118,7 @@ public class LShapePatternObjective extends Objectives{
                 x=x-(shift*verticalCardsRequired+1);
             }
             y=playerTable.setYCoordinate(y,corner);
-            if(diagonalPatternVerifier(x,y,diagonalCardsRequired,corner,playerTable) && diagonalCardsRequired>0){
+            if(diagonalPatternVerifier(x,y,diagonalCardsRequired,corner,playerTable)){
                 return true; // LShapePattern verified
             }else
                 return false; // diagonalPattern failed

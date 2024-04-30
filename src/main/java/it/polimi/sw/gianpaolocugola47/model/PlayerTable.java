@@ -112,8 +112,7 @@ public class PlayerTable {
                 placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
         }else
             return -1; // incorrect input: position is not buildable
-        if(card.isFront())
-            points = card.getPoints(this);
+        points = card.getPoints(this);
         cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }

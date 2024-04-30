@@ -17,6 +17,12 @@ public class ClientChatManager extends UnicastRemoteObject implements ChatClient
     protected ClientChatManager(ServerChatManager server) throws RemoteException {
         this.server = server;
     }
+
+    @Override
+    public String getNickname() throws RemoteException {
+        return this.nickname;
+    }
+
     public void receiveMessage(ChatMessage message) throws RemoteException {
         System.out.println("Client received public message: " + message.getMessage() + "from player:" + message.getSender());
     }

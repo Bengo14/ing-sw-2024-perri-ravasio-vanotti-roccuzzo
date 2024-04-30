@@ -37,7 +37,7 @@ public class ServerChatManager extends UnicastRemoteObject implements ChatServer
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
         System.out.println("Server received private message: " + message.getMessage());
         for (ChatClient client : this.clients) {
-            if(client.toString().equals(message.getReceiver())){
+            if(client.getNickname().equals(message.getReceiver())){
                 client.receivePrivateMessage(message);
             }
         }

@@ -12,18 +12,21 @@ class DeckTest {
         ResourceCard card = Deck.drawCardFromResourceDeck();
         assertNotNull(card);
     }
+
     @Test
     public void testDrawCardFromGoldDeck() {
         Deck.initDeck();
         GoldCard card = Deck.drawCardFromGoldDeck();
         assertNotNull(card);
     }
+
     @Test
     public void testDrawCardFromStartingDeck() {
         Deck.initDeck();
         StartingCard card = Deck.drawCardFromStartingDeck();
         assertNotNull(card);
     }
+
     @Test
     public void testDrawCardFromObjectiveDeck() {
         Deck.initDeck();
@@ -37,24 +40,28 @@ class DeckTest {
         assertNotNull(Deck.getGoldCardsDeck());
         assertFalse(Deck.getGoldCardsDeck().isEmpty());
     }
+
     @Test
     public void testGetResourceCardsDeck() {
         Deck.initDeck();
         assertNotNull(Deck.getResourceCardsDeck());
         assertFalse(Deck.getResourceCardsDeck().isEmpty());
     }
+
     @Test
     public void testGetStartingCardsDeck() {
         Deck.initDeck();
         assertNotNull(Deck.getStartingCardsDeck());
         assertFalse(Deck.getStartingCardsDeck().isEmpty());
     }
+
     @Test
     public void testGetObjectiveCardsDeck() {
         Deck.initDeck();
         assertNotNull(Deck.getObjectiveCardsDeck());
         assertFalse(Deck.getObjectiveCardsDeck().isEmpty());
     }
+
     @Test
     public void testAreDecksEmpty() {
         Deck.initDeck();
@@ -69,6 +76,18 @@ class DeckTest {
         assertEquals(null, Deck.drawCardFromObjectivesDeck());
         assertTrue(Deck.areDecksEmpty());
     }
+
+    @Test
+    public void testResourceCardOnTop() {
+        Deck.initDeck();
+        assertNotNull(Deck.getResourceCardOnTop());
+    }
+    @Test
+    public void testGoldCardOnTop () {
+        Deck.initDeck();
+        assertNotNull(Deck.getGoldCardOnTop());
+    }
+
 }
 
 

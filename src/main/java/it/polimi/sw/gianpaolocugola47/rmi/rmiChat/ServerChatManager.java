@@ -10,27 +10,14 @@ public class ServerChatManager extends UnicastRemoteObject implements ChatServer
     private final ArrayList<ChatClient> clients;
     public static final int SERVER_PORT = 4321;
     public static final String SERVER_ADDRESS = "127.0.0.1";
-    private int numOfPlayers = -1;
-    private volatile boolean terminated = false;
 
     protected ServerChatManager() throws RemoteException {
         this.clients = new ArrayList<>();
     }
 
     @Override
-    public int login(ChatClient client) throws RemoteException {
-        synchronized (this.clients) {
-            if(this.clients.size() == this.numOfPlayers || (numOfPlayers==-1 && !this.clients.isEmpty())) {
-                System.err.println("Connection to chat Refused");
-                return -1;
-            }
-            else {
-                System.out.println("New client connected to chat");
-                this.terminated = false;
-                this.clients.add(client);
-                return this.clients.indexOf(client);
-            }
-        }
+    public void login(ChatClient client) throws RemoteException {
+        this.clients.add(client);
     }
 
     @Override
@@ -50,7 +37,9 @@ public class ServerChatManager extends UnicastRemoteObject implements ChatServer
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
         System.out.println("Server received private message: " + message.getMessage());
         for (ChatClient client : this.clients) {
-            client.receiveMessage(message);
+            if(client.toString().equals(message.getReceiver())){
+                client.receivePrivateMessage(message);
+            }
         }
     }
 

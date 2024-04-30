@@ -43,10 +43,26 @@ class DiagonalPatternObjectiveTest {
         main.setPlayerTable(1, player);
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
-        main.playCardAndUpdatePoints(0,29,29,1,1);
-        main.playCardAndUpdatePoints(1,28,30,3,1);
-        main.playCardAndUpdatePoints(2,29,31,3,1);
-        System.out.println(obj.checkPatternAndComputePoints(player));
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
+        main.playCardAndUpdatePoints(1,30,30,3,1);
+        main.playCardAndUpdatePoints(2,31,31,3,1);
         assertEquals(2, obj.checkPatternAndComputePoints(player));
+
+        DiagonalPatternObjective obj2 = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(8);
+        ResourceCard fungi_1 = Deck.getResourceCardsDeck().get(10);
+        ResourceCard fungi_2 = Deck.getResourceCardsDeck().get(13);
+        ResourceCard fungi_3 = Deck.getResourceCardsDeck().get(14);
+        ResourceCard fungi_4 = Deck.getResourceCardsDeck().get(19);
+        main.getPlayerTable(1).setCardOnHandInTheEmptyPosition(fungi_1);
+        main.getPlayerTable(1).setCardOnHandInTheEmptyPosition(fungi_2);
+        main.getPlayerTable(1).setCardOnHandInTheEmptyPosition(fungi_3);
+        main.setPlayerSecretObjective(1, obj2);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,1);
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos()-1,PlayerTable.getStartingCardPos()+1,1,1);
+        main.playCardAndUpdatePoints(2,PlayerTable.getStartingCardPos()-2,PlayerTable.getStartingCardPos()+2,1,1);
+        main.getPlayerTable(1).setCardOnHandInTheEmptyPosition(fungi_4);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos()-3,PlayerTable.getStartingCardPos()+3,1,1);
+        assertEquals(2, obj2.checkPatternAndComputePoints(player));
     }
+
 }

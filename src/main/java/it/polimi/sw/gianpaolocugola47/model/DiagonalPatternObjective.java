@@ -90,7 +90,7 @@ public class DiagonalPatternObjective extends Objectives {
             if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 cardsMatch++;
                 if (cardsMatch <= cardsRequired - 1) {
-                    if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null && playerTable.getPlacedCard(x, y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3 - corner]) {
+                    if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null) {
                         x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
                         y = (playerTable.setYCoordinate(y, corner));
                     } else {
@@ -100,7 +100,7 @@ public class DiagonalPatternObjective extends Objectives {
             } else
                 return false; // found StartingCard OR resource is not matched OR card is already flaggedForObjective OR card is null
         }
-        return cardsMatch == cardsRequired;
+        return true; // diagonal pattern verified
     }
     private void diagonalPatternFlagger(int x, int y, int cardsRequired, int corner, PlayerTable playerTable) {
         for (int i = 0; i < cardsRequired; i++) {

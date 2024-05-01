@@ -13,4 +13,7 @@ public interface VirtualServer extends Remote {
     void addPlayer(int id, String nickname) throws RemoteException;
     void setStartingCard(int playerId, StartingCard card) throws RemoteException;
     void setSecretObjective(int playerId, Objectives obj) throws RemoteException;
+    void login() throws RemoteException;
+    void sendMessage(ChatMessage message) throws RemoteException;
+    void sendPrivateMessage(ChatMessage message) throws RemoteException;
 }

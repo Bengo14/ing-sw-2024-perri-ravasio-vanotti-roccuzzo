@@ -1,4 +1,4 @@
-package it.polimi.sw.gianpaolocugola47.rmi.rmiChat;
+package it.polimi.sw.gianpaolocugola47.rmi;
 
 import java.io.Serializable;
 

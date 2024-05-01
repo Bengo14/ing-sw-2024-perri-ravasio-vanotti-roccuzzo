@@ -3,6 +3,9 @@ package it.polimi.sw.gianpaolocugola47.rmi;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -18,6 +21,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private CLI cli;
     private boolean isCliChosen;
     private int numOfPlayers;
+    private String nickname;
 
     private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
@@ -74,7 +78,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             System.out.println("A game is already starting, you connected to the server with id: "+this.id);
             System.out.print("Insert your nickname: ");
         }
-        String nickname = scan.next();
+        this.nickname = scan.next();
         System.out.println("You joined the game! Waiting for other players...");
         this.server.addPlayer(this.id, nickname);
     }
@@ -136,7 +140,47 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void showPlayablePositions(boolean [][] matrix) throws RemoteException {
         /*todo*/
     }
+    @Override
+    public String getNickname() throws RemoteException {
+        return this.nickname;
+    }
 
+    @Override
+    public int getId() throws RemoteException {
+        return this.id;
+    }
+
+    public void receiveMessage(ChatMessage message) throws RemoteException {
+        System.out.println("Client received public message: " + message.getMessage() + " from player: " + message.getSender());
+    }
+
+    @Override
+    public void receivePrivateMessage(ChatMessage message) throws RemoteException {
+        System.err.println("Client received private message: " + message.getMessage() + " from player: " + message.getSender());
+    }
+
+    public void inputLoop() throws IOException {
+        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+        ChatMessage message = new ChatMessage(nickname, id);
+        //noinspection InfiniteLoopStatement
+        while(true){
+            String line = br.readLine();
+            if(line.startsWith("@")){
+                try{
+                    message.setPrivate(true);
+                    message.setReceiver(line.substring(1, line.indexOf(" ")));
+                    message.setMessage(line.substring(line.indexOf(" ")+1));
+                    this.server.sendPrivateMessage(message);
+                } catch (StringIndexOutOfBoundsException e){
+                    System.err.println("Invalid input, try again...");
+                }
+            } else {
+                message.setPrivate(false);
+                message.setMessage(line);
+                this.server.sendMessage(message);
+            }
+        }
+    }
 
     public static void main(String[] args){
 

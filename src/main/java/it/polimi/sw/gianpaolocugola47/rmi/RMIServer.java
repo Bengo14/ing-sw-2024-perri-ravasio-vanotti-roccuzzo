@@ -236,6 +236,28 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         }
     }
 
+    public void login() throws RemoteException {
+
+    }
+
+    @Override
+    public void sendMessage(ChatMessage message) throws RemoteException {
+        System.out.println("Server received public message: " + message.getMessage());
+        for (VirtualView client : this.clients) {
+            client.receiveMessage(message);
+        }
+    }
+
+    @Override
+    public void sendPrivateMessage(ChatMessage message) throws RemoteException {
+        System.out.println("Server received private message: " + message.getMessage());
+        for (VirtualView client : this.clients) {
+            if(client.getNickname().equals(message.getReceiver())){
+                client.receivePrivateMessage(message);
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         String name = "VirtualServer";

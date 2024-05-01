@@ -20,6 +20,9 @@ public interface VirtualView extends Remote {
     void showPlayablePositions(boolean [][] matrix) throws RemoteException;
     void gameOver() throws RemoteException;
     void showWinner() throws RemoteException;
-
+    String getNickname() throws RemoteException;
+    int getId() throws RemoteException;
+    void receiveMessage(ChatMessage message) throws RemoteException;
+    void receivePrivateMessage(ChatMessage message) throws RemoteException;
 
 }

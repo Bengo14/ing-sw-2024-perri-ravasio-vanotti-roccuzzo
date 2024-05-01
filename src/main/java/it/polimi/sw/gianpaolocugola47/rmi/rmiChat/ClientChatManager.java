@@ -10,12 +10,14 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClientChatManager extends UnicastRemoteObject implements ChatClient {
-    private ServerChatManager server;
+    private ChatServer server;
     private int id;
     private String nickname;
 
-    protected ClientChatManager(ServerChatManager server) throws RemoteException {
+    protected ClientChatManager(ServerChatManager server, int id, String nickname) throws RemoteException {
         this.server = server;
+        this.id = id;
+        this.nickname = nickname;
     }
 
     @Override
@@ -23,8 +25,13 @@ public class ClientChatManager extends UnicastRemoteObject implements ChatClient
         return this.nickname;
     }
 
+    @Override
+    public int getId() throws RemoteException {
+        return this.id;
+    }
+
     public void receiveMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Client received public message: " + message.getMessage() + "from player:" + message.getSender());
+        System.out.println("Client received public message: " + message.getMessage() + " from player: " + message.getSender());
     }
 
     @Override
@@ -34,15 +41,14 @@ public class ClientChatManager extends UnicastRemoteObject implements ChatClient
 
     public void startClient() throws IOException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(ServerChatManager.SERVER_ADDRESS, ServerChatManager.SERVER_PORT);
-        this.server.login(this);
-        this.server = (ServerChatManager) registry.lookup("RMIChat");
+        this.server = (ChatServer) registry.lookup("RMIChat");
         this.server.login(this);
         inputLoop();
     }
 
     void inputLoop() throws IOException {
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(nickname);
+        ChatMessage message = new ChatMessage(nickname, id);
         while(true){
             String line = br.readLine();
             if(line.equals("exit")){
@@ -65,8 +71,9 @@ public class ClientChatManager extends UnicastRemoteObject implements ChatClient
     public static void main(String[] args){
         try{
             ServerChatManager server = new ServerChatManager();
-            new ClientChatManager(server).startClient();
+            new ClientChatManager(server,0, "asdrubale").startClient();
         } catch(Exception e){
+            System.out.println("Server down! Try again later.");
             e.printStackTrace();
         }
     }

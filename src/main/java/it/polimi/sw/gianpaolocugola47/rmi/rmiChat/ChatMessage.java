@@ -1,20 +1,27 @@
 package it.polimi.sw.gianpaolocugola47.rmi.rmiChat;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable {
     private String message;
     private final String  sender;
     private String receiver;
     private boolean isPrivate;
+    private final int senderId;
+    private int receiverId;
 
-    public ChatMessage(String message, String sender, String receiver) {
+    public ChatMessage(String message, String sender, String receiver, int senderId, int receiverId) {
         this.message = message;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.sender = sender;
         this.receiver = receiver;
         this.isPrivate = false;
     }
 
-    public ChatMessage(String sender){
+    public ChatMessage(String sender, int senderId){
         this.sender = sender;
+        this.senderId = senderId;
         this.receiver = null;
         this.isPrivate = false;
     }
@@ -46,4 +53,8 @@ public class ChatMessage {
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+
+    public int getSenderId() { return senderId;}
+
+    public int getReceiverId() { return receiverId; }
 }

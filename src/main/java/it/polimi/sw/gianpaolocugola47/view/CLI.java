@@ -16,7 +16,7 @@ public class CLI {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.flush();
         System.out.println("---- The game CODEX NATURALIS starts! ----\ncoming soon...");
-        System.out.println("Chat service is on!");
+        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
         openChat();
         /*todo*/
     }

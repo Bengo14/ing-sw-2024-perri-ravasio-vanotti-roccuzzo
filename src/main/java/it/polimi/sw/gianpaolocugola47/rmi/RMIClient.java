@@ -36,7 +36,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             }
             System.err.println("Client connected with id: "+id);
             terminationCheckerStart();
-            runCli();
+            try{
+                runCli();
+            } catch (IOException e) {
+                System.out.println("Oops! Issues with input found. Terminating game.");
+                terminate();
+            }
         } catch (RemoteException e) {
             terminate();
         }
@@ -50,8 +55,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         }).start();
     }
 
-    private void runCli() throws RemoteException {
-
+    private void runCli() throws IOException {
+        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         System.out.println("Welcome to Codex Naturalis!");
         System.out.println("Just a little patience, choose the interface: \n1 = CLI\n2 = GUI");
         Scanner scan = new Scanner(System.in);
@@ -73,12 +78,32 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             this.numOfPlayers = Integer.parseInt(command);
             this.server.setNumOfPlayers(numOfPlayers);
             System.out.print("Okay, now insert your nickname: ");
+            this.nickname = br.readLine();
+            while(nickname.isEmpty() || nickname == null){
+                System.out.print("Invalid nickname, try again: ");
+                this.nickname = scan.next();
+            }
+            if(nickname.contains(" ")) {
+                this.nickname = nickname.replace(" ","_");
+            }
         }
         else {
             System.out.println("A game is already starting, you connected to the server with id: "+this.id);
             System.out.print("Insert your nickname: ");
+            this.nickname = br.readLine();
+            if(nickname.contains(" ")) {
+                this.nickname = nickname.replace(" ","_");
+            }
+            while(!this.server.isNicknameAvailable(this.nickname,this.id)
+                    || this.nickname.isEmpty() || this.nickname == null){
+                System.out.print("Nickname invalid or already taken, try again: ");
+                System.out.println(this.nickname);
+                this.nickname = br.readLine();
+                if(nickname.contains(" ")) {
+                    this.nickname = nickname.replace(" ","_");
+                }
+            }
         }
-        this.nickname = scan.next();
         System.out.println("You joined the game! Waiting for other players...");
         this.server.addPlayer(this.id, nickname);
     }
@@ -151,28 +176,37 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     public void receiveMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Client received public message: " + message.getMessage() + " from player: " + message.getSender());
+        System.out.println(message.getSender() + ": " + message.getMessage());
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) throws RemoteException {
-        System.err.println("Client received private message: " + message.getMessage() + " from player: " + message.getSender());
+        System.err.println(message.getSender() + ": psst, " + message.getMessage());
     }
 
     public void inputLoop() throws IOException {
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         ChatMessage message = new ChatMessage(nickname, id);
         //noinspection InfiniteLoopStatement
-        while(true){
+        while(true) {
             String line = br.readLine();
-            if(line.startsWith("@")){
-                try{
+            if (line.startsWith("@")) {
+                try {
                     message.setPrivate(true);
                     message.setReceiver(line.substring(1, line.indexOf(" ")));
-                    message.setMessage(line.substring(line.indexOf(" ")+1));
+                    message.setMessage(line.substring(line.indexOf(" ") + 1));
                     this.server.sendPrivateMessage(message);
-                } catch (StringIndexOutOfBoundsException e){
+                } catch (StringIndexOutOfBoundsException e) {
                     System.err.println("Invalid input, try again...");
+                }
+            } else if (line.equals("--listPlayers")) {
+                this.server.getNicknames();
+                System.out.println("Here's a list of all the players in the lobby: ");
+                for(String nickname : this.server.getNicknames()){
+                    if(nickname.equals(this.nickname))
+                        System.err.println(nickname + " (you)");
+                    else
+                        System.out.println(nickname);
                 }
             } else {
                 message.setPrivate(false);
@@ -190,6 +224,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
         } catch(RemoteException | NotBoundException e){
+            System.err.println("Server is not up yet. Try again later.");
             e.printStackTrace();
         }
     }

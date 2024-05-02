@@ -258,6 +258,22 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         }
     }
 
+    @Override
+    public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
+        for(VirtualView client: this.clients)
+            if(client.getNickname().equals(nickname) && clients.indexOf(client) != id)
+                return false;
+        return true;
+    }
+
+    @Override
+    public String[] getNicknames() throws RemoteException {
+        String[] nicknames = new String[this.clients.size()];
+        for(int i = 0; i<this.clients.size(); i++)
+            nicknames[i] = this.clients.get(i).getNickname();
+        return nicknames;
+    }
+
     public static void main(String[] args) {
 
         String name = "VirtualServer";

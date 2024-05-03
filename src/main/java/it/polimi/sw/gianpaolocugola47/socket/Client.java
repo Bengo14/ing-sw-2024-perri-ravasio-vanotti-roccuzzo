@@ -14,7 +14,7 @@ public class Client implements VirtualView {
         this.server = new ServerProxy(output);
     }
 
-    private void run() throws RemoteException {
+    public void run() throws RemoteException {
         new Thread(() -> {
             try {
                 runVirtualServer();
@@ -62,15 +62,34 @@ public class Client implements VirtualView {
         System.err.print("\n[ERROR] " + details + "\n> ");
     }
 
-    public static void main(String[] args) throws IOException {
-        String host = args[0];
-        int port = Integer.parseInt(args[1]);
+    public static void main(String[] args) {
+//        if (args.length < 2) {
+//            System.err.println("Usage: java Client <host> <port>");
+//            System.exit(1);
+//        }
 
-        Socket serverSocket = new Socket(host, port);
 
-        InputStreamReader socketRx = new InputStreamReader(serverSocket.getInputStream());
-        OutputStreamWriter socketTx = new OutputStreamWriter(serverSocket.getOutputStream());
+        int port= 8080;
+        String host = "localhost";
 
-        new Client(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
+//        try {
+//            port = Integer.parseInt(args[1]);
+//        } catch (NumberFormatException e) {
+//            System.err.println("Error: Invalid port number.");
+//            System.exit(1);
+//            return;
+//        }
+
+        try {
+            Socket serverSocket = new Socket(host, port);
+
+            InputStreamReader socketRx = new InputStreamReader(serverSocket.getInputStream());
+            OutputStreamWriter socketTx = new OutputStreamWriter(serverSocket.getOutputStream());
+
+            new Client(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
+        } catch (IOException e) {
+            System.err.println("Error: Unable to connect to server: " + e.getMessage());
+            System.exit(1);
+        }
     }
 }

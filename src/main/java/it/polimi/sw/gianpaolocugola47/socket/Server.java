@@ -1,75 +1,56 @@
 package it.polimi.sw.gianpaolocugola47.socket;
-
-import it.polimi.sw.gianpaolocugola47.controller.Controller;
-import it.polimi.sw.gianpaolocugola47.messages.Message;
+import  it.polimi.sw.gianpaolocugola47.controller.AdderController;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-public class Server implements Runnable {
-    private ServerSocket serverSocket;
-    int port;
 
-    private List<Lobby> lobbies = new ArrayList<>();
-    private List<ClientSkeleton> queue = new ArrayList<>();
+public class Server {
+    final ServerSocket listenSocket;
+    final AdderController controller;
+    final List<ClientHandler> clients = new ArrayList<>();
 
-
-    public Server(int port) {
-        this.port = port;
+    public Server(ServerSocket listenSocket, AdderController controller) {
+        this.listenSocket = listenSocket;
+        this.controller = controller;
     }
 
-    //inizializza e avvia il server
-    public void run() {
+    private void runServer() throws IOException {
+        Socket clientSocket = null;
+        while ((clientSocket = this.listenSocket.accept()) != null) {
+            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
+            OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
 
-        try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Server address: " + serverSocket.getInetAddress());
-            System.out.println("\nSystem port: " + port);
-        } catch (IOException ex) {
-            System.out.println("Error initializing serverSocket.\n" + ex.getClass().getSimpleName() +
-                    ": " + ex.getMessage());
+            ClientHandler handler = new ClientHandler(this.controller, this, new BufferedReader(socketRx), new BufferedWriter(socketTx));
+
+            clients.add(handler);
+            new Thread(() -> {
+                try {
+                    handler.runVirtualView();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         }
-        while (true) {
-            try {
-                Socket socket = serverSocket.accept();
-                System.out.println("Connection accepted from: " + socket.getInetAddress());
-                ClientSkeleton clientSkeleton = new ClientSkeleton(socket, this);
-                Thread thread = new Thread(clientSkeleton);
-                thread.start();
-                queue.add(clientSkeleton);
-//                if (lobbies.size() == 0) {
-//                    clientSkeleton.sendMessage(new MessageLobby("NO"));
-//                } else {
-//                    clientSkeleton.sendMessage(new MessageLobby("YES", lobbies));
-//                }
-            } catch (IOException e) {
-                System.out.println(("Connection ended.\n" + e.getClass().getSimpleName() + ": " + e.getMessage()));
+    }
+
+    public void broadcastUpdate(Integer value) {
+        synchronized (this.clients) {
+            for (var client : this.clients) {
+                client.showValue(value);
             }
         }
     }
 
-    public void connectLobby(Message m, ClientSkeleton client) throws RemoteException {
-    switch (m.getMessageType()) {
-            /*TODO: implementare il caso in cui il client vuole connettersi ad una lobby*/
+
+    public static void main(String[] args) throws IOException {
+        String host = args[0];
+        int port = Integer.parseInt(args[1]);
+
+        ServerSocket listenSocket = new ServerSocket(port);
+
+        new Server(listenSocket, new AdderController());
     }
-    }
-
-
-
-    public void quit(){
-        /*TODO: implementare il metodo che RIMUOVE UN GIOCATORE DALLA LOBBY*/
-    }
-
-
-
-    public void Print() {
-        /*TODO: implementare il metodo che STAMPA UN MESSAGGIO*/
-    }
-
-
 }

@@ -1,107 +1,76 @@
 package it.polimi.sw.gianpaolocugola47.socket;
 
-import it.polimi.sw.gianpaolocugola47.messages.Message;
-import it.polimi.sw.gianpaolocugola47.utils.ViewListener;
-import it.polimi.sw.gianpaolocugola47.view.handler;
-
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class Client extends ViewListener {
-    private final handler viewH;
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
-    private Socket socket;
-    private int port;
-    private String ip;
+public class Client implements VirtualView {
+    final BufferedReader input;
+    final ServerProxy server;
 
-
-    public Client(handler viewH) {
-        this.viewH = viewH;
-    }
-    //verifica se il client è connesso
-    public boolean register (int port,String ip){
-        this.port=port;
-        this.ip=ip;
-        try {
-            this.socket = new Socket(this.ip, this.port);
-        } catch (Exception e) {
-            viewH.wrongData();
-            return false;
-        }
-
-        try {
-            this.oos = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            viewH.wrongData();
-            return false;
-        }
-        try {
-            this.ois = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            viewH.wrongData();
-            return false;
-
-        }
-        return true;
+    protected Client(BufferedReader input, BufferedWriter output) {
+        this.input = input;
+        this.server = new ServerProxy(output);
     }
 
+    private void run() throws RemoteException {
+        new Thread(() -> {
+            try {
+                runVirtualServer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+        runCli();
+    }
 
-    public void sendMessage(Message message) throws RemoteException {
-       /*TODO:implementare l'invio di messaggi al server*/
-        try {
-            oos.writeObject(message);
-            oos.flush();
-        } catch (IOException e) {
-            throw new RemoteException("Can't send message to server: " + e.getMessage());
+    private void runVirtualServer() throws IOException {
+        String line;
+        // Read message type
+        while ((line = input.readLine()) != null) {
+            // Read message and perform action
+            switch (line) {
+                case "update" -> this.showValue(Integer.parseInt(input.readLine()));
+                case "error" -> this.reportError(input.readLine());
+                default -> System.err.println("[INVALID MESSAGE]");
+            }
         }
     }
 
+    private void runCli() throws RemoteException {
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            System.out.print("> ");
+            int command = scan.nextInt();
 
-    public void receive() throws RemoteException {
-       /*TODO:implementare la ricezione di messaggi dal server*/
-        try {
-            Message mes = (Message) ois.readObject();
-            //viewH.update(mes);non capisco il problema
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RemoteException("Can't receive message from server: " + e.getMessage());
+            if (command == 0) {
+                server.reset();
+            } else {
+                server.add(command);
+            }
         }
     }
 
-
-    //permette di avviare il client
-    public void start(int port, String ip) {
-        boolean valid = register(port,ip);
-        if (valid) {
-
-            new Thread() {
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            receive();
-                        } catch (RemoteException e) {
-                            System.err.println("Error in thread while receiving message: " + e.getMessage());
-                            try {
-                                socket.close();
-                            } catch (IOException ex) {
-                                System.err.println("Error in thread while closing connection: " + ex.getMessage());
-                            }
-                            System.exit(1);
-                        }
-                    }
-                }
-
-            }.start();
-            viewH.go();}
+    public void showValue(Integer number) {
+        // TODO Attenzione! Questo può causare data race con il thread dell'interfaccia o un altro thread
+        System.out.print("\n= " + number + "\n> ");
     }
 
+    public void reportError(String details) {
+        // TODO Attenzione! Questo può causare data race con il thread dell'interfaccia o un altro thread
+        System.err.print("\n[ERROR] " + details + "\n> ");
+    }
 
-    //inizializza la connessione
-    public void run(){
-        viewH.askServer();
+    public static void main(String[] args) throws IOException {
+        String host = args[0];
+        int port = Integer.parseInt(args[1]);
+
+        Socket serverSocket = new Socket(host, port);
+
+        InputStreamReader socketRx = new InputStreamReader(serverSocket.getInputStream());
+        OutputStreamWriter socketTx = new OutputStreamWriter(serverSocket.getOutputStream());
+
+        new Client(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
     }
 }
-

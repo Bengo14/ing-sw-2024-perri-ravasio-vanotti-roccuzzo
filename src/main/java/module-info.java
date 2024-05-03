@@ -8,4 +8,5 @@ module it.polimi.sw.gianpaolocugola47 {
     opens it.polimi.sw.gianpaolocugola47 to javafx.fxml;
     opens it.polimi.sw.gianpaolocugola47.model to com.google.gson;
     exports it.polimi.sw.gianpaolocugola47.rmi to java.rmi;
+    exports it.polimi.sw.gianpaolocugola47.utils to java.rmi;
 }

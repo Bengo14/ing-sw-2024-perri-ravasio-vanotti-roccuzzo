@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 
 import java.io.BufferedReader;

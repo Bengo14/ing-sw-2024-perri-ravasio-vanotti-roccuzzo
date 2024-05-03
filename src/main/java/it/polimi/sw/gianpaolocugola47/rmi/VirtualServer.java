@@ -2,6 +2,7 @@ package it.polimi.sw.gianpaolocugola47.rmi;
 
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

@@ -5,6 +5,7 @@ import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

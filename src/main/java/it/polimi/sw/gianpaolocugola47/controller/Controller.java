@@ -34,32 +34,34 @@ public class Controller {
         this.mainTable.addPlayer(id, nickname);
         playersAdded++;
     }
-    public void drawStartingCards() {
-        for(int i=0; i<mainTable.getNumOfPlayers(); i++){
-            mainTable.drawStartingCard(i);
-        }
+    public StartingCard drawStartingCard() {
+        return mainTable.drawStartingCard();
     }
-    public void setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
+    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
         mainTable.setPlayerStartingCard(playerId, card);
-        mainTable.drawTwoPossibleSecretObjectives(playerId);
+        return mainTable.drawTwoPossibleSecretObjectives();
     }
     public void setSecretObjectiveAndUpdateView(int playerId, Objectives obj) {
         mainTable.setPlayerSecretObjective(playerId, obj);
         startingCardsAndObjAdded++;
         if(startingCardsAndObjAdded == mainTable.getNumOfPlayers()) {
-            mainTable.setViewFixedParams();
-            mainTable.updateView();
+            mainTable.initView();
             mainTable.showTurn(currentPlayerId);
         }
     }
 
-    public void getPlayablePositions(int playerId) {
+    public boolean[][] getPlayablePositions(int playerId) {
         if(playerId == currentPlayerId)
-            mainTable.checkAllPlayablePositions(playerId);
+            return mainTable.checkAllPlayablePositions(playerId);
+        else return null;
     }
-    public void playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+    public void turnCardOnHand(int playerId, int position){
+        mainTable.turnCardOnHand(playerId, position);
+    }
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
         if(playerId == currentPlayerId)
-            mainTable.playCardAndUpdatePoints(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+            return mainTable.playCardAndUpdatePoints(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+        else return false;
     }
     public void drawCard(int position, int playerId) {
         if(playerId == currentPlayerId) {
@@ -69,10 +71,11 @@ public class Controller {
     }
 
     private void endTurn() {
+
         updateCurrentPlayer();
         if(currentPlayerId == 0 && mainTable.isEndGame()) {
             if(isLastTurn) {
-                getWinner();
+                computeWinner();
                 currentPlayerId = -1;
                 return;
             } else {
@@ -87,7 +90,7 @@ public class Controller {
                 return;
             }
         }
-        getWinner();
+        computeWinner();
         currentPlayerId = -1;
     }
     private void updateCurrentPlayer() {
@@ -95,7 +98,18 @@ public class Controller {
             currentPlayerId = 0;
         else this.currentPlayerId++;
     }
-    private void getWinner() {
+    private void computeWinner() {
         mainTable.computeWinnerAtEndGame();
+    }
+
+    public ResourceCard[][] getCardsOnHand() {
+        return mainTable.getCardsOnHand();
+    }
+    public PlaceableCard[][] getPlacedCards(int playerId){
+        return mainTable.getPlacedCards(playerId);
+    }
+
+    public String[] getNicknames() {
+        return mainTable.getNicknames();
     }
 }

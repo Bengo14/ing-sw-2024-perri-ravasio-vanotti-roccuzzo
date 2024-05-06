@@ -31,14 +31,14 @@ class MainTableTest {
     @Test
     public void drawTwoPossibleSecretObjectives() {
         MainTable mainTable = new MainTable();
-        Objectives[] objectives = mainTable.drawTwoPossibleSecretObjectives(0);
+        Objectives[] objectives = mainTable.drawTwoPossibleSecretObjectives();
         assertNotNull(objectives);
         assertEquals(2, objectives.length);
     }
     @Test
     public void drawStartingCard() {
         MainTable mainTable = new MainTable();
-        StartingCard start = mainTable.drawStartingCard(0);
+        StartingCard start = mainTable.drawStartingCard();
         assertNotNull(start);
     }
 
@@ -49,7 +49,7 @@ class MainTableTest {
         MainTable table = new MainTable();
         table.setNumOfPlayers(2);
         table.setPlayerTable(0, player);
-        StartingCard start = table.drawStartingCard(0);
+        StartingCard start = table.drawStartingCard();
         table.setPlayerStartingCard(0, start);
         table.getPlayerTable(0);
         assertEquals(start, table.getPlayerTable(0).getStartingCard());
@@ -77,7 +77,7 @@ class MainTableTest {
         Deck.initDeck();
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1,res_2,res_3});
         mainTable.setPlayerTable(0, player);
-        StartingCard start = mainTable.drawStartingCard(0);
+        StartingCard start = mainTable.drawStartingCard();
         mainTable.setPlayerStartingCard(0, start);
         player.checkAndPlaceCard(0,28,28,1);
         mainTable.drawCardFrom(0,0);
@@ -115,8 +115,8 @@ class MainTableTest {
         PlayerTable player2 = new PlayerTable(1, "surname", new ResourceCard[]{});
         main.setPlayerTable(0, player);
         main.setPlayerTable(1, player2);
-        StartingCard start = main.drawStartingCard(0);
-        StartingCard start2 = main.drawStartingCard(0);
+        StartingCard start = main.drawStartingCard();
+        StartingCard start2 = main.drawStartingCard();
         main.setPlayerStartingCard(0, start);
         main.setPlayerStartingCard(1, start2);
         assertEquals(true,main.checkIfPlayerCanPlay(0));
@@ -156,12 +156,12 @@ class MainTableTest {
         main.setPlayerTable(0, player);
         main.setPlayerTable(1, player2);
 
-        StartingCard start = main.drawStartingCard(0);
+        StartingCard start = main.drawStartingCard();
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         Objectives obj2 = Deck.getObjectiveCardsDeck().get(1);
         main.setPlayerSecretObjective(0, obj);
         main.setPlayerSecretObjective(1, obj2);
-        StartingCard start2 = main.drawStartingCard(0);
+        StartingCard start2 = main.drawStartingCard();
         start.switchFrontBack();
         res_1.switchFrontBack();
         res_2.switchFrontBack();
@@ -186,12 +186,5 @@ class MainTableTest {
         main.setPlayerSecretObjective(0, obj);
         main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
         assertEquals(1, main.getGlobalPoints(0));
-    }
-    @Test
-    public void testSetViewFixedParams(){
-        MainTable main = new MainTable();
-        main.setNumOfPlayers(2);
-        main.setViewFixedParams();
-
     }
 }

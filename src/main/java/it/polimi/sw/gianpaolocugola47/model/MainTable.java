@@ -1,13 +1,18 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import it.polimi.sw.gianpaolocugola47.observer.Observable;
+import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.rmi.RMIServer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents the common board, and it contains the scoreboard,
  * the two decks(resources card and gold card) and the common objectives. The status changes
  * are managed by the {@link //Controller}.
  */
-public class MainTable {
+public class MainTable implements Observable {
 
     private boolean endGame;
     private ResourceCard[] cardsOnTable;
@@ -16,15 +21,84 @@ public class MainTable {
     private int[] globalPoints;
     private PlayerTable[] playersTables;
     private int numOfPlayers;
+    private final List<Observer> observers;
 
 
     public MainTable() {
         this.endGame = false;
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
+        this.observers = new ArrayList<>();
         //Deck.initDeck();
         Deck.initAndShuffleDeck();
         initTable();
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        /*todo*/
+    }
+    @Override
+    public void removeObserver(Observer observer) {
+        /*todo*/
+    }
+    public StartingCard drawStartingCard() {
+        return Deck.drawCardFromStartingDeck();
+    }
+    public void setPlayerStartingCard(int playerId, StartingCard startingCard){
+        this.getPlayerTable(playerId).setStartingCard(startingCard);
+    }
+    public Objectives[] drawTwoPossibleSecretObjectives() {
+        return new Objectives[]{Deck.drawCardFromObjectivesDeck(), Deck.drawCardFromObjectivesDeck()};
+    }
+    public void setPlayerSecretObjective(int playerId, Objectives secretObjective){
+        this.getPlayerTable(playerId).setSecretObjective(secretObjective);
+    }
+    @Override
+    public void initView() {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.initView(getNicknames(), globalObjectives, getCardsOnHand(), cardsOnTable);
+            }
+            updateDecks();
+        }).start();
+    }
+    @Override
+    public void updateDecks() {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.updateDecks(Deck.getResourceCardOnTop(), Deck.getGoldCardOnTop());
+            }
+        }).start();
+    }
+    @Override
+    public void updatePoints() {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.updatePoints(boardPoints, globalPoints);
+            }
+        }).start();
+    }
+    @Override
+    public void showTurn(int playerId) {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.showTurn(playerId);
+            }
+        }).start();
+    }
+    @Override
+    public void showWinner(int winner) {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.showWinner(winner);
+            }
+        }).start();
     }
 
     private void initTable(){
@@ -46,23 +120,6 @@ public class MainTable {
         this.playersTables = new PlayerTable[numOfPlayers];
     }
 
-    public StartingCard drawStartingCard(int playerId) {
-        StartingCard card = Deck.drawCardFromStartingDeck();
-        new Thread(()->{RMIServer.getServer().startingCardDrawn(card, playerId);}).start();
-        return card;
-    }
-    public void setPlayerStartingCard(int playerId, StartingCard startingCard){
-        this.getPlayerTable(playerId).setStartingCard(startingCard);
-    }
-    public Objectives[] drawTwoPossibleSecretObjectives(int playerId) {
-        Objectives[] obj = new Objectives[]{Deck.drawCardFromObjectivesDeck(), Deck.drawCardFromObjectivesDeck()};
-        new Thread(()->{RMIServer.getServer().secretObjectivesDrawn(obj, playerId);}).start();
-        return obj;
-    }
-    public void setPlayerSecretObjective(int playerId, Objectives secretObjective){
-        this.getPlayerTable(playerId).setSecretObjective(secretObjective);
-    }
-
     public void switchCardOnHandFrontBack(int playerId, int position){
         this.getPlayerTable(playerId).turnCardOnHand(position);
     }
@@ -78,45 +135,30 @@ public class MainTable {
         }
     }
 
-    public void setViewFixedParams(){
-        new Thread(()->{
-            RMIServer.getServer().setViewFixedParams(playersTables, globalObjectives);
-        }).start();
+    public String[] getNicknames() {
+        String[] nicknames = new String[numOfPlayers];
+        for(int i = 0; i<numOfPlayers; i++)
+            nicknames[i] = getPlayerTable(i).getNickName();
+        return nicknames;
     }
-    public void updateView() {
-        new Thread(()->{
-            RMIServer.getServer().updateView(playersTables, boardPoints, globalPoints, cardsOnTable);
-        }).start();
+    public ResourceCard[][] getCardsOnHand() {
+        ResourceCard[][] cards = new ResourceCard[numOfPlayers][3];
+        for(int i=0; i<numOfPlayers; i++)
+            cards[i] = getPlayerTable(i).getCardsOnHand();
+        return cards;
     }
-    protected void updateView(int playerId) {
-        new Thread(()->{
-            RMIServer.getServer().updateView(getPlayerTable(playerId), boardPoints, globalPoints, cardsOnTable);
-        }).start();
-    }
-    public void showTurn(int playerId) {
-        new Thread(()->{
-            RMIServer.getServer().showTurn(playerId);
-        }).start();
-    }
-    protected void showWinner(int winner) {
-        new Thread(()->{
-            RMIServer.getServer().showWinner(winner);
-        }).start();
-    }
-    protected void showPlayablePositions(int playerId, boolean[][] matrix) {
-        new Thread(()->{
-            RMIServer.getServer().showPlayablePositions(playerId, matrix);
-        }).start();
+    public PlaceableCard[][] getPlacedCards(int playerId) {
+        return getPlayerTable(playerId).getPlacedCards();
     }
 
     public void turnCardOnHand(int playerId, int cardPosition) {
-        playersTables[playerId].turnCardOnHand(cardPosition);
+        getPlayerTable(playerId).turnCardOnHand(cardPosition);
     }
 
-    public int getBoardPoints(int playerId) {
+    protected int getBoardPoints(int playerId) {
         return boardPoints[playerId];
     }
-    public int getGlobalPoints(int playerId) {
+    protected int getGlobalPoints(int playerId) {
         return globalPoints[playerId];
     }
 
@@ -146,7 +188,7 @@ public class MainTable {
             playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
         if(Deck.areDecksEmpty())
             setEndGame();
-        this.updateView(playerId);
+        this.updateDecks();
     }
 
     private void replaceCardOnTable(int position){
@@ -172,7 +214,6 @@ public class MainTable {
                 matrix[i][j] = playerTable.isPlaceable(i, j); // boolean
             }
         }
-        this.showPlayablePositions(playerId, matrix);
         return matrix;
     }
 
@@ -182,12 +223,12 @@ public class MainTable {
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable
             addBoardPoints(playerId, points);
-            int objectivePoints = playersTables[playerId].getObjectivePoints(this.globalObjectives);
-            int globalPoints = this.getBoardPoints(playerId) + objectivePoints;
+            int objectivePoints = getPlayerTable(playerId).getObjectivePoints(globalObjectives);
+            int globalPoints = getBoardPoints(playerId) + objectivePoints;
             setGlobalPoints(playerId, globalPoints);
             if(getBoardPoints(playerId)>=20 && !isEndGame())
                 setEndGame();
-            this.updateView(playerId);
+            updatePoints();
             return true; // correct placement and points added
         } else {
             return false; // incorrect input: onTableCard is null

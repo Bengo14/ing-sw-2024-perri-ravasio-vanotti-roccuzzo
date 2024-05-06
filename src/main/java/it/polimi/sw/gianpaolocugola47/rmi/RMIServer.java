@@ -1,10 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.rmi;
 
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
-import it.polimi.sw.gianpaolocugola47.model.Objectives;
-import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
-import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
-import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.observer.Observer;
+import it.polimi.sw.gianpaolocugola47.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.rmi.RemoteException;
@@ -14,7 +13,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RMIServer extends UnicastRemoteObject implements VirtualServer {
+public class RMIServer extends UnicastRemoteObject implements VirtualServer, Observer {
 
     public static final int SERVER_PORT = 1234;
     public static final String SERVER_ADDRESS = "127.0.0.1";
@@ -27,7 +26,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
     public static RMIServer getServer() {
         if (RMIServer.server == null) {
             try {
-                RMIServer.server = new RMIServer();
+                RMIServer.server = new RMIServer(new Controller());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -35,9 +34,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         return RMIServer.server;
     }
 
-    private RMIServer() throws RemoteException {
+    private RMIServer(Controller controller) throws RemoteException {
         super(0);
-        this.controller = new Controller();
+        this.controller = controller;
         this.clients = new ArrayList<>();
         pingStart();
     }
@@ -138,76 +137,39 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
                 client.startGame();
             }
         }
-        this.controller.drawStartingCards();
     }
-
-    public void startingCardDrawn(StartingCard card, int playerId) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(playerId).startingCardDrawn(card);
-                } catch (RemoteException ignored) {}
-            }
+    @Override
+    public StartingCard drawStartingCard() throws RemoteException {
+        synchronized (controller) {
+            return this.controller.drawStartingCard();
         }
     }
     @Override
-    public void setStartingCard(int playerId, StartingCard card) throws RemoteException{
-        this.controller.setStartingCardAndDrawObjectives(playerId, card);
-    }
-    public void secretObjectivesDrawn(Objectives[] obj, int playerId) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(playerId).secretObjectivesDrawn(obj);
-                } catch (RemoteException ignored) {}
-            }
+    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException {
+        synchronized (controller) {
+            return this.controller.setStartingCardAndDrawObjectives(playerId, card);
         }
     }
     @Override
-    public void setSecretObjective(int playerId, Objectives obj) throws RemoteException{
-        this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
+    public void setSecretObjective(int playerId, Objectives obj) throws RemoteException {
+        synchronized (controller) {
+            this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
+        }
     }
 
-    public void setViewFixedParams(PlayerTable[] tables, Objectives[] globalObj) {
-        String[] nicknames = new String[numOfPlayers];
-        for(int i = 0; i<numOfPlayers; i++)
-            nicknames[i] = tables[i].getNickName();
+    @Override
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
 
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    for(VirtualView view : clients) {
-                        int i = clients.indexOf(view);
-                        view.setViewFixedParams(nicknames, globalObj, tables[i].getSecretObjective());
-                    }
-                } catch (RemoteException ignored) {}
-            }
-        }
     }
-    public void updateView(PlayerTable[] tables, int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    for(VirtualView view : clients) {
-                        int i = clients.indexOf(view);
-                        view.updateView(tables[i].getCardsOnHand(), tables[i].getPlacedCards());
-                        view.updateView(boardPoints, globalPoints, cardsOnTable);
-                    }
-                } catch (RemoteException ignored) {}
-            }
-        }
+    @Override
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+
     }
-    public void updateView(PlayerTable table, int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(table.getId()).updateView(table.getCardsOnHand(), table.getPlacedCards());
-                    for(VirtualView view : clients)
-                        view.updateView(boardPoints, globalPoints, cardsOnTable);
-                } catch (RemoteException ignored) {}
-            }
-        }
+    @Override
+    public void updatePoints(int[] boardPoints, int[] globalPoints) {
+
     }
+    @Override
     public void showTurn(int playerId) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
@@ -217,15 +179,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
             }
         }
     }
-    public void showPlayablePositions(int playerId, boolean[][] matrix) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(playerId).showPlayablePositions(matrix);
-                } catch (RemoteException ignored) {}
-            }
-        }
-    }
+    @Override
     public void showWinner(int winner) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
@@ -237,9 +191,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
         }
     }
 
-    public void login() throws RemoteException {
-
+    public boolean[][] getPlayablePositions(int playerId) {
+        synchronized (controller) {
+            return this.controller.getPlayablePositions(playerId);
+        }
     }
+
+    public void login() throws RemoteException {}
 
     @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
@@ -269,23 +227,24 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer {
 
     @Override
     public String[] getNicknames() throws RemoteException {
-        String[] nicknames = new String[this.clients.size()];
-        for(int i = 0; i<this.clients.size(); i++)
-            nicknames[i] = this.clients.get(i).getNickname();
-        return nicknames;
+        synchronized (controller) {
+            return controller.getNicknames();
+        }
     }
 
     public static void main(String[] args) {
 
         String name = "VirtualServer";
         System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
+        Controller controller = new Controller();
         try {
-            RMIServer.server = new RMIServer();
+            RMIServer.server = new RMIServer(controller);
             Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
             registry.rebind(name, RMIServer.server);
-        } catch (RemoteException e){
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
         System.err.println("Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
+        SocketServer.initSocketServer(controller);
     }
 }

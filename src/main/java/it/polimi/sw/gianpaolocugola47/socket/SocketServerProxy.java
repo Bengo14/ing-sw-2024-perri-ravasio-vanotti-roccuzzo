@@ -4,15 +4,15 @@ package it.polimi.sw.gianpaolocugola47.socket;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
-public class ServerProxy implements VirtualServer {
+public class SocketServerProxy implements VirtualSocketServer {
     final PrintWriter output;
 
-    public ServerProxy(BufferedWriter output) {
+    public SocketServerProxy(BufferedWriter output) {
         this.output = new PrintWriter(output);
     }
 
     @Override
-    public void connect(VirtualView client) {
+    public void connect(VirtualSocketView client) {
         output.println("connect");
         output.flush();
     }

@@ -1,12 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.controller;
 
-import com.sun.tools.javac.Main;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.rmi.RMIServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.imageio.stream.ImageInputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +38,7 @@ class ControllerTest {
         controller.setNumOfPlayers(2);
         controller.addPlayer(0, "name");
         controller.addPlayer(1, "name_2");
-        controller.drawStartingCards();
+        controller.drawStartingCard();
         controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
         controller.setStartingCardAndDrawObjectives(1,Deck.drawCardFromStartingDeck());
         controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().get(0));

@@ -4,21 +4,19 @@ package it.polimi.sw.gianpaolocugola47.socket;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
-public class ClientProxy implements VirtualView {
+public class SocketClientProxy implements VirtualSocketView {
     final PrintWriter output;
 
-    public ClientProxy(BufferedWriter output) {
+    public SocketClientProxy(BufferedWriter output) {
         this.output = new PrintWriter(output);
     }
 
-    @Override
     public void showValue(Integer number) {
         output.println("update");
         output.println(number);
         output.flush();
     }
 
-    @Override
     public void reportError(String details) {
         output.println("error");
         output.println(details);

@@ -92,14 +92,15 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         this.terminated = true;
 
         synchronized (this.clients) {
-            if(gameOver) {
-                for (int i=0; i<clients.size(); i++)
-                    if (i != clientId)
-                        clients.get(i).gameOver();
-            } else {
-                for (int i = 0; i < clients.size(); i++)
-                    if (i != clientId)
-                        clients.get(i).terminate();
+            if(gameOver) { // the game is ended
+                for (VirtualView view : clients)
+                    if (view.getId() != clientId)
+                        view.gameOver();
+            } else { // some client has disconnected
+                for (VirtualView view : clients)
+                    if (view.getId() != clientId)
+                        view.terminate();
+                /*todo call socket terminateGame*/
             }
         }
         resetGame();
@@ -123,19 +124,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     @Override
     public void addPlayer(int id, String nickname) throws RemoteException {
         synchronized (this.controller) {
-            this.controller.addPlayer(id, nickname);
             System.out.println("Player "+nickname+" added with id "+id);
-            if (this.controller.getNumOfPlayersCurrentlyAdded() == numOfPlayers) {
-                System.out.println("Game started");
-                startGame();
-            }
-        }
-    }
-    private void startGame() throws RemoteException {
-        synchronized (this.clients) {
-            for(VirtualView client : this.clients) {
-                client.startGame();
-            }
+            this.controller.addPlayer(id, nickname);
         }
     }
     @Override
@@ -156,48 +146,16 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
         }
     }
-
     @Override
-    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
-
-    }
-    @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-
-    }
-    @Override
-    public void updatePoints(int[] boardPoints, int[] globalPoints) {
-
-    }
-    @Override
-    public void showTurn(int playerId) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(playerId).showTurn();
-                } catch (RemoteException ignored) {}
-            }
-        }
-    }
-    @Override
-    public void showWinner(int winner) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    this.clients.get(winner).showWinner();
-                    terminateGame(true, winner);
-                } catch (RemoteException ignored) {}
-            }
-        }
-    }
-
     public boolean[][] getPlayablePositions(int playerId) {
         synchronized (controller) {
             return this.controller.getPlayablePositions(playerId);
         }
     }
-
-    public void login() throws RemoteException {}
+    @Override
+    public void login() throws RemoteException {
+        /*todo*/
+    }
 
     @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
@@ -229,6 +187,78 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     public String[] getNicknames() throws RemoteException {
         synchronized (controller) {
             return controller.getNicknames();
+        }
+    }
+
+    // --- methods of interface Observer ---
+    @Override
+    public void startGame() {
+        System.out.println("Game started");
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        view.startGame();
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        view.initView(nicknames, globalObjectives, cardsOnHand[view.getId()], cardsOnTable);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        view.updateDecks(resourceCardOnTop, goldCardOnTop);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void updatePoints(int[] boardPoints, int[] globalPoints) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        view.updatePoints(boardPoints, globalPoints);
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void showTurn(int playerId) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        if(view.getId() == playerId)
+                            view.showTurn();
+                } catch (RemoteException ignored) {}
+            }
+        }
+    }
+    @Override
+    public void showWinner(int winnerId) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                try {
+                    for(VirtualView view : this.clients)
+                        if(view.getId() == winnerId)
+                            view.showWinner();
+                    terminateGame(true, winnerId);
+                } catch (RemoteException ignored) {}
+            }
         }
     }
 

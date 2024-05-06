@@ -21,7 +21,7 @@ public class CLI {
         /*todo*/
     }
 
-    private void openChat(){
+    private void openChat() {
         new Thread(() -> {
             while (true) {
                 try {

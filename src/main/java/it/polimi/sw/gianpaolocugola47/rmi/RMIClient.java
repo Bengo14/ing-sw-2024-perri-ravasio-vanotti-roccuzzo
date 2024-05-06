@@ -23,6 +23,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private boolean isCliChosen;
     private int numOfPlayers;
     private String nickname;
+    private boolean isMyTurn = false;
 
     private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
@@ -124,11 +125,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.terminate = true;
     }
     @Override
-    public void showWinner(){
-        System.out.println("\nYou won the game!");
-        this.terminate = true;
-    }
-    @Override
     public void startGame() throws RemoteException {
         if(isCliChosen) {
             this.cli = new CLI(this);
@@ -138,39 +134,46 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             /*todo GUI*/
         }
     }
-    @Override
-    public void secretObjectivesDrawn(Objectives[] obj) throws RemoteException {
-        /*todo update cli/gui*/
+
+    public void drawStartingCard() {
+        /*todo*/
     }
+    public void setStartingCardAndDrawObjectives() {
+        /*todo*/
+    }
+    public void setSecretObjective(){
+        /*todo*/
+    }
+    public void getPlayablePositions(){
+        /*todo*/
+    }
+
     @Override
-    public void startingCardDrawn(StartingCard card) throws RemoteException{
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
         /*todo*/
     }
     @Override
-    public void showTurn(){
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException {
         /*todo*/
     }
     @Override
-    public void setViewFixedParams(String[] nicknames, Objectives[] globalObj, Objectives secretObj) throws RemoteException {
+    public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
         /*todo*/
     }
     @Override
-    public void updateView(ResourceCard[] cardsOnHand, PlaceableCard[][] placedCards) throws RemoteException {
+    public void showTurn() {
+        this.isMyTurn = true;
         /*todo*/
     }
     @Override
-    public void updateView(int[] boardPoints, int[] globalPoints, ResourceCard[] cardsOnTable) throws RemoteException {
-        /*todo*/
-    }
-    @Override
-    public void showPlayablePositions(boolean [][] matrix) throws RemoteException {
-        /*todo*/
+    public void showWinner(){
+        System.out.println("\nYou won the game!");
+        this.terminate = true;
     }
     @Override
     public String getNickname() throws RemoteException {
         return this.nickname;
     }
-
     @Override
     public int getId() throws RemoteException {
         return this.id;

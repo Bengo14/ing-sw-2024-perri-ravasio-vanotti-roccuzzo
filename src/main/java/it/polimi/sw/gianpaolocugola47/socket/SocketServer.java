@@ -1,6 +1,10 @@
 package it.polimi.sw.gianpaolocugola47.socket;
 
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
+import it.polimi.sw.gianpaolocugola47.model.GoldCard;
+import it.polimi.sw.gianpaolocugola47.model.Objectives;
+import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
+import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -9,7 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocketServer {
+public class SocketServer implements Observer {
     private final ServerSocket listenSocket;
     private final Controller controller;
     private final List<SocketClientHandler> clients = new ArrayList<>();
@@ -38,12 +42,12 @@ public class SocketServer {
         }
     }
 
-    public void broadcastUpdate(Integer value) {
+    /*public void broadcastUpdate(Integer value) {
         synchronized (this.clients) {
             for (var client : this.clients) {
             }
         }
-    }
+    }*/
 
     public static void initSocketServer(Controller controller) {
 
@@ -60,5 +64,35 @@ public class SocketServer {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
+
+    }
+
+    @Override
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+
+    }
+
+    @Override
+    public void updatePoints(int[] boardPoints, int[] globalPoints) {
+
+    }
+
+    @Override
+    public void showTurn(int playerId) {
+
+    }
+
+    @Override
+    public void showWinner(int winnerId) {
+
+    }
+
+    @Override
+    public void startGame() {
+
     }
 }

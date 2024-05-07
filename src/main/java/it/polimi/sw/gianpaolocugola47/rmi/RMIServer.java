@@ -94,13 +94,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         synchronized (this.clients) {
             if(gameOver) { // the game is ended
                 for (VirtualView view : clients)
-                    if (view.getId() != clientId)
+                    if (view.getId() != clientId) //consider real id
                         view.gameOver();
             } else { // some client has disconnected
                 for (VirtualView view : clients)
-                    if (view.getId() != clientId)
+                    if (clients.indexOf(view) != clientId) //consider local id
                         view.terminate();
-                /*todo call socket terminateGame*/
+                /*todo call socket terminateGame (and reset)*/
             }
         }
         resetGame();
@@ -147,7 +147,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
     @Override
-    public boolean[][] getPlayablePositions(int playerId) {
+    public boolean[][] getPlayablePositions(int playerId) throws RemoteException {
         synchronized (controller) {
             return this.controller.getPlayablePositions(playerId);
         }

@@ -36,11 +36,15 @@ public class MainTable implements Observable {
 
     @Override
     public void addObserver(Observer observer) {
-        /*todo*/
+        synchronized (observers) {
+            this.observers.add(observer);
+        }
     }
     @Override
     public void removeObserver(Observer observer) {
-        /*todo*/
+        synchronized (observers) {
+            this.observers.remove(observer);
+        }
     }
     public StartingCard drawStartingCard() {
         return Deck.drawCardFromStartingDeck();

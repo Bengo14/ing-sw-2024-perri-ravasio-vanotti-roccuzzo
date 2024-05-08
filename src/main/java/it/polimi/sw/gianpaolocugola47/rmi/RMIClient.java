@@ -90,14 +90,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             }
         }
         else {
-            System.out.println("A game is already starting, you connected to the server with id: "+this.id);
+            System.out.println("A game is already starting, you connected to the server with id: " + this.id);
             System.out.print("Insert your nickname: ");
             this.nickname = br.readLine();
             if(nickname.contains(" ")) {
                 this.nickname = nickname.replace(" ","_");
             }
             while(!this.server.isNicknameAvailable(this.nickname,this.id)
-                    || this.nickname.isEmpty() || this.nickname == null){
+                    || this.nickname.isEmpty() || this.nickname == null) {
                 System.out.print("Nickname invalid or already taken, try again: ");
                 System.out.println(this.nickname);
                 this.nickname = br.readLine();
@@ -129,12 +129,53 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         if(isCliChosen) {
             this.cli = new CLI(this);
             this.cli.start();
+            openChat();
         }
         else {
             /*todo GUI*/
         }
     }
-
+    private void openChat() {
+        new Thread(() -> {
+            try {
+                chatInputLoop(); /* todo open new cli window */
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+    public void chatInputLoop() throws IOException {
+        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
+        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+        ChatMessage message = new ChatMessage(nickname, id);
+        //noinspection InfiniteLoopStatement
+        while(true) {
+            String line = br.readLine();
+            if (line.startsWith("@")) {
+                try {
+                    message.setPrivate(true);
+                    message.setReceiver(line.substring(1, line.indexOf(" ")));
+                    message.setMessage(line.substring(line.indexOf(" ") + 1));
+                    this.server.sendPrivateMessage(message);
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.err.println("Invalid input, try again...");
+                }
+            } else if (line.equals("--listPlayers")) {
+                this.server.getNicknames();
+                System.out.println("Here's a list of all the players in the lobby: ");
+                for(String nickname : this.server.getNicknames()){
+                    if(nickname.equals(this.nickname))
+                        System.err.println(nickname + " (you)");
+                    else
+                        System.out.println(nickname);
+                }
+            } else {
+                message.setPrivate(false);
+                message.setMessage(line);
+                this.server.sendMessage(message);
+            }
+        }
+    }
     public void drawStartingCard() {
         /*todo*/
     }
@@ -179,6 +220,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return this.id;
     }
 
+    @Override
     public void receiveMessage(ChatMessage message) throws RemoteException {
         System.out.println(message.getSender() + ": " + message.getMessage());
     }
@@ -188,39 +230,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         System.err.println(message.getSender() + ": psst, " + message.getMessage());
     }
 
-    public void inputLoop() throws IOException {
-        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(nickname, id);
-        //noinspection InfiniteLoopStatement
-        while(true) {
-            String line = br.readLine();
-            if (line.startsWith("@")) {
-                try {
-                    message.setPrivate(true);
-                    message.setReceiver(line.substring(1, line.indexOf(" ")));
-                    message.setMessage(line.substring(line.indexOf(" ") + 1));
-                    this.server.sendPrivateMessage(message);
-                } catch (StringIndexOutOfBoundsException e) {
-                    System.err.println("Invalid input, try again...");
-                }
-            } else if (line.equals("--listPlayers")) {
-                this.server.getNicknames();
-                System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : this.server.getNicknames()){
-                    if(nickname.equals(this.nickname))
-                        System.err.println(nickname + " (you)");
-                    else
-                        System.out.println(nickname);
-                }
-            } else {
-                message.setPrivate(false);
-                message.setMessage(line);
-                this.server.sendMessage(message);
-            }
-        }
-    }
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         /*todo scelta tecnologia di rete da usare*/
         try {

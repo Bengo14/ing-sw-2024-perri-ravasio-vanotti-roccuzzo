@@ -20,7 +20,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     private static RMIServer server;
     private final Controller controller;
     private final List<VirtualView> clients;
-    private int numOfPlayers = -1;
     private volatile boolean terminated = false;
 
     public static RMIServer getServer() {
@@ -37,6 +36,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     private RMIServer(Controller controller) throws RemoteException {
         super(0);
         this.controller = controller;
+        this.controller.addModelObserver(this);
         this.clients = new ArrayList<>();
         pingStart();
     }
@@ -44,15 +44,17 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     @Override
     public int connect(VirtualView client) throws RemoteException {
         synchronized (this.clients) {
-            if(this.clients.size() == this.numOfPlayers || (numOfPlayers==-1 && !this.clients.isEmpty())) {
-                System.err.println("Connection Refused");
-                return -1;
-            }
-            else {
-                System.out.println("New client connected");
-                this.terminated = false;
-                this.clients.add(client);
-                return this.clients.indexOf(client);
+            synchronized (this.controller) {
+                if (controller.getClientsConnected() == controller.getNumOfPlayers() || (controller.getNumOfPlayers() == -1 && controller.getClientsConnected() > 0)) {
+                    System.err.println("Connection Refused");
+                    return -1;
+                } else {
+                    System.out.println("New client connected");
+                    this.terminated = false;
+                    this.clients.add(client);
+                    this.controller.addClientConnected();
+                    return this.controller.getClientsConnected() - 1;
+                }
             }
         }
     }
@@ -73,7 +75,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                } catch (RemoteException e) {
                    synchronized (this.clients) {
                        try {
-                           terminateGame(false, clients.indexOf(view));
+                           terminateGame(false, clients.indexOf(view)); // local id of dead client
                        } catch (RemoteException ex) {
                            e.printStackTrace();
                        }
@@ -94,11 +96,11 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         synchronized (this.clients) {
             if(gameOver) { // the game is ended
                 for (VirtualView view : clients)
-                    if (view.getId() != clientId) //consider real id
+                    if (view.getId() != clientId) // consider real id
                         view.gameOver();
             } else { // some client has disconnected
                 for (VirtualView view : clients)
-                    if (clients.indexOf(view) != clientId) //consider local id
+                    if (clients.indexOf(view) != clientId) // consider local id
                         view.terminate();
                 /*todo call socket terminateGame (and reset)*/
             }
@@ -109,7 +111,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         synchronized (this.controller) {
             controller.resetGame();
         }
-        this.numOfPlayers = -1;
         synchronized (this.clients) {
             clients.clear();
         }
@@ -119,13 +120,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         synchronized (this.controller) {
             this.controller.setNumOfPlayers(num);
         }
-        this.numOfPlayers = num;
     }
     @Override
     public void addPlayer(int id, String nickname) throws RemoteException {
         synchronized (this.controller) {
             System.out.println("Player "+nickname+" added with id "+id);
             this.controller.addPlayer(id, nickname);
+            /*todo*/
         }
     }
     @Override
@@ -152,41 +153,45 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return this.controller.getPlayablePositions(playerId);
         }
     }
+    /*todo add methods to interface*/
     @Override
     public void login() throws RemoteException {
-        /*todo*/
+        /*todo*/ // what is it meant for?
     }
 
     @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Server received public message: " + message.getMessage());
-        for (VirtualView client : this.clients) {
-            client.receiveMessage(message);
+        System.out.println("Received public message");
+        synchronized (this.clients) {
+            for (VirtualView client : this.clients)
+                client.receiveMessage(message);
         }
     }
 
     @Override
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Server received private message: " + message.getMessage());
-        for (VirtualView client : this.clients) {
-            if(client.getNickname().equals(message.getReceiver())){
-                client.receivePrivateMessage(message);
-            }
+        System.out.println("Received private message");
+        synchronized (this.clients) {
+            for (VirtualView client : this.clients)
+                if (client.getNickname().equals(message.getReceiver()))
+                    client.receivePrivateMessage(message);
         }
     }
 
     @Override
     public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
-        for(VirtualView client: this.clients)
-            if(client.getNickname().equals(nickname) && clients.indexOf(client) != id)
-                return false;
-        return true;
+        synchronized (this.clients) {
+            for (VirtualView client : this.clients)
+                if (client.getNickname().equals(nickname) && client.getId() != id)
+                    return false;
+            return true;
+        }
     }
 
     @Override
     public String[] getNicknames() throws RemoteException {
         synchronized (controller) {
-            return controller.getNicknames();
+            return this.controller.getNicknames();
         }
     }
 

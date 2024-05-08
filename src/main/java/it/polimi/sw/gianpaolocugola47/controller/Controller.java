@@ -1,11 +1,14 @@
 package it.polimi.sw.gianpaolocugola47.controller;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 public class Controller {
 
     private MainTable mainTable;
     private int currentPlayerId;
+    private int clientsConnected;
+    private int numOfPlayers;
     private int playersAdded;
     private int startingCardsAndObjAdded;
     private boolean isLastTurn = false;
@@ -15,6 +18,8 @@ public class Controller {
         this.currentPlayerId = 0;
         this.playersAdded = 0;
         this.startingCardsAndObjAdded = 0;
+        this.clientsConnected = 0;
+        this.numOfPlayers = -1;
     }
     public void resetGame() {
         this.mainTable = new MainTable();
@@ -22,13 +27,32 @@ public class Controller {
         this.playersAdded = 0;
         this.startingCardsAndObjAdded = 0;
         this.isLastTurn = false;
+        this.clientsConnected = 0;
+        this.numOfPlayers = -1;
     }
 
-    public void setNumOfPlayers(int num){
+    public void addModelObserver(Observer observer) {
+        mainTable.addObserver(observer);
+    }
+    public void removeModelObserver(Observer observer) {
+        mainTable.removeObserver(observer);
+    }
+
+    public void setNumOfPlayers(int num) {
+        this.numOfPlayers = num;
         this.mainTable.setNumOfPlayers(num);
     }
-    public int getNumOfPlayersCurrentlyAdded(){
+    public int getNumOfPlayers(){
+        return this.numOfPlayers;
+    }
+    protected int getNumOfPlayersCurrentlyAdded(){
         return this.playersAdded;
+    }
+    public void addClientConnected(){
+        this.clientsConnected++;
+    }
+    public int getClientsConnected(){
+        return this.clientsConnected;
     }
     public void addPlayer(int id, String nickname) {
         this.mainTable.addPlayer(id, nickname);

@@ -24,6 +24,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private int numOfPlayers;
     private String nickname;
     private boolean isMyTurn = false;
+    private StartingCard startingCard;
+    private Objectives secretObjective;
 
     private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
@@ -135,7 +137,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             /*todo GUI*/
         }
     }
-    private void openChat() {
+    public void openChat() {
         new Thread(() -> {
             try {
                 chatInputLoop(); /* todo open new cli window */
@@ -177,16 +179,44 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         }
     }
     public void drawStartingCard() {
-        /*todo*/
+        // richiede la carta al server
+        try {
+            startingCard = server.drawStartingCard();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("You have drawn: " + startingCard);
     }
     public void setStartingCardAndDrawObjectives() {
-        /*todo*/
+        // richiede al server di impostare la carta iniziale e di pescare gli obiettivi
+        Objectives[] objectives;
+        try {
+            objectives = server.setStartingCardAndDrawObjectives(this.id,startingCard);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Choose the objective you want to keep: ");
+        for (Objectives obj : objectives) {
+            System.out.println(obj);
+        }
+        Scanner scan = new Scanner(System.in);
+        int secretObjective = scan.nextInt();
     }
     public void setSecretObjective(){
-        /*todo*/
+        //set the objective chosen by the player in setStartingCardAndDrawObjectives
+        try {
+            server.setSecretObjective(this.id, secretObjective);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void getPlayablePositions(){
-        /*todo*/
+        //richiede al server le posizioni giocabili
+        try {
+            boolean[][] playablePositions = server.getPlayablePositions(this.id);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -204,7 +234,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public void showTurn() {
         this.isMyTurn = true;
-        /*todo*/
+        System.out.println("\nIt's your turn!");
+
     }
     @Override
     public void showWinner(){

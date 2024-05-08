@@ -56,4 +56,8 @@ public class ResourceCard extends PlaceableCard {
             counter[getResourceCentreBack().ordinal()]++;
         }
     }
+
+    public String resourceCentreBackToString(){
+        return "%s%s\u001B[0m".formatted(resourceCentreBack.getAsciiEscape(), resourceCentreBack.getSymbol());
+    }
 }

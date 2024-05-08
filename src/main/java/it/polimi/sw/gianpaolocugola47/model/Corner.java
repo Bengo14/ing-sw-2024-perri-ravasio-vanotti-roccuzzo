@@ -55,6 +55,18 @@ public class Corner {
     public Items getItem(){
         return this.item;
     }
+    public String getCornerType(){
+        if(this.item != null)
+            return Character.toString(this.item.getSymbol());
+        else if(this.resource != null)
+            return "%s%s\033[0m".formatted(this.resource.getAsciiEscape(), this.resource.getSymbol());
+        else if(isBuildable)
+            return "+";
+        else if(isCovered)
+            return "c";
+        else
+            return " ";
+    }
 }
 
 

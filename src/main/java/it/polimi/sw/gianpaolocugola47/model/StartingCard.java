@@ -22,6 +22,32 @@ public class StartingCard extends PlaceableCard {
         return this.resourcesCentreBack;
     }
 
+    public String resourcesCentreBackToString(){
+        StringBuilder retString = new StringBuilder();
+        if(resourcesCentreBack.size() == 1){
+            retString.append("   ");
+            for(Resources resource : resourcesCentreBack){
+                retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
+            }
+            retString.append("   ");
+        }
+        else if (resourcesCentreBack.size() == 2){
+            retString.append("  ");
+            for(Resources resource : resourcesCentreBack){
+                retString.append("%s %s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
+            }
+            retString.append("  ");
+        }
+        else {
+            retString.append("  ");
+            for(Resources resource : resourcesCentreBack){
+                retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
+            }
+            retString.append("  ");
+        }
+        return retString.toString();
+    }
+
     @Override
     public void updateResourceCounter(int[] counter) {
         if(isFront()) {

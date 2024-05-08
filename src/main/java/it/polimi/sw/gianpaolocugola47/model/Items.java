@@ -3,23 +3,28 @@ package it.polimi.sw.gianpaolocugola47.model;
  * This enumeration lists the items.
  */
 public enum Items {
-    QUILL("quill",""),
-    INKWELL("inkwell",""),
-    MANUSCRIPT("manuscript","");
+    QUILL("quill","", 'q'),
+    INKWELL("inkwell","",'i'),
+    MANUSCRIPT("manuscript","",'m');
     private final String name;
     private final String imgPath;
+    private final char symbol;
 
-    Items(String name, String imgPath) {
+    Items(String name, String imgPath, char symbol) {
         this.name = name;
         this.imgPath = imgPath;
+        this.symbol = symbol;
     }
 
-    @Override
-    public String toString() {
-        return "Items{" +
-                "name: '" + name + '\'' +
-                ", imgPath: '" + imgPath + '\'' +
-                '}';
+    public String getName() {
+        return name;
     }
 
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public char getSymbol() {
+        return symbol;
+    }
 }

@@ -30,6 +30,25 @@ public class GoldCard extends ResourceCard {
         return resourcesRequired;
     }
 
+    public String resourcesRequiredToString() {
+        StringBuilder retString = new StringBuilder();
+        for(Resources resource : resourcesRequired){
+            retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
+        }
+        return retString.toString();
+    }
+
+    public String pointConditionToString(){
+        if(pointsForCorners){
+            return "C";
+        }
+        if(pointsForItems){
+            return Character.toString(itemThatGivesPoints.getSymbol());
+        }
+        else
+            return "N/A";
+    }
+
     protected boolean isPointsForCorners() {
         return pointsForCorners;
     }
@@ -82,4 +101,6 @@ public class GoldCard extends ResourceCard {
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){
         return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x,y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3-corner];
     }
+
+
 }

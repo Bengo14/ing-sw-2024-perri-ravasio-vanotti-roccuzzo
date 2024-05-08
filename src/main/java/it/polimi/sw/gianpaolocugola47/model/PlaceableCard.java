@@ -10,6 +10,7 @@ public abstract class PlaceableCard {
     private int column;
     private boolean isFlaggedForObjective;
     private Corner[] corners = new Corner[8];
+    private int id;
 
     public PlaceableCard(String backImgPath, String frontImgPath) {
         this.isFront = true;
@@ -22,6 +23,10 @@ public abstract class PlaceableCard {
         if(isFront)
             return Arrays.copyOfRange(corners, 0, 4);
         else return Arrays.copyOfRange(corners, 4, 8);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setCoordinates(int line, int column) {
@@ -52,5 +57,8 @@ public abstract class PlaceableCard {
     public void switchFrontBack() {
         isFront = !isFront;
     }
+
+    public Corner[] getCorners() {return corners;}
+
     public abstract void updateResourceCounter(int[] counter);
 }

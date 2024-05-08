@@ -23,7 +23,7 @@ public class Deck {
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
 
-    protected static void initAndShuffleDeck() {
+    public static void initAndShuffleDeck() {
         initDeck();
         shuffleDeck();
     }

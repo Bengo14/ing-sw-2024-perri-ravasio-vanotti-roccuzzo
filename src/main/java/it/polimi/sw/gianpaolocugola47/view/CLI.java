@@ -3,6 +3,8 @@ package it.polimi.sw.gianpaolocugola47.view;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.rmi.RMIClient;
 
+import java.util.Scanner;
+
 //import java.io.IOException;
 
 
@@ -82,7 +84,7 @@ public class CLI {
     }
 
     public void printObjectiveCard(Objectives objective) {
-        /*todo*/
+        System.out.println("Objective card: "+ objective.getDescription());
     }
 
     public void printPlayerBoard(PlayerTable playerTable){

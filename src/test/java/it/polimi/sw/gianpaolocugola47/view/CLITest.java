@@ -42,4 +42,11 @@ class CLITest {
         startingCard.switchFrontBack();
         cli.printStartingCard(startingCard);
     }
+    @Test
+    void printObjectiveCard() {
+        Deck.initAndShuffleDeck();
+        Objectives objectiveCard = Deck.getObjectiveCardsDeck().getFirst();
+        CLI cli = new CLI();
+        cli.printObjectiveCard(objectiveCard);
+    }
 }

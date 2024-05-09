@@ -9,6 +9,8 @@ public abstract class Objectives {
     private final int points;
     private final String imgPathFront;
     private final String imgPathBack;
+    private int id;
+    private String description;
     /**
      * Objectives constructor.
      *
@@ -20,6 +22,9 @@ public abstract class Objectives {
         this.points = points;
         this.imgPathFront = imgPathFront;
         this.imgPathBack = imgPathBack;
+    }
+    public int getId(){
+        return id;
     }
 
     public int getPoints() {
@@ -35,5 +40,7 @@ public abstract class Objectives {
     }
 
     public abstract int checkPatternAndComputePoints(PlayerTable playerTable);
-
+    public String getDescription(){
+        return description;
+    }
 }

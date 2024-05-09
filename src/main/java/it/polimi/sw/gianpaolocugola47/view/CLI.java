@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola47.view;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.rmi.RMIClient;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 //import java.io.IOException;
@@ -89,6 +90,9 @@ public class CLI {
 
     public void printPlayerBoard(PlayerTable playerTable){
         /*todo*/
+    }
+    public void printPoints(RMIClient client) throws RemoteException {
+        System.out.println("BoardPoints: " + client.getBoardPoints()+"\nGlobalPoints: " + client.getGlobalPoints());
     }
 
 }

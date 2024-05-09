@@ -26,6 +26,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private boolean isMyTurn = false;
     private StartingCard startingCard;
     private Objectives secretObjective;
+    private Objectives[] objectives;
+    private ResourceCard[] cardsOnHand;
+    private ResourceCard[] cardsOnTable;
+    private GoldCard goldCardOnTop;
+    private ResourceCard resourceCardOnTop;
+    private int globalPoints;
+    private int boardPoints;
 
     private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
@@ -210,26 +217,33 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             throw new RuntimeException(e);
         }
     }
-    public void getPlayablePositions(){
+    public boolean[][] getPlayablePositions(){
         //richiede al server le posizioni giocabili
+        boolean[][] playablePositions;
         try {
-            boolean[][] playablePositions = server.getPlayablePositions(this.id);
+           playablePositions = server.getPlayablePositions(this.id);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        return playablePositions;
     }
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
-        /*todo*/
+        this.nickname = nicknames[id];
+        this.objectives = globalObjectives;
+        this.cardsOnHand = cardsOnHand;
+        this.cardsOnTable = cardsOnTable;
     }
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException {
-        /*todo*/
+        this.resourceCardOnTop = resourceCardOnTop;
+        this.goldCardOnTop = goldCardOnTop;
     }
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
-        /*todo*/
+        this.boardPoints = boardPoints[id];
+        this.globalPoints = globalPoints[id];
     }
     @Override
     public void showTurn() {
@@ -249,6 +263,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public int getId() throws RemoteException {
         return this.id;
+    }
+
+    public int getGlobalPoints() throws RemoteException {
+        return this.globalPoints;
+    }
+    public int getBoardPoints() throws RemoteException {
+        return this.boardPoints;
     }
 
     @Override

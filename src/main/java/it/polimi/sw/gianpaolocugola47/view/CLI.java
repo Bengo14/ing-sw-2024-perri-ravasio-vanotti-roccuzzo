@@ -1,10 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.view;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
-import it.polimi.sw.gianpaolocugola47.rmi.RMIClient;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 //import java.io.IOException;
 
@@ -17,7 +16,7 @@ public class CLI {
     public CLI(RMIClient client) {
         this.client = client;
     }
-    public CLI(){
+    public CLI() {
         this.client = null;
     }
     public void start() {

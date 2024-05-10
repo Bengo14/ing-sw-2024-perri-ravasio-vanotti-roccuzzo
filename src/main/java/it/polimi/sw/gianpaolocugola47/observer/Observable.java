@@ -9,4 +9,5 @@ public interface Observable {
     void showTurn(int playerId);
     void showWinner(int winner);
     void updatePoints();
+    void startGame();
 }

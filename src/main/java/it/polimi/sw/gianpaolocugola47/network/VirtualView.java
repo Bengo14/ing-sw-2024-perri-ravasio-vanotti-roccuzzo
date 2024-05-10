@@ -1,4 +1,4 @@
-package it.polimi.sw.gianpaolocugola47.rmi;
+package it.polimi.sw.gianpaolocugola47.network;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
@@ -7,7 +7,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface VirtualView extends Remote {
-    /*todo metodi remoti della view, invocati dal server*/
 
     void terminate() throws RemoteException;
     void ping() throws RemoteException;

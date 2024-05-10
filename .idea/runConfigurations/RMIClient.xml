@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RMIClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="it.polimi.sw.gianpaolocugola47.rmi.RMIClient" />
+  <configuration default="false" name="RMIClient" type="Application" factoryName="Application" singleton="false">
+    <option name="MAIN_CLASS_NAME" value="it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient" />
     <module name="GianpaoloCugola47" />
     <extension name="coverage">
       <pattern>

@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 import it.polimi.sw.gianpaolocugola47.observer.Observable;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
-import it.polimi.sw.gianpaolocugola47.rmi.RMIServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +100,15 @@ public class MainTable implements Observable {
             synchronized (observers) {
                 for (Observer observer : observers)
                     observer.showWinner(winner);
+            }
+        }).start();
+    }
+    @Override
+    public void startGame() {
+        new Thread(()->{
+            synchronized (observers) {
+                for (Observer observer : observers)
+                    observer.startGame();
             }
         }).start();
     }

@@ -1,6 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import it.polimi.sw.gianpaolocugola47.rmi.RMIServer;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

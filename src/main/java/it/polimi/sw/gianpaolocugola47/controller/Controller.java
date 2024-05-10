@@ -11,7 +11,7 @@ public class Controller {
     private int numOfPlayers;
     private int playersAdded;
     private int startingCardsAndObjAdded;
-    private boolean isLastTurn = false;
+    private boolean isLastTurn;
 
     public Controller() {
         this.mainTable = new MainTable();
@@ -20,15 +20,16 @@ public class Controller {
         this.startingCardsAndObjAdded = 0;
         this.clientsConnected = 0;
         this.numOfPlayers = -1;
+        this.isLastTurn = false;
     }
     public void resetGame() {
         this.mainTable = new MainTable();
         this.currentPlayerId = 0;
         this.playersAdded = 0;
         this.startingCardsAndObjAdded = 0;
-        this.isLastTurn = false;
         this.clientsConnected = 0;
         this.numOfPlayers = -1;
+        this.isLastTurn = false;
     }
 
     public void addModelObserver(Observer observer) {
@@ -45,9 +46,6 @@ public class Controller {
     public int getNumOfPlayers(){
         return this.numOfPlayers;
     }
-    protected int getNumOfPlayersCurrentlyAdded(){
-        return this.playersAdded;
-    }
     public void addClientConnected(){
         this.clientsConnected++;
     }
@@ -55,8 +53,13 @@ public class Controller {
         return this.clientsConnected;
     }
     public void addPlayer(int id, String nickname) {
-        this.mainTable.addPlayer(id, nickname);
-        playersAdded++;
+        mainTable.addPlayer(id, nickname);
+        this.playersAdded++;
+        if(this.numOfPlayers == this.playersAdded)
+            mainTable.startGame();
+    }
+    public int getNumOfPlayersCurrentlyAdded(){
+        return this.playersAdded;
     }
     public StartingCard drawStartingCard() {
         return mainTable.drawStartingCard();
@@ -79,7 +82,7 @@ public class Controller {
             return mainTable.checkAllPlayablePositions(playerId);
         else return null;
     }
-    public void turnCardOnHand(int playerId, int position){
+    public void turnCardOnHand(int playerId, int position) {
         mainTable.turnCardOnHand(playerId, position);
     }
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
@@ -99,14 +102,14 @@ public class Controller {
         updateCurrentPlayer();
         if(currentPlayerId == 0 && mainTable.isEndGame()) {
             if(isLastTurn) {
-                computeWinner();
                 currentPlayerId = -1;
+                computeWinner();
                 return;
             } else {
                 this.isLastTurn = true;
             }
         }
-        for(int i=0; i<mainTable.getNumOfPlayers(); i++) {
+        for(int i=0; i<numOfPlayers; i++) {
             if(!mainTable.checkIfPlayerCanPlay(currentPlayerId))
                 updateCurrentPlayer();
             else {
@@ -114,8 +117,8 @@ public class Controller {
                 return;
             }
         }
-        computeWinner();
         currentPlayerId = -1;
+        computeWinner();
     }
     private void updateCurrentPlayer() {
         if(currentPlayerId == mainTable.getNumOfPlayers()-1)
@@ -125,14 +128,12 @@ public class Controller {
     private void computeWinner() {
         mainTable.computeWinnerAtEndGame();
     }
-
     public ResourceCard[][] getCardsOnHand() {
         return mainTable.getCardsOnHand();
     }
-    public PlaceableCard[][] getPlacedCards(int playerId){
+    public PlaceableCard[][] getPlacedCards(int playerId) {
         return mainTable.getPlacedCards(playerId);
     }
-
     public String[] getNicknames() {
         return mainTable.getNicknames();
     }

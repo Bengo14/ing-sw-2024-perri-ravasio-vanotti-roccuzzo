@@ -120,11 +120,8 @@ public class Deck {
     protected static boolean areDecksEmpty() {
         return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
     }
-    public static GoldCard getGoldCardOnTop(){
-        return goldCardsDeck.getLast();
-    }
+    public static GoldCard getGoldCardOnTop() {return goldCardsDeck.getLast();}
     public static ResourceCard getResourceCardOnTop(){
         return resourceCardsDeck.getLast();
     }
-
 }

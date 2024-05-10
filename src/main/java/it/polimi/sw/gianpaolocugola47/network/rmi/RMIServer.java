@@ -1,9 +1,11 @@
-package it.polimi.sw.gianpaolocugola47.rmi;
+package it.polimi.sw.gianpaolocugola47.network.rmi;
 
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
+import it.polimi.sw.gianpaolocugola47.network.VirtualView;
+import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
-import it.polimi.sw.gianpaolocugola47.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.rmi.RemoteException;
@@ -124,9 +126,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     @Override
     public void addPlayer(int id, String nickname) throws RemoteException {
         synchronized (this.controller) {
-            System.out.println("Player "+nickname+" added with id "+id);
+            System.out.println(STR."Player \{nickname} added with id \{id}");
             this.controller.addPlayer(id, nickname);
-            /*todo*/
         }
     }
     @Override
@@ -153,7 +154,37 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return this.controller.getPlayablePositions(playerId);
         }
     }
-    /*todo add methods to interface*/
+    @Override
+    public void turnCardOnHand(int playerId, int position) throws RemoteException {
+        synchronized (controller) {
+            controller.turnCardOnHand(playerId, position);
+        }
+    }
+    @Override
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException {
+        synchronized (controller) {
+            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+        }
+    }
+    @Override
+    public void drawCard(int position, int playerId) throws RemoteException {
+        synchronized (controller) {
+            controller.drawCard(position, playerId);
+        }
+    }
+    @Override
+    public ResourceCard[][] getCardsOnHand() throws RemoteException {
+        synchronized (controller) {
+            return controller.getCardsOnHand();
+        }
+    }
+    @Override
+    public PlaceableCard[][] getPlacedCards(int playerId) throws RemoteException {
+        synchronized (controller) {
+            return controller.getPlacedCards(playerId);
+        }
+    }
+
     @Override
     public void login() throws RemoteException {
         /*todo*/ // what is it meant for?

@@ -1,6 +1,8 @@
-package it.polimi.sw.gianpaolocugola47.rmi;
+package it.polimi.sw.gianpaolocugola47.network;
 
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
+import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
+import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
@@ -15,6 +17,11 @@ public interface VirtualServer extends Remote {
     StartingCard drawStartingCard() throws RemoteException;
     Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException;
     void setSecretObjective(int playerId, Objectives obj) throws RemoteException;
+    void turnCardOnHand(int playerId, int position) throws RemoteException;
+    boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException;
+    void drawCard(int position, int playerId) throws RemoteException;
+    ResourceCard[][] getCardsOnHand() throws RemoteException;
+    PlaceableCard[][] getPlacedCards(int playerId) throws RemoteException;
     void login() throws RemoteException;
     void sendMessage(ChatMessage message) throws RemoteException;
     void sendPrivateMessage(ChatMessage message) throws RemoteException;

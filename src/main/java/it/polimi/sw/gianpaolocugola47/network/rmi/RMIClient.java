@@ -1,10 +1,13 @@
 package it.polimi.sw.gianpaolocugola47.network.rmi;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
+import it.polimi.sw.gianpaolocugola47.view.GUI;
+import it.polimi.sw.gianpaolocugola47.view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +19,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView {
+public class RMIClient extends UnicastRemoteObject implements VirtualView, Client {
 
     private final VirtualServer server;
     private int id;
     private volatile boolean terminate = false;
-    private CLI cli;
+    private View view;
     private boolean isCliChosen = false;
     private int numOfPlayers = 0;
     private String nickname = "";
@@ -49,7 +52,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             }
             System.err.println("Client connected with id: "+id);
             terminationCheckerStart();
-            try{
+            try {
                 runCli();
             } catch (IOException e) {
                 System.out.println("Oops! Issues with input found. Terminating game.");
@@ -59,7 +62,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             terminateLocal();
         }
     }
-    private void terminationCheckerStart(){
+    private void terminationCheckerStart() {
         new Thread(()->{
             while (!terminate) {
                 Thread.onSpinWait();
@@ -123,6 +126,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.server.addPlayer(this.id, this.nickname);
     }
 
+    /* --- methods of interface VirtualView --- */
+
     @Override
     public void terminate() throws RemoteException {
         terminateLocal();
@@ -160,11 +165,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public void showTurn() {
         this.isMyTurn = true;
-        System.out.println("\nIt's your turn!");
-
+        //System.out.println("\nIt's your turn!");
+        /*todo*/
     }
     @Override
-    public void showWinner(){
+    public void showWinner() {
         System.out.println("\nYou won the game!");
         this.terminate = true;
     }
@@ -189,28 +194,29 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public void startGame() throws RemoteException {
         if(isCliChosen) {
-            this.cli = new CLI(this);
-            this.cli.start();
-            openChat();
+            this.view = new CLI(this);
+            view.start();
         }
         else {
-            /*todo GUI*/
+            this.view = new GUI(this);
+            view.start();
         }
+        openChat();
     }
-    public void openChat() {
+    private void openChat() {
         new Thread(() -> {
             try {
-                chatInputLoop(); /* todo open new cli window */
+                chatInputLoop();
             } catch (IOException e) {
                 terminateLocal();
             }
         }).start();
     }
-    public void chatInputLoop() throws IOException {
+    private void chatInputLoop() throws IOException {
         System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         ChatMessage message = new ChatMessage(nickname, id);
-        //noinspection InfiniteLoopStatement
+
         while(true) {
             String line = br.readLine();
             if (line.startsWith("@")) {
@@ -238,8 +244,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             }
         }
     }
+
+    /* --- methods of interface Client --- */
+
+    @Override
     public void drawStartingCard() {
-        // richiede la carta al server
         try {
             this.startingCard = server.drawStartingCard();
         } catch (RemoteException e) {
@@ -247,8 +256,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         }
         System.out.println("You have drawn: " + startingCard);
     }
+    @Override
     public void setStartingCardAndDrawObjectives() {
-        // richiede al server di impostare la carta iniziale e di pescare gli obiettivi
         Objectives[] objectives = null;
         try {
             objectives = server.setStartingCardAndDrawObjectives(this.id, this.startingCard);
@@ -262,14 +271,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         Scanner scan = new Scanner(System.in);
         int secretObjective = scan.nextInt();
     }
+    @Override
     public void setSecretObjective() {
-        //set the objective chosen by the player in setStartingCardAndDrawObjectives
         try {
             server.setSecretObjective(this.id, this.secretObjective);
         } catch (RemoteException e) {
             terminateLocal();
         }
     }
+    @Override
     public boolean[][] getPlayablePositions() {
         try {
            return server.getPlayablePositions(this.id);
@@ -278,6 +288,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             return null;
         }
     }
+    @Override
     public void turnCardOnHand(int position) {
         try {
             server.turnCardOnHand(this.id, position);
@@ -285,6 +296,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             terminateLocal();
         }
     }
+    @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         try {
             return server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id);
@@ -293,13 +305,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             return false;
         }
     }
+    @Override
     public void drawCard(int position) {
         try {
             server.drawCard(position, this.id);
+            this.isMyTurn = false;
         } catch (RemoteException e) {
             terminateLocal();
         }
     }
+    @Override
     public ResourceCard[][] getCardsOnHand() {
         try {
             return server.getCardsOnHand();
@@ -308,6 +323,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             return null;
         }
     }
+    @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
         try {
             return server.getPlacedCards(playerId);
@@ -316,22 +332,31 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             return null;
         }
     }
-
-    public int getGlobalPoints() throws RemoteException {
+    @Override
+    public int[] getResourceCounter(int playerId) {
+        try {
+            return server.getResourceCounter(playerId);
+        } catch (RemoteException e) {
+            terminateLocal();
+            return null;
+        }
+    }
+    @Override
+    public int getGlobalPoints() {
         return this.globalPoints;
     }
-    public int getBoardPoints() throws RemoteException {
+    @Override
+    public int getBoardPoints() {
         return this.boardPoints;
     }
 
     public static void main(String[] args) {
 
-        /*todo scelta tecnologia di rete da usare*/
         try {
             Registry registry = LocateRegistry.getRegistry(RMIServer.SERVER_ADDRESS, RMIServer.SERVER_PORT);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
-        } catch(RemoteException | NotBoundException e){
+        } catch(RemoteException | NotBoundException e) {
             System.err.println("Server is not up yet. Try again later.");
             e.printStackTrace();
         }

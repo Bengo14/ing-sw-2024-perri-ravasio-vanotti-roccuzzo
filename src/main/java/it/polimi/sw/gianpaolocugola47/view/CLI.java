@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.view;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
+import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 
 import java.io.BufferedReader;
@@ -14,12 +15,12 @@ import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
 //import java.io.IOException;
 
 
-public class CLI {
+public class CLI implements View {
 
-    private final RMIClient client;
+    private final Client client;
     private final String ANSI_RESET = "\033[0m";
 
-    public CLI(RMIClient client) {
+    public CLI(Client client) {
         this.client = client;
     }
     public CLI() {

@@ -4,6 +4,7 @@ import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
+import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 import java.io.*;
@@ -14,9 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocketServer implements Observer {
+
+    public static final int SERVER_PORT = 8080;
+    public static final String SERVER_ADDRESS = "127.0.0.1";
+    private static SocketServer server;
     private final ServerSocket listenSocket;
     private final Controller controller;
-    private final List<SocketClientHandler> clients;
+    private final List<VirtualView> clients;
+    private volatile boolean terminated = false;
+
+    public static SocketServer getServer() {
+        if (SocketServer.server == null) {
+            try {
+                SocketServer.server = new SocketServer(new ServerSocket(), new Controller());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return SocketServer.server;
+    }
 
     public SocketServer(ServerSocket listenSocket, Controller controller) {
         this.listenSocket = listenSocket;
@@ -24,24 +41,57 @@ public class SocketServer implements Observer {
         this.clients = new ArrayList<>();
     }
 
-    public void run() throws IOException {
+    private void run() throws IOException {
 
+        pingStart();
         Socket clientSocket;
-        while ((clientSocket = this.listenSocket.accept()) != null) {
+
+        while ((clientSocket = this.listenSocket.accept()) != null) { // accept() waits until a client joins
+
             InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
             OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
 
             SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new BufferedWriter(socketTx));
 
-            clients.add(handler);
-            new Thread(() -> {
-                try {
-                    handler.runVirtualView();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+            connect(handler);
         }
+    }
+    private void pingStart() {
+        /*todo*/
+    }
+
+    private void connect(SocketClientHandler handler) {
+
+        synchronized (this.clients) {
+            synchronized (this.controller) {
+
+                if (controller.getClientsConnected() == controller.getNumOfPlayers() || (controller.getNumOfPlayers() == -1 && controller.getClientsConnected() > 0)) {
+                    System.err.println("Connection Refused");
+                    handler.setId(-1);
+                } else {
+
+                    System.out.println("New client connected");
+                    this.terminated = false;
+                    this.clients.add(handler);
+                    this.controller.addClientConnected();
+                    handler.setId(controller.getClientsConnected() - 1);
+
+                    new Thread(() -> {
+                        try {
+                            handler.runVirtualView();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
+                }
+            }
+        }
+    }
+    private void terminateGame(boolean gameOver, int clientId) {
+        /*todo*/
+    }
+    protected void resetGame() {
+        /*todo*/
     }
 
     @Override
@@ -76,17 +126,15 @@ public class SocketServer implements Observer {
 
     public static void initSocketServer(Controller controller) {
 
-        String host = "localhost";
-        int port = 8080;
-
         try {
             ServerSocket serverSocket = new ServerSocket();
-            InetSocketAddress endpoint = new InetSocketAddress(host, port);
+            InetSocketAddress endpoint = new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT);
             serverSocket.bind(endpoint);
-            System.out.println("Socket Server ready ---> IP: "+host+", Port: "+port);
+            System.out.println("Socket Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
 
-            new SocketServer(serverSocket, controller).run();
-        } catch (IOException e){
+            SocketServer.server = new SocketServer(serverSocket, controller);
+            SocketServer.server.run();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

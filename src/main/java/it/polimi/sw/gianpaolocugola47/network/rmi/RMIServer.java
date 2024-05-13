@@ -43,23 +43,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         pingStart();
     }
 
-    @Override
-    public int connect(VirtualView client) throws RemoteException {
-        synchronized (this.clients) {
-            synchronized (this.controller) {
-                if (controller.getClientsConnected() == controller.getNumOfPlayers() || (controller.getNumOfPlayers() == -1 && controller.getClientsConnected() > 0)) {
-                    System.err.println("Connection Refused");
-                    return -1;
-                } else {
-                    System.out.println("New client connected");
-                    this.terminated = false;
-                    this.clients.add(client);
-                    this.controller.addClientConnected();
-                    return this.controller.getClientsConnected() - 1;
-                }
-            }
-        }
-    }
     private void pingStart() {
        new Thread(()->{
            while(true) {
@@ -115,6 +98,26 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
         synchronized (this.clients) {
             clients.clear();
+        }
+    }
+
+    /* --- methods of interface VirtualServer --- */
+
+    @Override
+    public int connect(VirtualView client) throws RemoteException {
+        synchronized (this.clients) {
+            synchronized (this.controller) {
+                if (controller.getClientsConnected() == controller.getNumOfPlayers() || (controller.getNumOfPlayers() == -1 && controller.getClientsConnected() > 0)) {
+                    System.err.println("Connection Refused");
+                    return -1;
+                } else {
+                    System.out.println("New client connected");
+                    this.terminated = false;
+                    this.clients.add(client);
+                    this.controller.addClientConnected();
+                    return this.controller.getClientsConnected() - 1;
+                }
+            }
         }
     }
     @Override
@@ -184,6 +187,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return controller.getPlacedCards(playerId);
         }
     }
+    @Override
+    public int[] getResourceCounter(int playerId) throws RemoteException {
+        synchronized (controller) {
+            return controller.getResourceCounter(playerId);
+        }
+    }
 
     @Override
     public void login() throws RemoteException {
@@ -226,7 +235,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
 
-    // --- methods of interface Observer ---
+    /* --- methods of interface Observer --- */
+
     @Override
     public void startGame() {
         System.out.println("Game started");
@@ -300,17 +310,21 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
 
     public static void main(String[] args) {
 
-        String name = "VirtualServer";
-        System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
-        Controller controller = new Controller();
-        try {
-            RMIServer.server = new RMIServer(controller);
-            Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
-            registry.rebind(name, RMIServer.server);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        if(RMIServer.server == null) {
+
+            String name = "VirtualServer";
+            System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
+            Controller controller = new Controller();
+
+            try {
+                RMIServer.server = new RMIServer(controller);
+                Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
+                registry.rebind(name, RMIServer.server);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            System.err.println("Server ready ---> IP: " + SERVER_ADDRESS + ", Port: " + SERVER_PORT);
+            SocketServer.initSocketServer(controller);
         }
-        System.err.println("Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
-        SocketServer.initSocketServer(controller);
     }
 }

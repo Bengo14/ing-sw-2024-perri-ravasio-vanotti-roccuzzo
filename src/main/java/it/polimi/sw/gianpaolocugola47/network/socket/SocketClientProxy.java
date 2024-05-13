@@ -12,10 +12,16 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 
 public class SocketClientProxy implements VirtualView {
-    final PrintWriter output;
+    private final PrintWriter output;
 
     public SocketClientProxy(BufferedWriter output) {
         this.output = new PrintWriter(output);
+    }
+
+    public void setId(int id) {
+        output.println("setId");
+        output.println(id);
+        output.flush();
     }
 
     @Override
@@ -70,10 +76,4 @@ public class SocketClientProxy implements VirtualView {
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
 
     }
-
-   /* public void showValue(Integer number) {
-        output.println("update");
-        output.println(number);
-        output.flush();
-    }*/
 }

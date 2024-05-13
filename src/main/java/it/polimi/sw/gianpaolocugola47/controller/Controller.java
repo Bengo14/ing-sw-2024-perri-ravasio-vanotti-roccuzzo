@@ -134,6 +134,9 @@ public class Controller {
     public PlaceableCard[][] getPlacedCards(int playerId) {
         return mainTable.getPlacedCards(playerId);
     }
+    public int[] getResourceCounter(int playerId) {
+        return mainTable.getResourceCounter(playerId);
+    }
     public String[] getNicknames() {
         return mainTable.getNicknames();
     }

@@ -22,6 +22,7 @@ public interface VirtualServer extends Remote {
     void drawCard(int position, int playerId) throws RemoteException;
     ResourceCard[][] getCardsOnHand() throws RemoteException;
     PlaceableCard[][] getPlacedCards(int playerId) throws RemoteException;
+    int[] getResourceCounter(int playerId) throws RemoteException;
     void login() throws RemoteException;
     void sendMessage(ChatMessage message) throws RemoteException;
     void sendPrivateMessage(ChatMessage message) throws RemoteException;

@@ -4,6 +4,7 @@ import it.polimi.sw.gianpaolocugola47.observer.Observable;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -162,6 +163,9 @@ public class MainTable implements Observable {
     public PlaceableCard[][] getPlacedCards(int playerId) {
         return getPlayerTable(playerId).getPlacedCards();
     }
+    public int[] getResourceCounter(int playerId) {
+        return Arrays.copyOf(getPlayerTable(playerId).getResourceCounter(), 7);
+    }
 
     public void turnCardOnHand(int playerId, int cardPosition) {
         getPlayerTable(playerId).turnCardOnHand(cardPosition);
@@ -252,7 +256,6 @@ public class MainTable implements Observable {
     private void setGlobalPoints(int player, int points) {
         this.globalPoints[player] = points;
     }
-
     protected void setEndGame() {
         this.endGame = true;
     }

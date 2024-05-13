@@ -59,9 +59,10 @@ public class PlayerTable {
     }
     public boolean getCanPlay(){return canPlay;}
     private void unsetCanPlay(){this.canPlay = false;}
-    public int getResourceCounter(int position) {
+    protected int getResourceCounter(int position) {
         return resourceCounter[position];
     }
+    protected int[] getResourceCounter() {return resourceCounter;}
     public Objectives getSecretObjective() {
         return secretObjective;
     }

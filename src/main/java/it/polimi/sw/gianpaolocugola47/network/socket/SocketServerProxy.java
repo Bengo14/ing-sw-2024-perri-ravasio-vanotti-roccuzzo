@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
-    final PrintWriter output;
+    private final PrintWriter output;
 
     public SocketServerProxy(BufferedWriter output) {
         this.output = new PrintWriter(output);
@@ -22,6 +22,7 @@ public class SocketServerProxy implements VirtualServer {
 
     @Override
     public int connect(VirtualView client) throws RemoteException {
+        // not used
         return 0;
     }
     @Override
@@ -64,6 +65,12 @@ public class SocketServerProxy implements VirtualServer {
     public PlaceableCard[][] getPlacedCards(int playerId) {
         return new PlaceableCard[0][];
     }
+
+    @Override
+    public int[] getResourceCounter(int playerId) throws RemoteException {
+        return new int[0];
+    }
+
     @Override
     public void login() throws RemoteException {
 

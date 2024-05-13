@@ -40,12 +40,12 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void terminate() throws RemoteException {
+    public void terminate() {
 
     }
 
     @Override
-    public void ping() throws RemoteException {
+    public void ping() {
 
     }
 
@@ -75,7 +75,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public int getId() throws RemoteException {
+    public int getId() {
         return 0;
     }
 

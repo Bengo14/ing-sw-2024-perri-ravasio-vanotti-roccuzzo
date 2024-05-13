@@ -357,8 +357,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
         } catch(RemoteException | NotBoundException e) {
-            System.err.println("Server is not up yet. Try again later.");
-            e.printStackTrace();
+            System.err.println(e.getMessage() + "\nServer is not up yet... Try again later.");
+            System.exit(1);
         }
     }
 }

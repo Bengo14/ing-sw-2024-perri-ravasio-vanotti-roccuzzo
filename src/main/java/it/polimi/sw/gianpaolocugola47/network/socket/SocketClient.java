@@ -38,18 +38,12 @@ public class SocketClient implements VirtualView, Client {
         new Thread(() -> {
             try {
                 runVirtualServer();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 terminate();
             }
         }).start();
 
         terminationCheckerStart();
-        try {
-            runCli();
-        } catch (IOException e) {
-            System.out.println("Oops! Issues with input found. Terminating the game...");
-            terminate();
-        }
     }
 
     private void terminationCheckerStart() {
@@ -57,7 +51,7 @@ public class SocketClient implements VirtualView, Client {
             while (!terminate) {
                 Thread.onSpinWait();
             }
-            System.exit(0);
+            System.exit(1);
         }).start();
     }
 
@@ -73,12 +67,19 @@ public class SocketClient implements VirtualView, Client {
     }
 
     private void setId(int id) {
+
         if(id == -1) {
             System.err.println("Connection refused: match already started/full or number of players not set...");
-            System.exit(0);
+            System.exit(1);
         }
+
         this.id = id;
         System.err.println("Client connected with id: " + id);
+        try {
+            runCli();
+        } catch (IOException e) {
+            terminate();
+        }
     }
 
     private void runCli() throws IOException {
@@ -327,7 +328,7 @@ public class SocketClient implements VirtualView, Client {
             new SocketClient(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
 
         } catch (IOException e) {
-            System.err.println("Error: Unable to connect to server: " + e.getMessage());
+            System.err.println(e.getMessage() + "\nServer is not up yet... Try again later.");
             System.exit(1);
         }
     }

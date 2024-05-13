@@ -80,7 +80,7 @@ public class SocketServer implements Observer {
                         try {
                             handler.runVirtualView();
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            terminateGame(false, handler.getId()); // can it replace ping?
                         }
                     }).start();
                 }

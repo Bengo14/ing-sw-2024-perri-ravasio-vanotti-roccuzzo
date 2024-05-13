@@ -49,4 +49,19 @@ class CLITest {
         CLI cli = new CLI();
         cli.printObjectiveCard(objectiveCard);
     }
+
+    @Test
+    void printResourceCounter(){
+        int[] counter = new int[8];
+        counter[0] = 1;
+        counter[1] = 2;
+        counter[2] = 3;
+        counter[3] = 4;
+        counter[4] = 5;
+        counter[5] = 6;
+        counter[6] = 7;
+        counter[7] = 8;
+        CLI cli = new CLI();
+        cli.printResourceCounter(counter);
+    }
 }

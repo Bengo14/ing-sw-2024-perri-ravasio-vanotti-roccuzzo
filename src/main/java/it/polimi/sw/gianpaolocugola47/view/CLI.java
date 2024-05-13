@@ -184,6 +184,7 @@ public class CLI {
                         /help: show this message
                         /showCard [xCoord] [yCoord]: show the board
                         /showCardInHand [cardInHand]: show a card in hand
+                        /showCardsInHand: show both cards in hand
                         /placeCard [xCoord] [yCoord] [cardInHand]: place a card on the board""");
             }
             else if(command.startsWith("/showCard")){
@@ -199,7 +200,7 @@ public class CLI {
                     //getCard method
                 }
             }
-            else if(command.equals("/showCardInHand")){
+            else if(command.startsWith("/showCardInHand")){
                 String[] cardInHand = command.split(" ");
                 if(cardInHand.length != 2) System.out.println("Invalid command, try again.");
                 else{
@@ -229,8 +230,13 @@ public class CLI {
                     //placeCard method
                 }
             }
-            else if(command.equals("/exit")) break;
+            else if(command.equals("/showCardsInHand")){
+                /*todo*/
+                //getCardsInHand method
+            }
             else System.out.println("Command not recognized");
+            /*todo*/
+            /*checkIfGameHasEnded*/
         }
     }
 }

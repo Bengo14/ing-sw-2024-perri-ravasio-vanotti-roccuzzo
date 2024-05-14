@@ -72,7 +72,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     private void runCli() throws IOException {
-
+        String tempNick;
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         System.out.println("Welcome to Codex Naturalis!");
         System.out.println("Just a little patience, choose the interface: \n1 = CLI\n2 = GUI");
@@ -95,34 +95,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             }
             this.numOfPlayers = Integer.parseInt(command);
             this.server.setNumOfPlayers(numOfPlayers);
-            System.out.print("Okay, now insert your nickname: ");
-            this.nickname = br.readLine();
-            while(nickname.isEmpty() || nickname == null){
-                System.out.print("Invalid nickname, try again: ");
-                this.nickname = scan.next();
-            }
-            if(nickname.contains(" ")) {
-                this.nickname = nickname.replace(" ","_");
-            }
         }
         else {
             System.out.println("A game is already starting, you connected to the server with id: " + this.id);
-            System.out.print("Insert your nickname: ");
-            this.nickname = br.readLine();
-            if(nickname.contains(" ")) {
-                this.nickname = nickname.replace(" ","_");
-            }
-            while(!this.server.isNicknameAvailable(this.nickname, this.id)
-                    || this.nickname.isEmpty()) {
-                System.out.print("Nickname invalid or already taken, try again: ");
-                System.out.println(this.nickname);
-                this.nickname = br.readLine();
-                if(nickname.contains(" ")) {
-                    this.nickname = nickname.replace(" ","_");
-                }
+
+        }
+        System.out.print("Insert your nickname: ");
+        tempNick = br.readLine();
+        if(tempNick.contains(" ")) {
+            tempNick = tempNick.replace(" ","_");
+        }
+        while(!this.server.isNicknameAvailable(tempNick, this.id)
+                || tempNick.isEmpty()) {
+            System.out.print("Nickname invalid or already taken, try again: ");
+            System.out.println(tempNick);
+            tempNick = br.readLine();
+            if(tempNick.contains(" ")) {
+                tempNick = tempNick.replace(" ","_");
             }
         }
         System.out.println("You joined the game! Waiting for other players...");
+        this.nickname = tempNick;
         this.server.addPlayer(this.id, this.nickname);
     }
 

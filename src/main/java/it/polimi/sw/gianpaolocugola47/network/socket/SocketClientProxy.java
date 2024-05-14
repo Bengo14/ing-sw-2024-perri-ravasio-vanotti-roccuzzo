@@ -25,12 +25,14 @@ public class SocketClientProxy implements VirtualView {
     }
 
     @Override
-    public void terminate() throws RemoteException {
-
+    public void terminate() {
+        output.println("terminate");
+        output.flush();
     }
     @Override
-    public void ping() throws RemoteException {
-
+    public void ping() {
+        output.println("ping");
+        output.flush();
     }
     @Override
     public void startGame() throws RemoteException {

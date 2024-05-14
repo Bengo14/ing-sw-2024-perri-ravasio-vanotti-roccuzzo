@@ -22,13 +22,15 @@ import java.util.Scanner;
 public class RMIClient extends UnicastRemoteObject implements VirtualView, Client {
 
     private final VirtualServer server;
-    private int id;
     private volatile boolean terminate = false;
     private View view;
+    private int id;
     private boolean isCliChosen = false;
     private int numOfPlayers = 0;
     private String nickname = "";
     private boolean isMyTurn = false;
+
+    /* todo attributes to be moved to view below */
     private StartingCard startingCard;
     private Objectives secretObjective;
     private Objectives[] objectives;
@@ -52,10 +54,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             }
             System.err.println("Client connected with id: "+id);
             terminationCheckerStart();
+
             try {
                 runCli();
             } catch (IOException e) {
-                System.out.println("Oops! Issues with input found. Terminating game.");
+                System.out.println("Oops! Issues with input found. Terminating the game...");
                 terminateLocal();
             }
         } catch (RemoteException e) {
@@ -72,6 +75,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     private void runCli() throws IOException {
+
         String tempNick;
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         System.out.println("Welcome to Codex Naturalis!");
@@ -125,10 +129,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public void terminate() throws RemoteException {
         terminateLocal();
     }
-    private void terminateLocal() {
-        System.err.println("\nTerminating the game, because something went wrong...");
-        this.terminate = true;
-    }
     @Override
     public void ping() throws RemoteException {
         //do nothing, liveness check only
@@ -163,7 +163,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
     @Override
     public void showWinner() {
-        System.out.println("\nYou won the game!");
+        //System.out.println("\nYou won the game!");
         this.terminate = true;
     }
     @Override
@@ -188,81 +188,39 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public void startGame() throws RemoteException {
         if(isCliChosen) {
             this.view = new CLI(this);
-            view.start();
+            new Thread(() -> view.start()).start();
         }
         else {
             this.view = new GUI(this);
-            view.start();
-        }
-        openChat();
-    }
-    private void openChat() {
-        new Thread(() -> {
-            try {
-                chatInputLoop();
-            } catch (IOException e) {
-                terminateLocal();
-            }
-        }).start();
-    }
-    private void chatInputLoop() throws IOException {
-        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
-        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(nickname, id);
-
-        while(true) {
-            String line = br.readLine();
-            if (line.startsWith("@")) {
-                try {
-                    message.setPrivate(true);
-                    message.setReceiver(line.substring(1, line.indexOf(" ")));
-                    message.setMessage(line.substring(line.indexOf(" ") + 1));
-                    this.server.sendPrivateMessage(message);
-                } catch (StringIndexOutOfBoundsException e) {
-                    System.err.println("Invalid input, try again...");
-                }
-            } else if (line.equals("--listPlayers")) {
-                this.server.getNicknames();
-                System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : this.server.getNicknames()){
-                    if(nickname.equals(this.nickname))
-                        System.err.println(nickname + " (you)");
-                    else
-                        System.out.println(nickname);
-                }
-            } else {
-                message.setPrivate(false);
-                message.setMessage(line);
-                this.server.sendMessage(message);
-            }
+            new Thread(() -> view.start()).start();
         }
     }
 
     /* --- methods of interface Client --- */
 
     @Override
-    public void drawStartingCard() {
-        try {
-            this.startingCard = server.drawStartingCard();
-        } catch (RemoteException e) {
-            terminateLocal();
-        }
-        System.out.println("You have drawn: " + startingCard);
+    public void terminateLocal() {
+        System.err.println("\nTerminating the game, because something went wrong...");
+        this.terminate = true;
     }
     @Override
-    public void setStartingCardAndDrawObjectives() {
+    public StartingCard drawStartingCard() {
+        try {
+            return server.drawStartingCard();
+        } catch (RemoteException e) {
+            terminateLocal();
+            return null;
+        }
+    }
+    @Override
+    public Objectives[] setStartingCardAndDrawObjectives() {
         Objectives[] objectives = null;
         try {
             objectives = server.setStartingCardAndDrawObjectives(this.id, this.startingCard);
         } catch (RemoteException e) {
             terminateLocal();
         }
-        System.out.println("Choose the objective you want to keep: ");
-        for (Objectives obj : objectives) {
-            System.out.println(obj);
-        }
-        Scanner scan = new Scanner(System.in);
-        int secretObjective = scan.nextInt();
+        return objectives;
     }
     @Override
     public void setSecretObjective() {
@@ -342,6 +300,36 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public int getBoardPoints() {
         return this.boardPoints;
     }
+    @Override
+    public int getIdLocal() {return this.id;}
+    @Override
+    public String getNicknameLocal() {return this.nickname;}
+    @Override
+    public String[] getNicknames() {
+        try {
+            return server.getNicknames();
+        } catch (RemoteException e) {
+            terminateLocal();
+            return null;
+        }
+    }
+    @Override
+    public void sendMessage(ChatMessage msg) {
+        try {
+            server.sendMessage(msg);
+        } catch (RemoteException e) {
+            terminateLocal();
+        }
+    }
+    @Override
+    public void sendPrivateMessage(ChatMessage msg) {
+        try {
+            server.sendPrivateMessage(msg);
+        } catch (RemoteException e) {
+            terminateLocal();
+        }
+    }
+
 
     public static void main(String[] args) {
 

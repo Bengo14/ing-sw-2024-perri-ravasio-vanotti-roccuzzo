@@ -13,4 +13,12 @@ public class GUI implements View {
     public void start() {
 
     }
+    @Override
+    public void setId(int id) {
+
+    }
+    @Override
+    public void setNickname(String nickname) {
+
+    }
 }

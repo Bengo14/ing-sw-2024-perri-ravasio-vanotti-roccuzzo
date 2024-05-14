@@ -61,40 +61,47 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                    synchronized (this.clients) {
                        try {
                            terminateGame(false, clients.indexOf(view)); // local id of dead client
-                       } catch (RemoteException ex) {
-                           e.printStackTrace();
-                       }
+                       } catch (RemoteException _) {}
                    }
                }
                try {
                    Thread.sleep(500);
-               } catch (InterruptedException e) {
-                   e.printStackTrace();
-               }
+               } catch (InterruptedException _) {}
            }
        }).start();
+    }
+
+    public void terminateGame() {
+        this.terminated = true;
+        synchronized (this.clients) {
+            try {
+                for (VirtualView view : clients)
+                    view.terminate();
+            } catch (RemoteException ignored) {}
+        }
+        resetGame();
     }
     private void terminateGame(boolean gameOver, int clientId) throws RemoteException {
         System.err.println("terminating the game...");
         this.terminated = true;
 
-        synchronized (this.clients) {
-            if(gameOver) { // the game is ended
-                for (VirtualView view : clients)
-                    if (view.getId() != clientId) // consider real id
-                        view.gameOver();
-            } else { // some client has disconnected
-                for (VirtualView view : clients)
-                    if (clients.indexOf(view) != clientId) // consider local id
-                        view.terminate();
-                /*todo call socket terminateGame (and reset)*/
-            }
+        if(gameOver) { // the game is ended
+            for (VirtualView view : clients)
+                if (view.getId() != clientId) // consider real id
+                    view.gameOver();
+        } else { // some client has disconnected
+            for (VirtualView view : clients)
+                if (clients.indexOf(view) != clientId) // consider local id
+                    view.terminate();
+            SocketServer.getServer().terminateGame();
         }
         resetGame();
     }
     private void resetGame() {
         synchronized (this.controller) {
             controller.resetGame();
+            controller.addModelObserver(this);
+            controller.addModelObserver(SocketServer.getServer());
         }
         synchronized (this.clients) {
             clients.clear();

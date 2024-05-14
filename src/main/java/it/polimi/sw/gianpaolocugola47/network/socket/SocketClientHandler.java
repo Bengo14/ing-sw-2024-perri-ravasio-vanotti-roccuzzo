@@ -17,6 +17,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     private final BufferedReader input;
     private final SocketClientProxy client;
     private int id;
+    private boolean pingAck = false;
 
     public SocketClientHandler(Controller controller, SocketServer socketServer, BufferedReader input, BufferedWriter output) {
         this.controller = controller;
@@ -27,26 +28,36 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     public void runVirtualView() throws IOException {
         String line;
-        while ((line = input.readLine()) != null) {
+
+        while (true) {
+            line = input.readLine();
+
             switch (line) {
-                /*todo*/
+                case "ping" -> {
+                    synchronized (this) {this.pingAck = true;}
+                }
                 default -> System.err.println("[INVALID MESSAGE]");
             }
         }
     }
-    public void setId(int id) {
+    protected void setId(int id) {
         this.client.setId(id);
         this.id = id;
+    }
+    protected synchronized boolean getPingAck() {
+         boolean ping = pingAck;
+         pingAck = false;
+         return ping;
     }
 
     @Override
     public void terminate() {
-
+        this.client.terminate();
     }
 
     @Override
     public void ping() {
-
+        this.client.ping();
     }
 
     @Override
@@ -60,7 +71,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void gameOver() throws RemoteException {
+    public void gameOver() {
 
     }
 
@@ -76,7 +87,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 
     @Override

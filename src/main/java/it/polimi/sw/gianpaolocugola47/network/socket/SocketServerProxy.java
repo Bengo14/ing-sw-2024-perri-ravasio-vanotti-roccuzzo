@@ -20,25 +20,30 @@ public class SocketServerProxy implements VirtualServer {
         this.output = new PrintWriter(output);
     }
 
+    public void pingAck() {
+        output.println("ping");
+        output.flush();
+    }
+
     @Override
     public int connect(VirtualView client) throws RemoteException {
         // not used
         return 0;
     }
     @Override
-    public void setNumOfPlayers(int num) throws RemoteException {
+    public void setNumOfPlayers(int num) {
 
     }
     @Override
-    public void addPlayer(int id, String nickname) throws RemoteException {
+    public void addPlayer(int id, String nickname) {
 
     }
     @Override
-    public StartingCard drawStartingCard() throws RemoteException {
+    public StartingCard drawStartingCard() {
         return null;
     }
     @Override
-    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException {
+    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
         return new Objectives[0];
     }
     @Override

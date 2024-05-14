@@ -2,7 +2,7 @@ package it.polimi.sw.gianpaolocugola47.view;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +19,8 @@ public class CLI implements View {
 
     private final Client client;
     private final String ANSI_RESET = "\033[0m";
+    private int id;
+    private String nickname;
 
     public CLI(Client client) {
         this.client = client;
@@ -30,7 +32,61 @@ public class CLI implements View {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.flush();
         System.out.println("---- The game CODEX NATURALIS starts! ----\ncoming soon...");
-        /*todo*/
+
+        this.id = client.getIdLocal();
+        this.nickname = client.getNicknameLocal();
+        openChat();
+
+        /*todo input game loop (this method is already on a separate thread!!!)*/
+    }
+
+    private void openChat() {
+        new Thread(() -> {
+            try {
+                chatInputLoop();
+            } catch (IOException e) {
+                client.terminateLocal();
+            }
+        }).start();
+    }
+    private void chatInputLoop() throws IOException {
+        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
+        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+        ChatMessage message = new ChatMessage(nickname, id);
+
+        while(true) {
+            String line = br.readLine();
+            if (line.startsWith("@")) {
+                try {
+                    message.setPrivate(true);
+                    message.setReceiver(line.substring(1, line.indexOf(" ")));
+                    message.setMessage(line.substring(line.indexOf(" ") + 1));
+                    this.client.sendPrivateMessage(message);
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.err.println("Invalid input, try again...");
+                }
+            } else if (line.equals("--listPlayers")) {
+                System.out.println("Here's a list of all the players in the lobby: ");
+                for(String nickname : this.client.getNicknames()){
+                    if(nickname.equals(this.nickname))
+                        System.err.println(nickname + " (you)");
+                    else
+                        System.out.println(nickname);
+                }
+            } else {
+                message.setPrivate(false);
+                message.setMessage(line);
+                this.client.sendMessage(message);
+            }
+        }
+    }
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+    @Override
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @SuppressWarnings("ALL")

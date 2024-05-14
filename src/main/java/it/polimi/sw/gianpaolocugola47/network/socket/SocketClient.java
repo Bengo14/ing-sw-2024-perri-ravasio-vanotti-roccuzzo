@@ -1,11 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.network.socket;
 
-import it.polimi.sw.gianpaolocugola47.model.GoldCard;
-import it.polimi.sw.gianpaolocugola47.model.Objectives;
-import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
-import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
+import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
@@ -19,7 +15,7 @@ import java.util.Scanner;
 
 public class SocketClient implements VirtualView, Client {
     private final BufferedReader input;
-    private final VirtualServer server;
+    private final SocketServerProxy server;
     private volatile boolean terminate = false;
     private int id;
     private View view;
@@ -34,6 +30,7 @@ public class SocketClient implements VirtualView, Client {
     }
 
     public void run() throws RemoteException {
+        terminationCheckerStart();
 
         new Thread(() -> {
             try {
@@ -42,8 +39,6 @@ public class SocketClient implements VirtualView, Client {
                 terminate();
             }
         }).start();
-
-        terminationCheckerStart();
     }
 
     private void terminationCheckerStart() {
@@ -57,10 +52,14 @@ public class SocketClient implements VirtualView, Client {
 
     private void runVirtualServer() throws IOException {
         String line;
-        while ((line = input.readLine()) != null) {
+
+        while (true) {
+            line = input.readLine();
+
             switch (line) {
-                case "setId" -> this.setId(Integer.parseInt(input.readLine()));
-                /*todo*/
+                case "setId" -> setId(Integer.parseInt(input.readLine()));
+                case "terminate" -> terminate();
+                case "ping" -> ping();
                 default -> System.err.println("[INVALID MESSAGE]");
             }
         }
@@ -75,15 +74,19 @@ public class SocketClient implements VirtualView, Client {
 
         this.id = id;
         System.err.println("Client connected with id: " + id);
-        try {
-            runCli();
-        } catch (IOException e) {
-            terminate();
-        }
+
+        new Thread(()->{
+            try {
+                runCli();
+            } catch (IOException e) {
+                terminate();
+            }
+        }).start();
     }
 
     private void runCli() throws IOException {
 
+        String tempNick;
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         System.out.println("Welcome to Codex Naturalis!");
         System.out.println("Just a little patience, choose the interface: \n1 = CLI\n2 = GUI");
@@ -106,78 +109,28 @@ public class SocketClient implements VirtualView, Client {
             }
             this.numOfPlayers = Integer.parseInt(command);
             this.server.setNumOfPlayers(numOfPlayers);
-            System.out.print("Okay, now insert your nickname: ");
-            this.nickname = br.readLine();
-            while(nickname.isEmpty() || nickname == null){
-                System.out.print("Invalid nickname, try again: ");
-                this.nickname = scan.next();
-            }
-            if(nickname.contains(" ")) {
-                this.nickname = nickname.replace(" ","_");
-            }
         }
         else {
             System.out.println("A game is already starting, you connected to the server with id: " + this.id);
-            System.out.print("Insert your nickname: ");
-            this.nickname = br.readLine();
-            if(nickname.contains(" ")) {
-                this.nickname = nickname.replace(" ","_");
-            }
-            while(!this.server.isNicknameAvailable(this.nickname, this.id)
-                    || this.nickname.isEmpty()) {
-                System.out.print("Nickname invalid or already taken, try again: ");
-                System.out.println(this.nickname);
-                this.nickname = br.readLine();
-                if(nickname.contains(" ")) {
-                    this.nickname = nickname.replace(" ","_");
-                }
+
+        }
+        System.out.print("Insert your nickname: ");
+        tempNick = br.readLine();
+        if(tempNick.contains(" ")) {
+            tempNick = tempNick.replace(" ","_");
+        }
+        while(!this.server.isNicknameAvailable(tempNick, this.id)
+                || tempNick.isEmpty()) {
+            System.out.print("Nickname invalid or already taken, try again: ");
+            System.out.println(tempNick);
+            tempNick = br.readLine();
+            if(tempNick.contains(" ")) {
+                tempNick = tempNick.replace(" ","_");
             }
         }
         System.out.println("You joined the game! Waiting for other players...");
+        this.nickname = tempNick;
         this.server.addPlayer(this.id, this.nickname);
-    }
-
-    private void openChat() {
-        new Thread(() -> {
-            try {
-                chatInputLoop();
-            } catch (IOException e) {
-                terminate();
-            }
-        }).start();
-    }
-    public void chatInputLoop() throws IOException {
-
-        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
-        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(nickname, id);
-
-        while(true) {
-            String line = br.readLine();
-            if (line.startsWith("@")) {
-                try {
-                    message.setPrivate(true);
-                    message.setReceiver(line.substring(1, line.indexOf(" ")));
-                    message.setMessage(line.substring(line.indexOf(" ") + 1));
-                    this.server.sendPrivateMessage(message);
-                } catch (StringIndexOutOfBoundsException e) {
-                    System.err.println("Invalid input, try again...");
-                }
-            } else if (line.equals("--listPlayers")) {
-                this.server.getNicknames();
-                System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : this.server.getNicknames()){
-                    if(nickname.equals(this.nickname))
-                        System.err.println(nickname + " (you)");
-                    else
-                        System.out.println(nickname);
-                }
-            } else {
-                message.setPrivate(false);
-                message.setMessage(line);
-                this.server.sendMessage(message);
-            }
-        }
     }
 
     /* --- methods of interface VirtualView --- */
@@ -190,20 +143,19 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void ping() {
-        /*todo*/
+        this.server.pingAck();
     }
 
     @Override
-    public void startGame() throws RemoteException {
+    public void startGame() {
         if(isCliChosen) {
             this.view = new CLI(this);
-            view.start();
+            new Thread(() -> view.start()).start();
         }
         else {
             this.view = new GUI(this);
-            view.start();
+            new Thread(() -> view.start()).start();
         }
-        openChat();
     }
 
     @Override
@@ -259,13 +211,14 @@ public class SocketClient implements VirtualView, Client {
     /* --- methods of interface Client --- */
 
     @Override
-    public void drawStartingCard() {
+    public StartingCard drawStartingCard() {
 
+        return null;
     }
 
     @Override
-    public void setStartingCardAndDrawObjectives() {
-
+    public Objectives[] setStartingCardAndDrawObjectives() {
+        return null;
     }
 
     @Override
@@ -314,8 +267,38 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
+    public int getIdLocal() {
+        return 0;
+    }
+
+    @Override
+    public String getNicknameLocal() {
+        return null;
+    }
+
+    @Override
+    public String[] getNicknames() {
+        return new String[0];
+    }
+
+    @Override
+    public void sendMessage(ChatMessage msg) {
+
+    }
+
+    @Override
+    public void sendPrivateMessage(ChatMessage msg) {
+
+    }
+
+    @Override
     public int getBoardPoints() {
         return 0;
+    }
+
+    @Override
+    public void terminateLocal() {
+
     }
 
     public static void main(String[] args) {

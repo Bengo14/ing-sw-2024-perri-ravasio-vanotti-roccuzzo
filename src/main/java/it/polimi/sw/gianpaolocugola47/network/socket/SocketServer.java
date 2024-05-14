@@ -5,12 +5,14 @@ import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class SocketServer implements Observer {
     private static SocketServer server;
     private final ServerSocket listenSocket;
     private final Controller controller;
-    private final List<VirtualView> clients;
+    private final List<SocketClientHandler> clients;
     private volatile boolean terminated = false;
 
     public static SocketServer getServer() {
@@ -38,6 +40,7 @@ public class SocketServer implements Observer {
     public SocketServer(ServerSocket listenSocket, Controller controller) {
         this.listenSocket = listenSocket;
         this.controller = controller;
+        this.controller.addModelObserver(this);
         this.clients = new ArrayList<>();
     }
 
@@ -56,10 +59,6 @@ public class SocketServer implements Observer {
             connect(handler);
         }
     }
-    private void pingStart() {
-        /*todo*/
-    }
-
     private void connect(SocketClientHandler handler) {
 
         synchronized (this.clients) {
@@ -79,19 +78,68 @@ public class SocketServer implements Observer {
                     new Thread(() -> {
                         try {
                             handler.runVirtualView();
-                        } catch (IOException e) {
-                            terminateGame(false, handler.getId()); // can it replace ping?
-                        }
+                        } catch (IOException _) {}
                     }).start();
                 }
             }
         }
     }
+
+    private void pingStart() {
+        new Thread(()->{
+            while(true) {
+                while (terminated)
+                    Thread.onSpinWait();
+
+                SocketClientHandler view = null;
+                synchronized (this.clients) {
+                    for (SocketClientHandler handler : this.clients) {
+                        handler.ping();
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException _) {}
+
+                        if(!handler.getPingAck()) {
+                            terminateGame(false, clients.indexOf(handler));
+                            break;
+                        }
+                    }
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException _) {}
+            }
+        }).start();
+    }
+
+    public void terminateGame() { // terminates all clients
+        this.terminated = true;
+        synchronized (this.clients) {
+            for (SocketClientHandler view : clients)
+                view.terminate();
+        }
+        resetGame();
+    }
     private void terminateGame(boolean gameOver, int clientId) {
-        /*todo*/
+        System.err.println("terminating the game...");
+        this.terminated = true;
+
+        if(gameOver) { // the game is ended
+            for (SocketClientHandler view : clients)
+                if (view.getId() != clientId) // consider real id
+                    view.gameOver();
+        } else { // some client has disconnected
+            for (SocketClientHandler view : clients)
+                if (clients.indexOf(view) != clientId) // consider local id
+                    view.terminate();
+            RMIServer.getServer().terminateGame();
+        }
+        resetGame();
     }
     protected void resetGame() {
-        /*todo*/
+        synchronized (this.clients) {
+            clients.clear();
+        }
     }
 
     @Override

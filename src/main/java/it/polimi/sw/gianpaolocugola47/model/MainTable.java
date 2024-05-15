@@ -150,8 +150,11 @@ public class MainTable implements Observable {
 
     public String[] getNicknames() {
         String[] nicknames = new String[numOfPlayers];
-        for(int i = 0; i<numOfPlayers; i++)
-            nicknames[i] = getPlayerTable(i).getNickName();
+        for(int i = 0; i<numOfPlayers; i++) {
+            if (getPlayerTable(i) != null)
+                nicknames[i] = getPlayerTable(i).getNickName();
+            else nicknames[i] = "";
+        }
         return nicknames;
     }
     public ResourceCard[][] getCardsOnHand() {

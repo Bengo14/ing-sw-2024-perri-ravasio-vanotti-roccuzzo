@@ -7,6 +7,7 @@ import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -91,19 +92,19 @@ public class SocketServer implements Observer {
                 while (terminated)
                     Thread.onSpinWait();
 
-                SocketClientHandler view = null;
                 synchronized (this.clients) {
-                    for (SocketClientHandler handler : this.clients) {
+                    for (SocketClientHandler handler : this.clients)
                         handler.ping();
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException _) {}
 
-                        if(!handler.getPingAck()) {
+                    try {
+                        clients.wait(100);
+                    } catch (InterruptedException _) {}
+
+                    for (SocketClientHandler handler : this.clients)
+                        if (!handler.getPingAck()) {
                             terminateGame(false, clients.indexOf(handler));
                             break;
                         }
-                    }
                 }
                 try {
                     Thread.sleep(500);
@@ -117,8 +118,8 @@ public class SocketServer implements Observer {
         synchronized (this.clients) {
             for (SocketClientHandler view : clients)
                 view.terminate();
+            resetGame();
         }
-        resetGame();
     }
     private void terminateGame(boolean gameOver, int clientId) {
         System.err.println("terminating the game...");
@@ -132,14 +133,12 @@ public class SocketServer implements Observer {
             for (SocketClientHandler view : clients)
                 if (clients.indexOf(view) != clientId) // consider local id
                     view.terminate();
-            RMIServer.getServer().terminateGame();
+            new Thread(() -> RMIServer.getServer().terminateGame()).start();
         }
         resetGame();
     }
     protected void resetGame() {
-        synchronized (this.clients) {
-            clients.clear();
-        }
+        clients.clear();
     }
 
     @Override
@@ -170,6 +169,13 @@ public class SocketServer implements Observer {
     @Override
     public void startGame() {
 
+    }
+
+    protected void sendMessage(ChatMessage message) {
+        /*todo*/
+    }
+    protected void sendPrivateMessage(ChatMessage message) {
+        /*todo*/
     }
 
     public static void initSocketServer(Controller controller) {

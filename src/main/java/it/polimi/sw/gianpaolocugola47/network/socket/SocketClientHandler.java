@@ -179,11 +179,6 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void login() throws RemoteException {
-
-    }
-
-    @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
 
     }

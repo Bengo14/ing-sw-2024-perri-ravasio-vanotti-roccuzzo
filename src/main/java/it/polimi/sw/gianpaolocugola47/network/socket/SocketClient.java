@@ -16,7 +16,6 @@ import java.util.Scanner;
 public class SocketClient implements VirtualView, Client {
     private final BufferedReader input;
     private final SocketServerProxy server;
-    private volatile boolean terminate = false;
     private int id;
     private View view;
     private boolean isCliChosen = false;
@@ -30,7 +29,6 @@ public class SocketClient implements VirtualView, Client {
     }
 
     public void run() throws RemoteException {
-        terminationCheckerStart();
 
         new Thread(() -> {
             try {
@@ -38,15 +36,6 @@ public class SocketClient implements VirtualView, Client {
             } catch (IOException e) {
                 terminate();
             }
-        }).start();
-    }
-
-    private void terminationCheckerStart() {
-        new Thread(()->{
-            while (!terminate) {
-                Thread.onSpinWait();
-            }
-            System.exit(1);
         }).start();
     }
 
@@ -138,7 +127,7 @@ public class SocketClient implements VirtualView, Client {
     @Override
     public void terminate() {
         System.err.println("\nTerminating the game, because something went wrong...");
-        this.terminate = true;
+        System.exit(1);
     }
 
     @Override
@@ -160,17 +149,19 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void showTurn() {
-
+        this.isMyTurn = true;
     }
 
     @Override
     public void gameOver() {
-
+        /*todo*/
+        terminate();
     }
 
     @Override
     public void showWinner() {
-
+        /*todo*/
+        terminate();
     }
 
     @Override
@@ -298,7 +289,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void terminateLocal() {
-
+        terminate();
     }
 
     public static void main(String[] args) {

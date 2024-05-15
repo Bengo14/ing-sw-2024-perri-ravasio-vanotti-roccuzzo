@@ -78,8 +78,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                 for (VirtualView view : clients)
                     view.terminate();
             } catch (RemoteException ignored) {}
+            resetGame();
         }
-        resetGame();
     }
     private void terminateGame(boolean gameOver, int clientId) throws RemoteException {
         System.err.println("terminating the game...");
@@ -93,7 +93,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             for (VirtualView view : clients)
                 if (clients.indexOf(view) != clientId) // consider local id
                     view.terminate();
-            SocketServer.getServer().terminateGame();
+            new Thread(() -> SocketServer.getServer().terminateGame()).start();
         }
         resetGame();
     }
@@ -103,9 +103,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             controller.addModelObserver(this);
             controller.addModelObserver(SocketServer.getServer());
         }
-        synchronized (this.clients) {
-            clients.clear();
-        }
+        clients.clear();
     }
 
     /* --- methods of interface VirtualServer --- */
@@ -202,11 +200,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     }
 
     @Override
-    public void login() throws RemoteException {
-        /*todo*/ // what is it meant for?
-    }
-
-    @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
         System.out.println("Received public message");
         synchronized (this.clients) {
@@ -228,8 +221,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     @Override
     public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
         synchronized (this.clients) {
-            for (VirtualView client : this.clients)
-                if (client.getNickname().equals(nickname) && client.getId() != id)
+            String [] nicknames = getNicknames();
+            for (String nick : nicknames)
+                if (nick.equals(nickname))
                     return false;
             return true;
         }

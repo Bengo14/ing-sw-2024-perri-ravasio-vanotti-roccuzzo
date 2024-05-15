@@ -60,4 +60,8 @@ public class ResourceCard extends PlaceableCard {
     public String resourceCentreBackToString(){
         return "%s%s\u001B[0m".formatted(resourceCentreBack.getAsciiEscape(), resourceCentreBack.getSymbol());
     }
+
+    public String toString(){
+        return "ResourceCard: resource: "+resourceCentreBack.toString();
+    }
 }

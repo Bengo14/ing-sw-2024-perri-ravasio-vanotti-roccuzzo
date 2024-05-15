@@ -45,4 +45,8 @@ public class ItemObjective extends Objectives{
         }
         return this.getPoints()* itemsSetCounter;
     }
+
+    public String toString(){
+        return "ItemObjective: "+this.getPoints()+" points, required items: "+itemsRequired.toString();
+    }
 }

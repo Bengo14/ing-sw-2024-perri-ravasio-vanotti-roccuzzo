@@ -22,6 +22,10 @@ public class Deck {
     private static List<StartingCard> startingCardsDeck;
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
+    private static final int FIRST_OBJECTIVE_ID = 87;
+    private static final int FIRST_GOLD_ID = 41;
+    private static final int FIRST_RESOURCE_ID = 1;
+    private static final int FIRST_STARTING_ID = 81;
 
     public static void initAndShuffleDeck() {
         initDeck();
@@ -123,5 +127,32 @@ public class Deck {
     public static GoldCard getGoldCardOnTop() {return goldCardsDeck.getLast();}
     public static ResourceCard getResourceCardOnTop(){
         return resourceCardsDeck.getLast();
+    }
+    public static PlaceableCard getCardFromGivenId(int id){
+        if(id < FIRST_OBJECTIVE_ID){
+            if (id >= FIRST_RESOURCE_ID && id < FIRST_GOLD_ID){
+                for(ResourceCard card : resourceCardsDeck)
+                    if(card.getId() == id)
+                        return card;
+            }
+            else if(id >= FIRST_GOLD_ID && id < FIRST_STARTING_ID){
+                for(GoldCard card : goldCardsDeck)
+                    if(card.getId() == id)
+                        return card;
+            }
+            else{
+                for(StartingCard card : startingCardsDeck)
+                    if(card.getId() == id)
+                        return card;
+            }
+        }
+        return null;
+    }
+
+    public static Objectives getObjectiveCardFromGivenId(int id){
+        for(Objectives card : objectiveCardsDeck)
+            if(card.getId() == id)
+                return card;
+        return null;
     }
 }

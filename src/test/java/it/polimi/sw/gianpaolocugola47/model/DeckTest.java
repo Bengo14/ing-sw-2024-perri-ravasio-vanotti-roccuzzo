@@ -88,6 +88,28 @@ class DeckTest {
         assertNotNull(Deck.getGoldCardOnTop());
     }
 
+    @Test
+    public void testGetCardFromGivenId() {
+        Deck.initDeck();
+        assertNotNull(Deck.getCardFromGivenId(1));
+        assertEquals(Deck.getCardFromGivenId(1).getId(),1);
+        System.out.println(Deck.getCardFromGivenId(1).toString());
+        assertNull(Deck.getCardFromGivenId(1000));
+        assertNull(Deck.getCardFromGivenId(0));
+        assertNull(Deck.getCardFromGivenId(100));
+    }
+
+    @Test
+    public void testGetObjectiveCardFromGivenId(){
+        Deck.initDeck();
+        assertNull(Deck.getObjectiveCardFromGivenId(1));
+        assertNull(Deck.getObjectiveCardFromGivenId(1000));
+        assertNull(Deck.getObjectiveCardFromGivenId(0));
+        assertNotNull(Deck.getObjectiveCardFromGivenId(100));
+        assertEquals(Deck.getObjectiveCardFromGivenId(100).getId(),100);
+        System.out.println(Deck.getObjectiveCardFromGivenId(100).toString());
+    }
+
 }
 
 

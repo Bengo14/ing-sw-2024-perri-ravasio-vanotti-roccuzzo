@@ -44,9 +44,6 @@ public class CLI implements View {
                                                           ██║     ██║   ██║██║   ██╔╝██╔══╝   ██╔═██╗      ██║╚══████║██▀▀▀▀██║   ██║   ██║   ██║██╔ ▀█▄╗ ██▀▀▀▀██║██║     ██║╚════██║
                                                           ▀██████╗ ▀█████╔╝██████╔═╝ ███████╗██╔╝ ╚██╗     ██║   ╚███║██║   ██║   ██║    ██████╔╝██║  ╚██╗██║   ██║███████╗██║███████║
                                                            ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝    ╚══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
-                
-                
-                
                 """);
         System.out.flush();
         openChat();
@@ -82,7 +79,7 @@ public class CLI implements View {
                 }
             } else if (line.equals("--listPlayers")) {
                 System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : this.client.getNicknames()){
+                for(String nickname : this.client.getNicknames()) {
                     if(nickname.equals(this.localPlayerTable.getNickName()))
                         System.err.println(nickname + " (you)");
                     else

@@ -90,7 +90,6 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
                 default -> System.err.println("[INVALID MESSAGE]");
             }
-            //input.reset();
         }
     }
 

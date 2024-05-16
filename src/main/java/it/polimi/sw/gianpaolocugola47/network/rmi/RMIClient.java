@@ -126,6 +126,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void startGame() throws RemoteException {
+
         if(isCliChosen) {
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
@@ -134,6 +135,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             this.view = new GUI(this);
             new Thread(() -> view.start()).start();
         }
+        this.view.setId(id);
+        this.view.setNickname(nickname);
     }
 
     @Override

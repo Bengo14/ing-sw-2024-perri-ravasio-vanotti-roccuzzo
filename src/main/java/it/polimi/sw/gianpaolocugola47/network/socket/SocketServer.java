@@ -25,7 +25,7 @@ public class SocketServer implements Observer {
     private final ServerSocket listenSocket;
     private final Controller controller;
     private final List<SocketClientHandler> clients;
-    private volatile boolean terminated = false;
+    private volatile boolean terminated = true;
 
     public static SocketServer getServer() {
         if (SocketServer.server == null) {
@@ -88,6 +88,7 @@ public class SocketServer implements Observer {
     }
 
     private void pingStart() {
+
         new Thread(()->{
             while(true) {
                 while (terminated)

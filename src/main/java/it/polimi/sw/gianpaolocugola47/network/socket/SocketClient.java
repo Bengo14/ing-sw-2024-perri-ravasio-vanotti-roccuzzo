@@ -172,13 +172,13 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void receiveMessage(ChatMessage message) {
-        System.out.println(message.getSender() + ": " + message.getMessage()); //debug
+        System.out.println(message.getSender() + ": " + message.getMessage()); //debug only
         /*todo*/ //possible concurrent access with cli!
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) {
-        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug
+        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug only
         /*todo*/
     }
 

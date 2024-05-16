@@ -22,7 +22,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     private static RMIServer server;
     private final Controller controller;
     private final List<VirtualView> clients;
-    private volatile boolean terminated = false;
+    private volatile boolean terminated = true;
 
     public static RMIServer getServer() {
         if (RMIServer.server == null) {
@@ -44,6 +44,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     }
 
     private void pingStart() {
+
        new Thread(()->{
            while(true) {
                while (terminated)

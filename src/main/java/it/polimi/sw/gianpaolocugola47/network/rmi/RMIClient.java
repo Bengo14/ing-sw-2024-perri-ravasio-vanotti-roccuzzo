@@ -59,7 +59,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             while (!terminate) {
                 Thread.onSpinWait();
             }
-            System.exit(0);
+            System.exit(1);
         }).start();
     }
 
@@ -145,7 +145,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
-        this.view.initView(nicknames[id], globalObjectives, cardsOnHand, cardsOnTable);
+        this.view.initView(nicknames[id], globalObjectives, cardsOnHand, cardsOnTable); //todo all nicknames!
     }
 
     @Override
@@ -155,7 +155,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
-        this.view.updatePoints(boardPoints[id], globalPoints[id]); //should update the points of all players!
+        this.view.updatePoints(boardPoints[id], globalPoints[id]); //todo should update the points of all players!
     }
 
     @Override
@@ -179,13 +179,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void receiveMessage(ChatMessage message) throws RemoteException {
-        System.out.println(message.getSender() + ": " + message.getMessage()); //debug
+        System.out.println(message.getSender() + ": " + message.getMessage()); //debug only
         /*todo*/ //concurrent access with cli?
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) throws RemoteException {
-        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug
+        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug only
         /*todo*/
     }
 

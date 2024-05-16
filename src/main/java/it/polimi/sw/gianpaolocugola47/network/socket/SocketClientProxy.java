@@ -120,7 +120,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     protected void drawStartingCardResponse(StartingCard card) {
-
+        /*todo responses*/
     }
 
     protected void setStartingCardAndDrawObjectivesResponse(Objectives[] obj) {

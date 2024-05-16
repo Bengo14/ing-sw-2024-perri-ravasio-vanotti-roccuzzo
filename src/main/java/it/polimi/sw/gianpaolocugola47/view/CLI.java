@@ -37,9 +37,7 @@ public class CLI implements View {
     }
     public void start() {
         for (int i = 0; i < 50; i++) System.out.println();
-        System.out.flush();
-        System.out.println("---- The game CODEX NATURALIS starts! ----\n" +
-                """
+        System.out.println("""
                                                           ▄██████╗ ▄████▄  ██████▄   ███████╗██╗   ██╗     ███╗    ██╗  ▄██▄╗  ████████╗██╗   ██╗█████▄╗    ▄██▄╗  ██╗     ██╗███████╗
                                                           ██╔════╝██╔═══██╗██╔═══██╗ ██╔════╝╚██╗ ██╔╝     ████╗   ██║▄█▀╝ ▀█▄╗╚══██╔══╝██║   ██║██╔══██╗ ▄█▀╝ ▀█▄╗██║     ██║██╔════╝
                                                           ██║     ██║   ██║██║    ██╗█████╗   ╚████╔╝      ██╔████╗██║██▄▄▄▄██║   ██║   ██║   ██║█████▀ ╝ ██▄▄▄▄██║██║     ██║███████╗
@@ -49,7 +47,8 @@ public class CLI implements View {
                 
                 
                 
-                """+ "\ncoming soon...");
+                """);
+        System.out.flush();
         openChat();
 
         /*todo input game loop (this method is already on a separate thread!!!)*/

@@ -60,6 +60,7 @@ public class SocketServer implements Observer {
             connect(handler);
         }
     }
+
     private void connect(SocketClientHandler handler) {
 
         synchronized (this.clients) {
@@ -116,66 +117,121 @@ public class SocketServer implements Observer {
     public void terminateGame() { // terminates all clients
         this.terminated = true;
         synchronized (this.clients) {
-            for (SocketClientHandler view : clients)
-                view.terminate();
+            for (SocketClientHandler handler : clients)
+                handler.terminate();
             resetGame();
         }
     }
+
     private void terminateGame(boolean gameOver, int clientId) {
         System.err.println("terminating the game...");
         this.terminated = true;
 
         if(gameOver) { // the game is ended
-            for (SocketClientHandler view : clients)
-                if (view.getId() != clientId) // consider real id
-                    view.gameOver();
+            for (SocketClientHandler handler : clients)
+                if (handler.getId() != clientId) // consider real id
+                    handler.gameOver();
         } else { // some client has disconnected
-            for (SocketClientHandler view : clients)
-                if (clients.indexOf(view) != clientId) // consider local id
-                    view.terminate();
+            for (SocketClientHandler handler : clients)
+                if (clients.indexOf(handler) != clientId) // consider local id
+                    handler.terminate();
             new Thread(() -> RMIServer.getServer().terminateGame()).start();
         }
         resetGame();
     }
+
     protected void resetGame() {
         clients.clear();
     }
 
+    /* methods of interface Observer */
+
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
-
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    handler.initView(nicknames, globalObjectives, cardsOnHand[handler.getId()], cardsOnTable);
+            }
+        }
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    handler.updateDecks(resourceCardOnTop, goldCardOnTop);
+            }
+        }
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
-
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    handler.updatePoints(boardPoints, globalPoints);
+            }
+        }
     }
 
     @Override
     public void showTurn(int playerId) {
-
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    if(handler.getId() == playerId)
+                        handler.setMyTurn();
+            }
+        }
     }
 
     @Override
     public void showWinner(int winnerId) {
-
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    if(handler.getId() == winnerId)
+                        handler.showWinner();
+                terminateGame(true, winnerId);
+            }
+        }
     }
 
     @Override
     public void startGame() {
-
+        System.out.println("Game started");
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(SocketClientHandler handler : this.clients)
+                    handler.startGame();
+            }
+        }
     }
 
     protected void sendMessage(ChatMessage message) {
-        /*todo*/
+        System.out.println("Received public message");
+        synchronized (this.clients) {
+            for (SocketClientHandler handler : this.clients)
+                handler.receiveMessage(message);
+        }
     }
+
     protected void sendPrivateMessage(ChatMessage message) {
-        /*todo*/
+        System.out.println("Received private message");
+        String [] nicknames = getNicknames();
+        synchronized (this.clients) {
+            for (SocketClientHandler handler : this.clients)
+                if (nicknames[handler.getId()].equals(message.getReceiver()))
+                    handler.receivePrivateMessage(message);
+        }
+    }
+
+    protected String[] getNicknames()  {
+        synchronized (controller) {
+            return this.controller.getNicknames();
+        }
     }
 
     public static void initSocketServer(Controller controller) {

@@ -162,12 +162,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return this.controller.getPlayablePositions(playerId);
         }
     }
-    @Override
-    public void turnCardOnHand(int playerId, int position) throws RemoteException {
-        synchronized (controller) {
-            controller.turnCardOnHand(playerId, position);
-        }
-    }
+
     @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException {
         synchronized (controller) {
@@ -211,22 +206,21 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     @Override
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
         System.out.println("Received private message");
+        String [] nicknames = getNicknames();
         synchronized (this.clients) {
             for (VirtualView client : this.clients)
-                if (client.getNickname().equals(message.getReceiver()))
+                if (nicknames[client.getId()].equals(message.getReceiver()))
                     client.receivePrivateMessage(message);
         }
     }
 
     @Override
-    public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
-        synchronized (this.clients) {
-            String [] nicknames = getNicknames();
-            for (String nick : nicknames)
-                if (nick.equals(nickname))
-                    return false;
-            return true;
-        }
+    public boolean isNicknameAvailable(String nickname) throws RemoteException {
+        String [] nicknames = getNicknames();
+        for (String nick : nicknames)
+            if (nick.equals(nickname))
+                return false;
+        return true;
     }
 
     @Override

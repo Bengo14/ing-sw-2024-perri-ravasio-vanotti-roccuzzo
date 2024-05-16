@@ -108,7 +108,7 @@ public class SocketClient implements VirtualView, Client {
         if(tempNick.contains(" ")) {
             tempNick = tempNick.replace(" ","_");
         }
-        while(!this.server.isNicknameAvailable(tempNick, this.id)
+        while(!this.server.isNicknameAvailable(tempNick)
                 || tempNick.isEmpty()) {
             System.out.print("Nickname invalid or already taken, try again: ");
             System.out.println(tempNick);
@@ -149,6 +149,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void setMyTurn() {
+        /*todo*/
         this.isMyTurn = true;
     }
 
@@ -165,47 +166,39 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
-    public String getNickname() {
-        return null;
-    }
-
-    @Override
-    public int getId() {
-        return 0;
+    public int getId() { // not used here
+        return this.id;
     }
 
     @Override
     public void receiveMessage(ChatMessage message) {
-
+        System.out.println(message.getSender() + ": " + message.getMessage()); //debug
+        /*todo*/ //possible concurrent access with cli!
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) {
-
+        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug
+        /*todo*/
     }
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-
+        /*todo*/
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-
+        /*todo*/
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
-
-    }
-
-    @Override
-    public void setNotMyTurn() throws RemoteException {
-        this.isMyTurn = false;
+        /*todo*/
     }
 
     /* --- methods of interface Client --- */
-
+    /*todo send messages and read responses*/
     @Override
     public StartingCard drawStartingCard() {
 
@@ -214,6 +207,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public Objectives[] setStartingCardAndDrawObjectives() {
+
         return null;
     }
 
@@ -224,16 +218,13 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public boolean[][] getPlayablePositions() {
+
         return new boolean[0][];
     }
 
     @Override
-    public void turnCardOnHand(int position) {
-
-    }
-
-    @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
+
         return false;
     }
 
@@ -244,36 +235,43 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public ResourceCard[][] getCardsOnHand() {
+
         return new ResourceCard[0][];
     }
 
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
+
         return new PlaceableCard[0][];
     }
 
     @Override
     public int[] getResourceCounter(int playerId) {
+
         return new int[0];
     }
 
     @Override
     public int getGlobalPoints() {
+
         return 0;
     }
 
     @Override
     public int getIdLocal() {
+
         return 0;
     }
 
     @Override
     public String getNicknameLocal() {
+
         return null;
     }
 
     @Override
     public String[] getNicknames() {
+
         return new String[0];
     }
 
@@ -294,6 +292,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public int getBoardPoints() {
+
         return 0;
     }
 

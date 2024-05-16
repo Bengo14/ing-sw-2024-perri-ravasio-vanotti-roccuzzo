@@ -65,6 +65,7 @@ public class CLI implements View {
         }).start();
     }
     private void chatInputLoop() throws IOException {
+
         System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
         ChatMessage message = new ChatMessage(localPlayerTable.getNickName(), localPlayerTable.getId());

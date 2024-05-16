@@ -30,25 +30,94 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
         String line;
 
         while (true) {
-            line = input.readLine();
+            line = line();
 
             switch (line) {
+
                 case "ping" -> {
                     synchronized (this) {this.pingAck = true;}
                 }
+                case "numPlayers" -> setNumOfPlayers(integer());
+
+                case "addPlayer" -> addPlayer(integer(), line());
+
+                case "drawStarting" -> client.drawStartingCardResponse(drawStartingCard());
+
+                case "setStarting" -> {
+                    int id = integer();
+                    StartingCard card = (StartingCard) Deck.getCardFromGivenId(integer());
+                    if(bool()) {card.switchFrontBack();}
+                    client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(id, card));
+                }
+                case "setObj" -> {
+                    int id = integer();
+                    Objectives obj = Deck.getObjectiveCardFromGivenId(integer());
+                    setSecretObjective(id, obj);
+                }
+                case "play" -> client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer()));
+
+                case "draw" -> drawCard(integer(), integer());
+
+                case "getCardsOnHand" -> client.getCardsOnHandResponse(getCardsOnHand());
+
+                case "getPlacedCards" -> client.getPlacedCardsResponse(getPlacedCards(integer()));
+
+                case "getResourceCounter" -> client.getResourceCounterResponse(getResourceCounter(integer()));
+
+                case "message" -> {
+                    String sender = line();
+                    int id = integer();
+                    String msg = line();
+                    ChatMessage message = new ChatMessage(sender, id);
+                    message.setMessage(msg);
+                    sendMessage(message);
+                }
+                case "privateMessage" -> {
+                    String receiver = line();
+                    String sender = line();
+                    int id = integer();
+                    String msg = line();
+                    ChatMessage message = new ChatMessage(sender, id);
+                    message.setReceiver(receiver);
+                    message.setMessage(msg);
+                    sendPrivateMessage(message);
+                }
+                case "nickAvailable" -> client.isNicknameAvailableResponse(isNicknameAvailable(line()));
+
+                case "getNick" -> client.getNicknamesResponse(getNicknames());
+
+                case "getPlayPos" -> client.getPlayablePositionsResponse(getPlayablePositions(integer()));
+
                 default -> System.err.println("[INVALID MESSAGE]");
             }
+            input.reset();
         }
     }
+
+    private int integer() throws IOException {
+        return Integer.parseInt(line());
+    }
+
+    private boolean bool() throws IOException {
+        return Boolean.parseBoolean(line());
+    }
+
+    private String line() throws IOException {
+        return input.readLine();
+    }
+
     protected void setId(int id) {
         this.client.setId(id);
         this.id = id;
     }
+
     protected synchronized boolean getPingAck() {
          boolean ping = pingAck;
          pingAck = false;
          return ping;
     }
+
+    /* methods of interface VirtualView */
 
     @Override
     public void terminate() {
@@ -61,151 +130,168 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void startGame() throws RemoteException {
-
+    public void startGame() {
+        this.client.startGame();
     }
 
     @Override
-    public void setMyTurn() throws RemoteException {
-
+    public void setMyTurn() {
+        this.client.setMyTurn();
     }
 
     @Override
     public void gameOver() {
-
+        this.client.gameOver();
     }
 
     @Override
-    public void showWinner() throws RemoteException {
-
-    }
-
-    @Override
-    public String getNickname() throws RemoteException {
-        return null;
+    public void showWinner() {
+        this.client.showWinner();
     }
 
     @Override
     public int getId() {
-        return this.id;
+        return this.id; // id saved in local so socket communication is not needed
     }
 
     @Override
-    public void receiveMessage(ChatMessage message) throws RemoteException {
-
+    public void receiveMessage(ChatMessage message) {
+        this.client.receiveMessage(message);
     }
 
     @Override
-    public void receivePrivateMessage(ChatMessage message) throws RemoteException {
-
+    public void receivePrivateMessage(ChatMessage message) {
+        this.client.receivePrivateMessage(message);
     }
 
     @Override
-    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
-
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
+        this.client.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException {
-
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+        this.client.updateDecks(resourceCardOnTop, goldCardOnTop);
     }
 
     @Override
-    public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
-
-    }
-
-    @Override
-    public void setNotMyTurn() throws RemoteException {
-
+    public void updatePoints(int[] boardPoints, int[] globalPoints)  {
+        this.client.updatePoints(boardPoints, globalPoints);
     }
 
     /* methods of interface VirtualServer */
 
     @Override
     public int connect(VirtualView client) throws RemoteException {
-        // not used
-        return 0;
+        return -1; // not used here
     }
 
     @Override
-    public void setNumOfPlayers(int num) throws RemoteException {
-
+    public void setNumOfPlayers(int num) {
+        synchronized (controller) {
+            this.controller.setNumOfPlayers(num);
+        }
     }
 
     @Override
-    public void addPlayer(int id, String nickname) throws RemoteException {
-
+    public void addPlayer(int id, String nickname) {
+        synchronized (this.controller) {
+            System.out.println(STR."Player \{nickname} added with id \{id}");
+            this.controller.addPlayer(id, nickname);
+        }
     }
 
     @Override
-    public StartingCard drawStartingCard() throws RemoteException {
-        return null;
+    public StartingCard drawStartingCard() {
+        synchronized (controller) {
+            return this.controller.drawStartingCard();
+        }
     }
 
     @Override
-    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException {
-        return new Objectives[0];
+    public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
+        synchronized (controller) {
+            return this.controller.setStartingCardAndDrawObjectives(playerId, card);
+        }
     }
 
     @Override
-    public void setSecretObjective(int playerId, Objectives obj) throws RemoteException {
-
+    public void setSecretObjective(int playerId, Objectives obj) {
+        synchronized (controller) {
+            this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
+        }
     }
 
     @Override
-    public void turnCardOnHand(int playerId, int position) throws RemoteException {
-
+    public boolean[][] getPlayablePositions(int playerId) {
+        synchronized (controller) {
+            return this.controller.getPlayablePositions(playerId);
+        }
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException {
-        return false;
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+        synchronized (controller) {
+            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+        }
     }
 
     @Override
-    public void drawCard(int position, int playerId) throws RemoteException {
-
+    public void drawCard(int position, int playerId) {
+        synchronized (controller) {
+            controller.drawCard(position, playerId);
+        }
     }
 
     @Override
-    public ResourceCard[][] getCardsOnHand() throws RemoteException {
-        return new ResourceCard[0][];
+    public ResourceCard[][] getCardsOnHand() {
+        synchronized (controller) {
+            return controller.getCardsOnHand();
+        }
     }
 
     @Override
-    public PlaceableCard[][] getPlacedCards(int playerId) throws RemoteException {
-        return new PlaceableCard[0][];
+    public PlaceableCard[][] getPlacedCards(int playerId) {
+        synchronized (controller) {
+            return controller.getPlacedCards(playerId);
+        }
     }
 
     @Override
-    public int[] getResourceCounter(int playerId) throws RemoteException {
-        return new int[0];
+    public int[] getResourceCounter(int playerId)  {
+        synchronized (controller) {
+            return controller.getResourceCounter(playerId);
+        }
     }
 
     @Override
-    public void sendMessage(ChatMessage message) throws RemoteException {
-
+    public void sendMessage(ChatMessage message)  {
+        synchronized (this.socketServer) {
+            this.socketServer.sendMessage(message);
+        }
     }
 
     @Override
-    public void sendPrivateMessage(ChatMessage message) throws RemoteException {
-
+    public void sendPrivateMessage(ChatMessage message)  {
+        synchronized (this.socketServer) {
+            this.socketServer.sendPrivateMessage(message);
+        }
     }
 
     @Override
-    public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
-        return false;
+    public boolean isNicknameAvailable(String nickname)  {
+        String [] nicknames = getNicknames();
+        for (String nick : nicknames)
+            if (nick.equals(nickname))
+                return false;
+        return true;
     }
 
     @Override
-    public String[] getNicknames() throws RemoteException {
-        return new String[0];
-    }
-
-    @Override
-    public boolean[][] getPlayablePositions(int playerId) throws RemoteException {
-        return new boolean[0][];
+    public String[] getNicknames()  {
+        synchronized (socketServer) {
+            return this.socketServer.getNicknames();
+        }
     }
 }
 

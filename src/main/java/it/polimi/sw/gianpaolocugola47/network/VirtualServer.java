@@ -17,7 +17,6 @@ public interface VirtualServer extends Remote {
     StartingCard drawStartingCard() throws RemoteException;
     Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException;
     void setSecretObjective(int playerId, Objectives obj) throws RemoteException;
-    void turnCardOnHand(int playerId, int position) throws RemoteException;
     boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException;
     void drawCard(int position, int playerId) throws RemoteException;
     ResourceCard[][] getCardsOnHand() throws RemoteException;
@@ -25,7 +24,7 @@ public interface VirtualServer extends Remote {
     int[] getResourceCounter(int playerId) throws RemoteException;
     void sendMessage(ChatMessage message) throws RemoteException;
     void sendPrivateMessage(ChatMessage message) throws RemoteException;
-    boolean isNicknameAvailable(String nickname, int id) throws RemoteException;
+    boolean isNicknameAvailable(String nickname) throws RemoteException;
     String[] getNicknames() throws RemoteException;
     boolean[][] getPlayablePositions(int playerId) throws RemoteException;
 

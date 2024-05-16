@@ -124,10 +124,17 @@ public class Deck {
     protected static boolean areDecksEmpty() {
         return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
     }
-    public static GoldCard getGoldCardOnTop() {return goldCardsDeck.getLast();}
-    public static ResourceCard getResourceCardOnTop(){
-        return resourceCardsDeck.getLast();
+    public static GoldCard getGoldCardOnTop() {
+        if(!goldCardsDeck.isEmpty())
+            return goldCardsDeck.getLast();
+        else return null;
     }
+    public static ResourceCard getResourceCardOnTop() {
+        if(!resourceCardsDeck.isEmpty())
+            return resourceCardsDeck.getLast();
+        else return null;
+    }
+
     public static PlaceableCard getCardFromGivenId(int id){
         if(id < FIRST_OBJECTIVE_ID){
             if (id >= FIRST_RESOURCE_ID && id < FIRST_GOLD_ID){

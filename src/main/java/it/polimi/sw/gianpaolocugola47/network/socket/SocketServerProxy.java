@@ -26,74 +26,133 @@ public class SocketServerProxy implements VirtualServer {
     }
 
     @Override
-    public int connect(VirtualView client) throws RemoteException {
+    public int connect(VirtualView client) {
         // not used
         return 0;
     }
+
     @Override
     public void setNumOfPlayers(int num) {
-
+        output.println("numPlayers");
+        output.println(num);
+        output.flush();
     }
+
     @Override
     public void addPlayer(int id, String nickname) {
-
+        output.println("addPlayer");
+        output.println(id);
+        output.println(nickname);
+        output.flush();
     }
+
     @Override
     public StartingCard drawStartingCard() {
+        output.println("drawStarting");
+        output.flush();
         return null;
     }
+
     @Override
     public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
+        output.println("setStarting");
+        output.println(playerId);
+        output.println(card.getId());
+        output.println(card.isFront());
+        output.flush();
         return new Objectives[0];
     }
-    @Override
-    public void setSecretObjective(int playerId, Objectives obj) throws RemoteException {
 
-    }
     @Override
-    public void turnCardOnHand(int playerId, int position) {
-
+    public void setSecretObjective(int playerId, Objectives obj) {
+        output.println("setObj");
+        output.println(playerId);
+        output.println(obj.getId());
+        output.flush();
     }
+
     @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+        output.println("play");
+        output.println(onHandCard);
+        output.println(onTableCardX);
+        output.println(onTableCardY);
+        output.println(onTableCardCorner);
+        output.println(playerId);
+        output.flush();
         return false;
     }
+
     @Override
     public void drawCard(int position, int playerId) {
-
+        output.println("draw");
+        output.println(position);
+        output.println(playerId);
+        output.flush();
     }
+
     @Override
     public ResourceCard[][] getCardsOnHand() {
+        output.println("getCardsOnHand");
+        output.flush();
         return new ResourceCard[0][];
     }
+
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
+        output.println("getPlacedCards");
+        output.println(playerId);
+        output.flush();
         return new PlaceableCard[0][];
     }
 
     @Override
-    public int[] getResourceCounter(int playerId) throws RemoteException {
+    public int[] getResourceCounter(int playerId) {
+        output.println("getResourceCounter");
+        output.println(playerId);
+        output.flush();
         return new int[0];
     }
 
     @Override
-    public void sendMessage(ChatMessage message) throws RemoteException {
-
+    public void sendMessage(ChatMessage message) {
+        output.println("message");
+        output.println(message.getSender());
+        output.println(message.getSenderId());
+        output.println(message.getMessage());
+        output.flush();
     }
-    @Override
-    public void sendPrivateMessage(ChatMessage message) throws RemoteException {
 
-    }
     @Override
-    public boolean isNicknameAvailable(String nickname, int id) throws RemoteException {
+    public void sendPrivateMessage(ChatMessage message) {
+        output.println("privateMessage");
+        output.println(message.getReceiver());
+        output.println(message.getSender());
+        output.println(message.getSenderId());
+        output.println(message.getMessage());
+        output.flush();
+    }
+
+    @Override
+    public boolean isNicknameAvailable(String nickname) {
+        output.println("nickAvailable");
+        output.println(nickname);
+        output.flush();
         return false;
     }
+
     @Override
-    public String[] getNicknames() throws RemoteException {
+    public String[] getNicknames() {
+        output.println("getNick");
+        output.flush();
         return new String[0];
     }
+
     @Override
-    public boolean[][] getPlayablePositions(int playerId) throws RemoteException {
+    public boolean[][] getPlayablePositions(int playerId) {
+        output.println("getPlayPos");
+        output.println(playerId);
+        output.flush();
         return new boolean[0][];
     }
 }

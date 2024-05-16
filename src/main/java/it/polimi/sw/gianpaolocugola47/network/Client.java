@@ -20,8 +20,6 @@ public interface Client {
 
     boolean[][] getPlayablePositions();
 
-    void turnCardOnHand(int position);
-
     boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner);
 
     void drawCard(int position);

@@ -39,7 +39,7 @@ public class SocketClientProxy implements VirtualView {
 
     }
     @Override
-    public void showTurn() throws RemoteException {
+    public void setMyTurn() throws RemoteException {
 
     }
     @Override
@@ -76,6 +76,11 @@ public class SocketClientProxy implements VirtualView {
     }
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
+
+    }
+
+    @Override
+    public void setNotMyTurn() throws RemoteException {
 
     }
 }

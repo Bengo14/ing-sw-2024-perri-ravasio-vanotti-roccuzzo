@@ -11,7 +11,7 @@ public interface VirtualView extends Remote {
     void terminate() throws RemoteException;
     void ping() throws RemoteException;
     void startGame() throws RemoteException;
-    void showTurn() throws RemoteException;
+    void setMyTurn() throws RemoteException;
     void gameOver() throws RemoteException;
     void showWinner() throws RemoteException;
     String getNickname() throws RemoteException;
@@ -21,5 +21,5 @@ public interface VirtualView extends Remote {
     void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException;
     void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException;
     void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException;
-
+    void setNotMyTurn() throws RemoteException;
 }

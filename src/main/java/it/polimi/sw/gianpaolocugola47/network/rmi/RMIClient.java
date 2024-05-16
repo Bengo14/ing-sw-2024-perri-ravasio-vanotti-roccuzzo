@@ -30,17 +30,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     private String nickname = "";
     private boolean isMyTurn = false;
 
-    /* todo attributes to be moved to view below */
-    private StartingCard startingCard;
-    private Objectives secretObjective;
-    private Objectives[] objectives;
-    private ResourceCard[] cardsOnHand;
-    private ResourceCard[] cardsOnTable;
-    private GoldCard goldCardOnTop;
-    private ResourceCard resourceCardOnTop;
-    private int globalPoints = 0;
-    private int boardPoints = 0;
-
     private RMIClient(VirtualServer server) throws RemoteException {
         this.server = server;
     }
@@ -151,23 +140,24 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
-        this.nickname = nicknames[id];
-        this.objectives = globalObjectives;
-        this.cardsOnHand = cardsOnHand;
-        this.cardsOnTable = cardsOnTable;
+        this.view.initView(nicknames[id], globalObjectives, cardsOnHand, cardsOnTable);
     }
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException {
-        this.resourceCardOnTop = resourceCardOnTop;
-        this.goldCardOnTop = goldCardOnTop;
+        this.view.updateDecks(resourceCardOnTop, goldCardOnTop);
     }
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
-        this.boardPoints = boardPoints[id];
-        this.globalPoints = globalPoints[id];
+        this.view.updatePoints(boardPoints[id], globalPoints[id]);
     }
+
     @Override
-    public void showTurn() {
+    public void setNotMyTurn() throws RemoteException {
+        this.isMyTurn = false;
+    }
+
+    @Override
+    public void setMyTurn() {
         this.isMyTurn = true;
         //System.out.println("\nIt's your turn!");
         /*todo*/
@@ -216,7 +206,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public Objectives[] setStartingCardAndDrawObjectives() {
         Objectives[] objectives = null;
         try {
-            objectives = server.setStartingCardAndDrawObjectives(this.id, this.startingCard);
+            objectives = server.setStartingCardAndDrawObjectives(this.id, this.view.getStartingCard());
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -225,7 +215,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void setSecretObjective() {
         try {
-            server.setSecretObjective(this.id, this.secretObjective);
+            server.setSecretObjective(this.id, this.view.getSecretObjective());
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -240,7 +230,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         }
     }
     @Override
-    public void turnCardOnHand(int position) {
+    public void turnCardOnHand(int position) { //questo metodo non ha senso in ottica thick client!
         try {
             server.turnCardOnHand(this.id, position);
         } catch (RemoteException e) {
@@ -294,11 +284,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
     @Override
     public int getGlobalPoints() {
-        return this.globalPoints;
+        return this.view.getGlobalPoints();
     }
     @Override
     public int getBoardPoints() {
-        return this.boardPoints;
+        return this.view.getBoardPoints();
     }
     @Override
     public int getIdLocal() {return this.id;}
@@ -328,6 +318,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         } catch (RemoteException e) {
             terminateLocal();
         }
+    }
+
+    @Override
+    public boolean isItMyTurn() {
+        return isMyTurn;
     }
 
     public static void main(String[] args) {

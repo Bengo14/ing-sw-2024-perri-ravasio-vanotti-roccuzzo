@@ -148,7 +148,7 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
-    public void showTurn() {
+    public void setMyTurn() {
         this.isMyTurn = true;
     }
 
@@ -197,6 +197,11 @@ public class SocketClient implements VirtualView, Client {
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
 
+    }
+
+    @Override
+    public void setNotMyTurn() throws RemoteException {
+        this.isMyTurn = false;
     }
 
     /* --- methods of interface Client --- */
@@ -280,6 +285,11 @@ public class SocketClient implements VirtualView, Client {
     @Override
     public void sendPrivateMessage(ChatMessage msg) {
 
+    }
+
+    @Override
+    public boolean isItMyTurn() {
+        return isMyTurn;
     }
 
     @Override

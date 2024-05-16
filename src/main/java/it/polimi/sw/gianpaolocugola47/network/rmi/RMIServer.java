@@ -290,7 +290,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                 try {
                     for(VirtualView view : this.clients)
                         if(view.getId() == playerId)
-                            view.showTurn();
+                            view.setMyTurn();
                 } catch (RemoteException ignored) {}
             }
         }

@@ -11,14 +11,14 @@ import static java.util.Arrays.sort;
 public class PlayerTable {
     private static final int MATRIX_DIMENSION = 59; // should be 141
     private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
-    private final int id;
-    private final String nickName;
+    private int id;
+    private String nickName;
     private boolean canPlay;
-    private int[] resourceCounter;
+    private final int[] resourceCounter;
     private Objectives secretObjective;
     private StartingCard startingCard;
     private ResourceCard[] cardsOnHand;
-    private PlaceableCard[][] placedCards;
+    private final PlaceableCard[][] placedCards;
 
     /**
      * Class PlayerTable's constructor.
@@ -30,9 +30,18 @@ public class PlayerTable {
     public PlayerTable(int id, String nickName, ResourceCard[] cardsOnHand) {
         this.id = id;
         this.nickName = nickName;
-        this.canPlay=true;  //default
+        this.canPlay = true;  //default
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.cardsOnHand = cardsOnHand;
+        this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
+    }
+
+    public PlayerTable(int id){
+        this.id = id;
+        this.nickName = "";
+        this.canPlay = true;  //default
+        this.resourceCounter = new int[]{0,0,0,0,0,0,0};
+        this.cardsOnHand = new ResourceCard[3];
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
 
@@ -59,6 +68,7 @@ public class PlayerTable {
     }
     public boolean getCanPlay(){return canPlay;}
     private void unsetCanPlay(){this.canPlay = false;}
+    public void setId(int id) {this.id = id;}
     protected int getResourceCounter(int position) {
         return resourceCounter[position];
     }
@@ -101,7 +111,7 @@ public class PlayerTable {
      * @return the points made by the player if the card has been placed, else returns -1.
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
-        int points=0;
+        int points;
         ResourceCard card = cardsOnHand[onHandCard];
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
             if(card instanceof GoldCard && card.isFront()){
@@ -215,7 +225,7 @@ public class PlayerTable {
         return resCounter[0] >= 0; // true: I have enough resources
         // false: I don't have enough resources
     }
-    private void placeCard(int x,int y, ResourceCard card) {
+    private void placeCard(int x, int y, ResourceCard card) {
         this.placedCards[x][y]=card;
         card.setCoordinates(x,y);
         card.updateResourceCounter(this.resourceCounter);
@@ -297,5 +307,11 @@ public class PlayerTable {
                 }
             }
         }return false; // incorrect input :card is null
+    }
+
+    public void setNickname(String nicknameLocal) { this.nickName = nicknameLocal; }
+
+    public void setCardsOnHand(ResourceCard[] cardsOnHand) {
+        this.cardsOnHand = cardsOnHand;
     }
 }

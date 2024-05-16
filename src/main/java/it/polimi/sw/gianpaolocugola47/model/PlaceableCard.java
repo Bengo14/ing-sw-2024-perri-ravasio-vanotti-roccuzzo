@@ -9,7 +9,7 @@ public abstract class PlaceableCard {
     private int line;
     private int column;
     private boolean isFlaggedForObjective;
-    private Corner[] corners = new Corner[8];
+    private final Corner[] corners = new Corner[8];
     private int id;
 
     public PlaceableCard(String backImgPath, String frontImgPath) {
@@ -61,4 +61,8 @@ public abstract class PlaceableCard {
     public Corner[] getCorners() {return corners;}
 
     public abstract void updateResourceCounter(int[] counter);
+
+    public int getPoints(PlayerTable playerTable) {
+        return 0; // default value
+    }
 }

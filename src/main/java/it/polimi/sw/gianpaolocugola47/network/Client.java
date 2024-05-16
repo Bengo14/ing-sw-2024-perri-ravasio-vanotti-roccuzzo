@@ -43,4 +43,6 @@ public interface Client {
     void sendMessage(ChatMessage msg);
 
     void sendPrivateMessage(ChatMessage msg);
+
+    boolean isItMyTurn();
 }

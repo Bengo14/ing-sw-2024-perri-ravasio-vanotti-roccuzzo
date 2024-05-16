@@ -66,7 +66,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void showTurn() throws RemoteException {
+    public void setMyTurn() throws RemoteException {
 
     }
 
@@ -112,6 +112,11 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException {
+
+    }
+
+    @Override
+    public void setNotMyTurn() throws RemoteException {
 
     }
 

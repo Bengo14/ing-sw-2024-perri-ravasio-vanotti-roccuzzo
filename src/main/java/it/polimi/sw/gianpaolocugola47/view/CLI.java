@@ -19,13 +19,20 @@ public class CLI implements View {
 
     private final Client client;
     private final String ANSI_RESET = "\033[0m";
-    private int id;
-    private String nickname;
+    private final PlayerTable localPlayerTable;
+    private Objectives[] objectives;
+    private ResourceCard[] cardsOnTable; //cards on table that can be picked up
+    private GoldCard goldCardOnTop; //NOT on playerTable
+    private ResourceCard resourceCardOnTop; //NOT on playerTable
+    private int globalPoints = 0; //NOT on playerTable
+    private int boardPoints = 0;  //NOT on playerTable
 
     public CLI(Client client) {
         this.client = client;
+        this.localPlayerTable = new PlayerTable(client.getIdLocal());
     }
     public CLI() {
+        this.localPlayerTable = null;
         this.client = null;
     }
     public void start() {
@@ -43,9 +50,6 @@ public class CLI implements View {
                 
                 
                 """+ "\ncoming soon...");
-
-        this.id = client.getIdLocal();
-        this.nickname = client.getNicknameLocal();
         openChat();
 
         /*todo input game loop (this method is already on a separate thread!!!)*/
@@ -63,7 +67,7 @@ public class CLI implements View {
     private void chatInputLoop() throws IOException {
         System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(nickname, id);
+        ChatMessage message = new ChatMessage(localPlayerTable.getNickName(), localPlayerTable.getId());
 
         while(true) {
             String line = br.readLine();
@@ -79,7 +83,7 @@ public class CLI implements View {
             } else if (line.equals("--listPlayers")) {
                 System.out.println("Here's a list of all the players in the lobby: ");
                 for(String nickname : this.client.getNicknames()){
-                    if(nickname.equals(this.nickname))
+                    if(nickname.equals(this.localPlayerTable.getNickName()))
                         System.err.println(nickname + " (you)");
                     else
                         System.out.println(nickname);
@@ -93,11 +97,51 @@ public class CLI implements View {
     }
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.localPlayerTable.setId(id);
     }
     @Override
     public void setNickname(String nickname) {
-        this.nickname = nickname;
+        this.localPlayerTable.setNickname(nickname);
+    }
+
+    @Override
+    public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
+        this.localPlayerTable.setNickname(nickname);
+        this.objectives = globalObjectives;
+        this.cardsOnTable = cardsOnTable;
+        this.localPlayerTable.setCardsOnHand(cardsOnHand);
+    }
+
+    @Override
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+        this.resourceCardOnTop = resourceCardOnTop;
+        this.goldCardOnTop = goldCardOnTop;
+    }
+
+    @Override
+    public void updatePoints(int boardPoints, int globalPoints) {
+        this.boardPoints = boardPoints;
+        this.globalPoints = globalPoints;
+    }
+
+    @Override
+    public StartingCard getStartingCard() {
+        return localPlayerTable.getStartingCard();
+    }
+
+    @Override
+    public Objectives getSecretObjective() {
+        return localPlayerTable.getSecretObjective();
+    }
+
+    @Override
+    public int getGlobalPoints() {
+        return this.globalPoints;
+    }
+
+    @Override
+    public int getBoardPoints() {
+        return this.boardPoints;
     }
 
     @SuppressWarnings("ALL")
@@ -173,36 +217,6 @@ public class CLI implements View {
         System.out.println("[" + resourceCounter[4] + " " + resourceCounter[5] + " " + resourceCounter[6] + "]");
     }
 
-    /*resulting print is likely to be confusing, suggest using the compact method*/
-    public void printPlayerBoardExtendedCard(PlayerTable playerTable){
-        boolean printableRow = false;
-        for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
-            PlaceableCard[] row = playerTable.getPlacedCards()[i];
-            for (PlaceableCard placeableCard : row)
-                if (placeableCard != null) {
-                    printableRow = true;
-                    break;
-                }
-            if(printableRow){
-                printableRow = false;
-                for(PlaceableCard placeableCard : row){
-                    if(placeableCard != null){
-                        switch (placeableCard) {
-                            case ResourceCard resourceCard when !(placeableCard instanceof GoldCard) ->
-                                    printResourceCard(resourceCard);
-                            case GoldCard goldCard -> printGoldCard(goldCard);
-                            case StartingCard startingCard -> printStartingCard(startingCard);
-                            default -> {
-                            }
-                        }
-                    }
-                    else
-                        /*todo*/;
-                }
-            }
-        }
-    }
-
     public void printPlayerBoardCompactCard(PlayerTable playerTable){
         boolean printableRow = false;
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
@@ -241,70 +255,72 @@ public class CLI implements View {
 
     public void commandHandler() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        while(true){
-            printPoints();
-            //printResourceCounter(...);
-            //printPlayerBoardCompactCard(...);
-            String command = br.readLine();
-            if(command.equals("/help")){
-                System.out.println("""
+        if(client.isItMyTurn()){
+            while(true){
+                printPoints();
+                //printResourceCounter(...);
+                //printPlayerBoardCompactCard(...);
+                String command = br.readLine();
+                if(command.equals("/help")){
+                    System.out.println("""
                         Commands available:
                         /help: show this message
                         /showCard [xCoord] [yCoord]: show the board
                         /showCardInHand [cardInHand]: show a card in hand
                         /showCardsInHand: show both cards in hand
                         /placeCard [xCoord] [yCoord] [cardInHand]: place a card on the board""");
-            }
-            else if(command.startsWith("/showCard")){
-                String[] coordinates = command.split(" ");
-                if(coordinates.length != 3) System.out.println("Invalid command, try again.");
-                else{
-                    try{
-                        int x = Integer.parseInt(coordinates[1]);
-                        int y = Integer.parseInt(coordinates[2]);
-                    } catch(NumberFormatException e){
-                        System.out.println("The parameters you typed in are not numbers, try again.");
-                    }
-                    //getCard method
                 }
-            }
-            else if(command.startsWith("/showCardInHand")){
-                String[] cardInHand = command.split(" ");
-                if(cardInHand.length != 2) System.out.println("Invalid command, try again.");
-                else{
-                    try{
-                        int card = Integer.parseInt(cardInHand[1]);
-                        if(card != 0 && card != 1)
-                            System.out.println("The parameter you typed in is not a valid hand position, try again.");
-                    } catch(NumberFormatException e){
-                        System.out.println("The parameter you typed in is not a number, try again.");
+                else if(command.startsWith("/showCard")){
+                    String[] coordinates = command.split(" ");
+                    if(coordinates.length != 3) System.out.println("Invalid command, try again.");
+                    else{
+                        try{
+                            int x = Integer.parseInt(coordinates[1]);
+                            int y = Integer.parseInt(coordinates[2]);
+                        } catch(NumberFormatException e){
+                            System.out.println("The parameters you typed in are not numbers, try again.");
+                        }
+                        //getCard method
                     }
-                    //getCardInHand method
                 }
-            }
-            else if(command.startsWith("/placeCard")){
-                String[] coordinates = command.split(" ");
-                if(coordinates.length != 4) System.out.println("Invalid command, try again.");
-                else{
-                    try{
-                        int x = Integer.parseInt(coordinates[1]);
-                        int y = Integer.parseInt(coordinates[2]);
-                        int card = Integer.parseInt(coordinates[3]);
-                        if(card != 0 && card != 1)
-                            System.out.println("The parameter you typed in is not a valid hand position, try again.");
-                    } catch(NumberFormatException e){
-                        System.out.println("The parameters you typed in are not numbers, try again.");
+                else if(command.startsWith("/showCardInHand")){
+                    String[] cardInHand = command.split(" ");
+                    if(cardInHand.length != 2) System.out.println("Invalid command, try again.");
+                    else{
+                        try{
+                            int card = Integer.parseInt(cardInHand[1]);
+                            if(card != 0 && card != 1)
+                                System.out.println("The parameter you typed in is not a valid hand position, try again.");
+                        } catch(NumberFormatException e){
+                            System.out.println("The parameter you typed in is not a number, try again.");
+                        }
+                        //getCardInHand method
                     }
-                    //placeCard method
                 }
-            }
-            else if(command.equals("/showCardsInHand")){
+                else if(command.startsWith("/placeCard")){
+                    String[] coordinates = command.split(" ");
+                    if(coordinates.length != 4) System.out.println("Invalid command, try again.");
+                    else{
+                        try{
+                            int x = Integer.parseInt(coordinates[1]);
+                            int y = Integer.parseInt(coordinates[2]);
+                            int card = Integer.parseInt(coordinates[3]);
+                            if(card != 0 && card != 1)
+                                System.out.println("The parameter you typed in is not a valid hand position, try again.");
+                        } catch(NumberFormatException e){
+                            System.out.println("The parameters you typed in are not numbers, try again.");
+                        }
+                        //placeCard method
+                    }
+                }
+                else if(command.equals("/showCardsInHand")){
+                    /*todo*/
+                    //getCardsInHand method
+                }
+                else System.out.println("Command not recognized");
                 /*todo*/
-                //getCardsInHand method
+                /*checkIfGameHasEnded*/
             }
-            else System.out.println("Command not recognized");
-            /*todo*/
-            /*checkIfGameHasEnded*/
         }
     }
 }

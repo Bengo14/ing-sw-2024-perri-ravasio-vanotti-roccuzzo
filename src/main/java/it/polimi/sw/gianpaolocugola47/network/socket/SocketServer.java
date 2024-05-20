@@ -4,7 +4,6 @@ import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
-import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
@@ -211,12 +210,15 @@ public class SocketServer implements Observer {
         }
     }
 
-    protected void sendMessage(ChatMessage message) { /*todo comm to other server*/
+    protected void sendMessage(ChatMessage message) {
         System.out.println("Received public message");
         synchronized (this.clients) {
             for (SocketClientHandler handler : this.clients)
                 handler.receiveMessage(message);
         }
+        try {
+            RMIServer.getServer().sendMessage(message);
+        } catch (RemoteException _) {}
     }
 
     protected void sendPrivateMessage(ChatMessage message) {
@@ -227,6 +229,9 @@ public class SocketServer implements Observer {
                 if (nicknames[handler.getId()].equals(message.getReceiver()))
                     handler.receivePrivateMessage(message);
         }
+        try {
+            RMIServer.getServer().sendPrivateMessage(message);
+        } catch (RemoteException _) {}
     }
 
     protected String[] getNicknames()  {

@@ -297,7 +297,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public String[] getNicknames() {
         try {
-            return server.getNicknames();
+            String[] nick = server.getNicknames();
+            this.numOfPlayers = nick.length;
+            return nick;
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -329,7 +331,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void setMyTurn (boolean turn) { // may be used in particular cases (no cards to draw)
         this.isMyTurn = turn;
-    }
+    } // may be used in particular cases (no cards to draw)
 
     public static void main(String[] args) {
 

@@ -60,4 +60,5 @@ public class GUI implements View {
     public int getBoardPoints() {
         return 0;
     }
+
 }

@@ -158,6 +158,7 @@ public class SocketClientProxy implements VirtualView {
 
     protected void getNicknamesResponse(String[] nicknames) {
         output.println("getNick");
+        output.println(nicknames.length); //num of players
         Arrays.stream(nicknames).forEachOrdered(output::println);
         output.flush();
     }

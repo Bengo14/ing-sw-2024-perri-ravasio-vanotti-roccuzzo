@@ -288,8 +288,8 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public String[] getNicknames()  {
-        synchronized (socketServer) {
-            return this.socketServer.getNicknames();
+        synchronized (controller) {
+            return this.controller.getNicknames();
         }
     }
 }

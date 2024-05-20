@@ -211,7 +211,7 @@ public class SocketServer implements Observer {
         }
     }
 
-    protected void sendMessage(ChatMessage message) {
+    protected void sendMessage(ChatMessage message) { /*todo comm to other server*/
         System.out.println("Received public message");
         synchronized (this.clients) {
             for (SocketClientHandler handler : this.clients)

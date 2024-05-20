@@ -26,6 +26,7 @@ public class CLI implements View {
     private ResourceCard resourceCardOnTop; //NOT on playerTable
     private int globalPoints = 0; //NOT on playerTable
     private int boardPoints = 0;  //NOT on playerTable
+    private String[] nicknames;
 
     public CLI(Client client) {
         this.client = client;
@@ -48,6 +49,7 @@ public class CLI implements View {
         System.out.flush();
         setId(this.client.getIdLocal());
         setNickname(this.client.getNicknameLocal());
+        this.nicknames = client.getNicknames();
         openChat();
 
         /*todo input game loop (this method is already on a separate thread!!!)*/
@@ -81,7 +83,7 @@ public class CLI implements View {
                 }
             } else if (line.equals("--listPlayers")) {
                 System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : this.client.getNicknames()) {
+                for(String nickname : nicknames) {
                     if(nickname.equals(this.localPlayerTable.getNickName()))
                         System.err.println(nickname + " (you)");
                     else

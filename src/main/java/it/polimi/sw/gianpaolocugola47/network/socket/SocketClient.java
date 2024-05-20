@@ -22,6 +22,10 @@ public class SocketClient implements VirtualView, Client {
     private int numOfPlayers = 0;
     private String nickname = "";
     private boolean isMyTurn = false;
+    private volatile boolean response = false;
+    private boolean nickAvailableResponse;
+    private String[] nicknamesResponse;
+
 
     protected SocketClient(BufferedReader input, BufferedWriter output) {
         this.input = input;
@@ -43,11 +47,12 @@ public class SocketClient implements VirtualView, Client {
         String line;
 
         while (true) {
-            line = line();
 
+            line = line();
+            //System.err.println(line); // debug
             switch (line) {
 
-                case "setId" -> setId(Integer.parseInt(input.readLine()));
+                case "setId" -> setId(integer());
                 case "terminate" -> terminate();
                 case "ping" -> ping();
                 case "start" -> startGame();
@@ -79,13 +84,13 @@ public class SocketClient implements VirtualView, Client {
                     ResourceCard[] cardsOnHand = new ResourceCard[3];
                     ResourceCard[] cardsOnTable = new ResourceCard[4];
 
-                    for (int i=0; i<numOfPlayers; i++)
+                    for (int i = 0; i < numOfPlayers; i++)
                         nicknames[i] = line();
-                    for (int i=0; i<2; i++)
+                    for (int i = 0; i < 2; i++)
                         globalObjectives[i] = Deck.getObjectiveCardFromGivenId(integer());
-                    for (int i=0; i<3; i++)
+                    for (int i = 0; i < 3; i++)
                         cardsOnHand[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
-                    for (int i=0; i<4; i++)
+                    for (int i = 0; i < 4; i++)
                         cardsOnTable[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
 
                     initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
@@ -101,17 +106,42 @@ public class SocketClient implements VirtualView, Client {
                     int[] boardPoints = new int[numOfPlayers];
                     int[] globalPoints = new int[numOfPlayers];
 
-                    for (int i=0; i<numOfPlayers; i++)
+                    for (int i = 0; i < numOfPlayers; i++)
                         boardPoints[i] = integer();
-                    for (int i=0; i<numOfPlayers; i++)
+                    for (int i = 0; i < numOfPlayers; i++)
                         globalPoints[i] = integer();
 
                     updatePoints(boardPoints, globalPoints);
                 }
 
+                case "drawStarting" -> setResponse();
+                case "setStarting" -> setResponse();
+                case "play" -> setResponse();
+                case "getCardsOnHand" -> setResponse();
+                case "getPlacedCards" -> setResponse();
+                case "getResourceCounter" -> setResponse();
+                case "getPlayPos" -> setResponse();
+
+                case "nickAvailable" -> {
+                    nickAvailableResponse = bool();
+                    setResponse();
+                }
+
+                case "getNick" -> {
+                   this.numOfPlayers = integer();
+                   nicknamesResponse = new String[numOfPlayers];
+                   for(int i=0; i<numOfPlayers; i++)
+                       nicknamesResponse[i] = line();
+                   setResponse();
+                }
+
                 default -> System.err.println("[INVALID MESSAGE]");
             }
         }
+    }
+
+    private void setResponse() {
+        response = true;
     }
 
     private void setId(int id) {
@@ -267,8 +297,13 @@ public class SocketClient implements VirtualView, Client {
             server.drawStartingCard();
         }
         try {
-            while(!line().equals("drawStarting")){}
-            return (StartingCard) Deck.getCardFromGivenId(integer());
+            while(!response)
+                Thread.onSpinWait();
+
+            StartingCard card = (StartingCard) Deck.getCardFromGivenId(integer());
+            synchronized (this) {response = false;}
+            return card;
+
         } catch (IOException e) {
             terminate();
             return null;
@@ -281,11 +316,15 @@ public class SocketClient implements VirtualView, Client {
             server.setStartingCardAndDrawObjectives(this.id, this.view.getStartingCard());
         }
         try {
-            while(!line().equals("setStarting")){}
+            while(!response)
+                Thread.onSpinWait();
+
             Objectives[] obj = new Objectives[2];
             obj[0] = Deck.getObjectiveCardFromGivenId(integer());
             obj[1] = Deck.getObjectiveCardFromGivenId(integer());
+            synchronized (this) {response = false;}
             return obj;
+
         } catch (IOException e) {
             terminate();
             return null;
@@ -305,12 +344,15 @@ public class SocketClient implements VirtualView, Client {
             server.getPlayablePositions(this.id);
         }
         try {
-            while(!line().equals("getPlayPos")){}
-            boolean[][] pos = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
+            while(!response)
+                Thread.onSpinWait();
 
+            boolean[][] pos = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
             for(int i=0; i<PlayerTable.getMatrixDimension(); i++)
                 for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
                     pos[i][j] = bool();
+
+            synchronized (this) {response = false;}
             return pos;
 
         } catch (IOException e) {
@@ -325,8 +367,13 @@ public class SocketClient implements VirtualView, Client {
             server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id, isFront);
         }
         try {
-            while(!line().equals("play")){}
-            return bool();
+            while(!response)
+                Thread.onSpinWait();
+
+            boolean b = bool();
+            synchronized (this) {response = false;}
+            return b;
+
         } catch (IOException e) {
             terminate();
             return false;
@@ -346,11 +393,15 @@ public class SocketClient implements VirtualView, Client {
             server.getCardsOnHand();
         }
         try {
-            while(!line().equals("getCardsOnHand")){}
+            while(!response)
+                Thread.onSpinWait();
+
             ResourceCard[][] cardsOnHand = new ResourceCard[numOfPlayers][3];
             for (int i=0; i<numOfPlayers; i++)
                 for(int j=0; j<3; j++)
                     cardsOnHand[i][j] = (ResourceCard) Deck.getCardFromGivenId(integer());
+
+            synchronized (this) {response = false;}
             return cardsOnHand;
 
         } catch (IOException e) {
@@ -365,11 +416,15 @@ public class SocketClient implements VirtualView, Client {
             server.getPlacedCards(playerId);
         }
         try {
-            while(!line().equals("getPlacedCards")){}
+            while(!response)
+                Thread.onSpinWait();
+
             PlaceableCard[][] placedCards = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
             for (int i=0; i<PlayerTable.getMatrixDimension(); i++)
                 for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
                     placedCards[i][j] = Deck.getCardFromGivenId(integer());
+
+            synchronized (this) {response = false;}
             return placedCards;
 
         } catch (IOException e) {
@@ -384,10 +439,14 @@ public class SocketClient implements VirtualView, Client {
             server.getResourceCounter(playerId);
         }
         try {
-            while(!line().equals("getResourceCounter")){}
+            while(!response)
+                Thread.onSpinWait();
+
             int[] resources = new int[7];
             for(int i=0; i<7; i++)
                 resources[i] = integer();
+
+            synchronized (this) {response = false;}
             return resources;
 
         } catch (IOException e) {
@@ -401,32 +460,22 @@ public class SocketClient implements VirtualView, Client {
         synchronized (server) {
             server.getNicknames();
         }
-        try {
-            while(!line().equals("getNick")){}
-            String[] nick = new String[numOfPlayers];
+        while(!response)
+            Thread.onSpinWait();
 
-            for(int i=0; i<numOfPlayers; i++)
-                nick[i] = line();
-            return nick;
-
-        } catch (IOException e) {
-            terminate();
-            return null;
-        }
+        response = false;
+        return nicknamesResponse;
     }
 
     public boolean isNicknameAvailable(String nickname) {
         synchronized (server) {
             server.isNicknameAvailable(nickname);
         }
-        try {
-            while(!line().equals("nickAvailable")){}
-            return bool();
+        while(!response)
+            Thread.onSpinWait();
 
-        } catch (IOException e) {
-            terminate();
-            return false;
-        }
+        response = false;
+        return nickAvailableResponse;
     }
 
     @Override

@@ -98,8 +98,8 @@ public class PlayerTable {
             }
         }
     }
-    public void turnCardOnHand(int cardPosition){
-        this.cardsOnHand[cardPosition].switchFrontBack();
+    public void turnCardOnHand(int cardPosition, boolean isFront){
+        this.cardsOnHand[cardPosition].setFront(isFront);
     }
 
     /**

@@ -57,6 +57,9 @@ public abstract class PlaceableCard {
     public void switchFrontBack() {
         isFront = !isFront;
     }
+    public void setFront(boolean isFront) {
+        this.isFront = isFront;
+    }
 
     public Corner[] getCorners() {return corners;}
 

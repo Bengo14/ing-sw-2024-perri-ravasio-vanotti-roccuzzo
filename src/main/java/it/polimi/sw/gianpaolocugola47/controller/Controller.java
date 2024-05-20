@@ -82,12 +82,11 @@ public class Controller {
             return mainTable.checkAllPlayablePositions(playerId);
         else return null;
     }
-    public void turnCardOnHand(int playerId, int position) {
-        mainTable.turnCardOnHand(playerId, position);
-    }
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
-        if(playerId == currentPlayerId)
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) {
+        if(playerId == currentPlayerId) {
+            mainTable.turnCardOnHand(playerId, onHandCard, isFront);
             return mainTable.playCardAndUpdatePoints(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+        }
         else return false;
     }
     public void drawCard(int position, int playerId) {

@@ -1,15 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,9 +35,9 @@ class GoldCardTest {
         main.setNumOfPlayers(2);
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
         main.setPlayerTable(1,p);
-        main.switchCardOnHandFrontBack(1,1);
-        main.switchCardOnHandFrontBack(1,0);
-        main.switchCardOnHandFrontBack(1,2);
+        main.turnCardOnHand(1,1, true);
+        main.turnCardOnHand(1,0, true);
+        main.turnCardOnHand(1,2, true);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
         main.playCardAndUpdatePoints(0,29,29,0,1);
@@ -78,7 +69,7 @@ class GoldCardTest {
         main.setPlayerTable(1, player);
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
-        main.turnCardOnHand(1,2);
+        main.turnCardOnHand(1,2, true);
         main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
         main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
         main.playCardAndUpdatePoints(2, 28, 28, 1, 1);
@@ -99,9 +90,9 @@ class GoldCardTest {
         main.setPlayerTable(1, player);
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
-        main.turnCardOnHand(1,2);
-        main.turnCardOnHand(1,0);
-        main.turnCardOnHand(1,1);
+        main.turnCardOnHand(1,2, true);
+        main.turnCardOnHand(1,0, true);
+        main.turnCardOnHand(1,1, true);
         main.playCardAndUpdatePoints(1, 29, 29, 1, 1);
         main.playCardAndUpdatePoints(0, 29, 29, 3, 1);
         main.playCardAndUpdatePoints(2, 28, 30, 0, 1);

@@ -8,8 +8,6 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 public interface Client {
 
-    int getBoardPoints();
-
     void terminateLocal();
 
     StartingCard drawStartingCard();
@@ -20,7 +18,7 @@ public interface Client {
 
     boolean[][] getPlayablePositions();
 
-    boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner);
+    boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront);
 
     void drawCard(int position);
 
@@ -29,8 +27,6 @@ public interface Client {
     PlaceableCard[][] getPlacedCards(int playerId);
 
     int[] getResourceCounter(int playerId);
-
-    int getGlobalPoints();
 
     int getIdLocal();
 
@@ -43,4 +39,6 @@ public interface Client {
     void sendPrivateMessage(ChatMessage msg);
 
     boolean isItMyTurn();
+
+    void setMyTurn(boolean turn);
 }

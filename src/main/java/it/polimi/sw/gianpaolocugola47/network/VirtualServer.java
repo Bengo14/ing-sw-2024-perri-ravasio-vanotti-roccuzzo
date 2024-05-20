@@ -17,7 +17,7 @@ public interface VirtualServer extends Remote {
     StartingCard drawStartingCard() throws RemoteException;
     Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) throws RemoteException;
     void setSecretObjective(int playerId, Objectives obj) throws RemoteException;
-    boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException;
+    boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) throws RemoteException;
     void drawCard(int position, int playerId) throws RemoteException;
     ResourceCard[][] getCardsOnHand() throws RemoteException;
     PlaceableCard[][] getPlacedCards(int playerId) throws RemoteException;

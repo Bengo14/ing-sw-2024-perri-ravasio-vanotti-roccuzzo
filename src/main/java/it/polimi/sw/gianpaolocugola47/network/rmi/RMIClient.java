@@ -121,7 +121,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void ping() throws RemoteException {
-        //do nothing, liveness check only
+        // do nothing, liveness check only
     }
 
     @Override
@@ -135,8 +135,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             this.view = new GUI(this);
             new Thread(() -> view.start()).start();
         }
-        this.view.setId(id);
-        this.view.setNickname(nickname);
     }
 
     @Override
@@ -165,7 +163,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public void setMyTurn() {
         this.isMyTurn = true;
         //System.out.println("\nIt's your turn!");
-        /*todo*/
+        /*todo wake up user through view*/
     }
 
     @Override
@@ -183,7 +181,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void receiveMessage(ChatMessage message) throws RemoteException {
         System.out.println(message.getSender() + ": " + message.getMessage()); //debug only
-        /*todo*/ //concurrent access with cli?
+        /*todo*/ //concurrent access to cli?
     }
 
     @Override
@@ -241,9 +239,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront) {
         try {
-            return server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id);
+            return server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id, isFront);
         } catch (RemoteException e) {
             terminateLocal();
             return false;
@@ -291,16 +289,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public int getGlobalPoints() {
-        return this.view.getGlobalPoints();
-    }
-
-    @Override
-    public int getBoardPoints() {
-        return this.view.getBoardPoints();
-    }
-
-    @Override
     public int getIdLocal() {return this.id;}
 
     @Override
@@ -337,6 +325,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public boolean isItMyTurn() {
         return isMyTurn;
+    }
+    @Override
+    public void setMyTurn (boolean turn) { // may be used in particular cases (no cards to draw)
+        this.isMyTurn = turn;
     }
 
     public static void main(String[] args) {

@@ -46,6 +46,8 @@ public class CLI implements View {
                                                            ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝    ╚══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
                 """);
         System.out.flush();
+        setId(this.client.getIdLocal());
+        setNickname(this.client.getNicknameLocal());
         openChat();
 
         /*todo input game loop (this method is already on a separate thread!!!)*/
@@ -247,7 +249,7 @@ public class CLI implements View {
 
     @SuppressWarnings("ALL")
     public void printPoints() throws RemoteException {
-        System.out.println("BoardPoints: " + this.client.getBoardPoints()+"|| GlobalPoints: " + this.client.getGlobalPoints());
+        System.out.println("BoardPoints: " + this.getBoardPoints() + " || GlobalPoints: " + this.getGlobalPoints());
     }
 
     public void commandHandler() throws IOException {

@@ -11,7 +11,6 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
     private final PrintWriter output;
@@ -27,7 +26,7 @@ public class SocketServerProxy implements VirtualServer {
 
     @Override
     public int connect(VirtualView client) {
-        // not used
+        // not used here
         return 0;
     }
 
@@ -72,13 +71,14 @@ public class SocketServerProxy implements VirtualServer {
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) {
         output.println("play");
         output.println(onHandCard);
         output.println(onTableCardX);
         output.println(onTableCardY);
         output.println(onTableCardCorner);
         output.println(playerId);
+        output.println(isFront);
         output.flush();
         return false;
     }

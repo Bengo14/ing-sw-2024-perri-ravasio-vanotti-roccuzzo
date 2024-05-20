@@ -165,9 +165,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) throws RemoteException {
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) throws RemoteException {
         synchronized (controller) {
-            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId, isFront);
         }
     }
     @Override

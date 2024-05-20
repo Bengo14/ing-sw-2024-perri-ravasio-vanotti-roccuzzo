@@ -104,7 +104,7 @@ class MainTableTest {
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1, res_2, res_3});
         mainTable.setNumOfPlayers(2);
         mainTable.setPlayerTable(0, player);
-        mainTable.switchCardOnHandFrontBack(0, 0);
+        mainTable.turnCardOnHand(0, 0, true);
         assertEquals(false,mainTable.getPlayerTable(0).getCardOnHand(2).isFront());
     }
     @Test
@@ -131,9 +131,9 @@ class MainTableTest {
         ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res_1, res_2, res_3});
         main.setPlayerTable(0, player);
-        main.switchCardOnHandFrontBack(0, 0);
-        main.turnCardOnHand(0,1);
-        assertEquals(true,main.getPlayerTable(0).getCardOnHand(0).isFront());
+        main.turnCardOnHand(0, 0, true);
+        main.turnCardOnHand(0,1, true);
+        assertEquals(true, main.getPlayerTable(0).getCardOnHand(0).isFront());
     }
     @Test
     public void TestAddPlayer(){

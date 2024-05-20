@@ -133,10 +133,6 @@ public class MainTable implements Observable {
         this.playersTables = new PlayerTable[numOfPlayers];
     }
 
-    public void switchCardOnHandFrontBack(int playerId, int position){
-        this.getPlayerTable(playerId).turnCardOnHand(position);
-    }
-
     public void addPlayer(int id, String nickName) {
 
         if(playersTables[id] == null) {
@@ -170,8 +166,8 @@ public class MainTable implements Observable {
         return Arrays.copyOf(getPlayerTable(playerId).getResourceCounter(), 7);
     }
 
-    public void turnCardOnHand(int playerId, int cardPosition) {
-        getPlayerTable(playerId).turnCardOnHand(cardPosition);
+    public void turnCardOnHand(int playerId, int cardPosition, boolean isFront) {
+        getPlayerTable(playerId).turnCardOnHand(cardPosition, isFront);
     }
 
     protected int getBoardPoints(int playerId) {

@@ -54,7 +54,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
                     Objectives obj = Deck.getObjectiveCardFromGivenId(integer());
                     setSecretObjective(id, obj);
                 }
-                case "play" -> client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer()));
+                case "play" -> client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer(), bool()));
 
                 case "draw" -> drawCard(integer(), integer());
 
@@ -194,7 +194,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public void addPlayer(int id, String nickname) {
-        synchronized (this.controller) {
+        synchronized (controller) {
             System.out.println(STR."Player \{nickname} added with id \{id}");
             this.controller.addPlayer(id, nickname);
         }
@@ -229,9 +229,9 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) {
         synchronized (controller) {
-            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId);
+            return controller.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, playerId, isFront);
         }
     }
 

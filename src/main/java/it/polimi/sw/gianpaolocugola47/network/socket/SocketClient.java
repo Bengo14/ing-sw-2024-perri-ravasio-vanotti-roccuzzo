@@ -43,12 +43,72 @@ public class SocketClient implements VirtualView, Client {
         String line;
 
         while (true) {
-            line = input.readLine();
+            line = line();
 
             switch (line) {
+
                 case "setId" -> setId(Integer.parseInt(input.readLine()));
                 case "terminate" -> terminate();
                 case "ping" -> ping();
+                case "start" -> startGame();
+                case "turn" -> setMyTurn();
+                case "gameOver" -> gameOver();
+                case "winner" -> showWinner();
+
+                case "message" -> {
+                    String sender = line();
+                    int id = integer();
+                    String msg = line();
+                    ChatMessage message = new ChatMessage(sender, id);
+                    message.setMessage(msg);
+                    receiveMessage(message);
+                }
+
+                case "privateMessage" -> {
+                    String sender = line();
+                    int id = integer();
+                    String msg = line();
+                    ChatMessage message = new ChatMessage(sender, id);
+                    message.setMessage(msg);
+                    receivePrivateMessage(message);
+                }
+
+                case "init" -> {
+                    String[] nicknames = new String[numOfPlayers];
+                    Objectives[] globalObjectives = new Objectives[2];
+                    ResourceCard[] cardsOnHand = new ResourceCard[3];
+                    ResourceCard[] cardsOnTable = new ResourceCard[4];
+
+                    for (int i=0; i<numOfPlayers; i++)
+                        nicknames[i] = line();
+                    for (int i=0; i<2; i++)
+                        globalObjectives[i] = Deck.getObjectiveCardFromGivenId(integer());
+                    for (int i=0; i<3; i++)
+                        cardsOnHand[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
+                    for (int i=0; i<4; i++)
+                        cardsOnTable[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
+
+                    initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
+                }
+
+                case "decks" -> {
+                    ResourceCard resourceCardOnTop = (ResourceCard) Deck.getCardFromGivenId(integer());
+                    GoldCard goldCardOnTop = (GoldCard) Deck.getCardFromGivenId(integer());
+                    updateDecks(resourceCardOnTop, goldCardOnTop);
+                }
+
+                case "points" -> {
+                    int[] boardPoints = new int[numOfPlayers];
+                    int[] globalPoints = new int[numOfPlayers];
+
+                    for (int i=0; i<numOfPlayers; i++)
+                        boardPoints[i] = integer();
+                    for (int i=0; i<numOfPlayers; i++)
+                        globalPoints[i] = integer();
+
+                    updatePoints(boardPoints, globalPoints);
+                }
+
                 default -> System.err.println("[INVALID MESSAGE]");
             }
         }
@@ -108,7 +168,7 @@ public class SocketClient implements VirtualView, Client {
         if(tempNick.contains(" ")) {
             tempNick = tempNick.replace(" ","_");
         }
-        while(!this.server.isNicknameAvailable(tempNick)
+        while(!isNicknameAvailable(tempNick)
                 || tempNick.isEmpty()) {
             System.out.print("Nickname invalid or already taken, try again: ");
             System.out.println(tempNick);
@@ -132,7 +192,9 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void ping() {
-        this.server.pingAck();
+        synchronized (server) {
+            this.server.pingAck();
+        }
     }
 
     @Override
@@ -149,7 +211,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void setMyTurn() {
-        /*todo*/
+        /*todo wake up user through view*/
         this.isMyTurn = true;
     }
 
@@ -167,7 +229,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public int getId() { // not used here
-        return this.id;
+        return getIdLocal();
     }
 
     @Override
@@ -198,107 +260,221 @@ public class SocketClient implements VirtualView, Client {
     }
 
     /* --- methods of interface Client --- */
-    /*todo send messages and read responses*/
+
     @Override
     public StartingCard drawStartingCard() {
-
-        return null;
+        synchronized (server) {
+            server.drawStartingCard();
+        }
+        try {
+            while(!line().equals("drawStarting")){}
+            return (StartingCard) Deck.getCardFromGivenId(integer());
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
     public Objectives[] setStartingCardAndDrawObjectives() {
-
-        return null;
+        synchronized (server) {
+            server.setStartingCardAndDrawObjectives(this.id, this.view.getStartingCard());
+        }
+        try {
+            while(!line().equals("setStarting")){}
+            Objectives[] obj = new Objectives[2];
+            obj[0] = Deck.getObjectiveCardFromGivenId(integer());
+            obj[1] = Deck.getObjectiveCardFromGivenId(integer());
+            return obj;
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
     public void setSecretObjective() {
-
+        synchronized (server) {
+            server.setSecretObjective(this.id, this.view.getSecretObjective());
+        }
     }
 
     @Override
     public boolean[][] getPlayablePositions() {
+        synchronized (server) {
+            server.getPlayablePositions(this.id);
+        }
+        try {
+            while(!line().equals("getPlayPos")){}
+            boolean[][] pos = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
 
-        return new boolean[0][];
+            for(int i=0; i<PlayerTable.getMatrixDimension(); i++)
+                for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
+                    pos[i][j] = bool();
+            return pos;
+
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
-    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
-
-        return false;
+    public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront) {
+        synchronized (server) {
+            server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id, isFront);
+        }
+        try {
+            while(!line().equals("play")){}
+            return bool();
+        } catch (IOException e) {
+            terminate();
+            return false;
+        }
     }
 
     @Override
     public void drawCard(int position) {
-
+        synchronized (server) {
+            server.drawCard(position, this.id);
+        }
     }
 
     @Override
     public ResourceCard[][] getCardsOnHand() {
+        synchronized (server) {
+            server.getCardsOnHand();
+        }
+        try {
+            while(!line().equals("getCardsOnHand")){}
+            ResourceCard[][] cardsOnHand = new ResourceCard[numOfPlayers][3];
+            for (int i=0; i<numOfPlayers; i++)
+                for(int j=0; j<3; j++)
+                    cardsOnHand[i][j] = (ResourceCard) Deck.getCardFromGivenId(integer());
+            return cardsOnHand;
 
-        return new ResourceCard[0][];
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
+        synchronized (server) {
+            server.getPlacedCards(playerId);
+        }
+        try {
+            while(!line().equals("getPlacedCards")){}
+            PlaceableCard[][] placedCards = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
+            for (int i=0; i<PlayerTable.getMatrixDimension(); i++)
+                for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
+                    placedCards[i][j] = Deck.getCardFromGivenId(integer());
+            return placedCards;
 
-        return new PlaceableCard[0][];
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
     public int[] getResourceCounter(int playerId) {
+        synchronized (server) {
+            server.getResourceCounter(playerId);
+        }
+        try {
+            while(!line().equals("getResourceCounter")){}
+            int[] resources = new int[7];
+            for(int i=0; i<7; i++)
+                resources[i] = integer();
+            return resources;
 
-        return new int[0];
-    }
-
-    @Override
-    public int getGlobalPoints() {
-
-        return 0;
-    }
-
-    @Override
-    public int getIdLocal() {
-
-        return 0;
-    }
-
-    @Override
-    public String getNicknameLocal() {
-
-        return null;
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
     }
 
     @Override
     public String[] getNicknames() {
+        synchronized (server) {
+            server.getNicknames();
+        }
+        try {
+            while(!line().equals("getNick")){}
+            String[] nick = new String[numOfPlayers];
 
-        return new String[0];
+            for(int i=0; i<numOfPlayers; i++)
+                nick[i] = line();
+            return nick;
+
+        } catch (IOException e) {
+            terminate();
+            return null;
+        }
+    }
+
+    public boolean isNicknameAvailable(String nickname) {
+        synchronized (server) {
+            server.isNicknameAvailable(nickname);
+        }
+        try {
+            while(!line().equals("nickAvailable")){}
+            return bool();
+
+        } catch (IOException e) {
+            terminate();
+            return false;
+        }
     }
 
     @Override
     public void sendMessage(ChatMessage msg) {
-
+        synchronized (server) {
+            server.sendMessage(msg);
+        }
     }
 
     @Override
     public void sendPrivateMessage(ChatMessage msg) {
+        synchronized (server) {
+            server.sendPrivateMessage(msg);
+        }
+    }
 
+    @Override
+    public int getIdLocal() {
+        return this.id;
+    }
+
+    @Override
+    public String getNicknameLocal() {
+        return this.nickname;
     }
 
     @Override
     public boolean isItMyTurn() {
         return isMyTurn;
     }
-
     @Override
-    public int getBoardPoints() {
-
-        return 0;
+    public void setMyTurn (boolean turn) { // may be used in particular cases (no cards to draw)
+        this.isMyTurn = turn;
     }
 
     @Override
     public void terminateLocal() {
         terminate();
+    }
+
+    private int integer() throws IOException {
+        return Integer.parseInt(line());
+    }
+    private boolean bool() throws IOException {
+        return Boolean.parseBoolean(line());
+    }
+    private String line() throws IOException {
+        return input.readLine();
     }
 
     public static void main(String[] args) {

@@ -10,10 +10,7 @@ import it.polimi.sw.gianpaolocugola47.utils.ObjectiveDeserializer;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Deck {
 
@@ -26,6 +23,8 @@ public class Deck {
     private static final int FIRST_GOLD_ID = 41;
     private static final int FIRST_RESOURCE_ID = 1;
     private static final int FIRST_STARTING_ID = 81;
+    private static final HashMap<Integer, PlaceableCard> placeableCardIdMap = new HashMap<>();
+    private static final HashMap<Integer, Objectives> objectiveCardIdMap = new HashMap<>();
 
     public static void initAndShuffleDeck() {
         initDeck();
@@ -37,12 +36,28 @@ public class Deck {
         generateGoldCardsDeck();
         generateResourceCardsDeck();
         generateObjectiveCardsDeck();
+        initHashMaps();
     }
     private static void shuffleDeck() {
         Collections.shuffle(goldCardsDeck,randomGenerator);
         Collections.shuffle(resourceCardsDeck,randomGenerator);
         Collections.shuffle(startingCardsDeck,randomGenerator);
         Collections.shuffle(objectiveCardsDeck,randomGenerator);
+    }
+
+    private static void initHashMaps(){
+        for (GoldCard goldCard : goldCardsDeck) {
+            placeableCardIdMap.put(goldCard.getId(),goldCard);
+        }
+        for (ResourceCard resourceCard : resourceCardsDeck) {
+            placeableCardIdMap.put(resourceCard.getId(),resourceCard);
+        }
+        for (StartingCard startingCard : startingCardsDeck) {
+            placeableCardIdMap.put(startingCard.getId(),startingCard);
+        }
+        for (Objectives objectives : objectiveCardsDeck) {
+            objectiveCardIdMap.put(objectives.getId(),objectives);
+        }
     }
 
     private static void generateResourceCardsDeck() {
@@ -136,30 +151,18 @@ public class Deck {
     }
 
     public static PlaceableCard getCardFromGivenId(int id){
-        if(id < FIRST_OBJECTIVE_ID){
-            if (id >= FIRST_RESOURCE_ID && id < FIRST_GOLD_ID){
-                for(ResourceCard card : resourceCardsDeck)
-                    if(card.getId() == id)
-                        return card;
-            }
-            else if(id >= FIRST_GOLD_ID && id < FIRST_STARTING_ID){
-                for(GoldCard card : goldCardsDeck)
-                    if(card.getId() == id)
-                        return card;
-            }
-            else{
-                for(StartingCard card : startingCardsDeck)
-                    if(card.getId() == id)
-                        return card;
-            }
+        try{
+            return placeableCardIdMap.get(id);
+        }catch (NullPointerException e){
+            return null;
         }
-        return null;
     }
 
     public static Objectives getObjectiveCardFromGivenId(int id){
-        for(Objectives card : objectiveCardsDeck)
-            if(card.getId() == id)
-                return card;
-        return null;
+        try{
+            return objectiveCardIdMap.get(id);
+        }catch (NullPointerException e){
+            return null;
+        }
     }
 }

@@ -10,12 +10,13 @@ public class GoldCard extends ResourceCard {
     private final boolean pointsForCorners;
     private final boolean pointsForItems;
     private final Items itemThatGivesPoints;
+
     /**
      * GoldCard constructor.
      *
-     * @param backImgPath refer to the image of the back.
-     * @param frontImgPath refer to the image of the front.
-     * @param points the points the card scores when played.
+     * @param backImgPath      refer to the image of the back.
+     * @param frontImgPath     refer to the image of the front.
+     * @param points           the points the card scores when played.
      * @param pointsForCorners the points the card scores covering angles when played.
      */
     public GoldCard(String backImgPath, String frontImgPath, int points, boolean pointsForCorners, Resources resourceCentreBack,
@@ -32,75 +33,80 @@ public class GoldCard extends ResourceCard {
 
     public String resourcesRequiredToString() {
         StringBuilder retString = new StringBuilder();
-        for(Resources resource : resourcesRequired){
+        for (Resources resource : resourcesRequired) {
             retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
         }
         return retString.toString();
     }
 
-    public String pointConditionToString(){
-        if(pointsForCorners){
+    public String pointConditionToString() {
+        if (pointsForCorners) {
             return "C";
         }
-        if(pointsForItems){
+        if (pointsForItems) {
             return Character.toString(itemThatGivesPoints.getSymbol());
-        }
-        else
+        } else
             return "N/A";
     }
 
     protected boolean isPointsForCorners() {
         return pointsForCorners;
     }
+
     protected Items getItemThatGivesPoints() {
         return itemThatGivesPoints;
     }
+
     protected boolean isPointsForItems() {
         return pointsForItems;
     }
 
     @Override
-    public void updateResourceCounter(int[] counter){
-        if(isFront()){
+    public void updateResourceCounter(int[] counter) {
+        if (isFront()) {
             Corner[] visibleCorners = getVisibleCorners();
-            for(int i=0; i<4; i++){
+            for (int i = 0; i < 4; i++) {
                 Corner corner = visibleCorners[i];
-                if(corner.isItem()){
+                if (corner.isItem()) {
                     counter[corner.getItem().ordinal() + 4]++;
                     break;
                 }
             }
-        }
-        else{
+        } else {
             counter[getResourceCentreBack().ordinal()]++;
         }
     }
+
     @Override
     public int getPoints(PlayerTable playerTable) {
-        if(this.isFront()){
-            int points=this.getThisPoints();
-            if(!this.isPointsForCorners() && !this.isPointsForItems()){
+        if (this.isFront()) {
+            int points = this.getThisPoints();
+            if (!this.isPointsForCorners() && !this.isPointsForItems()) {
                 return points; // default points
             }
-            if(this.isPointsForCorners()){
+            if (this.isPointsForCorners()) {
                 int coveredCorners = 0;
-                int x=this.getLine();
-                int y=this.getColumn();
-                for(int corner=0; corner<4; corner++){
-                    if(checkIfCovers(x, y, corner, playerTable))
+                int x = this.getLine();
+                int y = this.getColumn();
+                for (int corner = 0; corner < 4; corner++) {
+                    if (checkIfCovers(x, y, corner, playerTable))
                         coveredCorners++;
                 }
-                return points*coveredCorners; // 2*coveredCorners
+                return points * coveredCorners; // 2*coveredCorners
             }
-            if(this.isPointsForItems()){
-                return points*playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
+            if (this.isPointsForItems()) {
+                return points * playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
             }
         }
         return 0; // GoldCard is not front
     }
-    private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable){
-        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x,y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x,corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3-corner];
+
+    private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable) {
+        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x, y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3 - corner];
     }
 
-
+    @Override
+    public String toString() {
+        return "GoldCard: resource: " + getResourceCentreBack().toString();
+    }
 }

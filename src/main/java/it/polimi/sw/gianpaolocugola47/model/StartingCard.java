@@ -66,4 +66,8 @@ public class StartingCard extends PlaceableCard {
             }
         }
     }
+
+    public String toString(){
+        return "StartingCard: resources: "+resourcesCentreBack.toString();
+    }
 }

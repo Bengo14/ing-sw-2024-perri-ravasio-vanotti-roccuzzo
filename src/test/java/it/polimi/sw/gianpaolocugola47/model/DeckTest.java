@@ -90,10 +90,14 @@ class DeckTest {
 
     @Test
     public void testGetCardFromGivenId() {
-        Deck.initDeck();
+        Deck.initAndShuffleDeck();
         assertNotNull(Deck.getCardFromGivenId(1));
         assertEquals(Deck.getCardFromGivenId(1).getId(),1);
         System.out.println(Deck.getCardFromGivenId(1).toString());
+        assertEquals(Deck.getCardFromGivenId(41).getId(),41);
+        System.out.println(Deck.getCardFromGivenId(41).toString());
+        assertEquals(Deck.getCardFromGivenId(85).getId(),85);
+        System.out.println(Deck.getCardFromGivenId(85).toString());
         assertNull(Deck.getCardFromGivenId(1000));
         assertNull(Deck.getCardFromGivenId(0));
         assertNull(Deck.getCardFromGivenId(100));
@@ -101,15 +105,33 @@ class DeckTest {
 
     @Test
     public void testGetObjectiveCardFromGivenId(){
-        Deck.initDeck();
+        Deck.initAndShuffleDeck();
         assertNull(Deck.getObjectiveCardFromGivenId(1));
         assertNull(Deck.getObjectiveCardFromGivenId(1000));
         assertNull(Deck.getObjectiveCardFromGivenId(0));
         assertNotNull(Deck.getObjectiveCardFromGivenId(100));
         assertEquals(Deck.getObjectiveCardFromGivenId(100).getId(),100);
+        assertEquals(Deck.getObjectiveCardFromGivenId(101).getId(),101);
+        assertEquals(Deck.getObjectiveCardFromGivenId(102).getId(),102);
         System.out.println(Deck.getObjectiveCardFromGivenId(100).toString());
+        System.out.println(Deck.getObjectiveCardFromGivenId(101).toString());
+        System.out.println(Deck.getObjectiveCardFromGivenId(102).toString());
     }
 
+    @Test
+    public void testHashMap(){
+        Deck.initAndShuffleDeck();
+        for(int i = 0; i<40; i++){
+            Deck.drawCardFromResourceDeck();
+            Deck.drawCardFromGoldDeck();
+        }
+        assertEquals(Deck.getCardFromGivenId(1).getId(),1);
+        assertNull(Deck.drawCardFromResourceDeck());
+        assertNull(Deck.drawCardFromGoldDeck());
+        assertNotNull(Deck.getCardFromGivenId(1));
+        assertNotNull(Deck.getCardFromGivenId(41));
+        assertNotNull(Deck.getCardFromGivenId(85));
+    }
 }
 
 

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PlaceableCardTest {
 
    /*@Test
@@ -33,7 +35,18 @@ class PlaceableCardTest {
     }
     @Test
     public void testGetvisibleCorner(){
-        /*todo*/
+        Deck.initDeck();
+        PlaceableCard p = Deck.drawCardFromResourceDeck();
+        Corner[] c = p.getVisibleCorners();
+        assertEquals(4,c.length);
+        for (int i = 0; i < 4; i++) {
+            assertEquals(c[i], p.getVisibleCorners()[i]);
+        }
+        p.switchFrontBack();
+        c = p.getVisibleCorners();
+        for (int i = 0; i < 4; i++) {
+            assertEquals(c[i], p.getVisibleCorners()[i]);
+        }
     }
 
     @Test

@@ -38,12 +38,12 @@ public class CLI implements View {
     public void start() {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.println("""
-                                                          ▄██████╗ ▄████▄  ██████▄   ███████╗██╗   ██╗     ███╗    ██╗  ▄██▄╗  ████████╗██╗   ██╗█████▄╗    ▄██▄╗  ██╗     ██╗███████╗
-                                                          ██╔════╝██╔═══██╗██╔═══██╗ ██╔════╝╚██╗ ██╔╝     ████╗   ██║▄█▀╝ ▀█▄╗╚══██╔══╝██║   ██║██╔══██╗ ▄█▀╝ ▀█▄╗██║     ██║██╔════╝
-                                                          ██║     ██║   ██║██║    ██╗█████╗   ╚████╔╝      ██╔████╗██║██▄▄▄▄██║   ██║   ██║   ██║█████▀ ╝ ██▄▄▄▄██║██║     ██║███████╗
-                                                          ██║     ██║   ██║██║   ██╔╝██╔══╝   ██╔═██╗      ██║╚══████║██▀▀▀▀██║   ██║   ██║   ██║██╔ ▀█▄╗ ██▀▀▀▀██║██║     ██║╚════██║
-                                                          ▀██████╗ ▀█████╔╝██████╔═╝ ███████╗██╔╝ ╚██╗     ██║   ╚███║██║   ██║   ██║    ██████╔╝██║  ╚██╗██║   ██║███████╗██║███████║
-                                                           ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝    ╚══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
+                                                    ▄██████╗ ▄████▄  ██████▄   ███████╗██╗   ██╗     ███╗   ██╗  ▄██▄╗  ████████╗██╗   ██╗█████▄╗    ▄██▄╗  ██╗     ██╗███████╗
+                                                    ██╔════╝██╔═══██╗██╔═══██╗ ██╔════╝╚██╗ ██╔╝     ████╗  ██║▄█▀╝ ▀█▄╗╚══██╔══╝██║   ██║██╔══██╗ ▄█▀╝ ▀█▄╗██║     ██║██╔════╝
+                                                    ██║     ██║   ██║██║    ██╗█████╗   ╚████╔╝      ██╔██╗ ██║██▄▄▄▄██║   ██║   ██║   ██║█████▀ ╝ ██▄▄▄▄██║██║     ██║███████╗
+                                                    ██║     ██║   ██║██║   ██╔╝██╔══╝   ██╔═██╗      ██║╚██╗██║██▀▀▀▀██║   ██║   ██║   ██║██╔ ▀█▄╗ ██▀▀▀▀██║██║     ██║╚════██║
+                                                    ▀██████╗ ▀█████╔╝██████╔═╝ ███████╗██╔╝ ╚██╗     ██║ ╚████║██║   ██║   ██║    ██████╔╝██║  ╚██╗██║   ██║███████╗██║███████║
+                                                     ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
                 """);
         System.out.flush();
         setId(this.client.getIdLocal());
@@ -257,8 +257,8 @@ public class CLI implements View {
         if(client.isItMyTurn()){
             while(true){
                 printPoints();
-                //printResourceCounter(...);
-                //printPlayerBoardCompactCard(...);
+                printResourceCounter(client.getResourceCounter(client.getIdLocal() ));
+                printPlayerBoardCompactCard(localPlayerTable);
                 String command = br.readLine();
                 if(command.equals("/help")){
                     System.out.println("""
@@ -279,7 +279,7 @@ public class CLI implements View {
                         } catch(NumberFormatException e){
                             System.out.println("The parameters you typed in are not numbers, try again.");
                         }
-                        //getCard method
+
                     }
                 }
                 else if(command.startsWith("/showCardInHand")){
@@ -294,6 +294,7 @@ public class CLI implements View {
                             System.out.println("The parameter you typed in is not a number, try again.");
                         }
                         //getCardInHand method
+                        client.getCardsOnHand();
                     }
                 }
                 else if(command.startsWith("/placeCard")){

@@ -202,11 +202,26 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             for (VirtualView client : this.clients)
                 client.receiveMessage(message);
         }
+        SocketServer.getServer().sendMessageFromRmi(message);
     }
-
+    public void sendMessageFromSocket(ChatMessage message) throws RemoteException {
+        synchronized (this.clients) {
+            for (VirtualView client : this.clients)
+                client.receiveMessage(message);
+        }
+    }
     @Override
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
         System.out.println("Received private message");
+        String [] nicknames = getNicknames();
+        synchronized (this.clients) {
+            for (VirtualView client : this.clients)
+                if (nicknames[client.getId()].equals(message.getReceiver()))
+                    client.receivePrivateMessage(message);
+        }
+        SocketServer.getServer().sendPrivateMessageFromRmi(message);
+    }
+    public void sendPrivateMessageFromSocket(ChatMessage message) throws RemoteException {
         String [] nicknames = getNicknames();
         synchronized (this.clients) {
             for (VirtualView client : this.clients)

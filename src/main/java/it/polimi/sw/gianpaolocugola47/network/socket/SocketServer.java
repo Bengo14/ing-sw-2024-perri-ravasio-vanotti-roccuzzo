@@ -210,18 +210,23 @@ public class SocketServer implements Observer {
         }
     }
 
-    protected void sendMessage(ChatMessage message) {
+    public void sendMessage(ChatMessage message) {
         System.out.println("Received public message");
         synchronized (this.clients) {
             for (SocketClientHandler handler : this.clients)
                 handler.receiveMessage(message);
         }
         try {
-            RMIServer.getServer().sendMessage(message);
+            RMIServer.getServer().sendMessageFromSocket(message);
         } catch (RemoteException _) {}
     }
-
-    protected void sendPrivateMessage(ChatMessage message) {
+    public void sendMessageFromRmi(ChatMessage message) {
+        synchronized (this.clients) {
+            for (SocketClientHandler handler : this.clients)
+                handler.receiveMessage(message);
+        }
+    }
+    public void sendPrivateMessage(ChatMessage message) {
         System.out.println("Received private message");
         String [] nicknames = getNicknames();
         synchronized (this.clients) {
@@ -230,8 +235,16 @@ public class SocketServer implements Observer {
                     handler.receivePrivateMessage(message);
         }
         try {
-            RMIServer.getServer().sendPrivateMessage(message);
+            RMIServer.getServer().sendPrivateMessageFromSocket(message);
         } catch (RemoteException _) {}
+    }
+    public void sendPrivateMessageFromRmi(ChatMessage message) {
+        String [] nicknames = getNicknames();
+        synchronized (this.clients) {
+            for (SocketClientHandler handler : this.clients)
+                if (nicknames[handler.getId()].equals(message.getReceiver()))
+                    handler.receivePrivateMessage(message);
+        }
     }
 
     protected String[] getNicknames()  {

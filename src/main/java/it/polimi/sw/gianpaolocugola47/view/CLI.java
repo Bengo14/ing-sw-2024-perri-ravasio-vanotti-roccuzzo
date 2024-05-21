@@ -269,6 +269,8 @@ public class CLI implements View {
                         /showCard [xCoord] [yCoord]: show the board
                         /showCardInHand [cardInHand]: show a card in hand
                         /showCardsInHand: show both cards in hand
+                        /showCardsOnBoard: show cards present on the board
+                        /showDeckCards: show cards present on top of each deck
                         /placeCard [xCoord] [yCoord] [cardInHand]: place a card on the board""");
                 }
                 else if(command.startsWith("/showCard")){
@@ -292,11 +294,17 @@ public class CLI implements View {
                             int card = Integer.parseInt(cardInHand[1]);
                             if(card != 0 && card != 1)
                                 System.out.println("The parameter you typed in is not a valid hand position, try again.");
+                            else{
+                                if(this.localPlayerTable.getCardsOnHand()[card] instanceof GoldCard)
+                                    this.printGoldCard((GoldCard) this.localPlayerTable.getCardsOnHand()[card]);
+                                else if(this.localPlayerTable.getCardsOnHand()[card].isFront())
+                                    this.printResourceCard(this.localPlayerTable.getCardsOnHand()[card]);
+                            }
                         } catch(NumberFormatException e){
                             System.out.println("The parameter you typed in is not a number, try again.");
                         }
                         //getCardInHand method
-                        client.getCardsOnHand();
+                        //client.getCardsOnHand(); to be moved!
                     }
                 }
                 else if(command.startsWith("/placeCard")){
@@ -316,8 +324,22 @@ public class CLI implements View {
                     }
                 }
                 else if(command.equals("/showCardsInHand")){
-                    /*todo*/
-                    //getCardsInHand method
+                    for(ResourceCard card: localPlayerTable.getCardsOnHand())
+                        if(card instanceof GoldCard)
+                            this.printGoldCard((GoldCard) card);
+                        else
+                            this.printResourceCard(card);
+                }
+                else if(command.equals("/showCardsOnBoard")){
+                    for(ResourceCard card: cardsOnTable)
+                        if(card instanceof GoldCard)
+                            this.printGoldCard((GoldCard) card);
+                        else
+                            this.printResourceCard(card);
+                }
+                else if(command.equals("/showDeckCards")){
+                    this.printResourceCard(resourceCardOnTop);
+                    this.printGoldCard(goldCardOnTop);
                 }
                 else System.out.println("Command not recognized");
                 /*todo*/

@@ -1,0 +1,17 @@
+.login-page {
+    -fx-background-image: url('../graphics/backGround/login.jpeg');
+    -fx-background-size: cover, auto;
+}
+.login-button {
+    -fx-padding: 10px 30px; /* more horizontal padding */
+    -fx-font-size: 1.3em;
+    -fx-border-width: 5px;
+    -fx-border-radius: 5px; /* rounded border */
+    -fx-background-radius: 7px; /* rounded background */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 3, 0.2, 2, 2);
+    -fx-cursor: hand;
+    -fx-background-color: #eaeaea;
+}
+.h2 {
+    -fx-font-size: 3em;
+}

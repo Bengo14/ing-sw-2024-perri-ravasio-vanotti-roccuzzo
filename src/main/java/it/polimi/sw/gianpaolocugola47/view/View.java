@@ -4,10 +4,14 @@ import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+import javafx.stage.Stage;
 
 public interface View {
 
     void start();
+
+
+
     void setId(int id);
     void setNickname(String nickname);
     void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable);

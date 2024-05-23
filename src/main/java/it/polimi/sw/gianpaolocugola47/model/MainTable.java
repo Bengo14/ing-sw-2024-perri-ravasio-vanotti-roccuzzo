@@ -170,10 +170,10 @@ public class MainTable implements Observable {
         getPlayerTable(playerId).turnCardOnHand(cardPosition, isFront);
     }
 
-    protected int getBoardPoints(int playerId) {
+    public int getBoardPoints(int playerId) {
         return boardPoints[playerId];
     }
-    protected int getGlobalPoints(int playerId) {
+    public int getGlobalPoints(int playerId) {
         return globalPoints[playerId];
     }
 
@@ -264,7 +264,7 @@ public class MainTable implements Observable {
     public int getNumOfPlayers() {
         return this.numOfPlayers;
     }
-    protected PlayerTable getPlayerTable(int index) {
+    public PlayerTable getPlayerTable(int index) {
         return this.playersTables[index];
     }
 

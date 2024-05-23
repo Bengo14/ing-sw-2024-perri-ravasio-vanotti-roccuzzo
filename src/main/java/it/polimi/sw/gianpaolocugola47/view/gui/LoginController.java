@@ -18,7 +18,7 @@ public class LoginController implements Initializable {
     @FXML
     private TextField nickname_LBL;
     @FXML
-    private Button sendNickname_BTN;
+    private VBox nickname_VB;
 
     private Client client;
 
@@ -68,6 +68,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourcesBundle) {
-
+        nickname_VB.setManaged(true);
+        nickname_VB.setVisible(true);
     }
 }

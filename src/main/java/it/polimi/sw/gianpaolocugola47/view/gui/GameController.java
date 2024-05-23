@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
     private Client client;
-    private String nickname;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

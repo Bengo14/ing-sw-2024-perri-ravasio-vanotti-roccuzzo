@@ -6,20 +6,19 @@ import it.polimi.sw.gianpaolocugola47.network.Client;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EndGameController implements Initializable {
-
+    private Stage stage;
     @FXML
     private Button ExitGame_BTN;
     private final TableView<PlayerTable> resultsTable = new TableView<>();
@@ -61,22 +60,23 @@ public class EndGameController implements Initializable {
         // Display the winner
         winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName()); // Assuming PlayerTable has a "getNickname" method
     }
+    public void logOut(ActionEvent event){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Are you sure you want to logout?");
+        alert.setContentText("Press OK to logout, Cancel to stay logged in");
 
-
-
-
-
-
-
-
-
-
-
-
-    public void handleExitGame() {
-        javafx.application.Platform.exit();
-        System.exit(0);
+        if(alert.showAndWait().get() == ButtonType.OK){
+            stage = (Stage) leaderboardPane.getScene().getWindow();
+            System.out.println("Logged out successfully");
+            stage.close();
+        }
     }
+//endle bottone funzionante senza richiesta
+//    public void handleExitGame() {
+//        javafx.application.Platform.exit();
+//        System.exit(0);
+//    }
 
 
     @Override

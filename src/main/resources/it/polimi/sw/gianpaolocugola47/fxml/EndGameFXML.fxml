@@ -17,7 +17,7 @@
       <Label id="titleEndGame" fx:id="winner_LBL" styleClass="h4" stylesheets="@../css/Style.css" text="WINNER" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button id="titleEndGame" fx:id="ExitGame_BTN" mnemonicParsing="false" onAction="#handleExitGame" styleClass="h4" stylesheets="@../css/Style.css" text="EXIT GAME" />
+            <Button id="titleEndGame" fx:id="ExitGame_BTN" mnemonicParsing="false" onAction="#logOut" styleClass="h4" stylesheets="@../css/Style.css" text="EXIT GAME" />
          </children>
       </HBox>
    </children>

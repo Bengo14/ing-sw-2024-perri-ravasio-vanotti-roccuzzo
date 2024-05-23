@@ -3,13 +3,17 @@ package it.polimi.sw.gianpaolocugola47.view.gui;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.view.View;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 //import javafx.scene.*;
 //import javafx.scene.media.Media;
 
@@ -27,6 +31,7 @@ public class ViewGui extends Application implements View {
 //    private Media media;
 //    private MediaPlayer mediaPlayer;
     private LoginController loginController;
+    private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
     private final PlayerTable localPlayerTable;
@@ -69,11 +74,16 @@ public class ViewGui extends Application implements View {
         });
         stage.setMinWidth(1280);
         stage.setMinHeight(760);
-       run();
+        setScene("PreGame");
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        delay.setOnFinished(event -> setScene("Game"));
+        delay.play();
+        stage.show();
+
     }
-    public void run() {
-        setScene("Login");
-        //music
+//    public void run() {
+//        setScene("Login");
+//        music
 //        try{
 //            media = new Media(getClass().getResource("/it/polimi/sw/gianpaolocugola47/audio/lobby.mp3").toExternalForm());
 //            mediaPlayer = new MediaPlayer(media);
@@ -81,8 +91,8 @@ public class ViewGui extends Application implements View {
 //            mediaPlayer.play();
 //        }catch (Exception e){
 //            System.out.println("Error loading music. Sorry :(");
-        //}
-    }
+//        }
+//    }
     public void setScene(String sceneName) {
         Platform.runLater(()->{
             fxmlLoader = new FXMLLoader();
@@ -101,6 +111,12 @@ public class ViewGui extends Application implements View {
             stage.setMaximized(true);
             stage.setTitle("Codex Naturalis");
             switch (sceneName) {
+                case "PreGame":
+                    preGameController = fxmlLoader.getController();
+                    preGameController.setClient(client);
+                    stage.setMinWidth(1280);
+                    stage.setMinHeight(720);
+                    break;
                 case "Login":
                     loginController = fxmlLoader.getController();
                     loginController.setClient(client);
@@ -116,13 +132,31 @@ public class ViewGui extends Application implements View {
                     endGameController = fxmlLoader.getController();
                     break;
             }
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                logOut(stage);
+            });
             stage.show();
         });
+    }
+    public void logOut(Stage primaryStage){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Are you sure you want to logout?");
+        alert.setContentText("Press OK to logout, Cancel to stay logged in");
+
+        if(alert.showAndWait().get() == ButtonType.OK){
+            System.out.println("Logged out successfully");
+            primaryStage.close();
+        }
     }
     protected static void waitForRunLater() throws InterruptedException {
         Semaphore semaphore = new Semaphore(0);
         Platform.runLater(semaphore::release);
         semaphore.acquire();
+    }
+    public void run() {
+        setScene("Login");
     }
 
     @Override

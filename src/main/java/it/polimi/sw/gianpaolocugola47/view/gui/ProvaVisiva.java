@@ -12,7 +12,7 @@ public class ProvaVisiva extends Application {
 
 
     //controllo visivo lobby
-    /*
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root;
@@ -30,8 +30,8 @@ public class ProvaVisiva extends Application {
     });
         stage.show();
     }
-     */
 
+/*
     //controllo visivo endGame
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,11 +49,11 @@ public class ProvaVisiva extends Application {
         logOut(stage);
     });
         stage.show();
-    }
+    }*/
 
-
+/*
     //controllo visivo PreGame
-    /*@Override
+    @Override
     public void start(Stage stage) throws Exception {
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml"));

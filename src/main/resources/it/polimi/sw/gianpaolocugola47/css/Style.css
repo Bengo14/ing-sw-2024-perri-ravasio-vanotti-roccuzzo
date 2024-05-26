@@ -46,6 +46,9 @@
 .boardTable {
     -fx-background-image: url('../graphics/backGround/boardTable.jpg');
     -fx-background-size: cover, auto;
+}.plateau {
+    -fx-background-image: url('../graphics/board/plateau.png');
+    -fx-background-size: cover, auto;
 }
 .tooltip {
     -fx-font-size: 1.2em;

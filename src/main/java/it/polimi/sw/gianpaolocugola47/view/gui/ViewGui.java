@@ -51,9 +51,10 @@ public class ViewGui extends Application implements View {
         this.client = client;
         this.localPlayerTable = new PlayerTable(client.getIdLocal());
         scenes = new HashMap<>();
-        scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/graphics/fxml/LoginFXML.fxml");
-        scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/graphics/fxml/GameFXML.fxml");
-        scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/graphics/fxml/EndGameFXML.fxml");
+        scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
+        scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
+        scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
+        scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(scenes.get("Login")));
         try{

@@ -58,6 +58,16 @@
     -fx-max-width: 400px;
     -fx-wrap-text: true;
 }
+.selectable:hover{
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0);
+}
+.baseSelectable{
+    -fx-effect: dropshadow(gaussian, black, 20.0, 0, 0, 0);
+}
+
+.selectedCard{
+    -fx-effect: dropshadow(gaussian, red, 20.0, 0, 0, 0);
+}
 .login-container {
     -fx-background-color: #FFFFFFEE;
     -fx-border-radius: 15px;

@@ -7,10 +7,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -18,7 +16,7 @@
    <children>
       <VBox prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="93.0" prefWidth="1280.0">
                <children>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -36,64 +34,9 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="796.0" prefWidth="1280.0">
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="630.0" prefWidth="1280.0">
                <children>
-                  <VBox alignment="BOTTOM_LEFT" prefHeight="658.0" prefWidth="234.0">
-                     <children>
-                        <GridPane alignment="TOP_CENTER" gridLinesVisible="true" prefHeight="495.0" prefWidth="234.0" styleClass="plateau">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                                 <image>
-                                    <Image url="@../graphics/pawns/CODEX_pion_vert.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../graphics/pawns/CODEX_pion_jaune.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-                                 <image>
-                                    <Image url="@../graphics/pawns/CODEX_pion_rouge.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitHeight="150.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                                 <image>
-                                    <Image url="@../graphics/pawns/CODEX_pion_bleu.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </GridPane>
-                        <ListView prefHeight="150.0" prefWidth="300.0" styleClass="tooltip" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <TextField prefHeight="70.0" prefWidth="233.0" promptText="type your message here:" styleClass="tooltip" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </VBox>
-                  <StackPane fx:id="board" prefHeight="658.0" prefWidth="746.0" />
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_RIGHT" prefHeight="539.0" prefWidth="314.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -113,7 +56,11 @@
                                  </image>
                               </ImageView>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
+                        <HBox prefHeight="40.0" prefWidth="20.0" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
@@ -136,6 +83,7 @@
                               </ImageView>
                            </children>
                         </HBox>
+                        <HBox prefHeight="40.0" prefWidth="20.0" />
                         <HBox alignment="CENTER" spacing="10.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
@@ -146,6 +94,7 @@
                               <Button fx:id="switch_1" mnemonicParsing="false" text="switch_1" />
                            </children>
                         </HBox>
+                        <HBox prefHeight="19.0" prefWidth="300.0" />
                         <HBox alignment="CENTER" spacing="10.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
@@ -156,6 +105,7 @@
                               <Button fx:id="switch_2" mnemonicParsing="false" text="switch_2" />
                            </children>
                         </HBox>
+                        <HBox prefHeight="21.0" prefWidth="300.0" />
                         <HBox alignment="CENTER" spacing="10.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
@@ -166,6 +116,7 @@
                               <Button fx:id="switch_3" mnemonicParsing="false" text="switch_3" />
                            </children>
                         </HBox>
+                        <HBox prefHeight="20.0" prefWidth="300.0" />
                         <HBox alignment="CENTER" prefHeight="77.0" prefWidth="300.0" spacing="10.0">
                            <children>
                               <ImageView fx:id="objective_card" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
@@ -178,10 +129,55 @@
                      </children>
                   </VBox>
                </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <HBox prefHeight="796.0" prefWidth="1280.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="748.0" prefWidth="259.0">
+                     <children>
+                        <HBox prefHeight="110.0" prefWidth="345.0">
+                           <children>
+                              <VBox prefHeight="80.0" prefWidth="8.0" />
+                              <ImageView fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../graphics/cards/front_96.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox prefHeight="80.0" prefWidth="45.0" />
+                              <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../graphics/cards/front_94.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <Pane prefHeight="535.0" prefWidth="259.0">
+                           <children>
+                              <ImageView fitHeight="506.0" fitWidth="259.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" styleClass="plateau">
+                                 <image>
+                                    <Image url="@../graphics/board/plateau.png" />
+                                 </image>
+                              </ImageView>
+                              <Pane fx:id="position_0" layoutX="42.0" layoutY="443.0" prefHeight="50.0" prefWidth="54.0" />
+                              <Pane fx:id="position_1" layoutX="88.0" layoutY="393.0" prefHeight="50.0" prefWidth="54.0" />
+                           </children>
+                        </Pane>
+                        <ListView prefHeight="122.0" prefWidth="259.0" styleClass="tooltip" />
+                        <TextField prefHeight="63.0" prefWidth="259.0" promptText="type your message here:" styleClass="tooltip" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <StackPane fx:id="board" prefHeight="658.0" prefWidth="746.0" />
+               </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></HBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </StackPane>

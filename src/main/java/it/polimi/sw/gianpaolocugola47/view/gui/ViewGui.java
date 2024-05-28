@@ -47,6 +47,7 @@ public class ViewGui extends Application implements View {
     public static void main(String[] args) {
         launch(args);
     }
+
     public ViewGui(Client client) {
         this.client = client;
         this.localPlayerTable = new PlayerTable(client.getIdLocal());
@@ -64,9 +65,11 @@ public class ViewGui extends Application implements View {
         }
     }
 
-
     @Override
     public void start(Stage stage) throws Exception {
+        setNickname(this.client.getNicknameLocal());
+        this.nicknames = client.getNicknames();
+
         this.stage = stage;
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
         stage.setOnCloseRequest((WindowEvent t) -> {

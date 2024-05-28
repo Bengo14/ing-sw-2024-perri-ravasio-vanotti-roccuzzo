@@ -47,7 +47,7 @@ public class CLI implements View {
                                                      ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
                 """);
         System.out.flush();
-        setId(this.client.getIdLocal());
+        //setId(this.client.getIdLocal()); // done in the constructor
         setNickname(this.client.getNicknameLocal());
         this.nicknames = client.getNicknames();
         openChat();

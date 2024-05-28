@@ -12,6 +12,6 @@ public interface Observer {
     void updatePoints(int[] boardPoints, int[] globalPoints);
     void showTurn(int playerId);
     void showWinner(int winnerId);
-    void startGame();
+    void startGame() throws RemoteException;
 
 }

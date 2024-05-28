@@ -2,6 +2,8 @@ package it.polimi.sw.gianpaolocugola47.view;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
+import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedReader;
@@ -143,6 +145,16 @@ public class CLI implements View {
     @Override
     public int getBoardPoints() {
         return this.boardPoints;
+    }
+
+    @Override
+    public void setClient(RMIClient client) {
+        //this.client = client;
+    }
+
+    @Override
+    public void setClient(SocketClient client) {
+
     }
 
     @SuppressWarnings("ALL")

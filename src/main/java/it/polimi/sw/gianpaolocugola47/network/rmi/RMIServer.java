@@ -249,14 +249,19 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     /* --- methods of interface Observer --- */
 
     @Override
-    public void startGame() {
+    public void startGame() throws RemoteException {
         System.out.println("Game started");
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
-                try {
-                    for(VirtualView view : this.clients)
+                for(VirtualView view : this.clients) {
+                    try {
                         view.startGame();
-                } catch (RemoteException ignored) {}
+                        System.out.println("Game started for client: " + view.getId());
+                    } catch (RemoteException e) {
+                        System.err.println("Failed to start game for client: " + view.getId());
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }

@@ -12,12 +12,12 @@ public class GameController implements Initializable {
     private Client client;
     private String nickname = null;
     @FXML
-    private Label myNickname;
+    private Label nickLabel;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        myNickname.setVisible(true);
+        nickLabel.setVisible(true);
     }
     /**
      * Set the nickname of the player that is using this GUI.
@@ -25,9 +25,9 @@ public class GameController implements Initializable {
      */
     public void setMyNickname(String nickname) {
         this.nickname = nickname;
-        myNickname.setText(nickname);
-        myNickname.setStyle("-fx-font-weight: bold");
-        myNickname.setVisible(true);
+        nickLabel.setText(nickname);
+        nickLabel.setStyle("-fx-font-weight: bold");
+        nickLabel.setVisible(true);
     }
 
 

@@ -6,8 +6,11 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
+import it.polimi.sw.gianpaolocugola47.view.gui.MainApp;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
+import javafx.application.Application;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -112,11 +115,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         this.server.addPlayer(this.id, this.nickname);
     }
 
+
+
     /* --- methods of interface VirtualView --- */
 
     @Override
     public void terminate() throws RemoteException {
         terminateLocal();
+    }
+    private void runLater(Runnable runnable) {
+        Platform.runLater(runnable);
     }
 
     @Override
@@ -126,14 +134,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void startGame() throws RemoteException {
-
-        if(isCliChosen) {
+        if (isCliChosen) {
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
-        }
-        else {
-            this.view = new ViewGui(this);
-            new Thread(() -> view.start()).start();
+        } else {
+            new Thread(() -> {
+                Platform.startup(() -> {
+                    MainApp.startGame(this);
+                });
+            }).start();
         }
     }
 

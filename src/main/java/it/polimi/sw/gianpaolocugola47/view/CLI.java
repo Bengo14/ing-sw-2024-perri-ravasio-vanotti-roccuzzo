@@ -146,7 +146,6 @@ public class CLI implements View {
     public int getBoardPoints() {
         return this.boardPoints;
     }
-
     @Override
     public void setClient(RMIClient client) {
         //this.client = client;

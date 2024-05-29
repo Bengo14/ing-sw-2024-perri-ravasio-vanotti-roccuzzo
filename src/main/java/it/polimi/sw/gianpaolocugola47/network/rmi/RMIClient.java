@@ -6,10 +6,8 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
-import it.polimi.sw.gianpaolocugola47.view.gui.MainApp;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
-import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -131,7 +129,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public void ping() throws RemoteException {
         // do nothing, liveness check only
     }
-
     @Override
     public void startGame() throws RemoteException {
         if (isCliChosen) {
@@ -140,7 +137,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         } else {
             new Thread(() -> {
                 Platform.startup(() -> {
-                    MainApp.startGame(this);
+                    ViewGui.startGame(this);
                 });
             }).start();
         }

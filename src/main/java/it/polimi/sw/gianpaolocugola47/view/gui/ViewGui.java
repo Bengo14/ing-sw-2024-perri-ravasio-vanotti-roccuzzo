@@ -23,7 +23,7 @@ import java.util.concurrent.Semaphore;
 
 public class ViewGui extends Application implements View {
 
-    private Client client;
+    private static Client client;
     private Stage stage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
@@ -51,6 +51,7 @@ public class ViewGui extends Application implements View {
         scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
+        scenes.put("Choice", "/it/polimi/sw/gianpaolocugola47/fxml/ChoiceFXML.fxml");
         fxmlLoader = new FXMLLoader();
 //        fxmlLoader.setLocation(getClass().getResource(scenes.get("PreGame")));
 //        try {
@@ -72,9 +73,20 @@ public class ViewGui extends Application implements View {
         stage.setMinHeight(760);
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(event -> setScene("Game"));
+        delay.setOnFinished(event -> setScene("Choice"));
         delay.play();
         stage.show();
+    }
+    public static void startGame(Client client) {
+        Platform.runLater(() -> {
+            try {
+                Platform.runLater(() -> {
+                    new Thread(() -> launch(ViewGui.class)).start();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void setScene(String sceneName) {
@@ -100,6 +112,14 @@ public class ViewGui extends Application implements View {
                         System.err.println("PreGameController is null");
                     }
                     break;
+                case "Choice":
+                    ChoiceController choiceController = fxmlLoader.getController();
+                    if (choiceController != null) {
+                        choiceController.setClient(client);
+                    } else {
+                        System.err.println("ChoiceController is null");
+                    }
+                    break;
                 case "Game":
                     gameController = fxmlLoader.getController();
                     if (gameController != null) {
@@ -119,7 +139,6 @@ public class ViewGui extends Application implements View {
 
             stage.setScene(scene);
             stage.setResizable(true);
-
             stage.setTitle("Codex Naturalis");
             stage.setMinWidth(1280);
             stage.setMinHeight(720);
@@ -211,14 +230,13 @@ public class ViewGui extends Application implements View {
     @Override
     public void setClient(RMIClient client) {
         this.client = client;
-        this.localPlayerTable.setId(client.getIdLocal());
     }
 
     @Override
     public void setClient(SocketClient client) {
         this.client = client;
-        this.localPlayerTable.setId(client.getIdLocal());
     }
+
 
     public void nicknameAlreadyUsed() {
         loginController.nicknameAlreadyUsed();

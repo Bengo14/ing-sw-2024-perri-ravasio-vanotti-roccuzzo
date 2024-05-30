@@ -135,11 +135,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
         } else {
-            new Thread(() -> {
-                Platform.startup(() -> {
-                    ViewGui.startGame(this);
-                });
-            }).start();
+            this.view = new ViewGui(this);
+            new Thread(() -> view.start()).start();
         }
     }
 

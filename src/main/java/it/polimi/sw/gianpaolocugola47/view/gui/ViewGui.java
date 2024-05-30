@@ -28,8 +28,8 @@ public class ViewGui extends Application implements View {
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private final HashMap<String, String> scenes;
-//    private Media media;
-//    private MediaPlayer mediaPlayer;
+    //private Media media;
+    //private MediaPlayer mediaPlayer;
     private LoginController loginController;
     private PreGameController preGameController;
     private GameController gameController;

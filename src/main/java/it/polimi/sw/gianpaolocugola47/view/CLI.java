@@ -146,15 +146,6 @@ public class CLI implements View {
     public int getBoardPoints() {
         return this.boardPoints;
     }
-    @Override
-    public void setClient(RMIClient client) {
-        //this.client = client;
-    }
-
-    @Override
-    public void setClient(SocketClient client) {
-
-    }
 
     @SuppressWarnings("ALL")
     public void printResourceCard(ResourceCard resourceCard) {

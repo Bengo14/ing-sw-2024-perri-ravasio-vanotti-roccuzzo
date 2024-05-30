@@ -283,8 +283,7 @@ public class SocketClient implements VirtualView, Client {
             new Thread(() -> view.start()).start();
         }
         else {
-            this.view = new ViewGui();
-            this.view.setClient(this);
+            this.view = new ViewGui(this);
             new Thread(() -> view.start()).start();
         }
     }

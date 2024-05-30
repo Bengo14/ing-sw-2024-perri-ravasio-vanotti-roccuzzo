@@ -25,6 +25,4 @@ public interface View {
     int getGlobalPoints();
     int getBoardPoints();
 
-    void setClient(RMIClient client);
-    void setClient(SocketClient client);
 }

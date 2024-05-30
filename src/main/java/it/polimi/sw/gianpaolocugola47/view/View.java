@@ -4,6 +4,9 @@ import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
+import it.polimi.sw.gianpaolocugola47.network.Client;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
+import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
 import javafx.stage.Stage;
 
 public interface View {
@@ -21,4 +24,7 @@ public interface View {
     Objectives getSecretObjective();
     int getGlobalPoints();
     int getBoardPoints();
+
+    void setClient(RMIClient client);
+    void setClient(SocketClient client);
 }

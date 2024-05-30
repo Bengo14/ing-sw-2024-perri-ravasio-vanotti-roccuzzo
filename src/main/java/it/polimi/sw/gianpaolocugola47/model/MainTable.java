@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 import it.polimi.sw.gianpaolocugola47.observer.Observable;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,8 +109,13 @@ public class MainTable implements Observable {
     public void startGame() {
         new Thread(()->{
             synchronized (observers) {
-                for (Observer observer : observers)
-                    observer.startGame();
+                for (Observer observer : observers) {
+                    try {
+                        observer.startGame();
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }).start();
     }

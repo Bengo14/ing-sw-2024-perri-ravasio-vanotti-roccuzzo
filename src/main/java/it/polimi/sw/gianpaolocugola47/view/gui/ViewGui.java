@@ -159,13 +159,10 @@ public class ViewGui extends Application implements View {
         Platform.runLater(semaphore::release);
         semaphore.acquire();
     }
-    public void run() {
-        setScene("Login");
-    }
 
     @Override
     public void start() {
-        run();
+        launch();
     }
 
     @Override

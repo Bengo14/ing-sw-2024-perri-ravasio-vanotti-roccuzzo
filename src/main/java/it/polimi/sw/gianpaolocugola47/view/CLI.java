@@ -147,6 +147,11 @@ public class CLI implements View {
         return this.boardPoints;
     }
 
+    @Override
+    public void setClient(Client client) {
+        //this.client = client;
+    }
+
     @SuppressWarnings("ALL")
     public void printResourceCard(ResourceCard resourceCard) {
         String colour = resourceCard.getResourceCentreBack().getAsciiEscape();

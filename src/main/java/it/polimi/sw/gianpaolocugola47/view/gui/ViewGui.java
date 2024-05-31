@@ -23,7 +23,7 @@ import java.util.concurrent.Semaphore;
 
 public class ViewGui extends Application implements View {
 
-    private final Client client;
+    private static Client client;
     private Stage stage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
@@ -31,10 +31,11 @@ public class ViewGui extends Application implements View {
     //private Media media;
     //private MediaPlayer mediaPlayer;
     private LoginController loginController;
+    private ChoiceController choiceController;
     private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
-    private final PlayerTable localPlayerTable;
+    private PlayerTable localPlayerTable;
     private Objectives[] objectives;
     private ResourceCard[] cardsOnTable; //cards on table that can be picked up
     private GoldCard goldCardOnTop; //NOT on playerTable
@@ -44,25 +45,30 @@ public class ViewGui extends Application implements View {
     private String[] nicknames;
     private String nickname;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-    public ViewGui(Client client) {
-        this.client = client;
-        this.localPlayerTable = new PlayerTable(client.getIdLocal());
+
+
+
+    public ViewGui() {
+        this.localPlayerTable = new PlayerTable(0);//id posto a zero di default
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
         scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
+        scenes.put("Choice", "/it/polimi/sw/gianpaolocugola47/fxml/ChoiceFXML.fxml");
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
-        fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(scenes.get("Login")));
-        try{
-            scene = new Scene(fxmlLoader.load());
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
     }
+
+
+    public void setClient(Client client) {
+        ViewGui.client = client;
+        //update the player table with the correct id
+        localPlayerTable.setId(client.getIdLocal());
+    }
+
+    public static Client getClient() {
+        return ViewGui.client;
+    }
+
 
 
     @Override
@@ -75,25 +81,23 @@ public class ViewGui extends Application implements View {
         });
         stage.setMinWidth(1280);
         stage.setMinHeight(760);
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(scenes.get("PreGame")));
+        try{
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(" Error loading scene PreGame");
+            return;
+        }
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
-        delay.setOnFinished(event -> setScene("Game"));
+        delay.setOnFinished(event -> setScene("Choice"));
         delay.play();
         stage.show();
 
     }
-//    public void run() {
-//        setScene("Login");
-//        music
-//        try{
-//            media = new Media(getClass().getResource("/it/polimi/sw/gianpaolocugola47/audio/lobby.mp3").toExternalForm());
-//            mediaPlayer = new MediaPlayer(media);
-//            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-//            mediaPlayer.play();
-//        }catch (Exception e){
-//            System.out.println("Error loading music. Sorry :(");
-//        }
-//    }
+
     public void setScene(String sceneName) {
         Platform.runLater(()->{
             fxmlLoader = new FXMLLoader();
@@ -115,16 +119,15 @@ public class ViewGui extends Application implements View {
                 case "PreGame":
                     preGameController = fxmlLoader.getController();
                     preGameController.setClient(client);
-                    stage.setMinWidth(1280);
-                    stage.setMinHeight(720);
+                    break;
+                case "Choice":
+                    choiceController = fxmlLoader.getController();
                     break;
                 case "Login":
                     loginController = fxmlLoader.getController();
                     loginController.setClient(client);
                     break;
                 case "Game":
-                    stage.setMinWidth(1280);
-                    stage.setMinHeight(720);
                     gameController = fxmlLoader.getController();
                     this.nickname = this.client.getNicknameLocal();
                     gameController.setClient(client);
@@ -156,13 +159,19 @@ public class ViewGui extends Application implements View {
         Platform.runLater(semaphore::release);
         semaphore.acquire();
     }
-    public void run() {
-        setScene("Login");
-    }
+
 
     @Override
     public void start() {
-        run();
+            Platform.runLater(() -> {
+                try {
+                    start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            });
+
     }
 
     @Override
@@ -222,6 +231,7 @@ public class ViewGui extends Application implements View {
     public void nicknameAlreadyUsed() {
         loginController.nicknameAlreadyUsed();
     }
+
 
 
 }

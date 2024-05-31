@@ -8,7 +8,9 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
+import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -135,8 +137,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
         } else {
-            this.view = new ViewGui(this);
-            new Thread(() -> view.start()).start();
+            new Thread(() -> {
+                this.view = new ViewGui();
+                view.setClient(this);
+                Platform.startup(() -> {
+                    view.start();
+                });
+            }).start();
+
         }
     }
 

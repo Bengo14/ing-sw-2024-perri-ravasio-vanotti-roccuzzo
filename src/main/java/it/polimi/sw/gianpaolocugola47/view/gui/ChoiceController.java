@@ -16,7 +16,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
-
+import static it.polimi.sw.gianpaolocugola47.view.gui.ViewGui.getClient;
 
 
 public class ChoiceController implements Initializable {
@@ -35,13 +35,12 @@ public class ChoiceController implements Initializable {
     private Client client;
 
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.client = getClient();
         if (client != null) {
-            StartingCard startingCard = client.drawStartingCard();
+            StartingCard startingCard = client.drawStartingCard();//non pesca la carta, il metodo successivo da nullpointexception
             int id_start = startingCard.getId();
             String frontImagePath = "/graphics/cards/front_"+id_start+".png";
             Image frontImage = new Image(getClass().getResourceAsStream(frontImagePath));

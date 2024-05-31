@@ -25,4 +25,5 @@ public interface View {
     int getGlobalPoints();
     int getBoardPoints();
 
+    void setClient(Client client);
 }

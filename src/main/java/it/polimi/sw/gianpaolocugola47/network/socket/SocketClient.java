@@ -7,6 +7,7 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
+import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
@@ -283,8 +284,13 @@ public class SocketClient implements VirtualView, Client {
             new Thread(() -> view.start()).start();
         }
         else {
-            this.view = new ViewGui();
-            new Thread(() -> view.start()).start();
+            new Thread(() -> {
+                this.view = new ViewGui();
+                view.setClient(this);
+                Platform.startup(() -> {
+                    view.start();
+                });
+            }).start();
         }
     }
 

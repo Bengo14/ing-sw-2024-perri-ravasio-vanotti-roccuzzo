@@ -35,7 +35,7 @@ public class ViewGui extends Application implements View {
     private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
-    private PlayerTable localPlayerTable;
+    private static PlayerTable localPlayerTable;
     private Objectives[] objectives;
     private ResourceCard[] cardsOnTable; //cards on table that can be picked up
     private GoldCard goldCardOnTop; //NOT on playerTable
@@ -67,6 +67,9 @@ public class ViewGui extends Application implements View {
 
     public static Client getClient() {
         return ViewGui.client;
+    }
+    public static PlayerTable getPlayerTable() {
+        return ViewGui.localPlayerTable;
     }
 
 
@@ -110,7 +113,7 @@ public class ViewGui extends Application implements View {
                 return;
             }
             //add css
-            //scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/graphics/css/style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
             stage.setResizable(true);
             stage.setMaximized(true);

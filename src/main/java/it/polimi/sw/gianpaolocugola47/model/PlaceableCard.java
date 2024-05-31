@@ -1,8 +1,9 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class PlaceableCard {
+public abstract class PlaceableCard implements Serializable {
     private boolean isFront;
     private final String backImgPath;
     private final String frontImgPath;

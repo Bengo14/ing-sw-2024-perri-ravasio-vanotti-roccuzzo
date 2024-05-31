@@ -1,11 +1,14 @@
 package it.polimi.sw.gianpaolocugola47.model;
+
+import java.io.Serializable;
+
 /**
  * This class represents a corner of a card.
  * It contains the information of the corner's status, such as if the corner is covered ot not, if the corner can be
  * covered by another card or if any resource/item is present. Information on the corner covering a particular instance
  * of a given corner is also present.
  */
-public class Corner {
+public class Corner implements Serializable {
     private final boolean isBuildable;
     private final boolean isItem;
     private final boolean isResource;

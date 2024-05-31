@@ -1,6 +1,8 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
+import it.polimi.sw.gianpaolocugola47.model.Deck;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
+import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
@@ -17,6 +19,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 import static it.polimi.sw.gianpaolocugola47.view.gui.ViewGui.getClient;
+import static it.polimi.sw.gianpaolocugola47.view.gui.ViewGui.getPlayerTable;
 
 
 public class ChoiceController implements Initializable {
@@ -33,33 +36,36 @@ public class ChoiceController implements Initializable {
     private StartingCard selectedStartingCard;
     private Objectives selectedObjective;
     private Client client;
-
+    private PlayerTable playerTable;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.client = getClient();
+        this.playerTable = getPlayerTable();
         if (client != null) {
-            StartingCard startingCard = client.drawStartingCard();//non pesca la carta, il metodo successivo da nullpointexception
+            StartingCard startingCard = client.drawStartingCard();
             int id_start = startingCard.getId();
-            String frontImagePath = "/graphics/cards/front_"+id_start+".png";
+            System.out.println("the id is:"+id_start);
+            String frontImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+id_start+".png";
+            System.out.println(getClass().getResource(frontImagePath));
             Image frontImage = new Image(getClass().getResourceAsStream(frontImagePath));
             starting_front.setImage(frontImage);
-            String backImagePath = "/graphics/cards/back_"+id_start+".png";
+            String backImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+id_start+".png";
             Image backImage = new Image(getClass().getResourceAsStream(backImagePath));
             starting_back.setImage(backImage);
 
-            Objectives[] objectives = client.setStartingCardAndDrawObjectives();
-            if (objectives.length >= 2) {
-                int id_obj1 = objectives[0].getId();
-                int id_obj2 = objectives[1].getId();
-                String obj1ImagePath = "/graphics/cards/front_"+id_obj1+".png";
-                Image obj1Image = new Image(getClass().getResourceAsStream(obj1ImagePath));
-                secret_1.setImage(obj1Image);
-                String obj2ImagePath = "/graphics/cards/front_"+id_obj2+".png";
-                Image obj2Image = new Image(getClass().getResourceAsStream(obj2ImagePath));
-                secret_2.setImage(obj2Image);
-            }
+//            Objectives[] objectives = client.setStartingCardAndDrawObjectives();
+//            if (objectives.length >= 2) {
+//                int id_obj1 = objectives[0].getId();
+//                int id_obj2 = objectives[1].getId();
+//                String obj1ImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png";
+//                Image obj1Image = new Image(getClass().getResourceAsStream(obj1ImagePath));
+//                secret_1.setImage(obj1Image);
+//                String obj2ImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png";
+//                Image obj2Image = new Image(getClass().getResourceAsStream(obj2ImagePath));
+//                secret_2.setImage(obj2Image);
+//            }
         } else {
             System.err.println("Client is not initialized!");
         }

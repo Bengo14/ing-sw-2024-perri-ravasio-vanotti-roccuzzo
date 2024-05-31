@@ -1,10 +1,12 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import java.io.Serializable;
+
 /**
  * This class represents all the objectives in a game with their points,the reference at the front and back image
  * and the items,the resource and the pattern use for make the points.
  */
-public abstract class Objectives {
+public abstract class Objectives implements Serializable {
 
     private final int points;
     private final String imgPathFront;

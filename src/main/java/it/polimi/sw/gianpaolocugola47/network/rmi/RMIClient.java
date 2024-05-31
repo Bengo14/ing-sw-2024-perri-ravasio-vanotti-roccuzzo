@@ -212,8 +212,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public StartingCard drawStartingCard() {
         try {
-            return server.drawStartingCard(); //todo synchronize access to server
+            synchronized (server){
+                StartingCard startingCard = server.drawStartingCard();
+                System.out.println("server.drawStartingCard() returned: " + startingCard); // Log message
+                return startingCard;
+            } //todo synchronize access to server
         } catch (RemoteException e) {
+            System.err.println("RemoteException occurred while drawing the starting card: " + e.getMessage());
+            e.printStackTrace();
             terminateLocal();
             return null;
         }

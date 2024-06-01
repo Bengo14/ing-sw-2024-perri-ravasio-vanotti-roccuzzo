@@ -64,7 +64,9 @@
 .baseSelectable{
     -fx-effect: dropshadow(gaussian, black, 20.0, 0, 0, 0);
 }
-
+.selected-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 255, 0.8), 20, 0.5, 0, 0);
+}
 .selectedCard{
     -fx-effect: dropshadow(gaussian, red, 20.0, 0, 0, 0);
 }

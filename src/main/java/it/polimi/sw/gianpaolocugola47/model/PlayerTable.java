@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import java.io.Serializable;
+
 import static java.util.Arrays.sort;
 
 /**
@@ -8,7 +10,7 @@ import static java.util.Arrays.sort;
  * the point on the board, all the point included the secret objective and the resource counter.
  *
  */
-public class PlayerTable {
+public class PlayerTable implements Serializable{
     private static final int MATRIX_DIMENSION = 59; // should be 141
     private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
     private int id;
@@ -52,7 +54,7 @@ public class PlayerTable {
         startingCard.updateResourceCounter(this.resourceCounter);
     }
 
-    protected void setSecretObjective(Objectives objective){
+    public void setSecretObjective(Objectives objective){
         this.secretObjective = objective;
     }
 

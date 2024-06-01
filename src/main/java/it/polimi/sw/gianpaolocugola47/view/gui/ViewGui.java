@@ -31,7 +31,7 @@ public class ViewGui extends Application implements View {
     //private Media media;
     //private MediaPlayer mediaPlayer;
     private LoginController loginController;
-    private ChoiceController choiceController;
+    private StartingCardController startingCardController;
     private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
@@ -53,7 +53,8 @@ public class ViewGui extends Application implements View {
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
         scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
-        scenes.put("Choice", "/it/polimi/sw/gianpaolocugola47/fxml/ChoiceFXML.fxml");
+        scenes.put("StartingCard", "/it/polimi/sw/gianpaolocugola47/fxml/StartingCardFXML.fxml");
+        scenes.put("SecretObj", "/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml");
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
     }
@@ -95,7 +96,7 @@ public class ViewGui extends Application implements View {
         }
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
-        delay.setOnFinished(event -> setScene("Choice"));
+        delay.setOnFinished(event -> setScene("StartingCard"));
         delay.play();
         stage.show();
 
@@ -123,8 +124,12 @@ public class ViewGui extends Application implements View {
                     preGameController = fxmlLoader.getController();
                     preGameController.setClient(client);
                     break;
-                case "Choice":
-                    choiceController = fxmlLoader.getController();
+                case "StartCard":
+                    startingCardController = fxmlLoader.getController();
+                    break;
+                case "SecretObj":
+                    SecretObjController secretObjController = fxmlLoader.getController();
+                    secretObjController.setClient(client);
                     break;
                 case "Login":
                     loginController = fxmlLoader.getController();
@@ -146,13 +151,17 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
-    public void logOut(Stage primaryStage){
+    public void logOut(Stage primaryStage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("Are you sure you want to logout?");
-        alert.setContentText("Press OK to logout, Cancel to stay logged in");
-
-        if(alert.showAndWait().get() == ButtonType.OK){
+        alert.setHeaderText("Logout from Codex Naturalis");
+        alert.setContentText("Are you sure you want to logout?");
+        Stage dialogStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("tooltip");
+        alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
+        if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Logged out successfully");
             primaryStage.close();
         }

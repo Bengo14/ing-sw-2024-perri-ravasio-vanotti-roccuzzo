@@ -1,6 +1,6 @@
 [
   {
-    "id": 100,
+    "id": 99,
     "itemsRequired" : [
       "MANUSCRIPT"
     ],
@@ -11,7 +11,7 @@
     "description" :"2 MANUSCRIPT \nPoints: 2"
   },
   {
-    "id": 101,
+    "id": 100,
     "itemsRequired" : [
       "INKWELL"
     ],
@@ -22,7 +22,7 @@
     "description" :"2 INKWELL \nPoints: 2"
   },
   {
-    "id": 102,
+    "id": 101,
     "itemsRequired" : [
       "QUILL"
     ],
@@ -33,7 +33,7 @@
     "description" :"2 QUILL \nPoints: 2"
   },
   {
-    "id": 99,
+    "id": 98,
     "itemsRequired" : [
       "MANUSCRIPT",
       "INKWELL",
@@ -46,7 +46,7 @@
     "description" :"1 MANUSCRIPT, 1 INKWELL, 1 QUILL \nPoints: 3"
   },
   {
-    "id": 96,
+    "id": 95,
     "resource" : "PLANT",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -55,7 +55,7 @@
     "description" :"2 PLANT \nPoints: 2"
   },
   {
-    "id": 98,
+    "id": 97,
     "resource" : "INSECTS",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -64,7 +64,7 @@
     "description" :"2 INSECTS \nPoints: 2"
   },
   {
-    "id": 95,
+    "id": 94,
     "resource" : "FUNGI",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -73,7 +73,7 @@
     "description" :"2 FUNGI \nPoints: 2"
   },
   {
-    "id": 97,
+    "id": 96,
     "resource" : "ANIMAL",
     "points" : 2,
     "imgPathFront" : "imgPathFrn",
@@ -82,7 +82,7 @@
     "description" :"2 ANIMAL \nPoints: 2"
   },
   {
-    "id": 87,
+    "id": 86,
     "isAscending" : true,
     "resource" : "FUNGI",
     "points" : 2,
@@ -92,7 +92,7 @@
     "description" :"ASCENDING FUNGI \nPoints: 2"
   },
   {
-    "id": 89,
+    "id": 88,
     "isAscending" : true,
     "resource" : "ANIMAL",
     "points" : 2,
@@ -102,7 +102,7 @@
     "description" :"ASCENDING ANIMAL \nPoints: 2"
   },
   {
-    "id": 88,
+    "id": 87,
     "isAscending" : false,
     "resource" : "PLANT",
     "points" : 2,
@@ -112,7 +112,7 @@
     "description" :"DESCENDING PLANT \nPoints: 2"
   },
   {
-    "id": 90,
+    "id": 89,
     "isAscending" : false,
     "resource" : "INSECTS",
     "points" : 2,
@@ -122,7 +122,7 @@
     "description" :"DESCENDING INSECTS \nPoints: 2"
   },
   {
-    "id": 91,
+    "id": 90,
     "orientation" : "bottomRight",
     "mainResource" : "FUNGI",
     "secondaryResource" : "PLANT",
@@ -133,7 +133,7 @@
     "description" :"MainResource:FUNGI SecondaryResource:PLANT \nOrientation:BottomRight  Points: 3"
   },
   {
-    "id": 93,
+    "id": 92,
     "orientation" : "topRight",
     "mainResource" : "ANIMAL",
     "secondaryResource" : "FUNGI",
@@ -144,7 +144,7 @@
     "description" :"MainResource:ANIMAL SecondaryResource:FUNGI \nOrientation:TopRight  Points: 3"
   },
   {
-    "id": 94,
+    "id": 93,
     "orientation" : "topLeft",
     "mainResource" : "INSECTS",
     "secondaryResource" : "ANIMAL",
@@ -155,7 +155,7 @@
     "description" :"MainResource:INSECTS SecondaryResource:ANIMAL \nOrientation:TopLeft  Points: 3"
   },
   {
-    "id": 92,
+    "id": 91,
     "orientation" : "bottomLeft",
     "mainResource" : "PLANT",
     "secondaryResource" : "INSECTS",

@@ -19,10 +19,6 @@ public class Deck {
     private static List<StartingCard> startingCardsDeck;
     private static List<Objectives> objectiveCardsDeck;
     private static Random randomGenerator;
-    private static final int FIRST_OBJECTIVE_ID = 87;
-    private static final int FIRST_GOLD_ID = 41;
-    private static final int FIRST_RESOURCE_ID = 1;
-    private static final int FIRST_STARTING_ID = 81;
     private static final HashMap<Integer, PlaceableCard> placeableCardIdMap = new HashMap<>();
     private static final HashMap<Integer, Objectives> objectiveCardIdMap = new HashMap<>();
 

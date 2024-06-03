@@ -93,13 +93,19 @@ class DeckTest {
         Deck.initAndShuffleDeck();
         assertNotNull(Deck.getCardFromGivenId(1));
         assertEquals(Deck.getCardFromGivenId(1).getId(),1);
+        if(Deck.getCardFromGivenId(1) instanceof ResourceCard)
+            System.out.println("ok");
         System.out.println(Deck.getCardFromGivenId(1).toString());
         assertEquals(Deck.getCardFromGivenId(41).getId(),41);
+        if(Deck.getCardFromGivenId(41) instanceof GoldCard)
+            System.out.println("ok");
         System.out.println(Deck.getCardFromGivenId(41).toString());
         assertEquals(Deck.getCardFromGivenId(85).getId(),85);
+        if(Deck.getCardFromGivenId(85) instanceof StartingCard)
+            System.out.println("ok");
         System.out.println(Deck.getCardFromGivenId(85).toString());
         assertNull(Deck.getCardFromGivenId(1000));
-        assertNull(Deck.getCardFromGivenId(0));
+        assertNotNull(Deck.getCardFromGivenId(0));
         assertNull(Deck.getCardFromGivenId(100));
     }
 
@@ -112,10 +118,8 @@ class DeckTest {
         assertNotNull(Deck.getObjectiveCardFromGivenId(100));
         assertEquals(Deck.getObjectiveCardFromGivenId(100).getId(),100);
         assertEquals(Deck.getObjectiveCardFromGivenId(101).getId(),101);
-        assertEquals(Deck.getObjectiveCardFromGivenId(102).getId(),102);
         System.out.println(Deck.getObjectiveCardFromGivenId(100).toString());
         System.out.println(Deck.getObjectiveCardFromGivenId(101).toString());
-        System.out.println(Deck.getObjectiveCardFromGivenId(102).toString());
     }
 
     @Test

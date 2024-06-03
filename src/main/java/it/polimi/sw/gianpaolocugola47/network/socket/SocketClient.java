@@ -125,7 +125,9 @@ public class SocketClient implements VirtualView, Client {
                 }
 
                 case "drawStarting" -> {
-                    drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(integer());
+                    int id = integer();//debug
+                    drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(id);
+                    System.out.println(drawStartingCardResponse+" "+id);//debug
                     setResponse();
                 }
 
@@ -285,9 +287,9 @@ public class SocketClient implements VirtualView, Client {
         }
         else {
             new Thread(() -> {
-                this.view = new ViewGui();
-                view.setClient(this);
                 Platform.startup(() -> {
+                    this.view = new ViewGui();
+                    view.setClient(this);
                     view.start();
                 });
             }).start();

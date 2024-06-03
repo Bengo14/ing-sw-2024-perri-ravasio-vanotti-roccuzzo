@@ -50,7 +50,7 @@ public class CLI implements View {
                 """);
         System.out.flush();
         //setId(this.client.getIdLocal()); // done in the constructor
-        setNickname(this.client.getNicknameLocal());
+        setNickname(client.getNicknameLocal());
         this.nicknames = client.getNicknames();
         openChat();
 

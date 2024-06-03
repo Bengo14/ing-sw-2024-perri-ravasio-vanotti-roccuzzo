@@ -17,25 +17,26 @@ import javafx.util.Duration;
 //import javafx.scene.*;
 //import javafx.scene.media.Media;
 
+import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
 public class ViewGui extends Application implements View {
 
-    private static Client client;
+    private Client client;
     private Stage stage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private final HashMap<String, String> scenes;
-    //private Media media;
+    private Media media;
     //private MediaPlayer mediaPlayer;
     private LoginController loginController;
     private StartingCardController startingCardController;
     private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
-    private static PlayerTable localPlayerTable;
+    private PlayerTable localPlayerTable;
     private Objectives[] objectives;
     private ResourceCard[] cardsOnTable; //cards on table that can be picked up
     private GoldCard goldCardOnTop; //NOT on playerTable
@@ -46,10 +47,7 @@ public class ViewGui extends Application implements View {
     private String nickname;
 
 
-
-
     public ViewGui() {
-        this.localPlayerTable = new PlayerTable(0);//id posto a zero di default
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
         scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
@@ -59,24 +57,17 @@ public class ViewGui extends Application implements View {
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
     }
 
-
+    @Override
     public void setClient(Client client) {
-        ViewGui.client = client;
-        //update the player table with the correct id
-        localPlayerTable.setId(client.getIdLocal());
+        this.client = client;
     }
-
-    public static Client getClient() {
-        return ViewGui.client;
-    }
-    public static PlayerTable getPlayerTable() {
-        return ViewGui.localPlayerTable;
-    }
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.nicknames = client.getNicknames();
+        localPlayerTable = new PlayerTable(client.getIdLocal());
+        localPlayerTable.setNickname(client.getNicknameLocal());
+
         this.stage = stage;
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
         stage.setOnCloseRequest((WindowEvent t) -> {
@@ -99,7 +90,6 @@ public class ViewGui extends Application implements View {
         delay.setOnFinished(event -> setScene("StartingCard"));
         delay.play();
         stage.show();
-
     }
 
     public void setScene(String sceneName) {
@@ -119,17 +109,19 @@ public class ViewGui extends Application implements View {
             stage.setResizable(true);
             stage.setMaximized(true);
             stage.setTitle("Codex Naturalis");
+
             switch (sceneName) {
                 case "PreGame":
                     preGameController = fxmlLoader.getController();
                     preGameController.setClient(client);
                     break;
-                case "StartCard":
+                case "StartingCard":
                     startingCardController = fxmlLoader.getController();
+                    startingCardController.start(client, localPlayerTable);
                     break;
                 case "SecretObj":
                     SecretObjController secretObjController = fxmlLoader.getController();
-                    secretObjController.setClient(client);
+                    secretObjController.start(client, localPlayerTable);
                     break;
                 case "Login":
                     loginController = fxmlLoader.getController();
@@ -137,8 +129,7 @@ public class ViewGui extends Application implements View {
                     break;
                 case "Game":
                     gameController = fxmlLoader.getController();
-                    this.nickname = this.client.getNicknameLocal();
-                    gameController.setClient(client);
+                    gameController.start(client, localPlayerTable);
                     break;
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
@@ -164,6 +155,7 @@ public class ViewGui extends Application implements View {
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Logged out successfully");
             primaryStage.close();
+            client.terminateLocal();
         }
     }
     protected static void waitForRunLater() throws InterruptedException {
@@ -172,23 +164,18 @@ public class ViewGui extends Application implements View {
         semaphore.acquire();
     }
 
-
     @Override
     public void start() {
-            Platform.runLater(() -> {
-                try {
-                    start(new Stage());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            });
-
+        try {
+            start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void setId(int id) {
-        this.localPlayerTable.setId(id);
+        localPlayerTable.setId(id);
     }
     /**
      * Sets the nickname of the player that is using this GUI.
@@ -196,15 +183,15 @@ public class ViewGui extends Application implements View {
      */
     @Override
     public void setNickname(String nickname) {
-        this.localPlayerTable.setNickname(nickname);
+        localPlayerTable.setNickname(nickname);
     }
 
     @Override
     public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        this.localPlayerTable.setNickname(nickname);
+        localPlayerTable.setNickname(nickname);
         this.objectives = globalObjectives;
         this.cardsOnTable = cardsOnTable;
-        this.localPlayerTable.setCardsOnHand(cardsOnHand);
+        localPlayerTable.setCardsOnHand(cardsOnHand);
     }
 
     @Override
@@ -229,7 +216,6 @@ public class ViewGui extends Application implements View {
         return localPlayerTable.getSecretObjective();
     }
 
-
     @Override
     public int getGlobalPoints() {
         return this.globalPoints;
@@ -239,11 +225,5 @@ public class ViewGui extends Application implements View {
     public int getBoardPoints() {
         return this.boardPoints;
     }
-
-    public void nicknameAlreadyUsed() {
-        loginController.nicknameAlreadyUsed();
-    }
-
-
 
 }

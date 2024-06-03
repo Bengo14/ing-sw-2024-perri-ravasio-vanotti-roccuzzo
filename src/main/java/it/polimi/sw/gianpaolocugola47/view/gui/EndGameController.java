@@ -58,8 +58,9 @@ public class EndGameController implements Initializable {
         leaderboardPane.getChildren().add(resultsTable);
 
         // Display the winner
-        winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName()); // Assuming PlayerTable has a "getNickname" method
+        winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName());
     }
+
     public void logOut(ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
@@ -72,13 +73,11 @@ public class EndGameController implements Initializable {
             stage.close();
         }
     }
-//endle bottone funzionante senza richiesta
+
 //    public void handleExitGame() {
 //        javafx.application.Platform.exit();
 //        System.exit(0);
 //    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resources) {
 

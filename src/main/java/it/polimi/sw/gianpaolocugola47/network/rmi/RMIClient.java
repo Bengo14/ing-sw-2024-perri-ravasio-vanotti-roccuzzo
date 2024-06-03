@@ -137,9 +137,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
         } else {
+            this.view = new ViewGui();
+            view.setClient(this);
             new Thread(() -> {
-                this.view = new ViewGui();
-                view.setClient(this);
                 Platform.startup(() -> {
                     view.start();
                 });
@@ -218,8 +218,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
                 return startingCard;
             } //todo synchronize access to server
         } catch (RemoteException e) {
-            System.err.println("RemoteException occurred while drawing the starting card: " + e.getMessage());
-            e.printStackTrace();
             terminateLocal();
             return null;
         }

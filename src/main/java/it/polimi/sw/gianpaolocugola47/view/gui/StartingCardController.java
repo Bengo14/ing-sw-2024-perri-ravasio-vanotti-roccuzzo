@@ -18,9 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static it.polimi.sw.gianpaolocugola47.view.gui.ViewGui.getClient;
-import static it.polimi.sw.gianpaolocugola47.view.gui.ViewGui.getPlayerTable;
-
 
 public class StartingCardController implements Initializable {
 
@@ -30,8 +27,7 @@ public class StartingCardController implements Initializable {
     ImageView starting_back;
     @FXML
     Button choice_button;
-    private static StartingCard selectedStartingCard;
-    private Objectives selectedObjective;
+    private StartingCard selectedStartingCard;
     private Client client;
     private PlayerTable playerTable;
     private boolean front = true;
@@ -42,8 +38,12 @@ public class StartingCardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.client = getClient();
-        this.playerTable = getPlayerTable();
+
+    }
+    public void start(Client client, PlayerTable playerTable) {
+        this.client = client;
+        this.playerTable = playerTable;
+
         if (client != null) {
             selectedStartingCard = client.drawStartingCard();
             int id_start = selectedStartingCard.getId();
@@ -59,9 +59,11 @@ public class StartingCardController implements Initializable {
             System.err.println("Client is not initialized!");
         }
     }
-    public static StartingCard getSelectedStartingCard() {
-        return selectedStartingCard;
+
+    public StartingCard getSelectedStartingCard() {
+        return this.selectedStartingCard;
     }
+
     @FXML
     private void handleConfirmButtonClicked(ActionEvent event) {
         // Verifica se sono state fatte tutte le scelte necessarie
@@ -70,12 +72,9 @@ public class StartingCardController implements Initializable {
             return;
         }
         // Azioni da eseguire quando l'utente conferma la scelta
-        if(front){
-            selectedStartingCard.setFront(true);
-        } else{
-            selectedStartingCard.setFront(false);
-        }
-        //passa la starting card al client e passa alla scena successiva
+        selectedStartingCard.setFront(front);
+        playerTable.setStartingCard(selectedStartingCard);
+
         // Cambia la scena
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml"));

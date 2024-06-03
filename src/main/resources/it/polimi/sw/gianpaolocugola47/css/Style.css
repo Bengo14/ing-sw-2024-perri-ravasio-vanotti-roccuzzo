@@ -78,9 +78,18 @@
 .footer {
     -fx-background-color: #FFFFFFEE;
 }
+.trasparent {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
 .EndGameBackGround {
     -fx-font-size: 1.2em;
     -fx-background-image:url('../graphics/cards/back_91.png');
+    -fx-background-size: cover, auto;
+}
+.TestBoardCard {
+    -fx-font-size: 1.2em;
+    -fx-background-image: url('../graphics/cards/back_0.png');
     -fx-background-size: cover, auto;
 }
 #EndGameContainer {

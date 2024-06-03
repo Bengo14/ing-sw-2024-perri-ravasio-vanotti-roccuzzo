@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
 public class StartingCardController implements Initializable {
 
     @FXML
@@ -27,7 +28,7 @@ public class StartingCardController implements Initializable {
     ImageView starting_back;
     @FXML
     Button choice_button;
-    private StartingCard selectedStartingCard;
+    private static StartingCard selectedStartingCard;
     private Client client;
     private PlayerTable playerTable;
     private boolean front = true;
@@ -60,10 +61,9 @@ public class StartingCardController implements Initializable {
         }
     }
 
-    public StartingCard getSelectedStartingCard() {
-        return this.selectedStartingCard;
+    public static StartingCard getSelectedStartingCard() {
+        return selectedStartingCard;
     }
-
     @FXML
     private void handleConfirmButtonClicked(ActionEvent event) {
         // Verifica se sono state fatte tutte le scelte necessarie
@@ -71,15 +71,15 @@ public class StartingCardController implements Initializable {
             label.setText("Please select a starting card");
             return;
         }
-        // Azioni da eseguire quando l'utente conferma la scelta
         selectedStartingCard.setFront(front);
         playerTable.setStartingCard(selectedStartingCard);
-
-        // Cambia la scena
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml"));
             Parent root = loader.load();
             choice_button.getScene().setRoot(root);
+            SecretObjController controller = loader.getController();
+            controller.start(client, playerTable);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

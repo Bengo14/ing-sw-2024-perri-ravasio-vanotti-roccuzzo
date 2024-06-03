@@ -33,6 +33,7 @@ public class ViewGui extends Application implements View {
     //private MediaPlayer mediaPlayer;
     private LoginController loginController;
     private StartingCardController startingCardController;
+    private SecretObjController secretObjController;
     private PreGameController preGameController;
     private GameController gameController;
     private EndGameController endGameController;
@@ -107,7 +108,6 @@ public class ViewGui extends Application implements View {
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
             stage.setResizable(true);
-            stage.setMaximized(true);
             stage.setTitle("Codex Naturalis");
 
             switch (sceneName) {
@@ -120,7 +120,7 @@ public class ViewGui extends Application implements View {
                     startingCardController.start(client, localPlayerTable);
                     break;
                 case "SecretObj":
-                    SecretObjController secretObjController = fxmlLoader.getController();
+                    secretObjController = fxmlLoader.getController();
                     secretObjController.start(client, localPlayerTable);
                     break;
                 case "Login":

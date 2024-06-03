@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
@@ -19,6 +18,8 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static it.polimi.sw.gianpaolocugola47.view.gui.StartingCardController.getSelectedStartingCard;
 
 public class SecretObjController implements Initializable {
 
@@ -35,24 +36,23 @@ public class SecretObjController implements Initializable {
     private Objectives selectedObjective;
     private Client client;
     private PlayerTable playerTable;
-    private StartingCard selectedStartingCard;
+    private static StartingCard selectedStartingCard;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
     public void start(Client client, PlayerTable playerTable) {
         this.client = client;
         this.playerTable = playerTable;
+        selectedStartingCard = playerTable.getStartingCard();
         Objectives[] objectives = client.setStartingCardAndDrawObjectives();
         secretObjective1 = objectives[0];
         secretObjective2 = objectives[1];
-
-        String imagePath1 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+(secretObjective1.getId()+86)+".png";
+        String imagePath1 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+secretObjective1.getId()+".png";
         secret_1.setImage(new Image(getClass().getResourceAsStream(imagePath1)));
-        String imagePath2 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+(secretObjective2.getId()+86)+".png";
+        String imagePath2 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+secretObjective2.getId()+".png";
         secret_2.setImage(new Image(getClass().getResourceAsStream(imagePath2)));
     }
 

@@ -76,14 +76,7 @@ public class SecretObjController implements Initializable {
         if (selectedObjective != null) {
             playerTable.setSecretObjective(selectedObjective);
             client.setSecretObjective();
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml"));
-                Parent root = loader.load();
-                obj_button.getScene().setRoot(root);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println(selectedObjective);
         } else {
             label.setText("Please select an objective");
         }

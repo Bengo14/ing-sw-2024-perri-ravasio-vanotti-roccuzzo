@@ -152,6 +152,11 @@ public class CLI implements View {
         //this.client = client;
     }
 
+    @Override
+    public void showTurn() {
+
+    }
+
     @SuppressWarnings("ALL")
     public void printResourceCard(ResourceCard resourceCard) {
         String colour = resourceCard.getResourceCentreBack().getAsciiEscape();

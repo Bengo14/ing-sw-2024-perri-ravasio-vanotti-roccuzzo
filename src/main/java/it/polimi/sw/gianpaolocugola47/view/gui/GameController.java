@@ -22,9 +22,6 @@ public class GameController implements Initializable {
     private String nickname = null;
     private PlayerTable playerTable;
 
-
-    private MainTable mainTable;
-    private static StartingCard selectedStartingCard;
     @FXML
     private Label nickLabel;
     @FXML
@@ -55,11 +52,6 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        this.client = getClient();
-//        this.playerTable = getPlayerTable();
-        setMyNickname(client.getNicknameLocal());
-        showTurn();
-        ResourceCard[] cardsOnHand = playerTable.getCardsOnHand();
         // Abilita il panning
         boardScrollPane.setPannable(true);
 
@@ -83,12 +75,11 @@ public class GameController implements Initializable {
                 imageView.setFitHeight(55);
                 imageView.setLayoutX(110 * j);
                 imageView.setLayoutY(29 * i);
-//                imageView.setId("card_"+i+"_"+j); // Assegna un ID univoco basato sulla posizione nella matrice
+                // imageView.setId("card_"+i+"_"+j); // Assegna un ID univoco basato sulla posizione nella matrice
                 board.getChildren().add(imageView);
                 cardMatrix[i][j] = imageView;
             }
         }
-
     }
 
     public void start(Client client, PlayerTable playerTable) {
@@ -143,16 +134,4 @@ public class GameController implements Initializable {
         }
     }
 
-
-
-
-
-
-    /**
-     * Link this controller to the client that is using it.
-     * @param client The client that is using this controller
-     */
-    public void setClient(Client client) {
-        this.client = client;
-    }
 }

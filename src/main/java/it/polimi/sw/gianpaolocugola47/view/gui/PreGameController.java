@@ -8,19 +8,8 @@ import java.util.ResourceBundle;
 
 public class PreGameController implements Initializable {
 
-
-    private Client client;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    /**
-     * Link this controller to the client that is using it.
-     * @param client The client that is using this controller
-     */
-    public void setClient(Client client) {
-        this.client = client;
+        //nothing to do
     }
 }

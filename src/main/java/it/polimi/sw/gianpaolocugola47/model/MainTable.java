@@ -66,8 +66,8 @@ public class MainTable implements Observable {
                 for (Observer observer : observers)
                     observer.initView(getNicknames(), globalObjectives, getCardsOnHand(), cardsOnTable);
             }
-            updateDecks();
         }).start();
+        updateDecks();
     }
     @Override
     public void updateDecks() {

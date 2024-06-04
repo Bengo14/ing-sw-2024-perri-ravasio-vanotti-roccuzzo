@@ -48,16 +48,14 @@ public class StartingCardController implements Initializable {
         if (client != null) {
             selectedStartingCard = client.drawStartingCard();
             int id_start = selectedStartingCard.getId();
-            System.out.println("the id is:"+id_start);
+            //System.out.println("the id is:"+id_start);
             String frontImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+id_start+".png";
-            System.out.println(getClass().getResource(frontImagePath));
+            //System.out.println(getClass().getResource(frontImagePath));
             Image frontImage = new Image(getClass().getResourceAsStream(frontImagePath));
             starting_front.setImage(frontImage);
             String backImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+id_start+".png";
             Image backImage = new Image(getClass().getResourceAsStream(backImagePath));
             starting_back.setImage(backImage);
-        } else {
-            System.err.println("Client is not initialized!");
         }
     }
 
@@ -79,7 +77,6 @@ public class StartingCardController implements Initializable {
             choice_button.getScene().setRoot(root);
             SecretObjController controller = loader.getController();
             controller.start(client, playerTable);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

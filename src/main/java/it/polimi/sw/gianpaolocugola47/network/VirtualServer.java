@@ -26,6 +26,7 @@ public interface VirtualServer extends Remote {
     void sendPrivateMessage(ChatMessage message) throws RemoteException;
     boolean isNicknameAvailable(String nickname) throws RemoteException;
     String[] getNicknames() throws RemoteException;
+    int getNumOfPlayers() throws RemoteException;
     boolean[][] getPlayablePositions(int playerId) throws RemoteException;
 
 }

@@ -30,22 +30,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.concurrent.Semaphore;
 
 public class ViewGui extends Application implements View, Initializable {
 
-    private Client client;
+    private final Client client;
     private Stage stage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private final HashMap<String, String> scenes;
     private Media media;
-    //private MediaPlayer mediaPlayer;
+    // private MediaPlayer mediaPlayer;
 
-    private LoginController loginController;
     private StartingCardController startingCardController;
-    private SecretObjController secretObjController;
-    private PreGameController preGameController;
     private EndGameController endGameController;
 
     private PlayerTable localPlayerTable;
@@ -53,8 +49,8 @@ public class ViewGui extends Application implements View, Initializable {
     private ResourceCard[] cardsOnTable; //cards on table that can be picked up
     private GoldCard goldCardOnTop; //NOT on playerTable
     private ResourceCard resourceCardOnTop; //NOT on playerTable
-    private int globalPoints = 0; //NOT on playerTable
-    private int boardPoints = 0;  //NOT on playerTable
+    private int[] globalPoints; //NOT on playerTable
+    private int[] boardPoints;  //NOT on playerTable
     private String[] nicknames;
 
     @FXML
@@ -85,10 +81,8 @@ public class ViewGui extends Application implements View, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Abilita il panning
-        boardScrollPane.setPannable(true);
 
-        // Gestisci lo zoom
+        boardScrollPane.setPannable(true);
         boardScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
                 double zoomFactor = 1.05;
@@ -113,9 +107,6 @@ public class ViewGui extends Application implements View, Initializable {
                 cardMatrix[i][j] = imageView;
             }
         }
-        nickLabel.setVisible(true);
-        turnLabel.setVisible(true);
-
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+getSecretObjective().getId()+".png")));
         //cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getStartingCard().getId()+".png")));
 
@@ -124,100 +115,97 @@ public class ViewGui extends Application implements View, Initializable {
         hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(2).getId()+".png")));
         obj_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+objectives[0].getId()+".png")));
         obj_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+objectives[1].getId()+".png")));
-        deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));
-        deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+goldCardOnTop.getId()+".png")));
         res_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[0].getId()+".png")));
         res_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[1].getId()+".png")));
         gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[2].getId()+".png")));
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[3].getId()+".png")));
-        nickLabel.setText(localPlayerTable.getNickName());
+
+        nickLabel.setText(localPlayerTable.getId()+": "+localPlayerTable.getNickName());
+        /*todo all nick and global points?*/
         nickLabel.setStyle("-fx-font-weight: bold");
         nickLabel.setVisible(true);
+        turnLabel.setStyle("-fx-font-weight: bold");
+        turnLabel.setVisible(true);
+        showTurn();
     }
 
 
-    public ViewGui() {
+    public ViewGui(Client client) {
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
-        scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
         scenes.put("StartingCard", "/it/polimi/sw/gianpaolocugola47/fxml/StartingCardFXML.fxml");
         scenes.put("SecretObj", "/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
-    }
-
-    @Override
-    public void setClient(Client client) {
+        scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         this.client = client;
     }
 
     @Override
+    public void start() {
+        try {
+            start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void start(Stage stage) throws Exception {
-        this.nicknames = client.getNicknames();
+
         localPlayerTable = new PlayerTable(client.getIdLocal());
         localPlayerTable.setNickname(client.getNicknameLocal());
 
-        this.stage = stage;
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
         stage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
             System.exit(0);
         });
-        stage.setMinWidth(1280);
-        stage.setMinHeight(760);
+        //stage.setMinWidth(1280);
+        //stage.setMinHeight(760);
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(scenes.get("PreGame")));
-        try{
+        try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(" Error loading scene PreGame");
-            return;
+            client.terminateLocal();
         }
+        this.stage = stage;
         setScene("PreGame");
-        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(event -> setScene("StartingCard"));
         delay.play();
-        stage.show();
     }
 
     public void setScene(String sceneName) {
-        Platform.runLater(()->{
+        
+        Platform.runLater(()-> {
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(scenes.get(sceneName)));
             try {
                 scene.setRoot(fxmlLoader.load());
             } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println(" Error loading scene " + sceneName);
-                return;
+                System.out.println("Error loading scene " + sceneName);
+                client.terminateLocal();
             }
-            //add css
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
             stage.setResizable(true);
+            stage.setMaximized(true);
             stage.setTitle("Codex Naturalis");
 
             switch (sceneName) {
-                case "PreGame":
-                    preGameController = fxmlLoader.getController();
-                    preGameController.setClient(client);
-                    break;
                 case "StartingCard":
                     startingCardController = fxmlLoader.getController();
                     startingCardController.start(client, localPlayerTable);
                     break;
-                case "SecretObj":
-                    secretObjController = fxmlLoader.getController();
-                    secretObjController.start(client, localPlayerTable);
-                    break;
-                case "Login":
-                    loginController = fxmlLoader.getController();
-                    loginController.setClient(client);
-                    break;
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
+                    endGameController.showResults(globalPoints, nicknames);
                     break;
             }
+
             stage.setOnCloseRequest(event -> {
                 event.consume();
                 logOut(stage);
@@ -225,6 +213,7 @@ public class ViewGui extends Application implements View, Initializable {
             stage.show();
         });
     }
+
     public void logOut(Stage primaryStage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
@@ -243,56 +232,40 @@ public class ViewGui extends Application implements View, Initializable {
     }
 
     @Override
-    public void start() {
-        try {
-            start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setId(int id) {
-        localPlayerTable.setId(id);
-    }
-    /**
-     * Sets the nickname of the player that is using this GUI.
-     * @param nickname The nickname of the player
-     */
-    @Override
-    public void setNickname(String nickname) {
-        localPlayerTable.setNickname(nickname);
-    }
-
-    @Override
-    public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
         Platform.runLater(() -> {
-            localPlayerTable.setNickname(nickname);
+            this.nicknames = nicknames;
             this.objectives = globalObjectives;
             this.cardsOnTable = cardsOnTable;
             localPlayerTable.setCardsOnHand(cardsOnHand);
-            System.out.println("init");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml"));
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(scenes.get("Game")));
             loader.setController(this);
-            Parent root;
+            Parent root = null;
             try {
                 root = loader.load();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                client.terminateLocal();
             }
-            stage.setScene(new Scene(root));
+            scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setFullScreen(true);
             stage.show();
         });
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+        System.err.println("updateDecks");
         this.resourceCardOnTop = resourceCardOnTop;
         this.goldCardOnTop = goldCardOnTop;
+        //deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));
+        //deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+goldCardOnTop.getId()+".png")));
     }
 
     @Override
-    public void updatePoints(int boardPoints, int globalPoints) {
+    public void updatePoints(int[] boardPoints, int[] globalPoints) {
         this.boardPoints = boardPoints;
         this.globalPoints = globalPoints;
     }
@@ -308,26 +281,19 @@ public class ViewGui extends Application implements View, Initializable {
     }
 
     @Override
-    public int getGlobalPoints() {
+    public int[] getGlobalPoints() {
         return this.globalPoints;
     }
 
     @Override
-    public int getBoardPoints() {
+    public int[] getBoardPoints() {
         return this.boardPoints;
     }
 
     @Override
-    public void showTurn() {
-        if(client.isItMyTurn()) {
-            turnLabel.setText(localPlayerTable.getNickName()+"'s turn");
-            turnLabel.setStyle("-fx-font-weight: bold");
-            turnLabel.setVisible(true);
-        }else{
-            turnLabel.setText("It's not "+localPlayerTable.getNickName()+"'s turn");
-            turnLabel.setStyle("-fx-font-weight: bold");
-            turnLabel.setVisible(true);
-        }
+    public void showTurn() { // called by client when turn status changes
+        if(client.isItMyTurn())
+            turnLabel.setText(localPlayerTable.getNickName() + ", it's your turn!");
+        else turnLabel.setText(localPlayerTable.getNickName() + ", it's not your turn...");
     }
-
 }

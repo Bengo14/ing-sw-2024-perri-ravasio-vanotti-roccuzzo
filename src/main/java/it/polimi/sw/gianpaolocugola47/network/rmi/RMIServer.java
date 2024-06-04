@@ -247,6 +247,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
 
+    @Override
+    public int getNumOfPlayers() throws RemoteException {
+        synchronized (controller) {
+            return this.controller.getNumOfPlayers();
+        }
+    }
+
     /* --- methods of interface Observer --- */
 
     @Override

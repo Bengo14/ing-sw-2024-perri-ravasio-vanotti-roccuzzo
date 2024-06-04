@@ -11,6 +11,7 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
     private final PrintWriter output;
@@ -146,6 +147,13 @@ public class SocketServerProxy implements VirtualServer {
         output.println("getNick");
         output.flush();
         return new String[0];
+    }
+
+    @Override
+    public int getNumOfPlayers() {
+        output.println("getNumPlayers");
+        output.flush();
+        return 0;
     }
 
     @Override

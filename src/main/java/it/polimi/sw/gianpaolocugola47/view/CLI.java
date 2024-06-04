@@ -2,8 +2,6 @@ package it.polimi.sw.gianpaolocugola47.view;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
-import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedReader;
@@ -26,8 +24,8 @@ public class CLI implements View {
     private ResourceCard[] cardsOnTable; //cards on table that can be picked up
     private GoldCard goldCardOnTop; //NOT on playerTable
     private ResourceCard resourceCardOnTop; //NOT on playerTable
-    private int globalPoints = 0; //NOT on playerTable
-    private int boardPoints = 0;  //NOT on playerTable
+    private int[] globalPoints; //NOT on playerTable
+    private int[] boardPoints;  //NOT on playerTable
     private String[] nicknames;
 
     public CLI(Client client) {
@@ -49,8 +47,7 @@ public class CLI implements View {
                                                      ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
                 """);
         System.out.flush();
-        //setId(this.client.getIdLocal()); // done in the constructor
-        setNickname(client.getNicknameLocal());
+        this.localPlayerTable.setNickname(client.getNicknameLocal());
         this.nicknames = client.getNicknames();
         openChat();
 
@@ -98,18 +95,9 @@ public class CLI implements View {
             }
         }
     }
-    @Override
-    public void setId(int id) {
-        this.localPlayerTable.setId(id);
-    }
-    @Override
-    public void setNickname(String nickname) {
-        this.localPlayerTable.setNickname(nickname);
-    }
 
     @Override
-    public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        this.localPlayerTable.setNickname(nickname);
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
         this.objectives = globalObjectives;
         this.cardsOnTable = cardsOnTable;
         this.localPlayerTable.setCardsOnHand(cardsOnHand);
@@ -122,7 +110,7 @@ public class CLI implements View {
     }
 
     @Override
-    public void updatePoints(int boardPoints, int globalPoints) {
+    public void updatePoints(int[] boardPoints, int[] globalPoints) {
         this.boardPoints = boardPoints;
         this.globalPoints = globalPoints;
     }
@@ -138,23 +126,18 @@ public class CLI implements View {
     }
 
     @Override
-    public int getGlobalPoints() {
+    public int[] getGlobalPoints() {
         return this.globalPoints;
     }
 
     @Override
-    public int getBoardPoints() {
+    public int[] getBoardPoints() {
         return this.boardPoints;
     }
 
     @Override
-    public void setClient(Client client) {
-        //this.client = client;
-    }
-
-    @Override
     public void showTurn() {
-
+        /*todo*/
     }
 
     @SuppressWarnings("ALL")

@@ -86,6 +86,8 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
                 case "getNick" -> client.getNicknamesResponse(getNicknames());
 
+                case "getNumPlayers" -> client.getNumOfPlayersResponse(getNumOfPlayers());
+
                 case "getPlayPos" -> client.getPlayablePositionsResponse(getPlayablePositions(integer()));
 
                 default -> System.err.println("[INVALID MESSAGE]");
@@ -290,6 +292,13 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     public String[] getNicknames()  {
         synchronized (controller) {
             return this.controller.getNicknames();
+        }
+    }
+
+    @Override
+    public int getNumOfPlayers() {
+        synchronized (controller) {
+            return this.controller.getNumOfPlayers();
         }
     }
 }

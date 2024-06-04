@@ -62,13 +62,15 @@ public class SocketClient implements VirtualView, Client {
             //System.err.println(line); // debug
             switch (line) {
 
-                case "setId" -> setId(integer());
+                case "setId" -> setIdAndRunCli(integer());
                 case "terminate" -> terminate();
                 case "ping" -> ping();
                 case "start" -> startGame();
                 case "turn" -> setMyTurn();
                 case "gameOver" -> gameOver();
                 case "winner" -> showWinner();
+
+                case "getNumPlayers" -> this.numOfPlayers = integer();
 
                 case "message" -> {
                     String sender = line();
@@ -180,7 +182,6 @@ public class SocketClient implements VirtualView, Client {
                 }
 
                 case "getNick" -> {
-                   this.numOfPlayers = integer(); // numOfPlayers is set only here (if not first one to connect)!
                    nicknamesResponse = new String[numOfPlayers];
                    for(int i=0; i<numOfPlayers; i++)
                        nicknamesResponse[i] = line();
@@ -196,7 +197,7 @@ public class SocketClient implements VirtualView, Client {
         this.response = true;
     }
 
-    private void setId(int id) {
+    private void setIdAndRunCli(int id) {
 
         if(id == -1) {
             System.err.println("Connection refused: match already started/full or number of players not set...");
@@ -205,6 +206,7 @@ public class SocketClient implements VirtualView, Client {
 
         this.id = id;
         System.err.println("Client connected with id: " + id);
+        getNumOfPlayers();
 
         new Thread(()->{
             try {
@@ -292,8 +294,7 @@ public class SocketClient implements VirtualView, Client {
             new Thread(() -> view.start()).start();
         }
         else {
-            this.view = new ViewGui();
-            view.setClient(this);
+            this.view = new ViewGui(this);
             new Thread(() -> {
                 Platform.startup(() -> {
                     view.start();
@@ -304,8 +305,8 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void setMyTurn() {
-        /*todo wake up user through view*/
         this.isMyTurn = true;
+        view.showTurn();
     }
 
     @Override
@@ -414,6 +415,8 @@ public class SocketClient implements VirtualView, Client {
         synchronized (server) {
             server.drawCard(position, this.id);
         }
+        this.isMyTurn = false;
+        view.showTurn();
     }
 
     @Override
@@ -511,6 +514,12 @@ public class SocketClient implements VirtualView, Client {
     @Override
     public void terminateLocal() {
         terminate();
+    }
+
+    private void getNumOfPlayers() {
+        synchronized (server) {
+            server.getNumOfPlayers();
+        }
     }
 
     private int integer() throws IOException {

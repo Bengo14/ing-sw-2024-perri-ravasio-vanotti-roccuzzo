@@ -1,8 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
-import it.polimi.sw.gianpaolocugola47.model.MainTable;
 import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
-import it.polimi.sw.gianpaolocugola47.network.Client;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +27,9 @@ public class EndGameController implements Initializable {
     @FXML
     private Label winner_LBL;
 
-    public void showResults(MainTable mainTable) {
+    public void showResults(int[] globalPoints, String[] nicknames) {
+     /* todo to be updated using new parameters (num of players by Array.length + points + nicknames)
+
         // Create columns for the TableView
         TableColumn<PlayerTable, String> nicknameColumn = new TableColumn<>("Nickname");
         nicknameColumn.setCellValueFactory(new PropertyValueFactory<>("nickname")); // Assuming PlayerTable has a "nickname" property
@@ -58,7 +58,7 @@ public class EndGameController implements Initializable {
         leaderboardPane.getChildren().add(resultsTable);
 
         // Display the winner
-        winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName());
+        winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName());*/
     }
 
     public void logOut(ActionEvent event){

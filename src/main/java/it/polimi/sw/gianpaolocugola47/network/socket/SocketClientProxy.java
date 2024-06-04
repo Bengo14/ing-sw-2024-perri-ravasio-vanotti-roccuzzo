@@ -163,6 +163,12 @@ public class SocketClientProxy implements VirtualView {
         output.flush();
     }
 
+    protected void getNumOfPlayersResponse(int numOfPlayers) {
+        output.println("getNumPlayers");
+        output.println(numOfPlayers);
+        output.flush();
+    }
+
     protected void getPlayablePositionsResponse(boolean[][] playablePositions) {
         output.println("getPlayPos");
         for(int i=0; i<playablePositions.length; i++)

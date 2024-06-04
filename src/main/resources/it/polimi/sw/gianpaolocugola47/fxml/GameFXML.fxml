@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1280.0" styleClass="boardTable" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1280.0" styleClass="boardTable" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="793.0" prefWidth="1296.0">
          <children>
@@ -39,49 +39,27 @@
                <children>
                   <VBox alignment="CENTER_RIGHT" prefHeight="539.0" prefWidth="314.0">
                      <children>
+                        <HBox prefHeight="100.0" prefWidth="314.0" />
                         <HBox prefHeight="108.0" prefWidth="314.0">
                            <children>
-                              <ImageView fx:id="deck_res" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/back_2.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="res_1" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_30.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="res_2" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_19.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="deck_res" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+                              <ImageView fx:id="res_1" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+                              <ImageView fx:id="res_2" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
                            </children>
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="99.0" prefWidth="314.0" />
+                        <HBox prefHeight="0.0" prefWidth="314.0" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="deck_gold" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/back_26.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="deck_gold" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
                               <ImageView fx:id="gold_1" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_61.png" />
-                                 </image>
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </ImageView>
-                              <ImageView fx:id="gold_2" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_71.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="gold_2" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="40.0" prefWidth="20.0" />
@@ -126,17 +104,9 @@
                         <HBox prefHeight="110.0" prefWidth="345.0">
                            <children>
                               <VBox prefHeight="80.0" prefWidth="8.0" />
-                              <ImageView fx:id="obj_1" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_96.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="obj_1" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                               <VBox prefHeight="80.0" prefWidth="45.0" />
-                              <ImageView fx:id="obj_2" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../graphics/cards/front_94.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="obj_2" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </HBox>
                         <Pane prefHeight="535.0" prefWidth="259.0">

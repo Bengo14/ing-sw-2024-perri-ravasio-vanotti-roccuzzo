@@ -117,28 +117,19 @@ public class ViewGui extends Application implements View, Initializable {
         turnLabel.setVisible(true);
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+getSecretObjective().getId()+".png")));
-        // secret_obj.setImage(secret_obj.getImage());
-        // Get the cards from the client or another data source
-        //ResourceCard[] deckCards =.getDeckCards();
-        //ResourceCard[] revealedCards = client.getRevealedCards();
-        // cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+startingCard.getId()+".png")));
-        // Set the images for the hand cards
-//        playerTable.setCardsOnHand();
-//        hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[0].getId()+".png")));
-//        hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[1].getId()+".png")));
-//        hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[2].getId()+".png")));
+        //cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getStartingCard().getId()+".png")));
 
-
-//        deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+id_deck_res+".png")));
-//        deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+id_deck_gold+".png")));
-
-//        // Set the images for the revealed cards
-//        res_1.setImage(new Image(getClass().getResourceAsStream("/path/to/card/images/" + revealedCards[0].getId() + ".png")));
-//        res_2.setImage(new Image(getClass().getResourceAsStream("/path/to/card/images/" + revealedCards[1].getId() + ".png")));
-//        // Set the images for the gold cards
-//        gold_1.setImage(new Image(getClass().getResourceAsStream("/path/to/card/images/" + revealedCards[2].getId() + ".png")));
-//        gold_2.setImage(new Image(getClass().getResourceAsStream("/path/to/card/images/" + revealedCards[3].getId() + ".png")));
-
+        hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(0).getId()+".png")));
+        hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(1).getId()+".png")));
+        hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(2).getId()+".png")));
+        obj_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+objectives[0].getId()+".png")));
+        obj_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+objectives[1].getId()+".png")));
+        deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));
+        deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+goldCardOnTop.getId()+".png")));
+        res_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[0].getId()+".png")));
+        res_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[1].getId()+".png")));
+        gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[2].getId()+".png")));
+        gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[3].getId()+".png")));
         nickLabel.setText(localPlayerTable.getNickName());
         nickLabel.setStyle("-fx-font-weight: bold");
         nickLabel.setVisible(true);

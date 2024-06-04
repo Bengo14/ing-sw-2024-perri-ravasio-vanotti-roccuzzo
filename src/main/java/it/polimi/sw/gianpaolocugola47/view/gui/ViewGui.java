@@ -46,7 +46,6 @@ public class ViewGui extends Application implements View, Initializable {
     private StartingCardController startingCardController;
     private SecretObjController secretObjController;
     private PreGameController preGameController;
-    private GameController gameController;
     private EndGameController endGameController;
 
     private PlayerTable localPlayerTable;
@@ -152,7 +151,6 @@ public class ViewGui extends Application implements View, Initializable {
         scenes.put("Login", "/it/polimi/sw/gianpaolocugola47/fxml/LoginFXML.fxml");
         scenes.put("StartingCard", "/it/polimi/sw/gianpaolocugola47/fxml/StartingCardFXML.fxml");
         scenes.put("SecretObj", "/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml");
-        scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
     }
 
@@ -225,10 +223,6 @@ public class ViewGui extends Application implements View, Initializable {
                     loginController = fxmlLoader.getController();
                     loginController.setClient(client);
                     break;
-                case "Game":
-                    gameController = fxmlLoader.getController();
-                    gameController.start(client, localPlayerTable);
-                    break;
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
                     break;
@@ -280,13 +274,24 @@ public class ViewGui extends Application implements View, Initializable {
     }
 
     @Override
-    public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        localPlayerTable.setNickname(nickname);
-        this.objectives = globalObjectives;
-        this.cardsOnTable = cardsOnTable;
-        localPlayerTable.setCardsOnHand(cardsOnHand);
-        System.out.println("init");
-        setScene("Game");
+    public void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
+        Platform.runLater(() -> {
+            localPlayerTable.setNickname(nickname);
+            this.objectives = globalObjectives;
+            this.cardsOnTable = cardsOnTable;
+            localPlayerTable.setCardsOnHand(cardsOnHand);
+            System.out.println("init");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml"));
+            loader.setController(this);
+            Parent root;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(new Scene(root));
+            stage.show();
+        });
     }
 
     @Override

@@ -9,6 +9,8 @@ import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public interface View {
 
     void start();
@@ -17,7 +19,7 @@ public interface View {
 
     void setId(int id);
     void setNickname(String nickname);
-    void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable);
+    void initView(String nickname, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException;
     void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop);
     void updatePoints(int boardPoints, int globalPoints);
     StartingCard getStartingCard();

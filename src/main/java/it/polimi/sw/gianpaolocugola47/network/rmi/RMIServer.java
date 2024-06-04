@@ -8,6 +8,7 @@ import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -272,7 +273,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                 try {
                     for(VirtualView view : this.clients)
                         view.initView(nicknames, globalObjectives, cardsOnHand[view.getId()], cardsOnTable);
-                } catch (RemoteException ignored) {}
+                } catch (RemoteException ignored) {} catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

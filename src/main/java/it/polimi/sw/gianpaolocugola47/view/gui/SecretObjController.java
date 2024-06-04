@@ -76,7 +76,8 @@ public class SecretObjController implements Initializable {
         if (selectedObjective != null) {
             playerTable.setSecretObjective(selectedObjective);
             client.setSecretObjective();
-            System.out.println(selectedObjective);
+            //System.out.println(selectedObjective);
+            label.setText("Ok! Now wait for all the players to choose their objective...");
         } else {
             label.setText("Please select an objective");
         }

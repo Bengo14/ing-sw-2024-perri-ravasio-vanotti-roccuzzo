@@ -61,13 +61,10 @@ public class MainTable implements Observable {
     }
     @Override
     public void initView() {
-        new Thread(()->{
-            synchronized (observers) {
-                for (Observer observer : observers)
-                    observer.initView(getNicknames(), globalObjectives, getCardsOnHand(), cardsOnTable);
-            }
-        }).start();
-        updateDecks();
+        synchronized (observers) {
+            for (Observer observer : observers)
+                observer.initView(getNicknames(), globalObjectives, getCardsOnHand(), cardsOnTable);
+        }
     }
     @Override
     public void updateDecks() {

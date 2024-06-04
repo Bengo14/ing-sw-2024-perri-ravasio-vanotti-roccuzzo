@@ -22,10 +22,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-//import javafx.scene.*;
-//import javafx.scene.media.Media;
-
 import javax.print.attribute.standard.Media;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -39,7 +37,6 @@ public class ViewGui extends Application implements View, Initializable {
     private Scene scene;
     private final HashMap<String, String> scenes;
     private Media media;
-    // private MediaPlayer mediaPlayer;
 
     private StartingCardController startingCardController;
     private EndGameController endGameController;
@@ -120,8 +117,10 @@ public class ViewGui extends Application implements View, Initializable {
         gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[2].getId()+".png")));
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnTable[3].getId()+".png")));
 
-        nickLabel.setText(localPlayerTable.getId()+": "+localPlayerTable.getNickName());
-        /*todo all nick and global points?*/
+        String text = "";
+        for(int i = 0; i<nicknames.length; i++)
+            text += i+": "+nicknames[i]+" | "+"global points: 0\n";
+        nickLabel.setText(text);
         nickLabel.setStyle("-fx-font-weight: bold");
         nickLabel.setVisible(true);
         turnLabel.setStyle("-fx-font-weight: bold");
@@ -160,8 +159,6 @@ public class ViewGui extends Application implements View, Initializable {
             Platform.exit();
             System.exit(0);
         });
-        //stage.setMinWidth(1280);
-        //stage.setMinHeight(760);
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(scenes.get("PreGame")));
         try {
@@ -250,24 +247,39 @@ public class ViewGui extends Application implements View, Initializable {
             scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
-            stage.setFullScreen(true);
+            double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+            double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+            stage.setWidth(width);
+            stage.setHeight(height);
+            stage.setX(0);
+            stage.setY(0);
             stage.show();
         });
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        System.err.println("updateDecks");
-        this.resourceCardOnTop = resourceCardOnTop;
-        this.goldCardOnTop = goldCardOnTop;
-        //deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));
-        //deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+goldCardOnTop.getId()+".png")));
+        Platform.runLater(() -> {
+            //System.err.println(resourceCardOnTop+" "+goldCardOnTop);
+            this.resourceCardOnTop = resourceCardOnTop;
+            this.goldCardOnTop = goldCardOnTop;
+            deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));
+            deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+goldCardOnTop.getId()+".png")));
+        });
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
-        this.boardPoints = boardPoints;
-        this.globalPoints = globalPoints;
+        Platform.runLater(() -> {
+            this.boardPoints = boardPoints;
+            this.globalPoints = globalPoints;
+
+            String text = "";
+            for(int i = 0; i<nicknames.length; i++)
+                text += i+": "+nicknames[i]+" | "+"global points: "+globalPoints[i]+"\n";
+            nickLabel.setText(text);
+            /*todo update board */
+        });
     }
 
     @Override
@@ -292,8 +304,10 @@ public class ViewGui extends Application implements View, Initializable {
 
     @Override
     public void showTurn() { // called by client when turn status changes
-        if(client.isItMyTurn())
-            turnLabel.setText(localPlayerTable.getNickName() + ", it's your turn!");
-        else turnLabel.setText(localPlayerTable.getNickName() + ", it's not your turn...");
+        Platform.runLater(() -> {
+            if(client.isItMyTurn())
+                turnLabel.setText(localPlayerTable.getNickName() + ", it's your turn!");
+            else turnLabel.setText(localPlayerTable.getNickName() + ", it's not your turn...");
+        });
     }
 }

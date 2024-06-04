@@ -73,6 +73,7 @@ public class Controller {
         startingCardsAndObjAdded++;
         if(startingCardsAndObjAdded == mainTable.getNumOfPlayers()) {
             mainTable.initView();
+            mainTable.updateDecks();
             mainTable.showTurn(currentPlayerId);
         }
     }

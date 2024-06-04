@@ -239,7 +239,9 @@ public class SocketClient implements VirtualView, Client {
                 command = scan.next();
             }
             this.numOfPlayers = Integer.parseInt(command);
-            this.server.setNumOfPlayers(numOfPlayers);
+            synchronized (server) {
+                this.server.setNumOfPlayers(numOfPlayers);
+            }
         }
         else {
             System.out.println("A game is already starting, you connected to the server with id: " + this.id);
@@ -261,7 +263,9 @@ public class SocketClient implements VirtualView, Client {
         }
         System.out.println("You joined the game! Waiting for other players...");
         this.nickname = tempNick;
-        this.server.addPlayer(this.id, this.nickname);
+        synchronized (server) {
+            this.server.addPlayer(this.id, this.nickname);
+        }
     }
 
     /* --- methods of interface VirtualView --- */
@@ -281,15 +285,17 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void startGame() {
+        Deck.initDeck(); //init Deck's hashMap to retrieve cards by id
+
         if(isCliChosen) {
             this.view = new CLI(this);
             new Thread(() -> view.start()).start();
         }
         else {
+            this.view = new ViewGui();
+            view.setClient(this);
             new Thread(() -> {
                 Platform.startup(() -> {
-                    this.view = new ViewGui();
-                    view.setClient(this);
                     view.start();
                 });
             }).start();

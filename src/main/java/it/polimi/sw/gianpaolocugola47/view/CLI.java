@@ -17,7 +17,7 @@ import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
 
 public class CLI implements View {
 
-    private final Client client;
+    private Client client;
     private final String ANSI_RESET = "\033[0m";
     private final PlayerTable localPlayerTable;
     private Objectives[] objectives;
@@ -36,6 +36,11 @@ public class CLI implements View {
         this.localPlayerTable = null;
         this.client = null;
     }
+    @Override
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public void start() {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.println("""

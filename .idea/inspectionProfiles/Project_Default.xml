@@ -40,6 +40,7 @@
       </option>
     </inspection_tool>
     <inspection_tool class="OptionalOfNullableMisuse" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="RawUseOfParameterizedType" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SameParameterValue" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SameReturnValue" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="StringTemplateMigration" enabled="false" level="WARNING" enabled_by_default="false" />

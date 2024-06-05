@@ -11,19 +11,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
+import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import javax.print.attribute.standard.Media;
-import java.awt.*;
+//import javafx.scene.media.Media;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ public class ViewGui extends Application implements View, Initializable {
     private FXMLLoader fxmlLoader;
     private Scene scene;
     private final HashMap<String, String> scenes;
-    private Media media;
+    //private Media media;
 
     private StartingCardController startingCardController;
     private EndGameController endGameController;
@@ -75,6 +74,8 @@ public class ViewGui extends Application implements View, Initializable {
     private Pane board;
     @FXML
     private ImageView[][] cardMatrix = new ImageView[64][64];
+    @FXML
+    private Button switch_1,switch_2,switch_3;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,7 +106,11 @@ public class ViewGui extends Application implements View, Initializable {
             }
         }
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+getSecretObjective().getId()+".png")));
-        //cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getStartingCard().getId()+".png")));
+//        if (localPlayerTable.getStartingCard().isFront()){
+//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getStartingCard().getId()+".png")));
+//        }else{
+//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+localPlayerTable.getStartingCard().getId()+".png")));
+//        }
 
         hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(0).getId()+".png")));
         hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+localPlayerTable.getCardOnHand(1).getId()+".png")));
@@ -227,7 +232,28 @@ public class ViewGui extends Application implements View, Initializable {
             client.terminateLocal();
         }
     }
+    @FXML
+    public void handelSwitch_1(ActionEvent event){
+        System.out.println("Switch 1 button clicked");
+        switchCardImage(localPlayerTable.getCardOnHand(0), hand_0);
+    }
+    @FXML
+    public void handelSwitch_2(ActionEvent event){
+        System.out.println("Switch 2 button clicked");
+        switchCardImage(localPlayerTable.getCardOnHand(1), hand_1);
+    }
+    @FXML
+    public void handelSwitch_3(ActionEvent event){
+        System.out.println("Switch 3 button clicked");
+        switchCardImage(localPlayerTable.getCardOnHand(2), hand_2);
+    }
 
+    private void switchCardImage(PlaceableCard card, ImageView imageView) {
+        String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+        imagePath+=card.isFront()?"back_":"front_";
+        imagePath+=card.getId()+".png";
+        imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
+    }
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
         Platform.runLater(() -> {
@@ -247,8 +273,9 @@ public class ViewGui extends Application implements View, Initializable {
             scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
-            double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-            double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double width = screenBounds.getWidth();
+            double height = screenBounds.getHeight();
             stage.setWidth(width);
             stage.setHeight(height);
             stage.setX(0);
@@ -260,7 +287,6 @@ public class ViewGui extends Application implements View, Initializable {
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
         Platform.runLater(() -> {
-            //System.err.println(resourceCardOnTop+" "+goldCardOnTop);
             this.resourceCardOnTop = resourceCardOnTop;
             this.goldCardOnTop = goldCardOnTop;
             deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+resourceCardOnTop.getId()+".png")));

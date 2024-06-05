@@ -58,26 +58,25 @@ public class SecretObjController implements Initializable {
 
     @FXML
     private void handleSecret1Clicked(MouseEvent event) {
-        // Azioni da eseguire quando l'utente clicca sul primo obiettivo segreto
         selectedObjective = secretObjective1;
         setImageViewBorder(secret_1);
     }
 
     @FXML
     private void handleSecret2Clicked(MouseEvent event) {
-        // Azioni da eseguire quando l'utente clicca sul secondo obiettivo segreto
         selectedObjective = secretObjective2;
         setImageViewBorder(secret_2);
     }
 
     @FXML
     private void handleObjButtonClicked(ActionEvent event) {
-        // Azioni da eseguire quando l'utente conferma la scelta degli obiettivi segreti
         if (selectedObjective != null) {
             playerTable.setSecretObjective(selectedObjective);
             client.setSecretObjective();
-            //System.out.println(selectedObjective);
             label.setText("Ok! Now wait for all the players to choose their objective...");
+            obj_button.setDisable(true);
+            secret_1.setDisable(true);
+            secret_2.setDisable(true);
         } else {
             label.setText("Please select an objective");
         }

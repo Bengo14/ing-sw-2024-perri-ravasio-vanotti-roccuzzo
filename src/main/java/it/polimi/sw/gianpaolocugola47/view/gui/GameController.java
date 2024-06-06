@@ -58,37 +58,37 @@ public class GameController implements Initializable {
     public void start(ViewGui gui) {
         this.gui = gui;
 
-        boardScrollPane.setPannable(true);
-        boardScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-            if (event.isControlDown()) {
-                double zoomFactor = 1.05;
-                double deltaY = event.getDeltaY();
-                if (deltaY < 0) {
-                    zoomFactor = 0.95;
-                }
-                board.setScaleX(board.getScaleX() * zoomFactor);
-                board.setScaleY(board.getScaleY() * zoomFactor);
-                event.consume();
-            }
-        });
-        for (int i = 0; i < 64; i++) {
-            for (int j = 0; j < 64; j++) {
-                ImageView imageView = new ImageView();
-                imageView.setFitWidth(70);
-                imageView.setFitHeight(55);
-                imageView.setLayoutX(110 * j);
-                imageView.setLayoutY(29 * i);
-                // imageView.setId("card_"+i+"_"+j); // Assegna un ID univoco basato sulla posizione nella matrice
-                board.getChildren().add(imageView);
-                cardMatrix[i][j] = imageView;
-            }
-        }
+//        boardScrollPane.setPannable(true);
+//        boardScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+//            if (event.isControlDown()) {
+//                double zoomFactor = 1.05;
+//                double deltaY = event.getDeltaY();
+//                if (deltaY < 0) {
+//                    zoomFactor = 0.95;
+//                }
+//                board.setScaleX(board.getScaleX() * zoomFactor);
+//                board.setScaleY(board.getScaleY() * zoomFactor);
+//                event.consume();
+//            }
+//        });
+//        for (int i = 0; i < 64; i++) {
+//            for (int j = 0; j < 64; j++) {
+//                ImageView imageView = new ImageView();
+//                imageView.setFitWidth(70);
+//                imageView.setFitHeight(55);
+//                imageView.setLayoutX(110 * j);
+//                imageView.setLayoutY(29 * i);
+//                // imageView.setId("card_"+i+"_"+j); // Assegna un ID univoco basato sulla posizione nella matrice
+//                board.getChildren().add(imageView);
+//                cardMatrix[i][j] = imageView;
+//            }
+//        }
 
-        if (gui.getStartingCard().isFront()) {
-            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
-        } else {
-            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
-        }
+//        if (gui.getStartingCard().isFront()) {
+//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
+//        } else {
+//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+//        }
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));
         hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(0).getId()+".png")));

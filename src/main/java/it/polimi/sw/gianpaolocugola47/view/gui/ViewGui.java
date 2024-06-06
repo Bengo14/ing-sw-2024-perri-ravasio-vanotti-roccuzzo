@@ -6,20 +6,17 @@ import it.polimi.sw.gianpaolocugola47.view.View;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.util.HashMap;
 

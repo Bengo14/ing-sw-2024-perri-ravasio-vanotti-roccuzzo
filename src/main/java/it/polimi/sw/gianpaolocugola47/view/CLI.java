@@ -145,6 +145,13 @@ public class CLI implements View {
         /*todo*/
     }
 
+    @Override
+    public void receiveMessage(ChatMessage message) {
+        if(!message.isPrivate())
+            System.out.println(message.getSender() + ": " + message.getMessage());
+        else System.out.println(message.getSender() + ": psst, " + message.getMessage());
+    }
+
     @SuppressWarnings("ALL")
     public void printResourceCard(ResourceCard resourceCard) {
         String colour = resourceCard.getResourceCentreBack().getAsciiEscape();

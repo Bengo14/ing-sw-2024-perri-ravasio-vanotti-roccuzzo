@@ -1,9 +1,8 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
-import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
-import it.polimi.sw.gianpaolocugola47.view.View;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -21,10 +19,15 @@ import java.util.ResourceBundle;
 public class GameController implements Initializable {
 
     @FXML
+    private TextField chatInput;
+    @FXML
+    private ListView<String> chat;
+    @FXML
+    private Button sendButton;
+    @FXML
     private ListView<String> rankingList;
     @FXML
     private Label turnLabel;
-    private int id_gold_1,id_gold_2,id_res_1,id_res_2,id_deck_gold,id_deck_res,id_obj_1,id_obj_2;
     @FXML
     private ImageView deck_gold,gold_1,gold_2;
     @FXML
@@ -43,11 +46,10 @@ public class GameController implements Initializable {
     private ScrollPane boardScrollPane;
     @FXML
     private Pane board;
-
-    private ImageView[][] cardMatrix = new ImageView[64][64];
     @FXML
     private Button switch_1,switch_2,switch_3;
 
+    private ImageView[][] cardMatrix = new ImageView[64][64];
     private ViewGui gui;
 
     @Override
@@ -112,6 +114,18 @@ public class GameController implements Initializable {
 
         turnLabel.setStyle("-fx-font-weight: bold");
         turnLabel.setVisible(true);
+
+        chat.getItems().add("Chat service is on!");
+        chat.getItems().add("Type --listPlayers to see who your opponents are.");
+        chat.getItems().add("Start a message with '@' to send a private message.");
+    }
+
+    public void receiveMessage(ChatMessage message) {
+        if(!message.isPrivate())
+            chat.getItems().add(message.getSender() + ": " + message.getMessage());
+        else chat.getItems().add(message.getSender() + ": psst, " + message.getMessage());
+        chat.scrollTo(chat.getItems().size()-1);
+        chat.refresh();
     }
 
     public void setTurnLabelText(String text) {
@@ -139,14 +153,11 @@ public class GameController implements Initializable {
 
     @FXML
     public void handleRankingClick(MouseEvent event) {
-        System.err.println(rankingList.getSelectionModel().getSelectedItem());
-        rankingList.getFocusModel().focus(rankingList.getFocusModel().getFocusedIndex());
-        rankingList.refresh();
+        /*todo show other boards*/
     }
 
     @FXML
     private void handleSwitch_1(ActionEvent event) {
-        System.out.println("Switch 1");
         switchCardImage(gui.getCardsOnHand()[0], hand_0);
     }
     @FXML
@@ -157,7 +168,6 @@ public class GameController implements Initializable {
     private void handleSwitch_3(ActionEvent event) {
         switchCardImage(gui.getCardsOnHand()[2], hand_2);
     }
-
     private void switchCardImage(ResourceCard card, ImageView imageView) {
         card.switchFrontBack();
         String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
@@ -166,4 +176,35 @@ public class GameController implements Initializable {
         imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
     }
 
+    @FXML
+    private void handleChatInput(ActionEvent event) {
+
+        ChatMessage message = new ChatMessage(gui.getLocalPlayerTable().getNickName(), gui.getLocalPlayerTable().getId());
+        String line = chatInput.getText();
+        chatInput.clear();
+
+        if (line.startsWith("@")) {
+            try {
+                message.setPrivate(true);
+                message.setReceiver(line.substring(1, line.indexOf(" ")));
+                message.setMessage(line.substring(line.indexOf(" ") + 1));
+                gui.sendMessage(message);
+            } catch (StringIndexOutOfBoundsException e) {
+                chat.getItems().add("Invalid input, try again...");
+            }
+        } else if (line.equals("--listPlayers")) {
+
+            chat.getItems().add("list of all players in the lobby: ");
+            for(String nickname : gui.getNicknames()) {
+                if(nickname.equals(gui.getLocalPlayerTable().getNickName()))
+                    chat.getItems().add(nickname + " (you)");
+                else
+                    chat.getItems().add(nickname);
+            }
+        } else {
+            message.setPrivate(false);
+            message.setMessage(line);
+            gui.sendMessage(message);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.View;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
@@ -199,6 +200,18 @@ public class ViewGui extends Application implements View {
             this.boardPoints = boardPoints;
             this.globalPoints = globalPoints;
             gameController.updatePoints(boardPoints, globalPoints);
+        });
+    }
+
+    public void sendMessage(ChatMessage message) {
+        if (message.isPrivate())
+            client.sendPrivateMessage(message);
+        else client.sendMessage(message);
+    }
+
+    public void receiveMessage(ChatMessage message) {
+        Platform.runLater(() -> {
+            gameController.receiveMessage(message);
         });
     }
 

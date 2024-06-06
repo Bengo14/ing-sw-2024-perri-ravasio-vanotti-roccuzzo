@@ -5,6 +5,7 @@ import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
+import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.IOException;
 
@@ -20,5 +21,5 @@ public interface View {
     int[] getGlobalPoints();
     int[] getBoardPoints();
     void showTurn();
-
+    void receiveMessage(ChatMessage message);
 }

@@ -8,21 +8,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1280.0" styleClass="boardTable" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.gianpaolocugola47.view.gui.GameController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1280.0" styleClass="boardTable" stylesheets="@../css/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.gianpaolocugola47.view.gui.GameController">
    <top>
-      <HBox alignment="CENTER_RIGHT" prefHeight="91.0" prefWidth="1280.0" BorderPane.alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" prefHeight="88.0" prefWidth="1280.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Label fx:id="turnLabel" prefHeight="49.0" prefWidth="213.0" styleClass="tooltip" stylesheets="@../css/Style.css">
+            <Label fx:id="turnLabel" prefHeight="50.0" prefWidth="300.0" styleClass="tooltip" stylesheets="@../css/Style.css">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </Label>
-            <ListView fx:id="rankingList" prefHeight="200.0" prefWidth="200.0" styleClass="tooltip" stylesheets="@../css/Style.css">
+            <ListView fx:id="rankingList" onMouseClicked="#handleRankingClick" prefHeight="90.0" prefWidth="357.0" styleClass="tooltip" stylesheets="@../css/Style.css">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -34,18 +34,23 @@
       </HBox>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="757.0" prefWidth="306.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="729.0" prefWidth="328.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="500.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="493.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/board/plateau.png" />
                </image>
             </ImageView>
-            <ListView prefHeight="165.0" prefWidth="306.0" styleClass="tooltip" stylesheets="@../css/Style.css">
+            <ListView fx:id="chat" prefHeight="151.0" prefWidth="328.0" styleClass="tooltip" stylesheets="@../css/Style.css">
                <VBox.margin>
                   <Insets top="10.0" />
-               </VBox.margin></ListView>
-            <TextField prefHeight="57.0" prefWidth="306.0" promptText="entre a messaeg" styleClass="tooltip" stylesheets="@../css/Style.css" />
+               </VBox.margin>
+            </ListView>
+            <TextField fx:id="chatInput" prefHeight="38.0" prefWidth="328.0" promptText="type a message (@nick for private one)" styleClass="tooltip" stylesheets="@../css/Style.css" />
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#handleChatInput" opacity="0.8" prefHeight="31.0" prefWidth="98.0" styleClass="login-button" stylesheets="@../css/Style.css" text="Send">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
          </children>
       </VBox>
    </left>
@@ -103,7 +108,7 @@
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="switch_1" mnemonicParsing="false" onAction="#handleSwitch_1" text="Switch_1">
+                  <Button fx:id="switch_1" mnemonicParsing="false" onAction="#handleSwitch_1" text="Switch">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -123,7 +128,7 @@
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="switch_2" mnemonicParsing="false" onAction="#handleSwitch_2" text="Switch_2">
+                  <Button fx:id="switch_2" mnemonicParsing="false" onAction="#handleSwitch_2" text="Switch">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -140,7 +145,7 @@
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="switch_3" mnemonicParsing="false" onAction="#handleSwitch_3" text="Switch_3">
+                  <Button fx:id="switch_3" mnemonicParsing="false" onAction="#handleSwitch_3" text="Switch">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -180,10 +185,6 @@
       </VBox>
    </right>
    <center>
-      <ScrollPane fx:id="boardScrollPane" hbarPolicy="NEVER" prefHeight="2000.0" prefWidth="5000.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
+      <ScrollPane fx:id="boardScrollPane" hbarPolicy="NEVER" prefHeight="2000.0" prefWidth="5000.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

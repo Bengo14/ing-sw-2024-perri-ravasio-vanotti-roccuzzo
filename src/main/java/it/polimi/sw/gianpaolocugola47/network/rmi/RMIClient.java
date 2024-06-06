@@ -154,9 +154,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void gameOver() {
-        //System.err.println("\nGame Over!");
         /*todo*/
-        this.terminate = true;
     }
 
     @Override
@@ -182,9 +180,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void showWinner() {
-        //System.out.println("\nYou won the game!");
         /*todo*/
-        this.terminate = true;
     }
 
     @Override
@@ -194,14 +190,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void receiveMessage(ChatMessage message) throws RemoteException {
-        System.out.println(message.getSender() + ": " + message.getMessage()); //debug only
-        /*todo*/ //concurrent access to cli?
+        synchronized (view) {
+            view.receiveMessage(message);
+        }
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) throws RemoteException {
-        System.err.println(message.getSender() + ": psst, " + message.getMessage()); //debug only
-        /*todo*/
+        synchronized (view) {
+            view.receiveMessage(message);
+        }
     }
 
     /* --- methods of interface Client --- */

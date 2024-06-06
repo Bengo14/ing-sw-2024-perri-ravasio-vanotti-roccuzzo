@@ -3,14 +3,19 @@ package it.polimi.sw.gianpaolocugola47.view.gui;
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.view.View;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.transform.Scale;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,60 +42,147 @@ public class GameController implements Initializable {
     @FXML
     private ImageView secret_obj,obj_1,obj_2;
     @FXML
-    private Pane pos_0,pos_1,pos_2,pos_3,pos_4,pos_5,pos_6,pos_7,pos_8,pos_9,pos_10;
+    private ImageView pos_0,pos_1,pos_2,pos_3,pos_4,pos_5,pos_6,pos_7,pos_8,pos_9,pos_10;
     @FXML
-    private Pane pos_11,pos_12,pos_13,pos_14,pos_15,pos_16,pos_17,pos_18,pos_19,pos_20;
+    private ImageView pos_11,pos_12,pos_13,pos_14,pos_15,pos_16,pos_17,pos_18,pos_19,pos_20;
     @FXML
-    private Pane pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29;
+    private ImageView pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29;
     @FXML
     private ScrollPane boardScrollPane;
     @FXML
-    private Pane board;
+    private Label globalPointsLabel;
+    @FXML
+    private ImageView idPawn,isFirstPawn;
+    @FXML
+    private Pane boardPane;
+    private Group boardGroup = new Group();
+
+    private ImageView[][] cardMatrix = new ImageView[32][32];
+    // Variables to track mouse position and board offset
+    private double mouseX;
+    private double mouseY;
+    private double boardOffsetX;
+    private double boardOffsetY;
     @FXML
     private Button switch_1,switch_2,switch_3;
 
-    private ImageView[][] cardMatrix = new ImageView[64][64];
     private ViewGui gui;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initializeBoard();
 
+
+        // Creazione della trasformazione di scala
+        Scale scale = new Scale(1, 1, 0, 0);
+        boardPane.getTransforms().add(scale);
+
+        // Gestione dell'evento di scorrimento della rotella del mouse
+        boardPane.setOnScroll((ScrollEvent event) -> {
+            double deltaY = event.getDeltaY();
+            double zoomFactor = deltaY > 0 ? 1.1 : 0.9;
+
+            // Calcola il nuovo fattore di scala
+            double newScaleX = scale.getX() * zoomFactor;
+            double newScaleY = scale.getY() * zoomFactor;
+
+            // Imposta il pivot point al centro del Pane
+            double pivotX = boardPane.getWidth() / 2;
+            double pivotY = boardPane.getHeight() / 2;
+
+            // Applica la nuova scala mantenendo il centro del Pane come riferimento
+            scale.setPivotX(pivotX);
+            scale.setPivotY(pivotY);
+            scale.setX(newScaleX);
+            scale.setY(newScaleY);
+
+            event.consume();
+        });
+        boardScrollPane.layout();
+        boardScrollPane.setHvalue(0.5);
+        boardScrollPane.setVvalue(0.5);
+
+        //addZoomFunctionality();
     }
+    private void addDragFunctionality() {
+        boardPane.setOnMousePressed(event -> {
+            mouseX = event.getSceneX();
+            mouseY = event.getSceneY();
+            boardOffsetX = boardPane.getLayoutX();
+            boardOffsetY = boardPane.getLayoutY();
+        });
+        boardPane.setOnMouseDragged(event -> {
+            double deltaX = event.getSceneX() - mouseX;
+            double deltaY = event.getSceneY() - mouseY;
+            boardPane.setLayoutX(boardOffsetX + deltaX);
+            boardPane.setLayoutY(boardOffsetY + deltaY);
+        });
+    }
+    private void centerScrollPaneOnMatrixElement(int rows, int cols, int cellSize) {
+        // Calcola la posizione centrale della matrice
+        double centerX = (cols * cellSize) / 2.0;
+        double centerY = (rows * cellSize) / 2.0;
 
+        // Calcola i valori di scorrimento necessari per centrare il ScrollPane
+        double hValue = centerX / (boardPane.getWidth() - boardScrollPane.getViewportBounds().getWidth());
+        double vValue = centerY / (boardPane.getHeight() - boardScrollPane.getViewportBounds().getHeight());
+
+        // Imposta i valori di scorrimento del ScrollPane
+        boardScrollPane.setHvalue(hValue);
+        boardScrollPane.setVvalue(vValue);
+    }
+    private void centerBoardPane() {
+        boardPane.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
+            boardPane.setLayoutX((boardScrollPane.getViewportBounds().getWidth() - newBounds.getWidth()) / 2);
+            boardPane.setLayoutY((boardScrollPane.getViewportBounds().getHeight() - newBounds.getHeight()) / 2);
+        });
+    }
+//    private void addZoomFunctionality() {
+//
+//
+//    }
+    private void initializeBoard(){
+//        boardPane.getChildren().add(boardGroup);
+
+        for (int i = 0; i < 32; i++) {
+            for (int j = 0; j < 32; j++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitWidth(70);
+                imageView.setFitHeight(55);
+                imageView.setLayoutX(110 * j);
+                imageView.setLayoutY(29 * i);
+                boardPane.getChildren().add(imageView);
+                cardMatrix[i][j] = imageView;
+            }
+        }
+    }
+    private void centerBoardOnCard(int row, int col) {
+        Platform.runLater(() -> {
+            double cardX = cardMatrix[row][col].getLayoutX();
+            double cardY = cardMatrix[row][col].getLayoutY();
+            double viewportWidth = boardScrollPane.getViewportBounds().getWidth();
+            double viewportHeight = boardScrollPane.getViewportBounds().getHeight();
+
+            double centerX = cardX - (viewportWidth / 2) + 35; // Adjust for half of card width
+            double centerY = cardY - (viewportHeight / 2) + 27.5; // Adjust for half of card height
+
+            // Ensure the boardPane's dimensions encompass all cards
+            boardPane.setPrefSize(Math.max(boardPane.getPrefWidth(), centerX + viewportWidth / 2),
+                    Math.max(boardPane.getPrefHeight(), centerY + viewportHeight / 2));
+
+            boardScrollPane.setHvalue(centerX / (boardPane.getWidth() - viewportWidth));
+            boardScrollPane.setVvalue(centerY / (boardPane.getHeight() - viewportHeight));
+        });
+    }
     public void start(ViewGui gui) {
         this.gui = gui;
 
-//        boardScrollPane.setPannable(true);
-//        boardScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-//            if (event.isControlDown()) {
-//                double zoomFactor = 1.05;
-//                double deltaY = event.getDeltaY();
-//                if (deltaY < 0) {
-//                    zoomFactor = 0.95;
-//                }
-//                board.setScaleX(board.getScaleX() * zoomFactor);
-//                board.setScaleY(board.getScaleY() * zoomFactor);
-//                event.consume();
-//            }
-//        });
-//        for (int i = 0; i < 64; i++) {
-//            for (int j = 0; j < 64; j++) {
-//                ImageView imageView = new ImageView();
-//                imageView.setFitWidth(70);
-//                imageView.setFitHeight(55);
-//                imageView.setLayoutX(110 * j);
-//                imageView.setLayoutY(29 * i);
-//                // imageView.setId("card_"+i+"_"+j); // Assegna un ID univoco basato sulla posizione nella matrice
-//                board.getChildren().add(imageView);
-//                cardMatrix[i][j] = imageView;
-//            }
-//        }
+        if (gui.getStartingCard().isFront()) {
+            cardMatrix[16][16].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
+        } else {
+            cardMatrix[16][16].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+        }
 
-//        if (gui.getStartingCard().isFront()) {
-//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
-//        } else {
-//            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
-//        }
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));
         hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(0).getId()+".png")));
@@ -102,7 +194,14 @@ public class GameController implements Initializable {
         res_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[1].getId()+".png")));
         gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[2].getId()+".png")));
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[3].getId()+".png")));
-
+        idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+gui.getLocalPlayerTable().getId()+".png")));
+        if(gui.getLocalPlayerTable().getId()==0){
+            isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
+        }
+        globalPointsLabel.setText("Global points: 0");
+        for(int num = 0; num < gui.getNicknames().length; num++){
+            pos_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+num+".png")));
+        }
         String text;
         for(int i = 0; i<gui.getNicknames().length; i++) {
             text = i + ": " + gui.getNicknames()[i] + " | " + "global points: 0";
@@ -153,7 +252,9 @@ public class GameController implements Initializable {
 
     @FXML
     public void handleRankingClick(MouseEvent event) {
-        /*todo show other boards*/
+        System.err.println(rankingList.getSelectionModel().getSelectedItem());
+        rankingList.getFocusModel().focus(rankingList.getFocusModel().getFocusedIndex());
+        rankingList.refresh();
     }
 
     @FXML

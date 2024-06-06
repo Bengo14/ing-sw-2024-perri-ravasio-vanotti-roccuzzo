@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
+import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.View;
@@ -57,7 +58,7 @@ public class GameController implements Initializable {
     private Pane boardPane;
     private Group boardGroup = new Group();
 
-    private ImageView[][] cardMatrix = new ImageView[32][32];
+    private ImageView[][] cardMatrix = new ImageView[64][64];
     // Variables to track mouse position and board offset
     private double mouseX;
     private double mouseY;
@@ -67,43 +68,73 @@ public class GameController implements Initializable {
     private Button switch_1,switch_2,switch_3;
 
     private ViewGui gui;
+    int selectedCard;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeBoard();
-
-
-        // Creazione della trasformazione di scala
-        Scale scale = new Scale(1, 1, 0, 0);
-        boardPane.getTransforms().add(scale);
-
-        // Gestione dell'evento di scorrimento della rotella del mouse
-        boardPane.setOnScroll((ScrollEvent event) -> {
-            double deltaY = event.getDeltaY();
-            double zoomFactor = deltaY > 0 ? 1.1 : 0.9;
-
-            // Calcola il nuovo fattore di scala
-            double newScaleX = scale.getX() * zoomFactor;
-            double newScaleY = scale.getY() * zoomFactor;
-
-            // Imposta il pivot point al centro del Pane
-            double pivotX = boardPane.getWidth() / 2;
-            double pivotY = boardPane.getHeight() / 2;
-
-            // Applica la nuova scala mantenendo il centro del Pane come riferimento
-            scale.setPivotX(pivotX);
-            scale.setPivotY(pivotY);
-            scale.setX(newScaleX);
-            scale.setY(newScaleY);
-
-            event.consume();
-        });
-        boardScrollPane.layout();
+        addZoomFunctionality();
+        boardPane.setScaleX(2.0);
+        boardPane.setScaleY(2.0);
         boardScrollPane.setHvalue(0.5);
         boardScrollPane.setVvalue(0.5);
 
-        //addZoomFunctionality();
     }
+    private void addZoomFunctionality() {
+        boardPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.isControlDown()) {
+                double delta = 1.2;
+                double scale = boardPane.getScaleX(); // Usa solo la scala X, ma potresti usare la Y se necessario
+                if (event.getDeltaY() < 0) {
+                    scale /= delta;
+                } else {
+                    scale *= delta;
+                }
+                boardPane.setScaleX(scale);
+                boardPane.setScaleY(scale); // Aggiorna anche la scala Y
+                event.consume();
+            }
+        });
+    }
+    private void setImageViewBorder(ImageView card) {
+        hand_0.getStyleClass().remove("selected-image");
+        hand_1.getStyleClass().remove("selected-image");
+        hand_2.getStyleClass().remove("selected-image");
+        card.getStyleClass().add("selected-image");
+    }
+    @FXML
+    private void handleHand0Click(MouseEvent event) {
+        setImageViewBorder(hand_0);
+        selectedCard = 0;
+    }
+    @FXML
+    private void handleHand1Click(MouseEvent event) {
+        setImageViewBorder(hand_1);
+        selectedCard = 1;
+    }
+    @FXML
+    private void handleHand2Click(MouseEvent event) {
+        setImageViewBorder(hand_2);
+        selectedCard = 2;
+    }
+//    @FXML
+//    public void handleBoardClick(MouseEvent event) {
+//        PlaceableCard card = gui.getLocalPlayerTable().getCardOnHand(selectedCard);
+//        if (card != null) {
+//            int x = (int) event.getX() / 110;
+//            int y = (int) event.getY() / 29;
+//            if(gui.getLocalPlayerTable().isPlaceable(x,y)){
+//                if (x >= 0 && x < 64 && y >= 0 && y < 64) {
+//                    if (card.isFront()) {
+//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+card.getId()+".png")));
+//                    } else {
+//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+card.getId()+".png")));
+//                    }
+//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0 );
+//                }
+//            }
+//        }
+//    }
     private void addDragFunctionality() {
         boardPane.setOnMousePressed(event -> {
             mouseX = event.getSceneX();
@@ -118,70 +149,39 @@ public class GameController implements Initializable {
             boardPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
-    private void centerScrollPaneOnMatrixElement(int rows, int cols, int cellSize) {
-        // Calcola la posizione centrale della matrice
-        double centerX = (cols * cellSize) / 2.0;
-        double centerY = (rows * cellSize) / 2.0;
-
-        // Calcola i valori di scorrimento necessari per centrare il ScrollPane
-        double hValue = centerX / (boardPane.getWidth() - boardScrollPane.getViewportBounds().getWidth());
-        double vValue = centerY / (boardPane.getHeight() - boardScrollPane.getViewportBounds().getHeight());
-
-        // Imposta i valori di scorrimento del ScrollPane
-        boardScrollPane.setHvalue(hValue);
-        boardScrollPane.setVvalue(vValue);
-    }
     private void centerBoardPane() {
         boardPane.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
             boardPane.setLayoutX((boardScrollPane.getViewportBounds().getWidth() - newBounds.getWidth()) / 2);
             boardPane.setLayoutY((boardScrollPane.getViewportBounds().getHeight() - newBounds.getHeight()) / 2);
         });
     }
-//    private void addZoomFunctionality() {
-//
-//
-//    }
-    private void initializeBoard(){
-//        boardPane.getChildren().add(boardGroup);
 
-        for (int i = 0; i < 32; i++) {
-            for (int j = 0; j < 32; j++) {
+    private void initializeBoard(){
+
+        for (int i = 0; i < 64; i++) {
+            for (int j = 0; j < 64; j++) {
                 ImageView imageView = new ImageView();
                 imageView.setFitWidth(70);
                 imageView.setFitHeight(55);
                 imageView.setLayoutX(110 * j);
                 imageView.setLayoutY(29 * i);
+                //imageView.setOnMouseClicked(event -> handleBoardClick(event));
                 boardPane.getChildren().add(imageView);
                 cardMatrix[i][j] = imageView;
+
             }
         }
-    }
-    private void centerBoardOnCard(int row, int col) {
-        Platform.runLater(() -> {
-            double cardX = cardMatrix[row][col].getLayoutX();
-            double cardY = cardMatrix[row][col].getLayoutY();
-            double viewportWidth = boardScrollPane.getViewportBounds().getWidth();
-            double viewportHeight = boardScrollPane.getViewportBounds().getHeight();
-
-            double centerX = cardX - (viewportWidth / 2) + 35; // Adjust for half of card width
-            double centerY = cardY - (viewportHeight / 2) + 27.5; // Adjust for half of card height
-
-            // Ensure the boardPane's dimensions encompass all cards
-            boardPane.setPrefSize(Math.max(boardPane.getPrefWidth(), centerX + viewportWidth / 2),
-                    Math.max(boardPane.getPrefHeight(), centerY + viewportHeight / 2));
-
-            boardScrollPane.setHvalue(centerX / (boardPane.getWidth() - viewportWidth));
-            boardScrollPane.setVvalue(centerY / (boardPane.getHeight() - viewportHeight));
-        });
     }
     public void start(ViewGui gui) {
         this.gui = gui;
 
         if (gui.getStartingCard().isFront()) {
-            cardMatrix[16][16].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
+            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {
-            cardMatrix[16][16].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         }
+        cardMatrix[0][0].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png")));
+        cardMatrix[63][63].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_1.png")));
 
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));

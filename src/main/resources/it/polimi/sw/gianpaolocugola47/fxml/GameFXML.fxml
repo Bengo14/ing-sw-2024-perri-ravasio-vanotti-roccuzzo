@@ -274,7 +274,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_0" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_0" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand0Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
@@ -294,7 +294,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_1" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_1" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand1Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
@@ -311,7 +311,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_2" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_2" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand2Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
@@ -358,7 +358,7 @@
    <center>
       <ScrollPane fx:id="boardScrollPane" hbarPolicy="NEVER" prefHeight="700.0" prefWidth="800.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <Pane fx:id="boardPane" prefHeight="700.0" prefWidth="800.0" />
+            <Pane fx:id="boardPane" prefHeight="1960.0" prefWidth="7100.0" />
          </content>
       </ScrollPane>
    </center>

@@ -148,7 +148,7 @@ public class ViewGui extends Application implements View {
     }
 
     @Override
-    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
         Platform.runLater(() -> {
             for(ResourceCard card : cardsOnTable)
                 card.switchFrontBack();
@@ -203,15 +203,12 @@ public class ViewGui extends Application implements View {
         });
     }
 
-    public void sendMessage(ChatMessage message) {
-        if (message.isPrivate())
-            client.sendPrivateMessage(message);
-        else client.sendMessage(message);
-    }
-
-    public void receiveMessage(ChatMessage message) {
+    @Override
+    public void showTurn() { // called by client when turn status changes
         Platform.runLater(() -> {
-            gameController.receiveMessage(message);
+            if(client.isItMyTurn())
+                gameController.setTurnLabelText(localPlayerTable.getNickName() + ", it's your turn!");
+            else gameController.setTurnLabelText(localPlayerTable.getNickName() + ", it's not your turn...");
         });
     }
 
@@ -226,43 +223,47 @@ public class ViewGui extends Application implements View {
     }
 
     @Override
-    public int[] getGlobalPoints() {
-        return this.globalPoints;
+    public void receiveMessage(ChatMessage message) {
+        Platform.runLater(() -> {
+            gameController.receiveMessage(message);
+        });
     }
 
     @Override
-    public int[] getBoardPoints() {
-        return this.boardPoints;
+    public void gameOver() {
+        /*todo set game over scene*/
     }
 
-    public PlayerTable getLocalPlayerTable() {
+    @Override
+    public void showWinner() {
+        /*todo set winner scene*/
+    }
+
+    protected void sendMessage(ChatMessage message) {
+        if (message.isPrivate())
+            client.sendPrivateMessage(message);
+        else client.sendMessage(message);
+    }
+
+    protected PlayerTable getLocalPlayerTable() {
         return localPlayerTable;
     }
-    public ResourceCard[] getCardsOnTable() {
+    protected ResourceCard[] getCardsOnTable() {
         return cardsOnTable;
     }
-    public Objectives[] getObjectives() {
+    protected Objectives[] getObjectives() {
         return objectives;
     }
-    public ResourceCard[] getCardsOnHand() {
+    protected ResourceCard[] getCardsOnHand() {
         return localPlayerTable.getCardsOnHand();
     }
-    public ResourceCard getResourceCardOnTop() {
+    protected ResourceCard getResourceCardOnTop() {
         return resourceCardOnTop;
     }
-    public GoldCard getGoldCardOnTop() {
+    protected GoldCard getGoldCardOnTop() {
         return goldCardOnTop;
     }
-    public String[] getNicknames() {
+    protected String[] getNicknames() {
         return nicknames;
-    }
-
-    @Override
-    public void showTurn() { // called by client when turn status changes
-        Platform.runLater(() -> {
-            if(client.isItMyTurn())
-                gameController.setTurnLabelText(localPlayerTable.getNickName() + ", it's your turn!");
-            else gameController.setTurnLabelText(localPlayerTable.getNickName() + ", it's not your turn...");
-        });
     }
 }

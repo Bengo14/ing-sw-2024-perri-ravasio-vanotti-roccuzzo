@@ -40,5 +40,4 @@ public interface Client {
 
     boolean isItMyTurn();
 
-    void setMyTurn(boolean turn);
 }

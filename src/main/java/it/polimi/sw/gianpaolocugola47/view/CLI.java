@@ -130,13 +130,11 @@ public class CLI implements View {
         return localPlayerTable.getSecretObjective();
     }
 
-    @Override
-    public int[] getGlobalPoints() {
+    private int[] getGlobalPoints() {
         return this.globalPoints;
     }
 
-    @Override
-    public int[] getBoardPoints() {
+    private int[] getBoardPoints() {
         return this.boardPoints;
     }
 
@@ -150,6 +148,16 @@ public class CLI implements View {
         if(!message.isPrivate())
             System.out.println(message.getSender() + ": " + message.getMessage());
         else System.out.println(message.getSender() + ": psst, " + message.getMessage());
+    }
+
+    @Override
+    public void gameOver() {
+        /*todo*/
+    }
+
+    @Override
+    public void showWinner() {
+        /*todo*/
     }
 
     @SuppressWarnings("ALL")

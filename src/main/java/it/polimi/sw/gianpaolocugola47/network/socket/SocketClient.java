@@ -129,7 +129,6 @@ public class SocketClient implements VirtualView, Client {
                 case "drawStarting" -> {
                     int id = integer();//debug
                     drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(id);
-                    System.out.println(drawStartingCardResponse+" "+id);//debug
                     setResponse();
                 }
 
@@ -312,12 +311,12 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void gameOver() {
-        /*todo*/
+        this.view.gameOver();
     }
 
     @Override
     public void showWinner() {
-        /*todo*/
+        this.view.showWinner();
     }
 
     @Override
@@ -334,6 +333,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void receivePrivateMessage(ChatMessage message) {
+        message.setPrivate(true);
         synchronized (view) {
             view.receiveMessage(message);
         }
@@ -341,17 +341,17 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        /*todo*/
+        this.view.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        /*todo*/
+        this.view.updateDecks(resourceCardOnTop, goldCardOnTop);
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
-        /*todo*/
+        this.view.updatePoints(boardPoints, globalPoints);
     }
 
     /* --- methods of interface Client --- */
@@ -468,17 +468,6 @@ public class SocketClient implements VirtualView, Client {
         return nicknamesResponse;
     }
 
-    public boolean isNicknameAvailable(String nickname) {
-        synchronized (server) {
-            server.isNicknameAvailable(nickname);
-        }
-        while(!response)
-            Thread.onSpinWait();
-
-        response = false;
-        return nickAvailableResponse;
-    }
-
     @Override
     public void sendMessage(ChatMessage msg) {
         synchronized (server) {
@@ -507,10 +496,6 @@ public class SocketClient implements VirtualView, Client {
     public boolean isItMyTurn() {
         return isMyTurn;
     }
-    @Override
-    public void setMyTurn (boolean turn) { // may be used in particular cases (no cards to draw)
-        this.isMyTurn = turn;
-    }
 
     @Override
     public void terminateLocal() {
@@ -521,6 +506,17 @@ public class SocketClient implements VirtualView, Client {
         synchronized (server) {
             server.getNumOfPlayers();
         }
+    }
+
+    private boolean isNicknameAvailable(String nickname) {
+        synchronized (server) {
+            server.isNicknameAvailable(nickname);
+        }
+        while(!response)
+            Thread.onSpinWait();
+
+        response = false;
+        return nickAvailableResponse;
     }
 
     private int integer() throws IOException {

@@ -18,7 +18,7 @@ public interface VirtualView extends Remote {
     int getId() throws RemoteException;
     void receiveMessage(ChatMessage message) throws RemoteException;
     void receivePrivateMessage(ChatMessage message) throws RemoteException;
-    void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException;
+    void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException;
     void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException;
     void updatePoints(int[] boardPoints, int[] globalPoints) throws RemoteException;
 }

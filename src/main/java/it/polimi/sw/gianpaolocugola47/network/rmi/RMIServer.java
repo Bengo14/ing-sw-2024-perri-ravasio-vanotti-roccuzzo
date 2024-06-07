@@ -198,7 +198,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
 
     @Override
     public void sendMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Received public message");
         synchronized (this.clients) {
             for (VirtualView client : this.clients)
                 client.receiveMessage(message);
@@ -213,7 +212,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     }
     @Override
     public void sendPrivateMessage(ChatMessage message) throws RemoteException {
-        System.out.println("Received private message");
         String [] nicknames = getNicknames();
         synchronized (this.clients) {
             for (VirtualView client : this.clients)
@@ -280,9 +278,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                 try {
                     for(VirtualView view : this.clients)
                         view.initView(nicknames, globalObjectives, cardsOnHand[view.getId()], cardsOnTable);
-                } catch (RemoteException ignored) {} catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (RemoteException _) {}
             }
         }
     }

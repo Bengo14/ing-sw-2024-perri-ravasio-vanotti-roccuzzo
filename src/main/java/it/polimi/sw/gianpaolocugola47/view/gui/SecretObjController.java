@@ -5,21 +5,15 @@ import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-
 import javafx.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static it.polimi.sw.gianpaolocugola47.view.gui.StartingCardController.getSelectedStartingCard;
 
 public class SecretObjController implements Initializable {
 
@@ -43,6 +37,7 @@ public class SecretObjController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
     public void start(Client client, PlayerTable playerTable) {
         this.client = client;
         this.playerTable = playerTable;

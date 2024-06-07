@@ -8,9 +8,7 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -153,12 +151,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public void gameOver() {
-        /*todo*/
+    public void gameOver() throws RemoteException {
+        this.view.gameOver();
     }
 
     @Override
-    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws IOException {
+    public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) throws RemoteException {
         this.view.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
     }
 
@@ -173,14 +171,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public void setMyTurn() {
+    public void setMyTurn() throws RemoteException {
         this.isMyTurn = true;
         view.showTurn();
     }
 
     @Override
-    public void showWinner() {
-        /*todo*/
+    public void showWinner() throws RemoteException {
+        this.view.showWinner();
     }
 
     @Override
@@ -197,13 +195,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void receivePrivateMessage(ChatMessage message) throws RemoteException {
+        message.setPrivate(true);
         synchronized (view) {
             view.receiveMessage(message);
         }
     }
 
     /* --- methods of interface Client --- */
-    //todo synchronize access to server
+
     @Override
     public void terminateLocal() {
         System.err.println("\nTerminating the game, because something went wrong...");
@@ -213,10 +212,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public StartingCard drawStartingCard() {
         try {
-            synchronized (server){
-                StartingCard startingCard = server.drawStartingCard();
-                System.out.println("server.drawStartingCard() returned: " + startingCard); // Log message
-                return startingCard;
+            synchronized (server) {
+                return server.drawStartingCard();
             }
         } catch (RemoteException e) {
             terminateLocal();
@@ -228,7 +225,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public Objectives[] setStartingCardAndDrawObjectives() {
         Objectives[] objectives = null;
         try {
-            objectives = server.setStartingCardAndDrawObjectives(this.id, this.view.getStartingCard());
+            synchronized (server) {
+                objectives = server.setStartingCardAndDrawObjectives(this.id, this.view.getStartingCard());
+            }
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -238,7 +237,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void setSecretObjective() {
         try {
-            server.setSecretObjective(this.id, this.view.getSecretObjective());
+            synchronized (server) {
+                server.setSecretObjective(this.id, this.view.getSecretObjective());
+            }
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -247,7 +248,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public boolean[][] getPlayablePositions() {
         try {
-           return server.getPlayablePositions(this.id);
+           synchronized (server) {
+               return server.getPlayablePositions(this.id);
+           }
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -257,7 +260,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront) {
         try {
-            return server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id, isFront);
+            synchronized (server) {
+                return server.playCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner, this.id, isFront);
+            }
         } catch (RemoteException e) {
             terminateLocal();
             return false;
@@ -267,7 +272,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void drawCard(int position) {
         try {
-            server.drawCard(position, this.id);
+            synchronized (server) {
+                server.drawCard(position, this.id);
+            }
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -278,7 +285,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public ResourceCard[][] getCardsOnHand() {
         try {
-            return server.getCardsOnHand();
+            synchronized (server) {
+                return server.getCardsOnHand();
+            }
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -288,7 +297,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
         try {
-            return server.getPlacedCards(playerId);
+            synchronized (server) {
+                return server.getPlacedCards(playerId);
+            }
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -298,7 +309,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public int[] getResourceCounter(int playerId) {
         try {
-            return server.getResourceCounter(playerId);
+            synchronized (server) {
+                return server.getResourceCounter(playerId);
+            }
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -314,7 +327,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public String[] getNicknames() {
         try {
-            return server.getNicknames();
+            synchronized (server) {
+                return server.getNicknames();
+            }
         } catch (RemoteException e) {
             terminateLocal();
             return null;
@@ -324,7 +339,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void sendMessage(ChatMessage msg) {
         try {
-            server.sendMessage(msg);
+            synchronized (server) {
+                server.sendMessage(msg);
+            }
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -333,7 +350,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void sendPrivateMessage(ChatMessage msg) {
         try {
-            server.sendPrivateMessage(msg);
+            synchronized (server) {
+                server.sendPrivateMessage(msg);
+            }
         } catch (RemoteException e) {
             terminateLocal();
         }
@@ -344,18 +363,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         return isMyTurn;
     }
 
-    @Override
-    public void setMyTurn (boolean turn) { // may be used in particular cases (no cards to draw)
-        this.isMyTurn = turn;
-    } // may be used in particular cases (no cards to draw)
-
     private void getNumOfPlayers() {
-        synchronized (server) {
-            try {
-                this.numOfPlayers = server.getNumOfPlayers();
-            } catch (RemoteException e) {
-                terminateLocal();
+        try {
+            synchronized (server) {
+                numOfPlayers = server.getNumOfPlayers();
             }
+        } catch (RemoteException e) {
+            terminateLocal();
         }
     }
 

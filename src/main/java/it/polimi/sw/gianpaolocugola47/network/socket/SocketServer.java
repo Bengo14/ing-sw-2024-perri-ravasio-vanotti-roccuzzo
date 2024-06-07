@@ -211,7 +211,6 @@ public class SocketServer implements Observer {
     }
 
     public void sendMessage(ChatMessage message) {
-        System.out.println("Received public message");
         synchronized (this.clients) {
             for (SocketClientHandler handler : this.clients)
                 handler.receiveMessage(message);
@@ -227,7 +226,6 @@ public class SocketServer implements Observer {
         }
     }
     public void sendPrivateMessage(ChatMessage message) {
-        System.out.println("Received private message");
         String [] nicknames = getNicknames();
         synchronized (this.clients) {
             for (SocketClientHandler handler : this.clients)

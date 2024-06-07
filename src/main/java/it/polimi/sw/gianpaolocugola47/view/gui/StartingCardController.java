@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
-import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
@@ -48,9 +47,7 @@ public class StartingCardController implements Initializable {
         if (client != null) {
             selectedStartingCard = client.drawStartingCard();
             int id_start = selectedStartingCard.getId();
-            //System.out.println("the id is:"+id_start);
             String frontImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+id_start+".png";
-            //System.out.println(getClass().getResource(frontImagePath));
             Image frontImage = new Image(getClass().getResourceAsStream(frontImagePath));
             starting_front.setImage(frontImage);
             String backImagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+id_start+".png";
@@ -62,15 +59,18 @@ public class StartingCardController implements Initializable {
     public static StartingCard getSelectedStartingCard() {
         return selectedStartingCard;
     }
+
     @FXML
     private void handleConfirmButtonClicked(ActionEvent event) {
-        // Verifica se sono state fatte tutte le scelte necessarie
+
         if (!isStartingCardSelected) {
-            label.setText("Please select a starting card");
+            label.setText("Please, select a starting card");
             return;
         }
         selectedStartingCard.setFront(front);
         playerTable.setStartingCard(selectedStartingCard);
+        choice_button.setDisable(true);
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml"));
             Parent root = loader.load();
@@ -83,7 +83,7 @@ public class StartingCardController implements Initializable {
     }
     @FXML
     private void handleStartingFrontClicked(MouseEvent event) {
-        // Azioni da eseguire quando l'utente clicca sul lato frontale della carta iniziale
+
         front = true;
         isStartingCardSelected = true;
         setImageViewBorder(starting_front);
@@ -97,7 +97,7 @@ public class StartingCardController implements Initializable {
 
     @FXML
     private void handleStartingBackClicked(MouseEvent event) {
-        // Azioni da eseguire quando l'utente clicca sul lato posteriore della carta iniziale
+
         front = false;
         isStartingCardSelected = true;
         setImageViewBorder(starting_back);

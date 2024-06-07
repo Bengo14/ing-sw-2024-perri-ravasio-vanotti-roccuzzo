@@ -276,9 +276,8 @@
                <children>
                   <ImageView fx:id="hand_0" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand0Click" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../graphics/cards/front_32.png" />
-                     </image>
-                  </ImageView>
+                        <Image url="@../graphics/cards/front_18.png" />
+                     </image></ImageView>
                   <Button fx:id="switch_1" mnemonicParsing="false" onAction="#handleSwitch_1" text="Switch">
                      <HBox.margin>
                         <Insets left="30.0" />
@@ -356,9 +355,369 @@
       </VBox>
    </right>
    <center>
-      <ScrollPane fx:id="boardScrollPane" hbarPolicy="NEVER" prefHeight="700.0" prefWidth="800.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="boardScrollPane" hbarPolicy="ALWAYS" prefHeight="702.0" prefWidth="583.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
-            <Pane fx:id="boardPane" prefHeight="1960.0" prefWidth="7100.0" />
+            <Pane fx:id="boardPane" prefHeight="685.0" prefWidth="622.0">
+               <children>
+                  <ImageView fx:id="place_0_0" fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/cards/back_0.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_1_1" fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/cards/back_6.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fx:id="place_2_2" fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_8.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_3_3" fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_7.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fx:id="place_4_4" fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_21.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_5_5" fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_5.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="298.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="322.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fx:id="place_6_6" fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_5.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_7_7" fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_6.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fx:id="place_8_8" fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fx:id="place_9_9" fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_8.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="362.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fx:id="place_10_10" fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_9.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_11_11" fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_25.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="392.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="409.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="414.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="405.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fx:id="place_12_12" fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_6.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_13_13" fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_8.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="454.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="447.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fx:id="place_14_14" fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_7.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_15_15" fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_9.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="85.0" layoutY="441.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="111.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="142.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="168.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" x="-4.0" y="-6.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="95.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="121.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true" x="96.0" y="-12.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="152.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="178.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true" x="92.0" y="-17.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="105.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="131.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true" x="192.0" y="-22.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="162.0" layoutY="466.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="188.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true" x="188.0" y="-27.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="172.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="198.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true" x="231.0" y="-37.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="182.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="208.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" x="274.0" y="-47.0">
+                  </ImageView>
+                  <ImageView fx:id="place_16_16" fitHeight="23.0" fitWidth="35.0" layoutX="192.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_9.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="place_17_17" fitHeight="23.0" fitWidth="35.0" layoutX="218.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true" x="317.0" y="-57.0">
+                     <image>
+                        <Image url="@../graphics/cards/back_8.png" />
+                     </image></ImageView>
+               </children></Pane>
          </content>
       </ScrollPane>
    </center>

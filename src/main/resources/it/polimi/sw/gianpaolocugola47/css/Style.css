@@ -67,8 +67,8 @@
 .selected-image {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 255, 0.8), 20, 0.5, 0, 0);
 }
-.selectedCard{
-    -fx-effect: dropshadow(gaussian, red, 20.0, 0, 0, 0);
+.playable {
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.5), 20, 0.5, 0, 0);
 }
 .login-container {
     -fx-background-color: #FFFFFFEE;

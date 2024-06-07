@@ -49,6 +49,9 @@ public class GameController implements Initializable {
     @FXML
     private ImageView pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29;
     @FXML
+    private ImageView place_0_0,place_1_1,place_2_2,place_3_3,place_4_4,place_5_5,place_6_6,place_7_7,place_8_8,place_9_9,place_10_10,place_11_11,place_12_12,place_13_13,place_14_14,place_15_15,place_16_16,place_17_17;
+
+    @FXML
     private ScrollPane boardScrollPane;
     @FXML
     private Label globalPointsLabel;
@@ -60,7 +63,6 @@ public class GameController implements Initializable {
     private Button switch_1,switch_2,switch_3;
 
     private Group boardGroup = new Group();
-    private ImageView[][] cardMatrix = new ImageView[64][64];
     // Variables to track mouse position and board offset
     private double mouseX;
     private double mouseY;
@@ -73,30 +75,35 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeBoard();
+        //initializeBoard();
         addZoomFunctionality();
         addDragFunctionality();
+//        boardPane.setMinWidth(2000);
+//        boardPane.setMinHeight(2000);
         boardPane.setScaleX(2.0);
         boardPane.setScaleY(2.0);
-        boardScrollPane.setHvalue(0.5);
-        boardScrollPane.setVvalue(0.5);
+        boardScrollPane.setVvalue(0.0);
+        boardScrollPane.setHvalue(0.0);
+
+
         boardPositions = new ImageView[]{
                 pos_0,pos_1,pos_2,pos_3,pos_4,pos_5,pos_6,pos_7,pos_8,pos_9,pos_10,
                 pos_11,pos_12,pos_13,pos_14,pos_15,pos_16,pos_17,pos_18,pos_19,pos_20,
                 pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29};
     }
 
+
     public void start(ViewGui gui) {
         this.gui = gui;
+        //handlePlayable();
 
         if (gui.getStartingCard().isFront()) {
-            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
+            place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {
-            cardMatrix[32][32].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+            place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         }
-        cardMatrix[0][0].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png")));
-        cardMatrix[63][63].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_1.png")));
-
+        //place_0_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png")));
+        //place_19_19.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_1.png")));
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));
         hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(0).getId()+".png")));
@@ -157,26 +164,47 @@ public class GameController implements Initializable {
         hand_2.getStyleClass().remove("selected-image");
         card.getStyleClass().add("selected-image");
     }
-
     @FXML
     private void handleHand0Click(MouseEvent event) {
         setImageViewBorder(hand_0);
         selectedCard = 0;
+        //handlePlayable();
     }
     @FXML
     private void handleHand1Click(MouseEvent event) {
         setImageViewBorder(hand_1);
         selectedCard = 1;
+       // handlePlayable();
     }
     @FXML
     private void handleHand2Click(MouseEvent event) {
         setImageViewBorder(hand_2);
         selectedCard = 2;
-    }
+        //handlePlayable();
 
+    }
 //    @FXML
-//    public void handleBoardClick(MouseEvent event) {
-//        PlaceableCard card = gui.getLocalPlayerTable().getCardOnHand(selectedCard);
+//    private void handlePlayable(){
+//        boolean[][] playable = gui.getPlayablePositions();
+//        for (int i = 0; i < 20; i++) {
+//            for (int j = 0; j < 20; j++) {
+//                if (playable[i][j]) {
+//                    cardMatrix[i][j].getStyleClass().add("playable");
+//                    System.out.println("playable:"+ i + j);
+//                }
+//            }
+//        }
+//    }
+    @FXML
+    public void handleBoardClick(MouseEvent event) {
+        //PlaceableCard card = gui.getLocalPlayerTable().getCardOnHand(selectedCard);
+      ImageView image =(ImageView)event.getSource();
+
+      if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/giallo.png")))){
+
+      }else{
+
+      };
 //        if (card != null) {
 //            int x = (int) event.getX() / 110;
 //            int y = (int) event.getY() / 29;
@@ -187,12 +215,11 @@ public class GameController implements Initializable {
 //                    } else {
 //                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+card.getId()+".png")));
 //                    }
-//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0 );
+//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0);
 //                }
 //            }
 //        }
-//    }
-
+    }
     private void addDragFunctionality() {
         boardPane.setOnMousePressed(event -> {
             mouseX = event.getSceneX();
@@ -207,29 +234,6 @@ public class GameController implements Initializable {
             boardPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
-    private void centerBoardPane() {
-        boardPane.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
-            boardPane.setLayoutX((boardScrollPane.getViewportBounds().getWidth() - newBounds.getWidth()) / 2);
-            boardPane.setLayoutY((boardScrollPane.getViewportBounds().getHeight() - newBounds.getHeight()) / 2);
-        });
-    }
-
-    private void initializeBoard() {
-
-        for (int i = 0; i < 64; i++) {
-            for (int j = 0; j < 64; j++) {
-                ImageView imageView = new ImageView();
-                imageView.setFitWidth(70);
-                imageView.setFitHeight(55);
-                imageView.setLayoutX(110 * j);
-                imageView.setLayoutY(29 * i);
-                //imageView.setOnMouseClicked(event -> handleBoardClick(event));
-                boardPane.getChildren().add(imageView);
-                cardMatrix[i][j] = imageView;
-            }
-        }
-    }
-
     public void receiveMessage(ChatMessage message) {
         if(message.getSenderId() != gui.getLocalPlayerTable().getId()) {
             if (!message.isPrivate())

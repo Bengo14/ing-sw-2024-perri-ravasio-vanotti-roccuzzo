@@ -217,6 +217,10 @@ public class ViewGui extends Application implements View {
         return localPlayerTable.getStartingCard();
     }
 
+    public boolean[][] getPlayablePositions() {
+        return client.getPlayablePositions();
+    }
+
     @Override
     public Objectives getSecretObjective() {
         return localPlayerTable.getSecretObjective();

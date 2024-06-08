@@ -1,22 +1,17 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
-import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
-import it.polimi.sw.gianpaolocugola47.view.View;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.transform.Scale;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -135,7 +130,7 @@ public class GameController implements Initializable {
     public void start(ViewGui gui) {
         this.gui = gui;
         place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png")));
-        place_9_9.setOpacity(0.5);
+
         if (gui.getStartingCard().isFront()) {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {

@@ -134,7 +134,8 @@ public class GameController implements Initializable {
 
     public void start(ViewGui gui) {
         this.gui = gui;
-
+        place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png")));
+        place_9_9.setOpacity(0.5);
         if (gui.getStartingCard().isFront()) {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {
@@ -302,7 +303,7 @@ public class GameController implements Initializable {
         ResourceCard card = gui.getCardsOnHand()[selectedCard];
         ImageView image =(ImageView)event.getSource();
 
-        if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/giallo.png")))){
+        if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png")))){
             /*todo*/
         } else {
 

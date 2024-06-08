@@ -14,10 +14,12 @@ public interface View {
     void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable);
     void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop);
     void updatePoints(int[] boardPoints, int[] globalPoints);
-    StartingCard getStartingCard();
-    Objectives getSecretObjective();
     void showTurn();
     void receiveMessage(ChatMessage message);
     void gameOver();
     void showWinner();
+
+    StartingCard getStartingCard();
+
+    Objectives getSecretObjective();
 }

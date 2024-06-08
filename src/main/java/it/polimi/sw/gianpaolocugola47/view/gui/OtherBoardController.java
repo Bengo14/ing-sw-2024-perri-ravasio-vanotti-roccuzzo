@@ -1,7 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
-import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

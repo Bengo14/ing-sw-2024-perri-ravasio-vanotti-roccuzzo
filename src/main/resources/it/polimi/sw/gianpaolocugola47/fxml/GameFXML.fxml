@@ -217,7 +217,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </ListView>
-            <TextField fx:id="chatInput" prefHeight="38.0" prefWidth="328.0" promptText="type a message (@nick for private one)" styleClass="tooltip" stylesheets="@../css/Style.css" />
+            <TextField fx:id="chatInput" prefHeight="38.0" prefWidth="328.0" promptText="type a message (@nick for private one)" onKeyTyped="#handleChatInputKey" styleClass="tooltip" stylesheets="@../css/Style.css" />
             <Button fx:id="sendButton" mnemonicParsing="false" onAction="#handleChatInput" opacity="0.8" prefHeight="16.0" prefWidth="98.0" styleClass="login-button" stylesheets="@../css/Style.css" text="Send">
                <font>
                   <Font size="13.0" />

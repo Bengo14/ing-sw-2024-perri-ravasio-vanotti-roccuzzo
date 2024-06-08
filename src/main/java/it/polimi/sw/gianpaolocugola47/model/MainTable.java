@@ -226,7 +226,7 @@ public class MainTable implements Observable {
     public boolean[][] checkAllPlayablePositions(int playerId) {
         PlayerTable playerTable = playersTables[playerId];
         boolean[][] matrix = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
-        for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
+        for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
                 matrix[i][j] = playerTable.isPlaceable(i, j);
             }

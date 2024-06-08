@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
@@ -84,10 +86,14 @@ public class GameController implements Initializable {
     private double mouseY;
     private double boardOffsetX;
     private double boardOffsetY;
-    private int selectedCard;
+    private int selectedCard = -1;
     private ViewGui gui;
     private ImageView[] boardPositions;
     private ImageView[][] matrix;
+    private boolean[][] playablePos;
+    private boolean cardPlayed = false;
+    private Image gold;
+    private boolean goldShowed = false;
 
 
     @Override
@@ -124,18 +130,31 @@ public class GameController implements Initializable {
                 {place_20_0,null,place_20_2,null,place_20_4,null,place_20_6,null,place_20_8,null,place_20_10,null,place_20_12,null,place_20_14,null,place_20_16,null,place_20_18,null,place_20_20,null},
                 {null,place_21_1,null,place_21_3,null,place_21_5,null,place_21_7,null,place_21_9,null,place_21_11,null,place_21_13,null,place_21_15,null,place_21_17,null,place_21_19,null,place_21_21}
         };
+
+        for(int i = 0; i < matrix.length/2; i++)
+            for(int j = 0; j < matrix[i].length/2; j++) {
+                matrix[2 * i][2 * j].setOnMouseClicked(this::handleBoardClick);
+                matrix[2 * i][2 * j].setMouseTransparent(true);
+            }
+        for(int i = 0; i < matrix.length/2; i++)
+            for(int j = 0; j < matrix[i].length/2; j++) {
+                matrix[2 * i + 1][2 * j + 1].setOnMouseClicked(this::handleBoardClick);
+                matrix[2 * i + 1][2 * j + 1].setMouseTransparent(true);
+            }
+
+        gold = new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png"));
     }
 
 
     public void start(ViewGui gui) {
         this.gui = gui;
-        place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png")));
 
         if (gui.getStartingCard().isFront()) {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         }
+        place_10_10.setMouseTransparent(false);
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));
         hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnHand()[0].getId()+".png")));
@@ -224,11 +243,15 @@ public class GameController implements Initializable {
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
         rankingList.getItems().clear();
         String text;
+
         for(int i = 0; i<boardPoints.length; i++) {
-            text = i + ") " + gui.getNicknames()[i] + " | " + "Board points: "+boardPoints[i];
+            text = i + ") " + gui.getNicknames()[i] + " | " + "Board points: " + boardPoints[i];
             rankingList.getItems().add(text);
         }
         rankingList.refresh();
+
+        for(int j = 0; j <= 29; j++)
+            boardPositions[j].setImage(null);
 
         for(int i = 0; i<boardPoints.length; i++) {
             if(boardPoints[i]<=29)
@@ -295,13 +318,37 @@ public class GameController implements Initializable {
 
     @FXML
     public void handleBoardClick(MouseEvent event) {
+
+        if (selectedCard == -1 || !gui.isItMyTurn() || cardPlayed)
+            return;
+
         ResourceCard card = gui.getCardsOnHand()[selectedCard];
-        ImageView image =(ImageView)event.getSource();
+        ImageView image = (ImageView) event.getSource();
 
-        if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png")))){
+        if (image.getImage().equals(gold)) {
+
             /*todo*/
-        } else {
 
+            for (int i = 0; i < playablePos.length; i++)
+                for (int j = 0; j < playablePos[i].length; j++)
+                    if(playablePos[i][j] && matrix[i][j] != null) {
+                        matrix[i][j].setImage(null);
+                        matrix[i][j].setMouseTransparent(true);
+                    }
+            disableHand(false);
+            goldShowed = false;
+
+        } else if (!goldShowed) {
+
+            this.playablePos = gui.getPlayablePositions();
+            for (int i = 0; i < playablePos.length; i++)
+                for (int j = 0; j < playablePos[i].length; j++)
+                    if(playablePos[i][j] && matrix[i][j] != null) {
+                        matrix[i][j].setImage(gold);
+                        matrix[i][j].setMouseTransparent(false);
+                    }
+            disableHand(true);
+            goldShowed = true;
         }
 
 //        if (card != null) {
@@ -318,6 +365,15 @@ public class GameController implements Initializable {
 //                }
 //            }
 //        }
+    }
+
+    private void disableHand(boolean b) {
+        hand_0.setMouseTransparent(b);
+        hand_1.setMouseTransparent(b);
+        hand_2.setMouseTransparent(b);
+        switch_1.setMouseTransparent(b);
+        switch_2.setMouseTransparent(b);
+        switch_3.setMouseTransparent(b);
     }
 
     @FXML
@@ -360,5 +416,11 @@ public class GameController implements Initializable {
             chat.refresh();
             gui.sendMessage(message);
         }
+    }
+
+    @FXML
+    private void handleChatInputKey(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER))
+            handleChatInput(new ActionEvent());
     }
 }

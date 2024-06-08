@@ -242,20 +242,6 @@ public class ViewGui extends Application implements View {
     }
 
     @Override
-    public StartingCard getStartingCard() {
-        return localPlayerTable.getStartingCard();
-    }
-
-    public boolean[][] getPlayablePositions() {
-        return client.getPlayablePositions();
-    }
-
-    @Override
-    public Objectives getSecretObjective() {
-        return localPlayerTable.getSecretObjective();
-    }
-
-    @Override
     public void receiveMessage(ChatMessage message) {
         Platform.runLater(() -> {
             gameController.receiveMessage(message);
@@ -272,12 +258,27 @@ public class ViewGui extends Application implements View {
         /*todo set winner scene*/
     }
 
+    @Override
+    public Objectives getSecretObjective() {
+        return localPlayerTable.getSecretObjective();
+    }
+
+    @Override
+    public StartingCard getStartingCard() {
+        return localPlayerTable.getStartingCard();
+    }
+
+    protected boolean isItMyTurn() {
+        return client.isItMyTurn();
+    }
+    public boolean[][] getPlayablePositions() {
+        return client.getPlayablePositions();
+    }
     protected void sendMessage(ChatMessage message) {
         if (message.isPrivate())
             client.sendPrivateMessage(message);
         else client.sendMessage(message);
     }
-
     protected PlayerTable getLocalPlayerTable() {
         return localPlayerTable;
     }

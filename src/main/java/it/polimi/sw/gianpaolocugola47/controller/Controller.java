@@ -79,10 +79,9 @@ public class Controller {
     }
 
     public boolean[][] getPlayablePositions(int playerId) {
-        if(playerId == currentPlayerId)
-            return mainTable.checkAllPlayablePositions(playerId);
-        else return null;
+        return mainTable.checkAllPlayablePositions(playerId);
     }
+
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) {
         if(playerId == currentPlayerId) {
             mainTable.turnCardOnHand(playerId, onHandCard, isFront);
@@ -90,6 +89,7 @@ public class Controller {
         }
         else return false;
     }
+
     public void drawCard(int position, int playerId) {
         if(playerId == currentPlayerId) {
             mainTable.drawCardFrom(position, currentPlayerId);

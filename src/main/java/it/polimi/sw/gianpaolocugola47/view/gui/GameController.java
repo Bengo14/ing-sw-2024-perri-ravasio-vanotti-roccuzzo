@@ -49,11 +49,30 @@ public class GameController implements Initializable {
     @FXML
     private ImageView pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29;
     @FXML
-    private ImageView place_0_0,place_0_2,place_0_4,place_0_6,place_0_8,place_0_10,place_0_12,place_0_14,place_0_16,place_0_18,place_0_20,place_1_1,place_1_3,place1_5,place_1_7,place_1_9,place_1_11,place_1_13,place_1_15,place_1_17,place_1_19,place_1_21,place_2_0,place_2_2,place_2_4,place_2_6,place_2_8,place_2_10,place_2_12,place_2_14,place_2_16,place_2_18,place_2_20,place_3_1,place_3_3,place_3_5,place_3_7,place_3_9,place_3_11,place_3_13,place_3_15,place_3_17,place_3_19,place_3_21,place_4_0,place_4_2,place_4_4,place_4_6,place_4_8,place_4_10,place_4_12,place_4_14,place_4_16,place_4_18,place_4_20,place_5_1,place_5_3,place_5_5,place_5_7,place_5_9,place_5_11,place_5_13,place_5_15,place_5_17,place_5_19,place_5_21,place_6_0,place_6_2,place_6_4,place_6_6,place_6_8,place_6_10,place_6_12,place_6_14,place_6_16,place_6_18,place_6_20,place_7_1,place_7_3,place_7_5,place_7_7,place_7_9,place_7_11,place_7_13,place_7_15,place_7_17,place_7_19,place_7_21,place_8_0,place_8_2,place_8_4,place_8_6,place_8_8,place_8_10,place_8_12,place_8_14,place_8_16,place_8_18,place_8_20;
+    private ImageView place_0_0,place_0_2,place_0_4,place_0_6,place_0_8,place_0_10,place_0_12,place_0_14,place_0_16,place_0_18,place_0_20,
+            place_1_1,place_1_3,place_1_5,place_1_7,place_1_9,place_1_11,place_1_13,place_1_15,place_1_17,place_1_19,place_1_21,
+            place_2_0,place_2_2,place_2_4,place_2_6,place_2_8,place_2_10,place_2_12,place_2_14,place_2_16,place_2_18,place_2_20,
+            place_3_1,place_3_3,place_3_5,place_3_7,place_3_9,place_3_11,place_3_13,place_3_15,place_3_17,place_3_19,place_3_21,
+            place_4_0,place_4_2,place_4_4,place_4_6,place_4_8,place_4_10,place_4_12,place_4_14,place_4_16,place_4_18,place_4_20,
+            place_5_1,place_5_3,place_5_5,place_5_7,place_5_9,place_5_11,place_5_13,place_5_15,place_5_17,place_5_19,place_5_21,
+            place_6_0,place_6_2,place_6_4,place_6_6,place_6_8,place_6_10,place_6_12,place_6_14,place_6_16,place_6_18,place_6_20,
+            place_7_1,place_7_3,place_7_5,place_7_7,place_7_9,place_7_11,place_7_13,place_7_15,place_7_17,place_7_19,place_7_21,
+            place_8_0,place_8_2,place_8_4,place_8_6,place_8_8,place_8_10,place_8_12,place_8_14,place_8_16,place_8_18,place_8_20;
     @FXML
-    private ImageView place_9_1,place_9_3,place_9_5,place_9_7,place_9_9,place_9_11,place_9_13,place_9_15,place_9_17,place_9_19,place_9_21,place_10_0,place_10_2,place_10_4,place_10_6,place_10_8,place_10_10,place_10_12,place_10_14,place_10_16,place_10_18,place_10_20,place_11_1,place_11_3,place_11_5,place_11_7,place_11_9,place_11_11,place_11_13,place_11_15,place_11_17,place_11_19,place_11_21,place_12_0,place_12_2,place_12_4,place_12_6,place_12_8,place_12_10,place_12_12,place_12_14,place_12_16,place_12_18,place_12_20,place_13_1,place_13_3,place_13_5,place_13_7,place_13_9,place_13_11,place_13_13,place_13_15,place_13_17,place_13_19,place_13_21,place_14_0,place_14_2,place_14_4,place_14_6,place_14_8,place_14_10,place_14_12,place_14_14,place_14_16,place_14_18,place_14_20,place_15_1,place_15_3,place_15_5,place_15_7,place_15_9,place_15_11,place_15_13,place_15_15,place_15_17,place_15_19,place_15_21;
+    private ImageView place_9_1,place_9_3,place_9_5,place_9_7,place_9_9,place_9_11,place_9_13,place_9_15,place_9_17,place_9_19,place_9_21,
+            place_10_0,place_10_2,place_10_4,place_10_6,place_10_8,place_10_10,place_10_12,place_10_14,place_10_16,place_10_18,place_10_20,
+            place_11_1,place_11_3,place_11_5,place_11_7,place_11_9,place_11_11,place_11_13,place_11_15,place_11_17,place_11_19,place_11_21,
+            place_12_0,place_12_2,place_12_4,place_12_6,place_12_8,place_12_10,place_12_12,place_12_14,place_12_16,place_12_18,place_12_20,
+            place_13_1,place_13_3,place_13_5,place_13_7,place_13_9,place_13_11,place_13_13,place_13_15,place_13_17,place_13_19,place_13_21,
+            place_14_0,place_14_2,place_14_4,place_14_6,place_14_8,place_14_10,place_14_12,place_14_14,place_14_16,place_14_18,place_14_20,
+            place_15_1,place_15_3,place_15_5,place_15_7,place_15_9,place_15_11,place_15_13,place_15_15,place_15_17,place_15_19,place_15_21;
     @FXML
-    private ImageView place_16_0,place_16_2,place_16_4,place_16_6,place_16_8,place_16_10,place_16_12,place_16_14,place_16_16,place_16_18,place_16_20,place_17_1,place_17_3,place_17_5,place_17_7,place_17_9,place_17_11,place_17_13,place_17_15,place_17_17,place_17_19,place_17_21,place_18_0,place_18_2,place_18_4,place_18_6,place_18_8,place_18_10,place_18_12,place_18_14,place_18_16,place_18_18,place_18_20,place_19_1,place_19_3,place_19_5,place_19_7,place_19_9,place_19_11,place_19_13,place_19_15,place_19_17,place_19_19,place_19_21,place_20_0,place_20_2,place_20_4,place_20_6,place_20_8,place_20_10,place_20_12,place_20_14,place_20_16,place_20_18,place_20_20,place_21_1,place_21_3,place_21_5,place_21_7,place_21_9,place_21_11,place_21_13,place_21_15,place_21_17,place_21_19,place_21_21;
+    private ImageView place_16_0,place_16_2,place_16_4,place_16_6,place_16_8,place_16_10,place_16_12,place_16_14,place_16_16,place_16_18,place_16_20,
+            place_17_1,place_17_3,place_17_5,place_17_7,place_17_9,place_17_11,place_17_13,place_17_15,place_17_17,place_17_19,place_17_21,
+            place_18_0,place_18_2,place_18_4,place_18_6,place_18_8,place_18_10,place_18_12,place_18_14,place_18_16,place_18_18,place_18_20,
+            place_19_1,place_19_3,place_19_5,place_19_7,place_19_9,place_19_11,place_19_13,place_19_15,place_19_17,place_19_19,place_19_21,
+            place_20_0,place_20_2,place_20_4,place_20_6,place_20_8,place_20_10,place_20_12,place_20_14,place_20_16,place_20_18,place_20_20,
+            place_21_1,place_21_3,place_21_5,place_21_7,place_21_9,place_21_11,place_21_13,place_21_15,place_21_17,place_21_19,place_21_21;
     @FXML
     private ScrollPane boardScrollPane;
     @FXML
@@ -65,7 +84,6 @@ public class GameController implements Initializable {
     @FXML
     private Button switch_1,switch_2,switch_3;
 
-    private Group boardGroup = new Group();
     // Variables to track mouse position and board offset
     private double mouseX;
     private double mouseY;
@@ -74,44 +92,59 @@ public class GameController implements Initializable {
     private int selectedCard;
     private ViewGui gui;
     private ImageView[] boardPositions;
+    private ImageView[][] matrix;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //initializeBoard();
+
         addZoomFunctionality();
         addDragFunctionality();
-//        boardPane.setMinWidth(2000);
-//        boardPane.setMinHeight(2000);
-        boardPane.setScaleX(2.0);
-        boardPane.setScaleY(2.0);
-        boardScrollPane.setVvalue(0.0);
-        boardScrollPane.setHvalue(0.0);
-
-
-        boardPositions = new ImageView[]{
+        boardPositions = new ImageView[] {
                 pos_0,pos_1,pos_2,pos_3,pos_4,pos_5,pos_6,pos_7,pos_8,pos_9,pos_10,
                 pos_11,pos_12,pos_13,pos_14,pos_15,pos_16,pos_17,pos_18,pos_19,pos_20,
-                pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29};
+                pos_21,pos_22,pos_23,pos_24,pos_25,pos_26,pos_27,pos_28,pos_29
+        };
+        matrix = new ImageView[][] {
+                {place_0_0,null,place_0_2,null,place_0_4,null,place_0_6,null,place_0_8,null,place_0_10,null,place_0_12,null,place_0_14,null,place_0_16,null,place_0_18,null,place_0_20,null},
+                {null,place_1_1,null,place_1_3,null,place_1_5,null,place_1_7,null,place_1_9,null,place_1_11,null,place_1_13,null,place_1_15,null,place_1_17,null,place_1_19,null,place_1_21},
+                {place_2_0,null,place_2_2,null,place_2_4,null,place_2_6,null,place_2_8,null,place_2_10,null,place_2_12,null,place_2_14,null,place_2_16,null,place_2_18,null,place_2_20,null},
+                {null,place_3_1,null,place_3_3,null,place_3_5,null,place_3_7,null,place_3_9,null,place_3_11,null,place_3_13,null,place_3_15,null,place_3_17,null,place_3_19,null,place_3_21},
+                {place_4_0,null,place_4_2,null,place_4_4,null,place_4_6,null,place_4_8,null,place_4_10,null,place_4_12,null,place_4_14,null,place_4_16,null,place_4_18,null,place_4_20,null},
+                {null,place_5_1,null,place_5_3,null,place_5_5,null,place_5_7,null,place_5_9,null,place_5_11,null,place_5_13,null,place_5_15,null,place_5_17,null,place_5_19,null,place_5_21},
+                {place_6_0,null,place_6_2,null,place_6_4,null,place_6_6,null,place_6_8,null,place_6_10,null,place_6_12,null,place_6_14,null,place_6_16,null,place_6_18,null,place_6_20,null},
+                {null,place_7_1,null,place_7_3,null,place_7_5,null,place_7_7,null,place_7_9,null,place_7_11,null,place_7_13,null,place_7_15,null,place_7_17,null,place_7_19,null,place_7_21},
+                {place_8_0,null,place_8_2,null,place_8_4,null,place_8_6,null,place_8_8,null,place_8_10,null,place_8_12,null,place_8_14,null,place_8_16,null,place_8_18,null,place_8_20,null},
+                {null,place_9_1,null,place_9_3,null,place_9_5,null,place_9_7,null,place_9_9,null,place_9_11,null,place_9_13,null,place_9_15,null,place_9_17,null,place_9_19,null,place_9_21},
+                {place_10_0,null,place_10_2,null,place_10_4,null,place_10_6,null,place_10_8,null,place_10_10,null,place_10_12,null,place_10_14,null,place_10_16,null,place_10_18,null,place_10_20,null},
+                {null,place_11_1,null,place_11_3,null,place_11_5,null,place_11_7,null,place_11_9,null,place_11_11,null,place_11_13,null,place_11_15,null,place_11_17,null,place_11_19,null,place_11_21},
+                {place_12_0,null,place_12_2,null,place_12_4,null,place_12_6,null,place_12_8,null,place_12_10,null,place_12_12,null,place_12_14,null,place_12_16,null,place_12_18,null,place_12_20,null},
+                {null,place_13_1,null,place_13_3,null,place_13_5,null,place_13_7,null,place_13_9,null,place_13_11,null,place_13_13,null,place_13_15,null,place_13_17,null,place_13_19,null,place_13_21},
+                {place_14_0,null,place_14_2,null,place_14_4,null,place_14_6,null,place_14_8,null,place_14_10,null,place_14_12,null,place_14_14,null,place_14_16,null,place_14_18,null,place_14_20,null},
+                {null,place_15_1,null,place_15_3,null,place_15_5,null,place_15_7,null,place_15_9,null,place_15_11,null,place_15_13,null,place_15_15,null,place_15_17,null,place_15_19,null,place_15_21},
+                {place_16_0,null,place_16_2,null,place_16_4,null,place_16_6,null,place_16_8,null,place_16_10,null,place_16_12,null,place_16_14,null,place_16_16,null,place_16_18,null,place_16_20,null},
+                {null,place_17_1,null,place_17_3,null,place_17_5,null,place_17_7,null,place_17_9,null,place_17_11,null,place_17_13,null,place_17_15,null,place_17_17,null,place_17_19,null,place_17_21},
+                {place_18_0,null,place_18_2,null,place_18_4,null,place_18_6,null,place_18_8,null,place_18_10,null,place_18_12,null,place_18_14,null,place_18_16,null,place_18_18,null,place_18_20,null},
+                {null,place_19_1,null,place_19_3,null,place_19_5,null,place_19_7,null,place_19_9,null,place_19_11,null,place_19_13,null,place_19_15,null,place_19_17,null,place_19_19,null,place_19_21},
+                {place_20_0,null,place_20_2,null,place_20_4,null,place_20_6,null,place_20_8,null,place_20_10,null,place_20_12,null,place_20_14,null,place_20_16,null,place_20_18,null,place_20_20,null},
+                {null,place_21_1,null,place_21_3,null,place_21_5,null,place_21_7,null,place_21_9,null,place_21_11,null,place_21_13,null,place_21_15,null,place_21_17,null,place_21_19,null,place_21_21}
+        };
     }
 
 
     public void start(ViewGui gui) {
         this.gui = gui;
-        //handlePlayable();
 
         if (gui.getStartingCard().isFront()) {
-            place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
+            place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         } else {
-            place_9_9.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+            place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         }
-        //place_0_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_0.png")));
-        //place_19_19.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_1.png")));
 
         secret_obj.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getSecretObjective().getId()+".png")));
-        hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(0).getId()+".png")));
-        hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(1).getId()+".png")));
-        hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getLocalPlayerTable().getCardOnHand(2).getId()+".png")));
+        hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnHand()[0].getId()+".png")));
+        hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnHand()[1].getId()+".png")));
+        hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnHand()[2].getId()+".png")));
         obj_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getObjectives()[0].getId()+".png")));
         obj_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getObjectives()[1].getId()+".png")));
         res_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[0].getId()+".png")));
@@ -120,9 +153,9 @@ public class GameController implements Initializable {
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[3].getId()+".png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+gui.getLocalPlayerTable().getId()+".png")));
 
-        if(gui.getLocalPlayerTable().getId() == 0) {
+        if(gui.getLocalPlayerTable().getId() == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
-        }
+        
         globalPointsLabel.setText("Global points: 0");
         int num = gui.getNicknames().length-1;
         pos_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+num+".png")));
@@ -135,10 +168,8 @@ public class GameController implements Initializable {
 
         rankingList.setStyle("-fx-font-weight: bold");
         rankingList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        rankingList.setVisible(true);
-
         turnLabel.setStyle("-fx-font-weight: bold");
-        turnLabel.setVisible(true);
+        globalPointsLabel.setStyle("-fx-font-weight: bold");
 
         chat.getItems().add("Chat service is on!");
         chat.getItems().add("Type --listPlayers to see who your opponents are.");
@@ -149,80 +180,22 @@ public class GameController implements Initializable {
         boardPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
                 double delta = 1.2;
-                double scale = boardPane.getScaleX(); // Usa solo la scala X, ma potresti usare la Y se necessario
+                double scaleX = boardPane.getScaleX();
+                double scaleY = boardPane.getScaleY();
                 if (event.getDeltaY() < 0) {
-                    scale /= delta;
+                    scaleX /= delta;
+                    scaleY /= delta;
                 } else {
-                    scale *= delta;
+                    scaleX *= delta;
+                    scaleY *= delta;
                 }
-                boardPane.setScaleX(scale);
-                boardPane.setScaleY(scale); // Aggiorna anche la scala Y
+                boardPane.setScaleX(scaleX);
+                boardPane.setScaleY(scaleY);
                 event.consume();
             }
         });
     }
-    private void setImageViewBorder(ImageView card) {
-        hand_0.getStyleClass().remove("selected-image");
-        hand_1.getStyleClass().remove("selected-image");
-        hand_2.getStyleClass().remove("selected-image");
-        card.getStyleClass().add("selected-image");
-    }
-    @FXML
-    private void handleHand0Click(MouseEvent event) {
-        setImageViewBorder(hand_0);
-        selectedCard = 0;
-        //handlePlayable();
-    }
-    @FXML
-    private void handleHand1Click(MouseEvent event) {
-        setImageViewBorder(hand_1);
-        selectedCard = 1;
-       // handlePlayable();
-    }
-    @FXML
-    private void handleHand2Click(MouseEvent event) {
-        setImageViewBorder(hand_2);
-        selectedCard = 2;
-        //handlePlayable();
 
-    }
-//    @FXML
-//    private void handlePlayable(){
-//        boolean[][] playable = gui.getPlayablePositions();
-//        for (int i = 0; i < 20; i++) {
-//            for (int j = 0; j < 20; j++) {
-//                if (playable[i][j]) {
-//                    cardMatrix[i][j].getStyleClass().add("playable");
-//                    System.out.println("playable:"+ i + j);
-//                }
-//            }
-//        }
-//    }
-    @FXML
-    public void handleBoardClick(MouseEvent event) {
-        //PlaceableCard card = gui.getLocalPlayerTable().getCardOnHand(selectedCard);
-      ImageView image =(ImageView)event.getSource();
-
-      if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/giallo.png")))){
-
-      }else{
-
-      };
-//        if (card != null) {
-//            int x = (int) event.getX() / 110;
-//            int y = (int) event.getY() / 29;
-//            if(gui.getLocalPlayerTable().isPlaceable(x,y)){
-//                if (x >= 0 && x < 64 && y >= 0 && y < 64) {
-//                    if (card.isFront()) {
-//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+card.getId()+".png")));
-//                    } else {
-//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+card.getId()+".png")));
-//                    }
-//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0);
-//                }
-//            }
-//        }
-    }
     private void addDragFunctionality() {
         boardPane.setOnMousePressed(event -> {
             mouseX = event.getSceneX();
@@ -237,6 +210,7 @@ public class GameController implements Initializable {
             boardPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
+
     public void receiveMessage(ChatMessage message) {
         if(message.getSenderId() != gui.getLocalPlayerTable().getId()) {
             if (!message.isPrivate())
@@ -275,7 +249,8 @@ public class GameController implements Initializable {
     @FXML
     public void handleRankingClick(MouseEvent event) {
         int id = rankingList.getFocusModel().getFocusedIndex();
-        /*todo display other board*/
+        if(id != gui.getLocalPlayerTable().getId())
+            gui.setOtherBoardScene(id);
     }
 
     @FXML
@@ -290,12 +265,63 @@ public class GameController implements Initializable {
     private void handleSwitch_3(ActionEvent event) {
         switchCardImage(gui.getCardsOnHand()[2], hand_2);
     }
+
     private void switchCardImage(ResourceCard card, ImageView imageView) {
         card.switchFrontBack();
         String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
         imagePath += card.isFront() ? "front_" : "back_";
         imagePath += card.getId() + ".png";
         imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
+    }
+
+    @FXML
+    private void handleHand0Click(MouseEvent event) {
+        setImageViewBorder(hand_0);
+        selectedCard = 0;
+    }
+    @FXML
+    private void handleHand1Click(MouseEvent event) {
+        setImageViewBorder(hand_1);
+        selectedCard = 1;
+    }
+    @FXML
+    private void handleHand2Click(MouseEvent event) {
+        setImageViewBorder(hand_2);
+        selectedCard = 2;
+    }
+
+    private void setImageViewBorder(ImageView card) {
+        hand_0.getStyleClass().remove("selected-image");
+        hand_1.getStyleClass().remove("selected-image");
+        hand_2.getStyleClass().remove("selected-image");
+        card.getStyleClass().add("selected-image");
+    }
+
+    @FXML
+    public void handleBoardClick(MouseEvent event) {
+        ResourceCard card = gui.getCardsOnHand()[selectedCard];
+        ImageView image =(ImageView)event.getSource();
+
+        if(image.getImage().equals(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/giallo.png")))){
+            /*todo*/
+        } else {
+
+        }
+
+//        if (card != null) {
+//            int x = (int) event.getX() / 110;
+//            int y = (int) event.getY() / 29;
+//            if(gui.getLocalPlayerTable().isPlaceable(x,y)){
+//                if (x >= 0 && x < 64 && y >= 0 && y < 64) {
+//                    if (card.isFront()) {
+//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+card.getId()+".png")));
+//                    } else {
+//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+card.getId()+".png")));
+//                    }
+//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0);
+//                }
+//            }
+//        }
     }
 
     @FXML

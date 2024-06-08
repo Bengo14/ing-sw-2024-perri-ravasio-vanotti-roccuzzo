@@ -205,7 +205,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     @Override
     public void terminateLocal() {
-        System.err.println("\nTerminating the game, because something went wrong...");
+        System.err.println("\nTerminating the game...");
         this.terminate = true;
     }
 

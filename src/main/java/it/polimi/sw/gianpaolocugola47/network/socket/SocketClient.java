@@ -273,7 +273,7 @@ public class SocketClient implements VirtualView, Client {
 
     @Override
     public void terminate() {
-        System.err.println("\nTerminating the game, because something went wrong...");
+        System.err.println("\nTerminating the game...");
         System.exit(1);
     }
 

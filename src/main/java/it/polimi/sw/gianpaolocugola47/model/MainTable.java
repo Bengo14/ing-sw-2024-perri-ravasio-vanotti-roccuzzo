@@ -30,7 +30,6 @@ public class MainTable implements Observable {
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
         this.observers = new ArrayList<>();
-        //Deck.initDeck();
         Deck.initAndShuffleDeck();
         initTable();
     }
@@ -229,7 +228,7 @@ public class MainTable implements Observable {
         boolean[][] matrix = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++){
             for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
-                matrix[i][j] = playerTable.isPlaceable(i, j); // boolean
+                matrix[i][j] = playerTable.isPlaceable(i, j);
             }
         }
         return matrix;

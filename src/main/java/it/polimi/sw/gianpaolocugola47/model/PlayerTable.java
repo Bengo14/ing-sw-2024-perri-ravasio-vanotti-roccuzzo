@@ -11,8 +11,8 @@ import static java.util.Arrays.sort;
  *
  */
 public class PlayerTable implements Serializable{
-    private static final int MATRIX_DIMENSION = 59; // should be 141
-    private static final int STARTING_CARD_POS = MATRIX_DIMENSION/2;
+    private static final int MATRIX_DIMENSION = 22;
+    private static final int STARTING_CARD_POS = 10;
     private int id;
     private String nickName;
     private boolean canPlay;

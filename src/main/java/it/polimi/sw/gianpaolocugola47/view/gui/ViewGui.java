@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -27,12 +26,14 @@ public class ViewGui extends Application implements View {
     private Stage stage;
     private FXMLLoader fxmlLoader;
     private Scene scene;
+    private Scene oldScene;
     private final HashMap<String, String> scenes;
     //private Media media;
 
     private StartingCardController startingCardController;
     private EndGameController endGameController;
     private GameController gameController;
+    private OtherBoardController otherBoardController;
 
     private PlayerTable localPlayerTable;
     private Objectives[] objectives;
@@ -48,9 +49,9 @@ public class ViewGui extends Application implements View {
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
         scenes.put("StartingCard", "/it/polimi/sw/gianpaolocugola47/fxml/StartingCardFXML.fxml");
-        scenes.put("SecretObj", "/it/polimi/sw/gianpaolocugola47/fxml/SecretObjFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
+        scenes.put("OtherBoard", "/it/polimi/sw/gianpaolocugola47/fxml/OtherBoardFXML.fxml");
     }
 
     @Override
@@ -74,10 +75,7 @@ public class ViewGui extends Application implements View {
         localPlayerTable.setNickname(client.getNicknameLocal());
 
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
-        stage.setOnCloseRequest((WindowEvent t) -> {
-            Platform.exit();
-            System.exit(0);
-        });
+
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(scenes.get("PreGame")));
         try {
@@ -87,6 +85,22 @@ public class ViewGui extends Application implements View {
             System.out.println(" Error loading scene PreGame");
             client.terminateLocal();
         }
+        stage.setTitle("Codex Naturalis");
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double width = screenBounds.getWidth();
+        double height = screenBounds.getHeight();
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.setX(0);
+        stage.setY(0);
+        stage.setResizable(true);
+        stage.setMaximized(true);
+
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+            logOut(stage);
+        });
+
         this.stage = stage;
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
@@ -99,6 +113,7 @@ public class ViewGui extends Application implements View {
         Platform.runLater(()-> {
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(scenes.get(sceneName)));
+
             try {
                 scene.setRoot(fxmlLoader.load());
             } catch (IOException e) {
@@ -107,9 +122,6 @@ public class ViewGui extends Application implements View {
             }
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
-            stage.setResizable(true);
-            stage.setMaximized(true);
-            stage.setTitle("Codex Naturalis");
 
             switch (sceneName) {
                 case "StartingCard":
@@ -120,12 +132,9 @@ public class ViewGui extends Application implements View {
                     endGameController = fxmlLoader.getController();
                     endGameController.showResults(globalPoints, nicknames);
                     break;
+                case "Game":
+                    break;
             }
-
-            stage.setOnCloseRequest(event -> {
-                event.consume();
-                logOut(stage);
-            });
             stage.show();
         });
     }
@@ -147,6 +156,34 @@ public class ViewGui extends Application implements View {
         }
     }
 
+    public void setOtherBoardScene(int id) {
+        Platform.runLater(() -> {
+            this.oldScene = stage.getScene();
+            fxmlLoader = new FXMLLoader(getClass().getResource(scenes.get("OtherBoard")));
+            Parent root = null;
+            try {
+                root = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+                client.terminateLocal();
+            }
+            otherBoardController = fxmlLoader.getController();
+            otherBoardController.start(this, id);
+
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        });
+    }
+
+    public void resetScene() {
+        Platform.runLater(() -> {
+            this.scene = oldScene;
+            stage.setScene(scene);
+            stage.show();
+        });
+    }
+
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
         Platform.runLater(() -> {
@@ -160,26 +197,18 @@ public class ViewGui extends Application implements View {
             this.cardsOnTable = cardsOnTable;
             localPlayerTable.setCardsOnHand(cardsOnHand);
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(scenes.get("Game")));
+            fxmlLoader = new FXMLLoader(getClass().getResource(scenes.get("Game")));
             Parent root = null;
             try {
-                root = loader.load();
+                root = fxmlLoader.load();
             } catch (IOException e) {
                 e.printStackTrace();
                 client.terminateLocal();
             }
-            this.gameController = loader.getController();
+            this.gameController = fxmlLoader.getController();
             gameController.start(this);
-
             scene = new Scene(root);
             stage.setScene(scene);
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            double width = screenBounds.getWidth();
-            double height = screenBounds.getHeight();
-            stage.setWidth(width);
-            stage.setHeight(height);
-            stage.setX(0);
-            stage.setY(0);
             showTurn();
             stage.show();
         });
@@ -260,6 +289,12 @@ public class ViewGui extends Application implements View {
     }
     protected ResourceCard[] getCardsOnHand() {
         return localPlayerTable.getCardsOnHand();
+    }
+    protected ResourceCard[][] getAllCardsOnHand() {
+        return client.getCardsOnHand();
+    }
+    protected PlaceableCard[][] getPlacedCards(int id) {
+        return client.getPlacedCards(id);
     }
     protected ResourceCard getResourceCardOnTop() {
         return resourceCardOnTop;

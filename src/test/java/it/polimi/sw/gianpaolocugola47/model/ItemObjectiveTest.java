@@ -38,9 +38,9 @@ class ItemObjectiveTest {
         main.setPlayerTable(0,player);
         main.setPlayerStartingCard(0,start);
         main.setPlayerSecretObjective(0,obj);
-        main.playCardAndUpdatePoints(0,29,29,0,0);
-        main.playCardAndUpdatePoints(1,29,29,1,0);
-        main.playCardAndUpdatePoints(2,29,29,2,0);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,0);
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,0);
+        main.playCardAndUpdatePoints(2,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),2,0);
         System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(3,obj.checkPatternAndComputePoints(player));
 

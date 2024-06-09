@@ -79,7 +79,7 @@ class MainTableTest {
         mainTable.setPlayerTable(0, player);
         StartingCard start = mainTable.drawStartingCard();
         mainTable.setPlayerStartingCard(0, start);
-        player.checkAndPlaceCard(0,28,28,1);
+        player.checkAndPlaceCard(0,9,9,1);
         mainTable.drawCardFrom(0,0);
         assertEquals(false,mainTable.getPlayerTable(0).getCardOnHand(1).isFront());
     }
@@ -167,8 +167,8 @@ class MainTableTest {
         res_2.switchFrontBack();
         main.setPlayerStartingCard(0, start);
         main.setPlayerStartingCard(1, start2);
-        main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
-        main.playCardAndUpdatePoints(0, 29, 29, 3, 1);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 0);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3, 1);
         System.out.println(main.computeWinnerAtEndGame());
     }
     @Test
@@ -184,7 +184,7 @@ class MainTableTest {
         main.setPlayerTable(0, player);
         main.setPlayerStartingCard(0, start);
         main.setPlayerSecretObjective(0, obj);
-        main.playCardAndUpdatePoints(0, 29, 29, 1, 0);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 0);
         assertEquals(1, main.getGlobalPoints(0));
     }
 }

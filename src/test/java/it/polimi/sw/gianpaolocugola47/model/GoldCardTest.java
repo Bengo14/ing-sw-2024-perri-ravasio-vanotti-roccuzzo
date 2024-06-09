@@ -40,18 +40,10 @@ class GoldCardTest {
         main.turnCardOnHand(1,2, true);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
-        main.playCardAndUpdatePoints(0,29,29,0,1);
-        System.out.println(p.getResourceCounter(0));
-        main.playCardAndUpdatePoints(1,29,29,1,1);
-        System.out.println(p.getResourceCounter(0));
-        main.playCardAndUpdatePoints(2,29,29,2,1);
-        System.out.println(p.getResourceCounter(0));
-        System.out.println("stampo tutti i valori degli elementi");
-        System.out.println(p.getResourceCounter(0));
-        System.out.println(p.getResourceCounter(1));
-        System.out.println(p.getResourceCounter(2));
-        System.out.println(p.getResourceCounter(3));
-        System.out.println(main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(0,10,10,0,1);
+        main.playCardAndUpdatePoints(1,10,10,1,1);
+        main.playCardAndUpdatePoints(2,10,10,2,1);
+
         assertEquals(5, main.getBoardPoints(1));
     }
     @Test
@@ -72,7 +64,7 @@ class GoldCardTest {
         main.turnCardOnHand(1,2, true);
         main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
         main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
-        main.playCardAndUpdatePoints(2, 28, 28, 1, 1);
+        main.playCardAndUpdatePoints(2, 9, 9, 1, 1);
         assertEquals(4, main.getBoardPoints(1));
     }
     @Test
@@ -93,9 +85,9 @@ class GoldCardTest {
         main.turnCardOnHand(1,2, true);
         main.turnCardOnHand(1,0, true);
         main.turnCardOnHand(1,1, true);
-        main.playCardAndUpdatePoints(1, 29, 29, 1, 1);
-        main.playCardAndUpdatePoints(0, 29, 29, 3, 1);
-        main.playCardAndUpdatePoints(2, 28, 30, 0, 1);
+        main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3, 1);
+        main.playCardAndUpdatePoints(2, 9, 11, 0, 1);
         assertEquals(2, main.getBoardPoints(1));
         assertEquals(2,player.getResourceCounter(6));
     }
@@ -128,7 +120,7 @@ class GoldCardTest {
        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
        main.setPlayerStartingCard(1, start);
        main.setPlayerSecretObjective(1,obj);
-       main.playCardAndUpdatePoints(0, 29, 29, 1, 1);
+       main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
     }
 
 

@@ -44,8 +44,8 @@ class DiagonalPatternObjectiveTest {
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
         main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
-        main.playCardAndUpdatePoints(1,30,30,3,1);
-        main.playCardAndUpdatePoints(2,31,31,3,1);
+        main.playCardAndUpdatePoints(1,11,11,3,1);
+        main.playCardAndUpdatePoints(2,12,12,3,1);
         assertEquals(2, obj.checkPatternAndComputePoints(player));
 
         DiagonalPatternObjective obj2 = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(8);

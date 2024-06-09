@@ -31,11 +31,11 @@ class ResourceCardTest {
         main.setPlayerTable(1,player);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
-        main.playCardAndUpdatePoints(0,29,29,1,1);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,1);
         plant_2.switchFrontBack();
-        main.playCardAndUpdatePoints(1,29,29,3,1);
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
         res.switchFrontBack();
-        main.playCardAndUpdatePoints(2,29,29,0,1);
+        main.playCardAndUpdatePoints(2,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
         System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(2,obj.checkPatternAndComputePoints(player));
     }
@@ -51,7 +51,7 @@ class ResourceCardTest {
         main.setPlayerTable(1,player);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
-        main.playCardAndUpdatePoints(0,29,29,0,1);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
         assertEquals(0,res.getThisPoints());
         assertEquals(0,res.getPoints(player));
     }

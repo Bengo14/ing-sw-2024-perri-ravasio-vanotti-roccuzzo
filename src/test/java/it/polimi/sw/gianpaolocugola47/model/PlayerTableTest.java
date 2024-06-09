@@ -31,14 +31,14 @@ class PlayerTableTest {
 
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{});
         p.setStartingCard(start);
-        start.setCoordinates(29,29);
+        start.setCoordinates(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos());
 
-        boolean val = p.isPlaceable(28,28);
+        boolean val = p.isPlaceable(9,9);
 
         System.out.println(val);
 
 
-        assertTrue(p.isPlaceable(28, 28));
+        assertTrue(p.isPlaceable(9, 9));
 
 
     }
@@ -68,8 +68,8 @@ class PlayerTableTest {
         p.setStartingCard(start);
 
       //  assertNotNull(p.getPlacedCard(28,30));
-        p.checkAndPlaceCard(0, 29, 29, 3);
-        assertNotNull(p.getPlacedCard(30,30));
+        p.checkAndPlaceCard(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3);
+        assertNotNull(p.getPlacedCard(11,11));
     }
     @Test
     public void testPlaceStartingCard(){
@@ -77,8 +77,8 @@ class PlayerTableTest {
         StartingCard start = Deck.getStartingCardsDeck().get(0);
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{});
         p.setStartingCard(start);
-        assertNotNull(p.getPlacedCard(29,29));
-        System.out.println(p.getPlacedCard(29,29));
+        assertNotNull(p.getPlacedCard(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos()));
+        System.out.println(p.getPlacedCard(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos()));
     }
     @Test
     public void testIsCheap(){
@@ -91,10 +91,10 @@ class PlayerTableTest {
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,gold});
         p.setStartingCard(start);
 
-        p.checkAndPlaceCard(0, 29, 29, 3);
-        p.checkAndPlaceCard(1, 29, 29, 1);
+        p.checkAndPlaceCard(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3);
+        p.checkAndPlaceCard(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1);
         gold.switchFrontBack();
-        p.checkAndPlaceCard(2, 29, 29, 0);
+        p.checkAndPlaceCard(2, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0);
     }
     @Test
     public void testGetCardsOnHand(){
@@ -104,7 +104,7 @@ class PlayerTableTest {
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
         assertNotNull(p.getCardsOnHand());
-        p.checkAndPlaceCard(0, 29, 29, 3);
+        p.checkAndPlaceCard(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3);
         assertNotNull(p.getPlacedCards());
     }
 

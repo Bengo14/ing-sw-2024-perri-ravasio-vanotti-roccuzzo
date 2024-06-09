@@ -31,9 +31,9 @@ class LShapePatternObjectiveTest {
         main.setPlayerSecretObjective(1,obj);
         start.switchFrontBack();
         main.setPlayerStartingCard(1,start);
-        main.playCardAndUpdatePoints(0,29,29,0,1);
-        main.playCardAndUpdatePoints(1,29,29,2,1);
-        main.playCardAndUpdatePoints(2,30,28,2,1);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),2,1);
+        main.playCardAndUpdatePoints(2,11,9,2,1);
         System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(3, obj.checkPatternAndComputePoints(player));
     }

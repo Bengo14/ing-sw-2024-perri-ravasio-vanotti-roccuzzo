@@ -54,14 +54,14 @@ class ResourceObjectiveTest {
         main.setPlayerStartingCard(1,start);
         System.out.println(player.getResourceCounter(2)+"Starting card\n");
         main.setPlayerSecretObjective(1,obj);
-        main.playCardAndUpdatePoints(0,29,29,0,1);
+        main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
         //verify if the card is played
-        assertNotNull(player.getPlacedCard(28,28));
+        assertNotNull(player.getPlacedCard(9,9));
         System.out.println(player.getResourceCounter(2)+" First card\n");
-        main.playCardAndUpdatePoints(1,29,29,1,1);
-        assertNotNull(player.getPlacedCard(28,30));
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,1);
+        assertNotNull(player.getPlacedCard(9,11));
         System.out.println(player.getResourceCounter(2)+" Second card\n");
-        main.playCardAndUpdatePoints(2,28,30,3,1);
+        main.playCardAndUpdatePoints(2,9,11,3,1);
         System.out.println(player.getResourceCounter(0)+"\n");
         System.out.println(player.getResourceCounter(1)+"\n");
         System.out.println(player.getResourceCounter(2)+" Third card\n");

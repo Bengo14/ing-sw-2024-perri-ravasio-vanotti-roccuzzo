@@ -19,7 +19,7 @@ class StartingCardTest {
     public void testConstructor() {
         Deck.initDeck();
         StartingCard start = new StartingCard("back", "front");
-        start.setCoordinates(29,29);
+        start.setCoordinates(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos());
     }
     @Test
     public void testGetResourceCenterFront() {

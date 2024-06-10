@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 
 import static it.polimi.sw.gianpaolocugola47.model.Items.*;
 import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
+import static java.lang.Thread.sleep;
 
 //import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class CLI implements View {
         this.client = client;
     }
 
-    public void start() {
+    public void start() throws IOException {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.println("""
                                                     ▄██████╗ ▄████▄  ██████▄   ███████╗██╗   ██╗     ███╗   ██╗  ▄██▄╗  ████████╗██╗   ██╗█████▄╗    ▄██▄╗  ██╗     ██╗███████╗
@@ -54,8 +55,7 @@ public class CLI implements View {
         System.out.flush();
         this.localPlayerTable.setNickname(client.getNicknameLocal());
         this.nicknames = client.getNicknames();
-        openChat();
-
+        commandHandler();
         /*todo input game loop (this method is already on a separate thread!!!)*/
     }
 
@@ -271,8 +271,13 @@ public class CLI implements View {
 
     public void commandHandler() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        if(client.isItMyTurn()){
-            while(true){
+        try{
+            setupPhase(br);
+        }catch(InterruptedException e){;
+            System.err.println("Interrupted");
+        }
+        while(true){
+            while(client.isItMyTurn()){
                 printPoints();
                 printResourceCounter(client.getResourceCounter(client.getIdLocal() ));
                 printPlayerBoardCompactCard(localPlayerTable);
@@ -360,6 +365,50 @@ public class CLI implements View {
                 /*todo*/
                 /*checkIfGameHasEnded*/
             }
+            while(!client.isItMyTurn()){
+                System.out.println("It's not your turn, wait for the other players to finish.");
+                System.out.println("Press Any Key To Continue...");
+                br.readLine();
+            }
         }
+    }
+
+    public void setupPhase(BufferedReader br) throws IOException, InterruptedException {
+        StartingCard selectedStartingCard = client.drawStartingCard();
+        String command;
+        System.out.println("You drew the following starting card: ");
+        this.printStartingCard(selectedStartingCard);
+        selectedStartingCard.switchFrontBack();
+        this.printStartingCard(selectedStartingCard);
+        selectedStartingCard.switchFrontBack();
+        System.out.println("Pick the side you want to start with (1-2): ");
+        do{
+            command = br.readLine();
+            if(command.equals("2")){
+                selectedStartingCard.switchFrontBack();
+                localPlayerTable.setStartingCard(selectedStartingCard);
+            }
+            else if(command.equals("1"))
+                localPlayerTable.setStartingCard(selectedStartingCard);
+            else
+                System.out.println("Invalid command, try again.");
+        }while(!command.equals("1") && !command.equals("2"));
+        Objectives[] objectives = client.setStartingCardAndDrawObjectives();
+        System.out.println("You drew the following objectives: ");
+        for(Objectives objective : objectives)
+            this.printObjectiveCard(objective);
+        System.out.println("Pick the objective you want to keep (1-2): ");
+        do {
+            command = br.readLine();
+            if (command.equals("2"))
+                localPlayerTable.setSecretObjective(objectives[1]);
+            else if (command.equals("1"))
+                localPlayerTable.setSecretObjective(objectives[0]);
+            else
+                System.out.println("Invalid command, try again.");
+        }while(!command.equals("1") && !command.equals("2"));
+        System.out.println("Setup phase completed! Waiting for the other players to pick their cards.");
+        Thread.sleep(1000);
+        for (int i = 0; i < 50; i++) System.out.println();
     }
 }

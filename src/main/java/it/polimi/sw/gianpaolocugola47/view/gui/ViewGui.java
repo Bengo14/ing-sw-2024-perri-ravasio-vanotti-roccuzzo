@@ -274,6 +274,42 @@ public class ViewGui extends Application implements View {
     public boolean[][] getPlayablePositions() {
         return client.getPlayablePositions();
     }
+    protected boolean playCard(int hand, int x, int y, int corner, boolean isFront) {
+        return client.playCard(hand, x, y, corner, isFront);
+    }
+
+    protected void drawCard(int position) {
+        client.drawCard(position);
+
+        ResourceCard choice = null;
+        if(position==0||position==1||position==2||position==3) {
+            choice = cardsOnTable[position];
+            cardsOnTable[position] = null;
+        }
+        if(position == 4) {
+            choice = resourceCardOnTop;
+            choice.switchFrontBack();
+        }
+        if(position == 5) {
+            choice = goldCardOnTop;
+            choice.switchFrontBack();
+        }
+
+        if(choice != null)
+            for(int i = 0; i<3; i++)
+                if(getCardsOnHand()[i] == null)
+                    getCardsOnHand()[i] = choice;
+
+        if(position == 0 || position == 1) {
+            cardsOnTable[position] = resourceCardOnTop;
+            cardsOnTable[position].switchFrontBack();
+        }
+        if(position == 2 || position == 3) {
+            cardsOnTable[position] = goldCardOnTop;
+            cardsOnTable[position].switchFrontBack();
+        }
+    }
+
     protected void sendMessage(ChatMessage message) {
         if (message.isPrivate())
             client.sendPrivateMessage(message);

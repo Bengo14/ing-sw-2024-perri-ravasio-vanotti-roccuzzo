@@ -94,6 +94,10 @@ public class GameController implements Initializable {
     private boolean cardPlayed = false;
     private Image gold;
     private boolean goldShowed = false;
+    private ImageView selectedImage;
+    private ImageView[] cardsOnHand;
+    private Button[] buttons;
+    private ImageView[] table;
 
 
     @Override
@@ -101,6 +105,11 @@ public class GameController implements Initializable {
 
         addZoomFunctionality();
         addDragFunctionality();
+
+        cardsOnHand = new ImageView[] {hand_0, hand_1, hand_2};
+        buttons = new Button[] {switch_1, switch_2, switch_3};
+        table = new ImageView[] {res_1, res_2, gold_1, gold_2, deck_res, deck_gold};
+
         boardPositions = new ImageView[] {
                 pos_0,pos_1,pos_2,pos_3,pos_4,pos_5,pos_6,pos_7,pos_8,pos_9,pos_10,
                 pos_11,pos_12,pos_13,pos_14,pos_15,pos_16,pos_17,pos_18,pos_19,pos_20,
@@ -141,6 +150,11 @@ public class GameController implements Initializable {
                 matrix[2 * i + 1][2 * j + 1].setOnMouseClicked(this::handleBoardClick);
                 matrix[2 * i + 1][2 * j + 1].setMouseTransparent(true);
             }
+
+        for(ImageView img : table) {
+            img.setOnMouseClicked(this::handleTableClick);
+            img.setMouseTransparent(true);
+        }
 
         gold = new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png"));
     }
@@ -327,18 +341,49 @@ public class GameController implements Initializable {
 
         if (image.getImage().equals(gold)) {
 
-            /*todo*/
+            int x = 0, y = 0, corner = 0;
 
+            for (int i = 0; i < playablePos.length; i++)
+                for (int j = 0; j < playablePos[i].length; j++)
+                    if(matrix[i][j] != null && matrix[i][j].equals(selectedImage)) {
+                        x = i;
+                        y = j;
+                        break;
+                    }
             for (int i = 0; i < playablePos.length; i++)
                 for (int j = 0; j < playablePos[i].length; j++)
                     if(playablePos[i][j] && matrix[i][j] != null) {
                         matrix[i][j].setImage(null);
                         matrix[i][j].setMouseTransparent(true);
+
+                        if(matrix[i][j].equals(image)) {
+                            if(i-x < 0 && j-y < 0) corner = 0;
+                            if(i-x < 0 && j-y > 0) corner = 1;
+                            if(i-x > 0 && j-y < 0) corner = 2;
+                            if(i-x > 0 && j-y > 0) corner = 3;
+
+                            if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].isFront())) {
+                                String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+                                imagePath += gui.getCardsOnHand()[selectedCard].isFront() ? "front_" : "back_";
+                                imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
+                                matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+                                matrix[i][j].setMouseTransparent(false);
+                                cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
+                                cardsOnHand[selectedCard].setImage(null);
+                                gui.getCardsOnHand()[selectedCard] = null;
+                                disableHand(false);
+                                cardsOnHand[selectedCard].setMouseTransparent(true);
+                                buttons[selectedCard].setMouseTransparent(true);
+                                selectedCard = -1;
+                                cardPlayed = true;
+                                disableTable(false);
+                            } else disableHand(false);
+                        }
                     }
-            disableHand(false);
             goldShowed = false;
 
         } else if (!goldShowed) {
+            selectedImage = image;
 
             this.playablePos = gui.getPlayablePositions();
             for (int i = 0; i < playablePos.length; i++)
@@ -350,21 +395,6 @@ public class GameController implements Initializable {
             disableHand(true);
             goldShowed = true;
         }
-
-//        if (card != null) {
-//            int x = (int) event.getX() / 110;
-//            int y = (int) event.getY() / 29;
-//            if(gui.getLocalPlayerTable().isPlaceable(x,y)){
-//                if (x >= 0 && x < 64 && y >= 0 && y < 64) {
-//                    if (card.isFront()) {
-//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+card.getId()+".png")));
-//                    } else {
-//                       cardMatrix[y][x].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+card.getId()+".png")));
-//                    }
-//                    gui.getLocalPlayerTable().checkAndPlaceCard(selectedCard, x, y, 0);
-//                }
-//            }
-//        }
     }
 
     private void disableHand(boolean b) {
@@ -374,6 +404,49 @@ public class GameController implements Initializable {
         switch_1.setMouseTransparent(b);
         switch_2.setMouseTransparent(b);
         switch_3.setMouseTransparent(b);
+    }
+
+    @FXML
+    private void handleTableClick(MouseEvent event) {
+        int pos = 0;
+        ImageView source = (ImageView) event.getSource();
+        Image image = source.getImage();
+
+        for(int i = 0; i < table.length; i++)
+            if(table[i].equals(source)) {
+                pos = i;
+                table[i].setImage(null);
+                if((i == 0 || i == 1) && gui.getResourceCardOnTop() != null)
+                    table[i].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getResourceCardOnTop().getId()+".png")));
+                if((i == 2 || i == 3) && gui.getGoldCardOnTop() != null)
+                    table[i].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getGoldCardOnTop().getId()+".png")));
+                break;
+            }
+        if(pos>=0 && pos<=3) {
+            for(ImageView img : cardsOnHand)
+                if(img.getImage() == null)
+                    img.setImage(image);
+        } else if (pos == 5) {
+            for(ImageView img : cardsOnHand)
+                if(img.getImage() == null && gui.getResourceCardOnTop() != null)
+                    img.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getResourceCardOnTop().getId()+".png")));
+        } else {
+            for(ImageView img : cardsOnHand)
+                if(img.getImage() == null && gui.getGoldCardOnTop() != null)
+                    img.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getGoldCardOnTop().getId()+".png")));
+        }
+        gui.drawCard(pos);
+        disableHand(false);
+        disableTable(true);
+        cardPlayed = false;
+    }
+
+    private void disableTable(boolean b) {
+        for(ImageView img : table) {
+            img.setMouseTransparent(b);
+            if(img.getImage() == null)
+                img.setMouseTransparent(true);
+        }
     }
 
     @FXML

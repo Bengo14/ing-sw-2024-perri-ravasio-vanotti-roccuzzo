@@ -49,13 +49,14 @@ public class MainTable implements Observable {
     public StartingCard drawStartingCard() {
         return Deck.drawCardFromStartingDeck();
     }
-    public void setPlayerStartingCard(int playerId, StartingCard startingCard){
+
+    public void setPlayerStartingCard(int playerId, StartingCard startingCard) {
         this.getPlayerTable(playerId).setStartingCard(startingCard);
     }
     public Objectives[] drawTwoPossibleSecretObjectives() {
         return new Objectives[]{Deck.drawCardFromObjectivesDeck(), Deck.drawCardFromObjectivesDeck()};
     }
-    public void setPlayerSecretObjective(int playerId, Objectives secretObjective){
+    public void setPlayerSecretObjective(int playerId, Objectives secretObjective) {
         this.getPlayerTable(playerId).setSecretObjective(secretObjective);
     }
     @Override
@@ -191,7 +192,7 @@ public class MainTable implements Observable {
     public void drawCardFrom(int position, int playerId) {
         ResourceCard choice = null;
 
-        if(position==0||position==1||position==2||position==3){
+        if(position==0||position==1||position==2||position==3) {
             choice = cardsOnTable[position];
             cardsOnTable[position] = null;
             replaceCardOnTable(position);
@@ -205,6 +206,7 @@ public class MainTable implements Observable {
             playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
         if(Deck.areDecksEmpty())
             setEndGame();
+
         this.updateDecks();
     }
 

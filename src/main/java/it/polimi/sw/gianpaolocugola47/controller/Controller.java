@@ -43,31 +43,39 @@ public class Controller {
         this.numOfPlayers = num;
         this.mainTable.setNumOfPlayers(num);
     }
+
     public int getNumOfPlayers(){
         return this.numOfPlayers;
     }
+
     public void addClientConnected(){
         this.clientsConnected++;
     }
+
     public int getClientsConnected(){
         return this.clientsConnected;
     }
+
     public void addPlayer(int id, String nickname) {
         mainTable.addPlayer(id, nickname);
         this.playersAdded++;
         if(this.numOfPlayers == this.playersAdded)
             mainTable.startGame();
     }
+
     public int getNumOfPlayersCurrentlyAdded(){
         return this.playersAdded;
     }
+
     public StartingCard drawStartingCard() {
         return mainTable.drawStartingCard();
     }
+
     public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
         mainTable.setPlayerStartingCard(playerId, card);
         return mainTable.drawTwoPossibleSecretObjectives();
     }
+
     public void setSecretObjectiveAndUpdateView(int playerId, Objectives obj) {
         mainTable.setPlayerSecretObjective(playerId, obj);
         startingCardsAndObjAdded++;

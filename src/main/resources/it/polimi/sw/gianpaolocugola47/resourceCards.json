@@ -919,7 +919,7 @@
       {
         "isBuildable" : false,
         "isItem" : false,
-        "isResource": true,
+        "isResource": false,
         "item" : null,
         "resource" : null
       },
@@ -984,7 +984,7 @@
       {
         "isBuildable" : true,
         "isItem" : false,
-        "isResource": true,
+        "isResource": false,
         "item" : null,
         "resource" : null
       },

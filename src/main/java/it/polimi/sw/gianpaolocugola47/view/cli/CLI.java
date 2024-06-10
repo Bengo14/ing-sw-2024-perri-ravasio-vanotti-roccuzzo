@@ -1,8 +1,9 @@
-package it.polimi.sw.gianpaolocugola47.view;
+package it.polimi.sw.gianpaolocugola47.view.cli;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.rmi.RemoteException;
 
 import static it.polimi.sw.gianpaolocugola47.model.Items.*;
 import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
-import static java.lang.Thread.sleep;
 
 //import java.io.IOException;
 
@@ -68,6 +68,7 @@ public class CLI implements View {
             }
         }).start();
     }
+
     private void chatInputLoop() throws IOException {
 
         System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
@@ -140,7 +141,10 @@ public class CLI implements View {
 
     @Override
     public void showTurn() {
-        /*todo*/
+        if(client.isItMyTurn())
+            System.out.println("It's your turn!");
+        else
+            System.out.println("It's not your turn, wait for the other players to finish.");
     }
 
     @Override
@@ -273,82 +277,76 @@ public class CLI implements View {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try{
             setupPhase(br);
-        }catch(InterruptedException e){;
+        }catch(InterruptedException e){
             System.err.println("Interrupted");
         }
         while(true){
-            while(client.isItMyTurn()){
+            if(client.isItMyTurn()){
                 printPoints();
                 printResourceCounter(client.getResourceCounter(client.getIdLocal() ));
-                printPlayerBoardCompactCard(localPlayerTable);
                 String command = br.readLine();
                 if(command.equals("/help")){
                     System.out.println("""
                         Commands available:
                         /help: show this message
-                        /showCard [xCoord] [yCoord]: show the board
-                        /showCardInHand [cardInHand]: show a card in hand
+                        /showCardAt [xCoord] [yCoord]: show a card in a given position
                         /showCardsInHand: show both cards in hand
                         /showCardsOnBoard: show cards present on the board
                         /showDeckCards: show cards present on top of each deck
-                        /placeCard [xCoord] [yCoord] [cardInHand]: place a card on the board""");
+                        /placeCard [xCoord] [yCoord] [cardInHand]: place a card on the board
+                        /printBoard: print player board
+                        /showObjective: print personal objective card""");
                 }
-                else if(command.startsWith("/showCard")){
+                else if(command.startsWith("/showCardAt")){
                     String[] coordinates = command.split(" ");
                     if(coordinates.length != 3) System.out.println("Invalid command, try again.");
                     else{
-                        try{
-                            int x = Integer.parseInt(coordinates[1]);
-                            int y = Integer.parseInt(coordinates[2]);
-                        } catch(NumberFormatException e){
+                        if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
+                            if(localPlayerTable.getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
+                                PlaceableCard card = localPlayerTable.getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
+                                if(card instanceof ResourceCard)
+                                    this.printResourceCard((ResourceCard) card);
+                                else if(card instanceof GoldCard)
+                                    this.printGoldCard((GoldCard) card);
+                                else
+                                    System.out.println("Starting card");
+                            }
+                            else
+                                System.out.println("There is no card in the position you typed in.");
+                        } else {
                             System.out.println("The parameters you typed in are not numbers, try again.");
                         }
 
-                    }
-                }
-                else if(command.startsWith("/showCardInHand")){
-                    String[] cardInHand = command.split(" ");
-                    if(cardInHand.length != 2) System.out.println("Invalid command, try again.");
-                    else{
-                        try{
-                            int card = Integer.parseInt(cardInHand[1]);
-                            if(card != 0 && card != 1)
-                                System.out.println("The parameter you typed in is not a valid hand position, try again.");
-                            else{
-                                if(this.localPlayerTable.getCardsOnHand()[card] instanceof GoldCard)
-                                    this.printGoldCard((GoldCard) this.localPlayerTable.getCardsOnHand()[card]);
-                                else if(this.localPlayerTable.getCardsOnHand()[card].isFront())
-                                    this.printResourceCard(this.localPlayerTable.getCardsOnHand()[card]);
-                            }
-                        } catch(NumberFormatException e){
-                            System.out.println("The parameter you typed in is not a number, try again.");
-                        }
-                        //getCardInHand method
-                        //client.getCardsOnHand(); to be moved!
                     }
                 }
                 else if(command.startsWith("/placeCard")){
                     String[] coordinates = command.split(" ");
                     if(coordinates.length != 4) System.out.println("Invalid command, try again.");
                     else{
-                        try{
+                        if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && isAPositiveNumber(coordinates[3]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
                             int x = Integer.parseInt(coordinates[1]);
                             int y = Integer.parseInt(coordinates[2]);
                             int card = Integer.parseInt(coordinates[3]);
-                            if(card != 0 && card != 1)
+                            if(card != 0 && card != 1 && card != 2)
                                 System.out.println("The parameter you typed in is not a valid hand position, try again.");
-                        } catch(NumberFormatException e){
+                        } else {
                             System.out.println("The parameters you typed in are not numbers, try again.");
                         }
                         //placeCard method
                     }
                 }
                 else if(command.equals("/showCardsInHand")){
-                    for(ResourceCard card: localPlayerTable.getCardsOnHand())
+                    for(ResourceCard card: localPlayerTable.getCardsOnHand()){
                         if(card instanceof GoldCard)
                             this.printGoldCard((GoldCard) card);
                         else
                             this.printResourceCard(card);
+                        card.switchFrontBack();
+                        if(card instanceof GoldCard)
+                            this.printGoldCard((GoldCard) card);
+                        else
+                            this.printResourceCard(card);
+                    }
                 }
                 else if(command.equals("/showCardsOnBoard")){
                     for(ResourceCard card: cardsOnTable)
@@ -361,13 +359,18 @@ public class CLI implements View {
                     this.printResourceCard(resourceCardOnTop);
                     this.printGoldCard(goldCardOnTop);
                 }
-                else System.out.println("Command not recognized");
+                else if(command.equals("/printBoard")){
+                    this.printPlayerBoardCompactCard(localPlayerTable);
+                }
+                else if(command.equals("/showObjective"))
+                    this.printObjectiveCard(localPlayerTable.getSecretObjective());
+                else System.out.println("Command couldn't be recognized, please try again.");
+                System.err.println("Command: " + command);
                 /*todo*/
                 /*checkIfGameHasEnded*/
             }
-            while(!client.isItMyTurn()){
+            if(!client.isItMyTurn()){
                 System.out.println("It's not your turn, wait for the other players to finish.");
-                System.out.println("Press Any Key To Continue...");
                 br.readLine();
             }
         }
@@ -407,8 +410,21 @@ public class CLI implements View {
             else
                 System.out.println("Invalid command, try again.");
         }while(!command.equals("1") && !command.equals("2"));
+        client.setSecretObjective();
         System.out.println("Setup phase completed! Waiting for the other players to pick their cards.");
         Thread.sleep(1000);
         for (int i = 0; i < 50; i++) System.out.println();
     }
+
+    private boolean isAPositiveNumber(String number){
+        try{
+            Integer.parseInt(number);
+            return Integer.parseInt(number) >= 0;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
 }
+
+

@@ -1,9 +1,8 @@
 package it.polimi.sw.gianpaolocugola47.view;
 
+import it.polimi.sw.gianpaolocugola47.view.cli.CLI;
 import org.junit.jupiter.api.Test;
 import it.polimi.sw.gianpaolocugola47.model.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CLITest {
 

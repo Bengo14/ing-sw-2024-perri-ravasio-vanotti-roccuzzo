@@ -5,7 +5,7 @@ import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
-import it.polimi.sw.gianpaolocugola47.view.CLI;
+import it.polimi.sw.gianpaolocugola47.view.cli.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
 import javafx.application.Platform;

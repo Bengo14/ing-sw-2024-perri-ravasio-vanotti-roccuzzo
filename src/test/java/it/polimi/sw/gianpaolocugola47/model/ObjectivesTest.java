@@ -7,15 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ObjectivesTest {
     @Test
     public void testConstructorAndGetterObjectives() {
-        Objectives o = new Objectives(5, "imgPathFront", "imgPathBack") {
-            @Override
-            public int checkPatternAndComputePoints(PlayerTable playerTable) {
-                return 0;
-            }
-        };
+        Deck.initDeck();
+        Objectives o = Deck.getObjectiveCardsDeck().get(0);
         assertNotNull(o);
-        assertEquals(5, o.getPoints());
-        assertEquals("imgPathFront", o.getImgPathFront());
-        assertEquals("imgPathBack", o.getImgPathBack());
+        assertEquals(2, o.getPoints());
+        assertEquals("imgPathFrn", o.getImgPathFront());
+        assertEquals("imgPathBck", o.getImgPathBack());
+        assertEquals("2 MANUSCRIPT \nPoints: 2",o.getDescription());
+
     }
 }

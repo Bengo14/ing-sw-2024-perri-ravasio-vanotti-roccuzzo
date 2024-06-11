@@ -67,11 +67,11 @@ public class MainTable implements Observable {
         }
     }
     @Override
-    public void updateDecks() {
+    public void updateDecks(int drawPos) {
         new Thread(()->{
             synchronized (observers) {
                 for (Observer observer : observers)
-                    observer.updateDecks(Deck.getResourceCardOnTop(), Deck.getGoldCardOnTop());
+                    observer.updateDecks(Deck.getResourceCardOnTop(), Deck.getGoldCardOnTop(), drawPos);
             }
         }).start();
     }
@@ -207,7 +207,7 @@ public class MainTable implements Observable {
         if(Deck.areDecksEmpty())
             setEndGame();
 
-        this.updateDecks();
+        this.updateDecks(position);
     }
 
     private void replaceCardOnTable(int position){

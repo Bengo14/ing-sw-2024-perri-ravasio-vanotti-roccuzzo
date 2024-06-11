@@ -274,9 +274,16 @@ public class GameController implements Initializable {
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
     }
 
-    public void updateDecks(ResourceCard res, GoldCard gold) {
+    public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
         deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
         deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
+
+        if(drawPos>=0 && drawPos<=3) {
+            String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+            imagePath += gui.getCardsOnTable()[drawPos].isFront() ? "front_" : "back_";
+            imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
+            table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+        }
     }
 
     @FXML
@@ -368,6 +375,7 @@ public class GameController implements Initializable {
                                 imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
                                 matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
                                 matrix[i][j].setMouseTransparent(false);
+                                matrix[i][j].toFront();
                                 cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
                                 cardsOnHand[selectedCard].setImage(null);
                                 gui.getCardsOnHand()[selectedCard] = null;

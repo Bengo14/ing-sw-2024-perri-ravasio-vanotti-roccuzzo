@@ -41,28 +41,52 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
                 case "addPlayer" -> addPlayer(integer(), line());
 
-                case "drawStarting" -> client.drawStartingCardResponse(drawStartingCard());
+                case "drawStarting" -> {
+                    synchronized (client) {
+                        client.drawStartingCardResponse(drawStartingCard());
+                    }
+                }
 
                 case "setStarting" -> {
                     int id = integer();
                     StartingCard card = (StartingCard) Deck.getCardFromGivenId(integer());
                     if(bool()) {card.switchFrontBack();}
-                    client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(id, card));
+                    synchronized (client) {
+                        client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(id, card));
+                    }
                 }
+
                 case "setObj" -> {
                     int id = integer();
                     Objectives obj = Deck.getObjectiveCardFromGivenId(integer());
                     setSecretObjective(id, obj);
                 }
-                case "play" -> client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer(), bool()));
+
+                case "play" -> {
+                    synchronized (client) {
+                        client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer(), bool()));
+                    }
+                }
 
                 case "draw" -> drawCard(integer(), integer());
 
-                case "getCardsOnHand" -> client.getCardsOnHandResponse(getCardsOnHand());
+                case "getCardsOnHand" -> {
+                    synchronized (client) {
+                        client.getCardsOnHandResponse(getCardsOnHand());
+                    }
+                }
 
-                case "getPlacedCards" -> client.getPlacedCardsResponse(getPlacedCards(integer()));
+                case "getPlacedCards" -> {
+                    synchronized (client) {
+                        client.getPlacedCardsResponse(getPlacedCards(integer()));
+                    }
+                }
 
-                case "getResourceCounter" -> client.getResourceCounterResponse(getResourceCounter(integer()));
+                case "getResourceCounter" -> {
+                    synchronized (client) {
+                        client.getResourceCounterResponse(getResourceCounter(integer()));
+                    }
+                }
 
                 case "message" -> {
                     String sender = line();
@@ -82,13 +106,30 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
                     message.setMessage(msg);
                     sendPrivateMessage(message);
                 }
-                case "nickAvailable" -> client.isNicknameAvailableResponse(isNicknameAvailable(line()));
 
-                case "getNick" -> client.getNicknamesResponse(getNicknames());
+                case "nickAvailable" -> {
+                    synchronized (client) {
+                        client.isNicknameAvailableResponse(isNicknameAvailable(line()));
+                    }
+                }
 
-                case "getNumPlayers" -> client.getNumOfPlayersResponse(getNumOfPlayers());
+                case "getNick" -> {
+                    synchronized (client) {
+                        client.getNicknamesResponse(getNicknames());
+                    }
+                }
 
-                case "getPlayPos" -> client.getPlayablePositionsResponse(getPlayablePositions(integer()));
+                case "getNumPlayers" -> {
+                    synchronized (client) {
+                        client.getNumOfPlayersResponse(getNumOfPlayers());
+                    }
+                }
+
+                case "getPlayPos" -> {
+                    synchronized (client) {
+                        client.getPlayablePositionsResponse(getPlayablePositions(integer()));
+                    }
+                }
 
                 default -> System.err.println("[INVALID MESSAGE]");
             }
@@ -122,32 +163,44 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public void terminate() {
-        this.client.terminate();
+        synchronized (client) {
+            this.client.terminate();
+        }
     }
 
     @Override
     public void ping() {
-        this.client.ping();
+        synchronized (client) {
+            this.client.ping();
+        }
     }
 
     @Override
     public void startGame() {
-        this.client.startGame();
+        synchronized (client) {
+            this.client.startGame();
+        }
     }
 
     @Override
     public void setMyTurn() {
-        this.client.setMyTurn();
+        synchronized (client) {
+            this.client.setMyTurn();
+        }
     }
 
     @Override
     public void gameOver() {
-        this.client.gameOver();
+        synchronized (client) {
+            this.client.gameOver();
+        }
     }
 
     @Override
     public void showWinner() {
-        this.client.showWinner();
+        synchronized (client) {
+            this.client.showWinner();
+        }
     }
 
     @Override
@@ -157,27 +210,37 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
 
     @Override
     public void receiveMessage(ChatMessage message) {
-        this.client.receiveMessage(message);
+        synchronized (client) {
+            client.receiveMessage(message);
+        }
     }
 
     @Override
     public void receivePrivateMessage(ChatMessage message) {
-        this.client.receivePrivateMessage(message);
+        synchronized (client) {
+            client.receivePrivateMessage(message);
+        }
     }
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        this.client.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
+        synchronized (client) {
+            client.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
+        }
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        this.client.updateDecks(resourceCardOnTop, goldCardOnTop);
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
+        synchronized (client) {
+            client.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
+        }
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints)  {
-        this.client.updatePoints(boardPoints, globalPoints);
+        synchronized (client) {
+            client.updatePoints(boardPoints, globalPoints);
+        }
     }
 
     /* methods of interface VirtualServer */

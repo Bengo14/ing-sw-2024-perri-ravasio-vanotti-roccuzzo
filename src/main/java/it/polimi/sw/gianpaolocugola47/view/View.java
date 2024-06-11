@@ -12,9 +12,9 @@ import java.io.IOException;
 public interface View {
 
     void setClient(Client client);
-    void start() throws IOException;
+    void start();
     void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable);
-    void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop);
+    void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos);
     void updatePoints(int[] boardPoints, int[] globalPoints);
     void showTurn();
     void receiveMessage(ChatMessage message);

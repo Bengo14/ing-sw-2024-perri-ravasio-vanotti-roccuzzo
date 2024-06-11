@@ -42,8 +42,7 @@ public class SocketClient implements VirtualView, Client {
         this.server = new SocketServerProxy(output);
     }
 
-    public void run() throws RemoteException {
-
+    public void run() {
         new Thread(() -> {
             try {
                 runVirtualServer();
@@ -111,7 +110,7 @@ public class SocketClient implements VirtualView, Client {
                 case "decks" -> {
                     ResourceCard resourceCardOnTop = (ResourceCard) Deck.getCardFromGivenId(integer());
                     GoldCard goldCardOnTop = (GoldCard) Deck.getCardFromGivenId(integer());
-                    updateDecks(resourceCardOnTop, goldCardOnTop);
+                    updateDecks(resourceCardOnTop, goldCardOnTop, integer());
                 }
 
                 case "points" -> {
@@ -127,8 +126,7 @@ public class SocketClient implements VirtualView, Client {
                 }
 
                 case "drawStarting" -> {
-                    int id = integer();//debug
-                    drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(id);
+                    drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(integer());
                     setResponse();
                 }
 
@@ -290,24 +288,14 @@ public class SocketClient implements VirtualView, Client {
 
         if(isCliChosen) {
             this.view = new CLI(this);
-            new Thread(() -> {
-                try {
-                    view.start();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+            new Thread(() -> view.start()).start();
         }
         else {
             this.view = new ViewGui();
             this.view.setClient(this);
             new Thread(() -> {
                 Platform.startup(() -> {
-                    try {
-                        view.start();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.start();
                 });
             }).start();
         }
@@ -355,8 +343,8 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        this.view.updateDecks(resourceCardOnTop, goldCardOnTop);
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
+        this.view.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
     }
 
     @Override

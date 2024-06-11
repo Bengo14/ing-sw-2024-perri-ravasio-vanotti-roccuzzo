@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 
 public interface Observer {
     void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable);
-    void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop);
+    void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos);
     void updatePoints(int[] boardPoints, int[] globalPoints);
     void showTurn(int playerId);
     void showWinner(int winnerId);

@@ -5,6 +5,7 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 import java.util.ArrayList;
 
 public class CLIController {
+
     private final PlayerTable localPlayerTable;
     private Objectives[] objectives;
     private ResourceCard[] cardsOnTable;
@@ -13,6 +14,8 @@ public class CLIController {
     private int[] globalPoints;
     private int[] boardPoints;
     private String[] nicknames;
+
+
     public CLIController(PlayerTable localPlayerTable) {
         this.localPlayerTable = localPlayerTable;
     }
@@ -96,7 +99,16 @@ public class CLIController {
         this.nicknames = nicknames;
     }
 
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop){
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
+        if(drawPos == 0 || drawPos == 1) {
+            cardsOnTable[drawPos] = this.resourceCardOnTop;
+            cardsOnTable[drawPos].setFront(true);
+        }
+        if(drawPos == 2 || drawPos == 3) {
+            cardsOnTable[drawPos] = this.goldCardOnTop;
+            cardsOnTable[drawPos].setFront(true);
+        }
+
         this.resourceCardOnTop = resourceCardOnTop;
         this.goldCardOnTop = goldCardOnTop;
     }

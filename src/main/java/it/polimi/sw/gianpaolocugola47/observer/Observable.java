@@ -5,7 +5,7 @@ public interface Observable {
     void addObserver(Observer observer);
     void removeObserver(Observer observer);
     void initView();
-    void updateDecks();
+    void updateDecks(int drawPos);
     void showTurn(int playerId);
     void showWinner(int winner);
     void updatePoints();

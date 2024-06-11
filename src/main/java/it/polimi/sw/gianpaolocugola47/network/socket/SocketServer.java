@@ -157,11 +157,11 @@ public class SocketServer implements Observer {
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
                 for(SocketClientHandler handler : this.clients)
-                    handler.updateDecks(resourceCardOnTop, goldCardOnTop);
+                    handler.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
             }
         }
     }

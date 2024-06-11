@@ -375,6 +375,7 @@ public class GameController implements Initializable {
                                 imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
                                 matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
                                 matrix[i][j].setMouseTransparent(false);
+                                matrix[i][j].toFront();
                                 cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
                                 cardsOnHand[selectedCard].setImage(null);
                                 gui.getCardsOnHand()[selectedCard] = null;

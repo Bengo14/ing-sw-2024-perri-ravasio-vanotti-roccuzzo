@@ -99,11 +99,11 @@ public class CLIController {
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         if(drawPos == 0 || drawPos == 1) {
             cardsOnTable[drawPos] = this.resourceCardOnTop;
-            cardsOnTable[drawPos].switchFrontBack();
+            cardsOnTable[drawPos].setFront(true);
         }
         if(drawPos == 2 || drawPos == 3) {
             cardsOnTable[drawPos] = this.goldCardOnTop;
-            cardsOnTable[drawPos].switchFrontBack();
+            cardsOnTable[drawPos].setFront(true);
         }
 
         this.resourceCardOnTop = resourceCardOnTop;

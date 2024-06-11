@@ -277,8 +277,13 @@ public class GameController implements Initializable {
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
         deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
         deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
-        if(drawPos>=0 && drawPos<=3)
-            table[drawPos].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[drawPos].getId()+".png")));
+
+        if(drawPos>=0 && drawPos<=3) {
+            String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+            imagePath += gui.getCardsOnTable()[drawPos].isFront() ? "front_" : "back_";
+            imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
+            table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+        }
     }
 
     @FXML

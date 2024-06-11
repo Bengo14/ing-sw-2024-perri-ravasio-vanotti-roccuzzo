@@ -284,6 +284,12 @@ public class GameController implements Initializable {
             imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
             table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
+        for(int i = 0; i<3; i++) {
+            String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+            imagePath += gui.getCardsOnHand()[i].isFront() ? "front_" : "back_";
+            imagePath += gui.getCardsOnHand()[i].getId() + ".png";
+            cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+        }
     }
 
     @FXML
@@ -423,26 +429,8 @@ public class GameController implements Initializable {
         for(int i = 0; i < table.length; i++)
             if(table[i].equals(source)) {
                 pos = i;
-                table[i].setImage(null);
-                if((i == 0 || i == 1) && gui.getResourceCardOnTop() != null)
-                    table[i].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getResourceCardOnTop().getId()+".png")));
-                if((i == 2 || i == 3) && gui.getGoldCardOnTop() != null)
-                    table[i].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getGoldCardOnTop().getId()+".png")));
                 break;
             }
-        if(pos>=0 && pos<=3) {
-            for(ImageView img : cardsOnHand)
-                if(img.getImage() == null)
-                    img.setImage(image);
-        } else if (pos == 5) {
-            for(ImageView img : cardsOnHand)
-                if(img.getImage() == null && gui.getResourceCardOnTop() != null)
-                    img.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getResourceCardOnTop().getId()+".png")));
-        } else {
-            for(ImageView img : cardsOnHand)
-                if(img.getImage() == null && gui.getGoldCardOnTop() != null)
-                    img.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getGoldCardOnTop().getId()+".png")));
-        }
         gui.drawCard(pos);
         disableHand(false);
         disableTable(true);

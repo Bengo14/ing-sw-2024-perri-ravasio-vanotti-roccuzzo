@@ -128,12 +128,36 @@ public class OtherBoardController implements Initializable {
 
         PlaceableCard[][] placedCards = this.gui.getPlacedCards(id);
 
+        for(int k = 10; k < placedCards.length; k += 2)
+            for(int l = 10; l < placedCards.length; l++) {
+                matrix[k - (l % 2)][l].toFront();
+            }
+        for(int k = 8; k > 0; k -= 2)
+            for(int l = 10; l < placedCards.length; l++) {
+                matrix[k - (l % 2)][l].toFront();
+            }
+        for(int l = 10; l < placedCards.length; l += 2)
+            matrix[0][l].toFront();
+
+        for(int k = 10; k < placedCards.length; k += 2)
+            for(int l = 9; l >= 0; l--) {
+                matrix[k + (l % 2)][l].toFront();
+            }
+        for(int k = 9; k > 0; k -= 2)
+            for(int l = 9; l >= 0; l--) {
+                matrix[k + (l % 2) - 1][l].toFront();
+            }
+
+
         for (int i = 0; i < placedCards.length; i++)
             for (int j = 0; j < placedCards[i].length; j++)
                 if(placedCards[i][j] != null && matrix[i][j] != null) {
                     String front = placedCards[i][j].isFront() ? "front_" : "back_";
                     matrix[i][j].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[i][j].getId() + ".png")));
                 }
+
+        String front = placedCards[10][10].isFront() ? "back_" : "front_";
+        matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
     }
 
     @FXML

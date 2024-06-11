@@ -5,6 +5,7 @@ import java.util.ArrayList;
  * This class represents all the starting cards.
  */
 public class StartingCard extends PlaceableCard {
+
     private ArrayList<Resources> resourcesCentreBack;
 
     /**

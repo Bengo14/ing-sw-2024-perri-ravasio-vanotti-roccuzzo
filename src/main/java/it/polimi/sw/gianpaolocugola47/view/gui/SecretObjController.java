@@ -30,7 +30,6 @@ public class SecretObjController implements Initializable {
     private Objectives selectedObjective;
     private Client client;
     private PlayerTable playerTable;
-    private static StartingCard selectedStartingCard;
 
 
     @Override
@@ -41,7 +40,6 @@ public class SecretObjController implements Initializable {
     public void start(Client client, PlayerTable playerTable) {
         this.client = client;
         this.playerTable = playerTable;
-        selectedStartingCard = playerTable.getStartingCard();
         Objectives[] objectives = client.setStartingCardAndDrawObjectives();
         secretObjective1 = objectives[0];
         secretObjective2 = objectives[1];

@@ -67,7 +67,7 @@ public class StartingCardController implements Initializable {
             label.setText("Please, select a starting card");
             return;
         }
-        selectedStartingCard.setFront(!front);
+        selectedStartingCard.setFront(front);
         playerTable.setStartingCard(selectedStartingCard);
         choice_button.setDisable(true);
 
@@ -81,26 +81,24 @@ public class StartingCardController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void handleStartingFrontClicked(MouseEvent event) {
-
-        front = true;
+        front = false;
         isStartingCardSelected = true;
         setImageViewBorder(starting_front);
-
     }
+
+    @FXML
+    private void handleStartingBackClicked(MouseEvent event) {
+        front = true;
+        isStartingCardSelected = true;
+        setImageViewBorder(starting_back);
+    }
+
     private void setImageViewBorder(ImageView selectedImageView) {
         starting_front.getStyleClass().remove("selected-image");
         starting_back.getStyleClass().remove("selected-image");
         selectedImageView.getStyleClass().add("selected-image");
     }
-
-    @FXML
-    private void handleStartingBackClicked(MouseEvent event) {
-
-        front = false;
-        isStartingCardSelected = true;
-        setImageViewBorder(starting_back);
-    }
-
 }

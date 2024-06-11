@@ -67,7 +67,7 @@ public class StartingCardController implements Initializable {
             label.setText("Please, select a starting card");
             return;
         }
-        selectedStartingCard.setFront(front);
+        selectedStartingCard.setFront(!front);
         playerTable.setStartingCard(selectedStartingCard);
         choice_button.setDisable(true);
 

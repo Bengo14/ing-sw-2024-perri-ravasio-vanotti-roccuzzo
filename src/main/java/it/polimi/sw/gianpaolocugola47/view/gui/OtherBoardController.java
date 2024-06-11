@@ -116,11 +116,11 @@ public class OtherBoardController implements Initializable {
         ResourceCard[] cardsOnHand = gui.getAllCardsOnHand()[id];
 
         if(cardsOnHand[0]!=null)
-            hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[0].getId()+".png")));
+            hand_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+cardsOnHand[0].getId()+".png")));
         if(cardsOnHand[1]!=null)
-            hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[1].getId()+".png")));
+            hand_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+cardsOnHand[1].getId()+".png")));
         if(cardsOnHand[2]!=null)
-            hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+cardsOnHand[2].getId()+".png")));
+            hand_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+cardsOnHand[2].getId()+".png")));
 
         if(id == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));

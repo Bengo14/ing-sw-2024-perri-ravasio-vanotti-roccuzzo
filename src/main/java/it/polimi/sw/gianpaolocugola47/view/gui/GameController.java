@@ -164,9 +164,9 @@ public class GameController implements Initializable {
         this.gui = gui;
 
         if (gui.getStartingCard().isFront()) {
-            place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
-        } else {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
+        } else {
+            place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
         }
         place_10_10.setMouseTransparent(false);
 

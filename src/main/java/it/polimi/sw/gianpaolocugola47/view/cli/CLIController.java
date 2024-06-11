@@ -2,6 +2,8 @@ package it.polimi.sw.gianpaolocugola47.view.cli;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 
+import java.util.ArrayList;
+
 public class CLIController {
     private final PlayerTable localPlayerTable;
     private Objectives[] objectives;
@@ -87,10 +89,11 @@ public class CLIController {
         return this.nicknames;
     }
 
-    public void initView(Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable){
+    public void initView(Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable, String[] nicknames){
         this.objectives = globalObjectives;
         this.cardsOnTable = cardsOnTable;
         this.localPlayerTable.setCardsOnHand(cardsOnHand);
+        this.nicknames = nicknames;
     }
 
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop){
@@ -111,4 +114,84 @@ public class CLIController {
         return this.localPlayerTable.getSecretObjective();
     }
 
+    public ArrayList<Integer[]> getAvailablePositions(boolean[][] playablePositions){
+        ArrayList<Integer[]> availablePositions = new ArrayList<>();
+        for(int i = 0; i < playablePositions.length; i++){
+            for(int j = 0; j < playablePositions[i].length; j++){
+                if(playablePositions[i][j]){
+                    Integer[] coordinates = {i,j};
+                    availablePositions.add(coordinates);
+                }
+            }
+        }
+        return availablePositions;
+    }
+
+    public boolean checkIfValidPosition(int x, int y, boolean[][] playablePositions){
+        for(Integer[] coordinates : this.getAvailablePositions(playablePositions)){
+            if(coordinates[0] == x && coordinates[1] == y)
+                return true;
+        }
+        return false;
+    }
+
+    public int getCorner(int x, int y){ //TO BE FINISHED! SOME CASES ARE STILL LEFT UNCHECKED.
+        PlaceableCard[][] localBoard = this.localPlayerTable.getPlacedCards();
+        int dim = PlayerTable.getMatrixDimension();
+        if(x + 1 < dim && y + 1 < dim && x - 1 > 0 && y - 1 > 0){ //to dodge ArrayIndexOutOfBoundsException
+            if(localBoard[x-1][y-1] != null)
+                return 3;
+            if(localBoard[x+1][y-1] != null)
+                return 2;
+            if(localBoard[x-1][y+1] != null)
+                return 1;
+            if(localBoard[x+1][y+1] != null)
+                return 0;
+        }
+        return 0;
+    }
+
+    public int[] getCardCoords(int x, int y){
+        return switch (getCorner(x, y)) {
+            case 0 -> new int[]{x + 1, y + 1};
+            case 1 -> new int[]{x - 1, y + 1};
+            case 2 -> new int[]{x + 1, y - 1};
+            case 3 -> new int[]{x - 1, y - 1};
+            default -> null;
+        };
+    }
+
+    public void updateDecksAndBoard(int position){
+        ResourceCard choice = null;
+        if(position==0||position==1||position==2||position==3) {
+            choice = cardsOnTable[position];
+            cardsOnTable[position] = null;
+        }
+        if(position == 4) {
+            choice = resourceCardOnTop;
+            choice.switchFrontBack();
+        }
+        if(position == 5) {
+            choice = goldCardOnTop;
+            choice.switchFrontBack();
+        }
+
+        if(choice != null)
+            for(int i = 0; i<3; i++)
+                if(localPlayerTable.getCardsOnHand()[i] == null)
+                    localPlayerTable.getCardsOnHand()[i] = choice;
+
+        if(position == 0 || position == 1) {
+            cardsOnTable[position] = resourceCardOnTop;
+            cardsOnTable[position].switchFrontBack();
+        }
+        if(position == 2 || position == 3) {
+            cardsOnTable[position] = goldCardOnTop;
+            cardsOnTable[position].switchFrontBack();
+        }
+    }
+
+    public void updateLocalBoard(int onHandCard, int x, int y){
+        this.localPlayerTable.checkAndPlaceCard(onHandCard, x, y, this.getCorner(x, y));
+    }
 }

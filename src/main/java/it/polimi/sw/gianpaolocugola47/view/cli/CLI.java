@@ -21,19 +21,15 @@ public class CLI implements View {
     private Client client;
     private final String ANSI_RESET = "\033[0m";
     private final PlayerTable localPlayerTable;
-    private Objectives[] objectives;
-    private ResourceCard[] cardsOnTable; //cards on table that can be picked up
-    private GoldCard goldCardOnTop; //NOT on playerTable
-    private ResourceCard resourceCardOnTop; //NOT on playerTable
-    private int[] globalPoints; //NOT on playerTable
-    private int[] boardPoints;  //NOT on playerTable
-    private String[] nicknames;
+    private final CLIController cliController;
 
     public CLI(Client client) {
         this.client = client;
         this.localPlayerTable = new PlayerTable(client.getIdLocal());
+        this.cliController = new CLIController(new PlayerTable(client.getIdLocal()));
     }
     public CLI() {
+        this.cliController = null;
         this.localPlayerTable = null;
         this.client = null;
     }
@@ -53,8 +49,8 @@ public class CLI implements View {
                                                      ╚═════╝  ╚════╝ ╚═════╝   ╚══════╝╚═╝   ╚═╝     ╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚═╝   ╚═╝╚═╝   ╚═╝╚══════╝╚═╝╚══════╝
                 """);
         System.out.flush();
-        this.localPlayerTable.setNickname(client.getNicknameLocal());
-        this.nicknames = client.getNicknames();
+        this.cliController.setNickname(client.getNicknameLocal());
+        this.cliController.setNicknames(client.getNicknames());
         commandHandler();
         /*todo input game loop (this method is already on a separate thread!!!)*/
     }
@@ -73,7 +69,7 @@ public class CLI implements View {
 
         System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
         BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-        ChatMessage message = new ChatMessage(localPlayerTable.getNickName(), localPlayerTable.getId());
+        ChatMessage message = new ChatMessage(cliController.getNickname(), cliController.getId());
 
         while(true) {
             String line = br.readLine();
@@ -88,8 +84,8 @@ public class CLI implements View {
                 }
             } else if (line.equals("--listPlayers")) {
                 System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : nicknames) {
-                    if(nickname.equals(this.localPlayerTable.getNickName()))
+                for(String nickname : cliController.getNicknames()) {
+                    if(nickname.equals(this.cliController.getNickname()))
                         System.err.println(nickname + " (you)");
                     else
                         System.out.println(nickname);
@@ -104,39 +100,35 @@ public class CLI implements View {
 
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
-        this.objectives = globalObjectives;
-        this.cardsOnTable = cardsOnTable;
-        this.localPlayerTable.setCardsOnHand(cardsOnHand);
+        this.cliController.initView(globalObjectives, cardsOnHand, cardsOnTable);
     }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        this.resourceCardOnTop = resourceCardOnTop;
-        this.goldCardOnTop = goldCardOnTop;
+        this.cliController.updateDecks(resourceCardOnTop, goldCardOnTop);
     }
 
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
-        this.boardPoints = boardPoints;
-        this.globalPoints = globalPoints;
+        this.cliController.updatePoints(boardPoints, globalPoints);
     }
 
     @Override
     public StartingCard getStartingCard() {
-        return localPlayerTable.getStartingCard();
+        return cliController.getStartingCard();
     }
 
     @Override
     public Objectives getSecretObjective() {
-        return localPlayerTable.getSecretObjective();
+        return cliController.getSecretObjective();
     }
 
     private int[] getGlobalPoints() {
-        return this.globalPoints;
+        return cliController.getGlobalPoints();
     }
 
     private int[] getBoardPoints() {
-        return this.boardPoints;
+        return cliController.getBoardPoints();
     }
 
     @Override
@@ -270,7 +262,7 @@ public class CLI implements View {
 
     @SuppressWarnings("ALL")
     public void printPoints() throws RemoteException {
-        System.out.println("BoardPoints: " + this.getBoardPoints() + " || GlobalPoints: " + this.getGlobalPoints());
+        System.out.println("BoardPoints: " + this.cliController.getBoardPoints() + " || GlobalPoints: " + this.cliController.getGlobalPoints());
     }
 
     public void commandHandler() throws IOException {
@@ -283,7 +275,7 @@ public class CLI implements View {
         while(true){
             if(client.isItMyTurn()){
                 printPoints();
-                printResourceCounter(client.getResourceCounter(client.getIdLocal() ));
+                printResourceCounter(client.getResourceCounter(client.getIdLocal()));
                 String command = br.readLine();
                 if(command.equals("/help")){
                     System.out.println("""
@@ -298,45 +290,13 @@ public class CLI implements View {
                         /showObjective: print personal objective card""");
                 }
                 else if(command.startsWith("/showCardAt")){
-                    String[] coordinates = command.split(" ");
-                    if(coordinates.length != 3) System.out.println("Invalid command, try again.");
-                    else{
-                        if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
-                            if(localPlayerTable.getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
-                                PlaceableCard card = localPlayerTable.getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
-                                if(card instanceof ResourceCard)
-                                    this.printResourceCard((ResourceCard) card);
-                                else if(card instanceof GoldCard)
-                                    this.printGoldCard((GoldCard) card);
-                                else
-                                    System.out.println("Starting card");
-                            }
-                            else
-                                System.out.println("There is no card in the position you typed in.");
-                        } else {
-                            System.out.println("The parameters you typed in are not numbers, try again.");
-                        }
-
-                    }
+                    showCardAt(command);
                 }
                 else if(command.startsWith("/placeCard")){
-                    String[] coordinates = command.split(" ");
-                    if(coordinates.length != 4) System.out.println("Invalid command, try again.");
-                    else{
-                        if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && isAPositiveNumber(coordinates[3]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
-                            int x = Integer.parseInt(coordinates[1]);
-                            int y = Integer.parseInt(coordinates[2]);
-                            int card = Integer.parseInt(coordinates[3]);
-                            if(card != 0 && card != 1 && card != 2)
-                                System.out.println("The parameter you typed in is not a valid hand position, try again.");
-                        } else {
-                            System.out.println("The parameters you typed in are not numbers, try again.");
-                        }
-                        //placeCard method
-                    }
+                    placeCard(command);
                 }
                 else if(command.equals("/showCardsInHand")){
-                    for(ResourceCard card: localPlayerTable.getCardsOnHand()){
+                    for(ResourceCard card: this.cliController.getLocalPlayerTable().getCardsOnHand()){
                         if(card instanceof GoldCard)
                             this.printGoldCard((GoldCard) card);
                         else
@@ -349,21 +309,21 @@ public class CLI implements View {
                     }
                 }
                 else if(command.equals("/showCardsOnBoard")){
-                    for(ResourceCard card: cardsOnTable)
+                    for(ResourceCard card: this.cliController.getCardsOnTable())
                         if(card instanceof GoldCard)
                             this.printGoldCard((GoldCard) card);
                         else
                             this.printResourceCard(card);
                 }
                 else if(command.equals("/showDeckCards")){
-                    this.printResourceCard(resourceCardOnTop);
-                    this.printGoldCard(goldCardOnTop);
+                    this.printResourceCard(this.cliController.getResourceCardOnTop());
+                    this.printGoldCard(this.cliController.getGoldCardOnTop());
                 }
                 else if(command.equals("/printBoard")){
-                    this.printPlayerBoardCompactCard(localPlayerTable);
+                    this.printPlayerBoardCompactCard(this.cliController.getLocalPlayerTable());
                 }
                 else if(command.equals("/showObjective"))
-                    this.printObjectiveCard(localPlayerTable.getSecretObjective());
+                    this.printObjectiveCard(this.cliController.getLocalPlayerTable().getSecretObjective());
                 else System.out.println("Command couldn't be recognized, please try again.");
                 System.err.println("Command: " + command);
                 /*todo*/
@@ -389,10 +349,10 @@ public class CLI implements View {
             command = br.readLine();
             if(command.equals("2")){
                 selectedStartingCard.switchFrontBack();
-                localPlayerTable.setStartingCard(selectedStartingCard);
+                this.cliController.getLocalPlayerTable().setStartingCard(selectedStartingCard);
             }
             else if(command.equals("1"))
-                localPlayerTable.setStartingCard(selectedStartingCard);
+                this.cliController.getLocalPlayerTable().setStartingCard(selectedStartingCard);
             else
                 System.out.println("Invalid command, try again.");
         }while(!command.equals("1") && !command.equals("2"));
@@ -404,9 +364,9 @@ public class CLI implements View {
         do {
             command = br.readLine();
             if (command.equals("2"))
-                localPlayerTable.setSecretObjective(objectives[1]);
+                this.cliController.getLocalPlayerTable().setSecretObjective(objectives[1]);
             else if (command.equals("1"))
-                localPlayerTable.setSecretObjective(objectives[0]);
+                this.cliController.getLocalPlayerTable().setSecretObjective(objectives[0]);
             else
                 System.out.println("Invalid command, try again.");
         }while(!command.equals("1") && !command.equals("2"));
@@ -425,6 +385,45 @@ public class CLI implements View {
         }
     }
 
+    private void placeCard(String command){
+        String[] coordinates = command.split(" ");
+        if(coordinates.length != 4) System.out.println("Invalid command, try again.");
+        else{
+            if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && isAPositiveNumber(coordinates[3]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
+                int x = Integer.parseInt(coordinates[1]);
+                int y = Integer.parseInt(coordinates[2]);
+                int card = Integer.parseInt(coordinates[3]);
+                if(card != 0 && card != 1 && card != 2)
+                    System.out.println("The parameter you typed in is not a valid hand position, try again.");
+            } else {
+                System.out.println("The parameters you typed in are not numbers, try again.");
+            }
+            //placeCard method
+        }
+    }
+
+    private void showCardAt(String command){
+        String[] coordinates = command.split(" ");
+        if(coordinates.length != 3) System.out.println("Invalid command, try again.");
+        else{
+            if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
+                if(this.cliController.getLocalPlayerTable().getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
+                    PlaceableCard card = this.cliController.getLocalPlayerTable().getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
+                    if(card instanceof ResourceCard)
+                        this.printResourceCard((ResourceCard) card);
+                    else if(card instanceof GoldCard)
+                        this.printGoldCard((GoldCard) card);
+                    else
+                        this.printStartingCard((StartingCard) card);
+                }
+                else
+                    System.out.println("There is no card in the position you typed in.");
+            } else {
+                System.out.println("The parameters you typed in are not numbers, try again.");
+            }
+
+        }
+    }
 }
 
 

@@ -136,25 +136,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     @Override
     public void startGame() throws RemoteException {
 
-        if (isCliChosen) {
+        if(isCliChosen) {
             this.view = new CLI(this);
-            new Thread(() -> {
-                try {
-                    view.start();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        } else {
+            new Thread(() -> view.start()).start();
+        }
+        else {
             this.view = new ViewGui();
             this.view.setClient(this);
             new Thread(() -> {
                 Platform.startup(() -> {
-                    try {
-                        view.start();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.start();
                 });
             }).start();
         }
@@ -171,8 +162,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) throws RemoteException {
-        this.view.updateDecks(resourceCardOnTop, goldCardOnTop);
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) throws RemoteException {
+        this.view.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
     }
 
     @Override

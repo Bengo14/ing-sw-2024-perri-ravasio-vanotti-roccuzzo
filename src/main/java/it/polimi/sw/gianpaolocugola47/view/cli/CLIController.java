@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola47.view.cli;
 import it.polimi.sw.gianpaolocugola47.model.*;
 
 public class CLIController {
+
     private final PlayerTable localPlayerTable;
     private Objectives[] objectives;
     private ResourceCard[] cardsOnTable;
@@ -11,6 +12,8 @@ public class CLIController {
     private int[] globalPoints;
     private int[] boardPoints;
     private String[] nicknames;
+
+
     public CLIController(PlayerTable localPlayerTable) {
         this.localPlayerTable = localPlayerTable;
     }
@@ -93,7 +96,16 @@ public class CLIController {
         this.localPlayerTable.setCardsOnHand(cardsOnHand);
     }
 
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop){
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
+        if(drawPos == 0 || drawPos == 1) {
+            cardsOnTable[drawPos] = this.resourceCardOnTop;
+            cardsOnTable[drawPos].switchFrontBack();
+        }
+        if(drawPos == 2 || drawPos == 3) {
+            cardsOnTable[drawPos] = this.goldCardOnTop;
+            cardsOnTable[drawPos].switchFrontBack();
+        }
+
         this.resourceCardOnTop = resourceCardOnTop;
         this.goldCardOnTop = goldCardOnTop;
     }

@@ -8,7 +8,6 @@ import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -283,12 +282,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
                 try {
                     for(VirtualView view : this.clients)
-                        view.updateDecks(resourceCardOnTop, goldCardOnTop);
+                        view.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
                 } catch (RemoteException ignored) {}
             }
         }

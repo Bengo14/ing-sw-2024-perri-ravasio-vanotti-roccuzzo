@@ -38,7 +38,7 @@ public class CLI implements View {
         this.client = client;
     }
 
-    public void start() throws IOException {
+    public void start() {
         for (int i = 0; i < 50; i++) System.out.println();
         System.out.println("""
                                                     ▄██████╗ ▄████▄  ██████▄   ███████╗██╗   ██╗     ███╗   ██╗  ▄██▄╗  ████████╗██╗   ██╗█████▄╗    ▄██▄╗  ██╗     ██╗███████╗
@@ -51,8 +51,11 @@ public class CLI implements View {
         System.out.flush();
         this.cliController.setNickname(client.getNicknameLocal());
         this.cliController.setNicknames(client.getNicknames());
-        commandHandler();
-        /*todo input game loop (this method is already on a separate thread!!!)*/
+        try {
+            commandHandler();
+        } catch (IOException e) {
+            client.terminateLocal();
+        }
     }
 
     private void openChat() {
@@ -104,8 +107,8 @@ public class CLI implements View {
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
-        this.cliController.updateDecks(resourceCardOnTop, goldCardOnTop);
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
+        this.cliController.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
     }
 
     @Override

@@ -274,9 +274,11 @@ public class GameController implements Initializable {
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
     }
 
-    public void updateDecks(ResourceCard res, GoldCard gold) {
+    public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
         deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
         deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
+        if(drawPos>=0 && drawPos<=3)
+            table[drawPos].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[drawPos].getId()+".png")));
     }
 
     @FXML

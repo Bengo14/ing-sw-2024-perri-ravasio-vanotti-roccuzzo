@@ -7,7 +7,6 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
 import java.util.Arrays;
 
 public class SocketClientProxy implements VirtualView {
@@ -86,20 +85,23 @@ public class SocketClientProxy implements VirtualView {
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
 
         output.println("init");
-
         Arrays.stream(nicknames).forEachOrdered(output::println);
         Arrays.stream(globalObjectives).mapToInt(this::getObjectiveId).forEachOrdered(output::println);
         Arrays.stream(cardsOnHand).mapToInt(this::getCardId).forEachOrdered(output::println);
         Arrays.stream(cardsOnTable).mapToInt(this::getCardId).forEachOrdered(output::println);
-
         output.flush();
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         output.println("decks");
-        output.println(getCardId(resourceCardOnTop));
-        output.println(getCardId(goldCardOnTop));
+        if(resourceCardOnTop != null)
+            output.println(getCardId(resourceCardOnTop));
+        else output.println(-1);
+        if(goldCardOnTop != null)
+            output.println(getCardId(goldCardOnTop));
+        else output.println(-1);
+        output.println(drawPos);
         output.flush();
     }
 
@@ -133,14 +135,20 @@ public class SocketClientProxy implements VirtualView {
     protected void getCardsOnHandResponse(ResourceCard[][] cardsOnHand) {
         output.println("getCardsOnHand");
         for(int i=0; i<cardsOnHand.length; i++)
-            Arrays.stream(cardsOnHand[i]).mapToInt(this::getCardId).forEachOrdered(output::println);
+            for(int j=0; j<3; j++)
+                if (cardsOnHand[i][j] != null)
+                    output.println(getCardId(cardsOnHand[i][j]));
+                else output.println(-1);
         output.flush();
     }
 
     protected void getPlacedCardsResponse(PlaceableCard[][] placedCards) {
         output.println("getPlacedCards");
         for(int i=0; i<placedCards.length; i++)
-            Arrays.stream(placedCards[i]).mapToInt(this::getCardId).forEachOrdered(output::println);
+            for (int j = 0 ; j < placedCards[i].length; j++)
+                if (placedCards[i][j] != null)
+                    output.println(getCardId(placedCards[i][j]));
+                else output.println(-1);
         output.flush();
     }
 
@@ -158,7 +166,6 @@ public class SocketClientProxy implements VirtualView {
 
     protected void getNicknamesResponse(String[] nicknames) {
         output.println("getNick");
-        output.println(nicknames.length); //num of players
         Arrays.stream(nicknames).forEachOrdered(output::println);
         output.flush();
     }

@@ -140,20 +140,22 @@ public class ViewGui extends Application implements View {
     }
 
     public void logOut(Stage primaryStage) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setHeaderText("Logout from Codex Naturalis");
-        alert.setContentText("Are you sure you want to logout?");
-        Stage dialogStage = (Stage) alert.getDialogPane().getScene().getWindow();
-        dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/style.css").toExternalForm());
-        alert.getDialogPane().getStyleClass().add("tooltip");
-        alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            System.out.println("Logged out successfully");
-            primaryStage.close();
-            client.terminateLocal();
-        }
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Logout");
+            alert.setHeaderText("Logout from Codex Naturalis");
+            alert.setContentText("Are you sure you want to logout?");
+            Stage dialogStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/style.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("tooltip");
+            alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                System.out.println("Logged out successfully");
+                primaryStage.close();
+                client.terminateLocal();
+            }
+        });
     }
 
     public void setOtherBoardScene(int id) {
@@ -215,11 +217,19 @@ public class ViewGui extends Application implements View {
     }
 
     @Override
-    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop) {
+    public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         Platform.runLater(() -> {
+            if(drawPos == 0 || drawPos == 1) {
+                cardsOnTable[drawPos] = this.resourceCardOnTop;
+                cardsOnTable[drawPos].setFront(true);
+            }
+            if(drawPos == 2 || drawPos == 3) {
+                cardsOnTable[drawPos] = this.goldCardOnTop;
+                cardsOnTable[drawPos].setFront(true);
+            }
             this.resourceCardOnTop = resourceCardOnTop;
             this.goldCardOnTop = goldCardOnTop;
-            gameController.updateDecks(resourceCardOnTop, goldCardOnTop);
+            gameController.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
         });
     }
 
@@ -279,35 +289,24 @@ public class ViewGui extends Application implements View {
     }
 
     protected void drawCard(int position) {
-        client.drawCard(position);
 
         ResourceCard choice = null;
         if(position==0||position==1||position==2||position==3) {
             choice = cardsOnTable[position];
             cardsOnTable[position] = null;
         }
-        if(position == 4) {
+        if(position == 4)
             choice = resourceCardOnTop;
-            choice.switchFrontBack();
-        }
-        if(position == 5) {
+        if(position == 5)
             choice = goldCardOnTop;
-            choice.switchFrontBack();
-        }
 
         if(choice != null)
             for(int i = 0; i<3; i++)
-                if(getCardsOnHand()[i] == null)
+                if(getCardsOnHand()[i] == null) {
+                    choice.setFront(true);
                     getCardsOnHand()[i] = choice;
-
-        if(position == 0 || position == 1) {
-            cardsOnTable[position] = resourceCardOnTop;
-            cardsOnTable[position].switchFrontBack();
-        }
-        if(position == 2 || position == 3) {
-            cardsOnTable[position] = goldCardOnTop;
-            cardsOnTable[position].switchFrontBack();
-        }
+                }
+        client.drawCard(position);
     }
 
     protected void sendMessage(ChatMessage message) {

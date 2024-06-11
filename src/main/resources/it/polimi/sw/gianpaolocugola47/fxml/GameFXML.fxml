@@ -217,7 +217,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </ListView>
-            <TextField fx:id="chatInput" prefHeight="38.0" prefWidth="328.0" promptText="type a message (@nick for private one)" onKeyPressed="#handleChatInputKey" styleClass="tooltip" stylesheets="@../css/Style.css" />
+            <TextField fx:id="chatInput" onKeyPressed="#handleChatInputKey" prefHeight="38.0" prefWidth="328.0" promptText="type a message (@nick for private one)" styleClass="tooltip" stylesheets="@../css/Style.css" />
             <Button fx:id="sendButton" mnemonicParsing="false" onAction="#handleChatInput" opacity="0.8" prefHeight="16.0" prefWidth="98.0" styleClass="login-button" stylesheets="@../css/Style.css" text="Send">
                <font>
                   <Font size="13.0" />
@@ -274,7 +274,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_0" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand0Click" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_0" fitHeight="90.0" fitWidth="130.0" onMouseClicked="#handleHand0Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_18.png" />
                      </image></ImageView>
@@ -293,7 +293,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_1" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand1Click" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_1" fitHeight="90.0" fitWidth="130.0" onMouseClicked="#handleHand1Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>
@@ -310,7 +310,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="hand_2" fitHeight="150.0" fitWidth="130.0" onMouseClicked="#handleHand2Click" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="hand_2" fitHeight="90.0" fitWidth="130.0" onMouseClicked="#handleHand2Click" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/cards/front_32.png" />
                      </image>

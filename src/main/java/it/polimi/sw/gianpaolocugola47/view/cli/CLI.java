@@ -293,78 +293,105 @@ public class CLI implements View {
                 printPoints();
                 printResourceCounter(client.getResourceCounter(client.getIdLocal()));
                 String command = br.readLine();
-                if(command.equals("/help")){
-                    System.out.println("""
-                        Commands available:
-                        /help: show this message
-                        /showCardAt [xCoord] [yCoord]: show a card in a given position
-                        /showHandCards: show both cards in hand
-                        /showOccupiedPositions: show positions where a card is already present
-                        /showBoard: show the player board
-                        /showAvailablePositions: show available positions to place a card
-                        /placeCard [xCoord] [yCoord] [cardInHand {0-2}] [{front/back}]: place a card on the board
-                        /showObjectives: print personal & shared objective card""");
-                }
-                else if(command.startsWith("/showCardAt")){
-                    showCardAt(command);
-                }
-                else if(command.startsWith("/placeCard")){
-                    if(placeCard(command))
-                    {
-                        System.out.println("Card placed successfully!");
-                        System.out.println("Now you can draw your card {0-5}: ");
-                        showCardsOnTable();
-                        showDeckCards();
-                        String choice;
-                        do{
-                            choice = br.readLine();
-                            if(choice.equals("0") || choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4") || choice.equals("5"))
-                                break;
-                            else
-                                System.out.println("Invalid card choice, must be between 0 and 5. Try again.");
-                        } while(true);
-                        drawCard(choice);
-                        System.out.println("Your turn is done now!");
+                switch (command) {
+                    case "/help" -> System.out.println("""
+                            Commands available:
+                            /help: show this message
+                            /showCardAt [xCoord] [yCoord]: show a card in a given position
+                            /showHandCards: show both cards in hand
+                            /showOccupiedPositions: show positions where a card is already present
+                            /showBoard: show the player board
+                            /showAvailablePositions: show available positions to place a card
+                            /showObjectives: print personal & shared objective card
+                            /placeCard [xCoord] [yCoord] [cardInHand {0-2}] [{front/back}]: place a card on the board
+                            """);
+                    case "/showHandCards" -> showHandCards();
+                    case "/showOccupiedPositions" -> showOccupiedPositions();
+                    case "/showBoard" -> printPlayerBoardCompactCard();
+                    case "/showObjectives" -> showObjectives();
+                    case "/showAvailablePositions" -> showAvailablePositions();
+                    default -> {
+                        if(command.startsWith("/showCardAt")){
+                            showCardAt(command);
+                        }
+                        else if(command.startsWith("/placeCard")){
+                            if(placeCard(command))
+                            {
+                                System.out.println("Card placed successfully!");
+                                System.out.println("Now you can draw your card {0-5}: ");
+                                showCardsOnTable();
+                                showDeckCards();
+                                String choice;
+                                do{
+                                    choice = br.readLine();
+                                    if(choice.equals("0") || choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4") || choice.equals("5"))
+                                        break;
+                                    else
+                                        System.out.println("Invalid card choice, must be between 0 and 5. Try again.");
+                                } while(true);
+                                drawCard(choice);
+                                System.out.println("Your turn is done now!");
+                            }
+                        }
+                        else
+                            System.out.println("Command couldn't be recognized, please try again.");
                     }
                 }
-                else if(command.equals("/showHandCards")){
-                    int i = 0;
-                    for(ResourceCard card: this.cliController.getLocalPlayerTable().getCardsOnHand()){
-                        System.out.println("Card #" + i );
-                        if(card instanceof GoldCard)
-                            this.printGoldCard((GoldCard) card);
-                        else
-                            this.printResourceCard(card);
-                        card.switchFrontBack();
-                        if(card instanceof GoldCard)
-                            this.printGoldCard((GoldCard) card);
-                        else
-                            this.printResourceCard(card);
-                        System.out.println("________________________");
-                        i++;
-                    }
-                }
-                else if(command.equals("/showOccupiedPositions")){
-                    showOccupiedPositions();
-                }
-                else if(command.equals("/showBoard")){
-                    this.printPlayerBoardCompactCard();
-                }
-                else if(command.equals("/showObjectives")){
-                    System.out.println("SECRET PERSONAL OBJECTIVE");
-                    this.printObjectiveCard(this.cliController.getLocalPlayerTable().getSecretObjective());
-                    System.out.println("SHARED GLOBAL OBJECTIVES");
-                    this.printObjectiveCard(this.cliController.getObjectives()[0]);
-                    this.printObjectiveCard(this.cliController.getObjectives()[1]);
-                }
-                else if(command.equals("/showAvailablePositions"))
-                    showAvailablePositions();
-                else System.out.println("Command couldn't be recognized, please try again.");
                 /*checkIfGameHasEnded*/
             }
             if(!client.isItMyTurn()){
-                br.readLine();
+                String command = br.readLine();
+                printPoints();
+                switch (command) {
+                    case "/help" -> System.out.println("""
+                            Commands available:
+                            /help: show this message
+                            /showCardAt [xCoord] [yCoord]: show a card in a given position
+                            /showHandCards: show both cards in hand
+                            /showOccupiedPositions: show positions where a card is already present
+                            /showBoard: show the player board
+                            /showObjectives: print personal & shared objective card
+                            /openChat: opens chat. Type '@' to send a private message
+                            """);
+                    case "/showHandCards" -> showHandCards();
+                    case "/showOccupiedPositions" -> showOccupiedPositions();
+                    case "/showBoard" -> printPlayerBoardCompactCard();
+                    case "/showObjectives" -> showObjectives();
+                    case "/openChat" -> System.out.flush(); /*todo*/
+                    default -> {
+                        if(command.startsWith("/showCardAt"))
+                            showCardAt(command);
+                        else
+                            System.out.println("Command couldn't be recognized, please try again.");
+                    }
+                }
             }
+        }
+    }
+
+    private void showObjectives() {
+        System.out.println("SECRET PERSONAL OBJECTIVE");
+        this.printObjectiveCard(this.cliController.getLocalPlayerTable().getSecretObjective());
+        System.out.println("SHARED GLOBAL OBJECTIVES");
+        this.printObjectiveCard(this.cliController.getObjectives()[0]);
+        this.printObjectiveCard(this.cliController.getObjectives()[1]);
+    }
+
+    private void showHandCards() {
+        int i = 0;
+        for(ResourceCard card: this.cliController.getLocalPlayerTable().getCardsOnHand()){
+            System.out.println("Card #" + i );
+            if(card instanceof GoldCard)
+                this.printGoldCard((GoldCard) card);
+            else
+                this.printResourceCard(card);
+            card.switchFrontBack();
+            if(card instanceof GoldCard)
+                this.printGoldCard((GoldCard) card);
+            else
+                this.printResourceCard(card);
+            System.out.println("________________________");
+            i++;
         }
     }
 

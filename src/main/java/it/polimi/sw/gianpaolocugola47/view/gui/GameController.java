@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -355,6 +356,7 @@ public class GameController implements Initializable {
         if (image.getImage().equals(gold)) {
 
             int x = 0, y = 0, corner = 0;
+            selectedImage.getStyleClass().remove("play");
 
             for (int i = 0; i < playablePos.length; i++)
                 for (int j = 0; j < playablePos[i].length; j++)
@@ -398,6 +400,7 @@ public class GameController implements Initializable {
 
         } else if (!goldShowed) {
             selectedImage = image;
+            selectedImage.getStyleClass().add("play");
 
             this.playablePos = gui.getPlayablePositions();
             for (int i = 0; i < playablePos.length; i++)

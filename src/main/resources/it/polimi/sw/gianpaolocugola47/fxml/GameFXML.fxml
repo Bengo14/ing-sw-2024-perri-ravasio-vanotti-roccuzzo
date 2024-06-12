@@ -355,7 +355,7 @@
       </VBox>
    </right>
    <center>
-      <ScrollPane fx:id="boardScrollPane" hbarPolicy="ALWAYS" hvalue="0.5" prefHeight="702.0" prefWidth="583.0" styleClass="trasparent" stylesheets="@../css/Style.css" vbarPolicy="ALWAYS" vvalue="0.5" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="boardScrollPane" hbarPolicy="ALWAYS" hvalue="0.5" prefHeight="702.0" prefWidth="583.0" styleClass="transparent" stylesheets="@../css/Style.css" vbarPolicy="ALWAYS" vvalue="0.5" BorderPane.alignment="CENTER">
          <content>
             <Pane fx:id="boardPane" prefHeight="2000.0" prefWidth="2000.0" scaleX="3.0" scaleY="3.0">
                <children>

@@ -154,6 +154,10 @@ public class CLI implements View {
         /*todo*/
     }
 
+    protected PlaceableCard[][] getPlacedCards(int id) {
+        return client.getPlacedCards(id);
+    }
+
     @SuppressWarnings("ALL")
     public void printResourceCard(ResourceCard resourceCard) {
         String colour = resourceCard.getResourceCentreBack().getAsciiEscape();
@@ -191,7 +195,8 @@ public class CLI implements View {
             System.out.println(color + "|" + ANSI_RESET + corners[6].getCornerType() + "     " + corners[7].getCornerType() + color + "|" + ANSI_RESET);
         }
         System.out.println(color + "+-------+" + ANSI_RESET);
-        System.out.println("Resources required to play this card: " + goldCard.resourcesRequiredToString());
+        if(goldCard.isFront())
+            System.out.println("Resources required to play this card: " + goldCard.resourcesRequiredToString());
     }
 
     @SuppressWarnings("ALL")
@@ -227,17 +232,17 @@ public class CLI implements View {
         System.out.println("[" + resourceCounter[4] + " " + resourceCounter[5] + " " + resourceCounter[6] + "]");
     }
 
-    public void printPlayerBoardCompactCard(PlayerTable playerTable){ //to be fixed!!
-        boolean printableRow = false;
+    public void printPlayerBoardCompactCard(){ //to be fixed!!
+        boolean printableRow;
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
-            PlaceableCard[] row = playerTable.getPlacedCards()[i];
+            printableRow = false;
+            PlaceableCard[] row = this.getPlacedCards(client.getIdLocal())[i];
             for (PlaceableCard placeableCard : row)
                 if (placeableCard != null) {
                     printableRow = true;
                     break;
                 }
             if(printableRow){
-                printableRow = false;
                 for(PlaceableCard placeableCard : row){
                     if(placeableCard != null){
                         switch (placeableCard) {
@@ -294,24 +299,21 @@ public class CLI implements View {
                         /help: show this message
                         /showCardAt [xCoord] [yCoord]: show a card in a given position
                         /showHandCards: show both cards in hand
-                        /showCardsOnBoard: show cards present on the board
-                        /showDeckCards: show cards present on top of each deck
+                        /showOccupiedPositions: show positions where a card is already present
                         /showBoard: show the player board
                         /showAvailablePositions: show available positions to place a card
                         /placeCard [xCoord] [yCoord] [cardInHand {0-2}] [{front/back}]: place a card on the board
-                        /showObjective: print personal objective card"""); //AGGIUNGERE METODO /showOccupiedPositions!!!
+                        /showObjectives: print personal & shared objective card""");
                 }
                 else if(command.startsWith("/showCardAt")){
                     showCardAt(command);
                 }
                 else if(command.startsWith("/placeCard")){
-                    if(placeCard(command));
+                    if(placeCard(command))
                     {
                         System.out.println("Card placed successfully!");
                         System.out.println("Now you can draw your card {0-5}: ");
-                        System.out.println("________________________\nBOARD Cards");
-                        showCardsOnBoard();
-                        System.out.println("________________________\nDECK CARDS");
+                        showCardsOnTable();
                         showDeckCards();
                         String choice;
                         do{
@@ -342,24 +344,25 @@ public class CLI implements View {
                         i++;
                     }
                 }
-                else if(command.equals("/showCardsOnBoard")){
-                    showCardsOnBoard();
-                }
-                else if(command.equals("/showDeckCards")){
-                    showDeckCards();
+                else if(command.equals("/showOccupiedPositions")){
+                    showOccupiedPositions();
                 }
                 else if(command.equals("/showBoard")){
-                    this.printPlayerBoardCompactCard(this.cliController.getLocalPlayerTable());
+                    this.printPlayerBoardCompactCard();
                 }
-                else if(command.equals("/showObjective"))
+                else if(command.equals("/showObjectives")){
+                    System.out.println("SECRET PERSONAL OBJECTIVE");
                     this.printObjectiveCard(this.cliController.getLocalPlayerTable().getSecretObjective());
+                    System.out.println("SHARED GLOBAL OBJECTIVES");
+                    this.printObjectiveCard(this.cliController.getObjectives()[0]);
+                    this.printObjectiveCard(this.cliController.getObjectives()[1]);
+                }
                 else if(command.equals("/showAvailablePositions"))
                     showAvailablePositions();
                 else System.out.println("Command couldn't be recognized, please try again.");
                 /*checkIfGameHasEnded*/
             }
             if(!client.isItMyTurn()){
-                System.out.println("It's not your turn, wait for the other players to finish.");
                 br.readLine();
             }
         }
@@ -416,7 +419,10 @@ public class CLI implements View {
 
     private boolean placeCard(String command){
         String[] coordinates = command.split(" ");
-        if(coordinates.length != 5) System.out.println("Invalid command, try again.");
+        if(coordinates.length != 5){
+            System.out.println("Invalid command, try again.");
+            return false;
+        }
         else{
             if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && isAPositiveNumber(coordinates[3]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
                 int x = Integer.parseInt(coordinates[1]);
@@ -429,18 +435,15 @@ public class CLI implements View {
                 else if(!this.cliController.checkIfValidPosition(x,y,getPlayablePositions()))
                     System.out.println("The x/y coordinates you typed in are not available. Use /showAvailablePositions to see where you may place your cards.");
                 else{
-                    int[] coords = this.cliController.getCardCoords(x,y);
-                    boolean ret;
-                    ret = playCard(card, coords[0], coords[1], cliController.getCorner(x, y), coordinates[4].equals("front"));
-                    if(ret)
-                        this.cliController.updateLocalBoard(card, coords[0], coords[1]);
-                    return ret;
+                    int[] coords = this.cliController.getCardCoords(x,y,this.getPlacedCards(client.getIdLocal()));
+                    this.cliController.setCardSide(card, coordinates[4].equals("front"));
+                    System.err.println("Coords: " + coords[0] + " " + coords[1] + " " + this.cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal())));
+                    return playCard(card, coords[0], coords[1], cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal())), coordinates[4].equals("front"));
                 }
             } else {
                 System.out.println("The parameters you typed in are not numbers, try again.");
             }
         }
-
         return false;
     }
 
@@ -456,8 +459,8 @@ public class CLI implements View {
         if(coordinates.length != 3) System.out.println("Invalid command, try again.");
         else{
             if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
-                if(this.cliController.getLocalPlayerTable().getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
-                    PlaceableCard card = this.cliController.getLocalPlayerTable().getPlacedCards()[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
+                if(this.getPlacedCards(client.getIdLocal())[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
+                    PlaceableCard card = this.getPlacedCards(client.getIdLocal())[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
                     if(card instanceof ResourceCard)
                         this.printResourceCard((ResourceCard) card);
                     else if(card instanceof GoldCard)
@@ -479,20 +482,32 @@ public class CLI implements View {
         }
     }
 
-    private void showCardsOnBoard(){
-        for(ResourceCard card: this.cliController.getCardsOnTable())
+    private void showCardsOnTable(){
+        System.out.println("________________________\nBOARD CARDS");
+        for(ResourceCard card: this.cliController.getCardsOnTable()){
+            if(!card.isFront())
+                card.switchFrontBack();
             if(card instanceof GoldCard)
                 this.printGoldCard((GoldCard) card);
             else
                 this.printResourceCard(card);
+        }
     }
 
     private void showDeckCards(){
+        System.out.println("________________________\nRESOURCE DECK CARDS");
         this.printResourceCard(this.cliController.getResourceCardOnTop());
+        System.out.println("________________________\nGOLD DECK CARDS");
         this.printGoldCard(this.cliController.getGoldCardOnTop());
     }
     private void drawCard(String choice){
         this.client.drawCard(Integer.parseInt(choice));
         this.cliController.updateDecksAndBoard(Integer.parseInt(choice));
+    }
+
+    private void showOccupiedPositions() {
+        System.out.println("The following positions are already occupied by a card: ");
+        for(Integer[] i : this.cliController.getOccupiedPositions(this.getPlacedCards(client.getIdLocal())))
+            System.out.println("[" + i[0] + " " + i[1] + "]");
     }
 }

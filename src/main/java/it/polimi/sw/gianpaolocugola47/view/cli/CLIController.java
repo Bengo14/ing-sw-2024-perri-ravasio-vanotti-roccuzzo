@@ -147,15 +147,14 @@ public class CLIController {
         return false;
     }
 
-    public int getCorner(int x, int y){ //TO BE FINISHED! SOME CASES ARE STILL LEFT UNCHECKED.
-        PlaceableCard[][] localBoard = this.localPlayerTable.getPlacedCards();
+    public int getCorner(int x, int y, PlaceableCard[][] localBoard){ //TO BE FINISHED! SOME CASES ARE STILL LEFT UNCHECKED.
         int dim = PlayerTable.getMatrixDimension();
         if(x + 1 < dim && y + 1 < dim && x - 1 > 0 && y - 1 > 0){ //to dodge ArrayIndexOutOfBoundsException
             if(localBoard[x-1][y-1] != null)
                 return 3;
-            if(localBoard[x+1][y-1] != null)
-                return 2;
             if(localBoard[x-1][y+1] != null)
+                return 2;
+            if(localBoard[x+1][y-1] != null)
                 return 1;
             if(localBoard[x+1][y+1] != null)
                 return 0;
@@ -163,11 +162,11 @@ public class CLIController {
         return 0;
     }
 
-    public int[] getCardCoords(int x, int y){
-        return switch (getCorner(x, y)) {
+    public int[] getCardCoords(int x, int y, PlaceableCard[][] localBoard){
+        return switch (getCorner(x, y, localBoard)) {
             case 0 -> new int[]{x + 1, y + 1};
-            case 1 -> new int[]{x - 1, y + 1};
-            case 2 -> new int[]{x + 1, y - 1};
+            case 1 -> new int[]{x + 1, y - 1};
+            case 2 -> new int[]{x - 1, y + 1};
             case 3 -> new int[]{x - 1, y - 1};
             default -> null;
         };
@@ -203,7 +202,22 @@ public class CLIController {
         }
     }
 
-    public void updateLocalBoard(int onHandCard, int x, int y){
-        this.localPlayerTable.checkAndPlaceCard(onHandCard, x, y, this.getCorner(x, y));
+    public ArrayList<Integer[]> getOccupiedPositions(PlaceableCard[][] localBoard){
+        ArrayList<Integer[]> occupiedPositions = new ArrayList<>();
+        for(int i = 0; i < localBoard.length; i++){
+            for(int j = 0; j < localBoard[i].length; j++){
+                if(localBoard[i][j] != null){
+                    Integer[] coordinates = {i,j};
+                    occupiedPositions.add(coordinates);
+                }
+            }
+        }
+        return occupiedPositions;
+    }
+
+    public void setCardSide(int card, boolean side){
+        ResourceCard r = this.localPlayerTable.getCardsOnHand()[card];
+        r.setFront(side);
+        this.localPlayerTable.setCardOnHand(card,r);
     }
 }

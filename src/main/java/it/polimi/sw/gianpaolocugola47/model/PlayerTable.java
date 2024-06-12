@@ -316,4 +316,8 @@ public class PlayerTable implements Serializable{
     public void setCardsOnHand(ResourceCard[] cardsOnHand) {
         this.cardsOnHand = cardsOnHand;
     }
+
+    public void setCardOnHand(int position, ResourceCard cardOnHand){
+        this.cardsOnHand[position] = cardOnHand;
+    }
 }

@@ -169,14 +169,8 @@ public class PlayerTable implements Serializable{
             if(corner==3 && (x==getMatrixDimension()-1 || y==getMatrixDimension()-1))
                 return false; // all surrounding cards are null
 
-            x=setXCoordinate(x, corner);
-            y=setYCoordinate(y, corner);
-            if(placedCards[x][y] != null){
+            if(placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)] != null)
                 return true; // a surrounding card is not null
-            }else{
-                x=setXCoordinate(x, 3-corner);
-                y=setYCoordinate(y, 3-corner);
-            }                
         }
         return false; // all surrounding cards are null
     }
@@ -299,14 +293,8 @@ public class PlayerTable implements Serializable{
                 if(corner==3 && (x==getMatrixDimension()-1 || y==getMatrixDimension()-1))
                     return false; // can't play on card
 
-                x=setXCoordinate(x,corner);
-                y=setYCoordinate(y,corner);
-                if(isPlaceable(x,y))
+                if(isPlaceable(setXCoordinate(x, corner), setYCoordinate(y, corner)))
                     return true; // found a card that is playable on this card
-                else{
-                    x=setXCoordinate(x,3-corner);
-                    y=setYCoordinate(y,3-corner);
-                }
             }
         }return false; // incorrect input :card is null
     }

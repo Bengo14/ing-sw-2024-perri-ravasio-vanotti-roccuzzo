@@ -8,6 +8,7 @@ import it.polimi.sw.gianpaolocugola47.view.View;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import static it.polimi.sw.gianpaolocugola47.model.Items.*;
 import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
@@ -20,6 +21,8 @@ public class CLI implements View {
     private Client client;
     private final String ANSI_RESET = "\033[0m";
     private final CLIController cliController;
+    private boolean isChatOpen;
+    private ArrayList<ChatMessage> chatBuffer = new ArrayList<>();
 
     public CLI(Client client) {
         this.client = client;
@@ -53,45 +56,48 @@ public class CLI implements View {
         }
     }
 
-    private void openChat() {
-        new Thread(() -> {
-            try {
-                chatInputLoop();
-            } catch (IOException e) {
-                client.terminateLocal();
-            }
-        }).start();
-    }
-
-    private void chatInputLoop() throws IOException {
-
-        System.out.println("Chat service is on!\nType --listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.");
-        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+    private void chatInputLoop(BufferedReader br) throws IOException {
+        boolean startingState = isChatOpen;
+        System.out.println("Chat service is on!\nType /listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.\nType /closeChat to close the chat.");
         ChatMessage message = new ChatMessage(cliController.getNickname(), cliController.getId());
-
-        while(true) {
-            String line = br.readLine();
-            if (line.startsWith("@")) {
-                try {
-                    message.setPrivate(true);
-                    message.setReceiver(line.substring(1, line.indexOf(" ")));
-                    message.setMessage(line.substring(line.indexOf(" ") + 1));
-                    this.client.sendPrivateMessage(message);
-                } catch (StringIndexOutOfBoundsException e) {
-                    System.err.println("Invalid input, try again...");
+        System.out.println("\nLast 50 unread messages: ");
+        for(ChatMessage chatMessage : chatBuffer){
+            System.out.println(chatMessage.getSender() + ": " + chatMessage.getMessage());
+        }
+        while(isChatOpen) {
+            if(client.isItMyTurn() != startingState){
+                this.isChatOpen = false;
+                this.chatBuffer.clear();
+                System.out.println("Closing chat, it's your turn.");
+            }
+            else{
+                String line = br.readLine();
+                if (line.startsWith("@")) {
+                    try {
+                        message.setPrivate(true);
+                        message.setReceiver(line.substring(1, line.indexOf(" ")));
+                        message.setMessage(line.substring(line.indexOf(" ") + 1));
+                        this.client.sendPrivateMessage(message);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.err.println("Invalid input, try again...");
+                    }
+                } else if (line.equals("/listPlayers")) {
+                    System.out.println("Here's a list of all the players in the lobby: ");
+                    for(String nickname : cliController.getNicknames()) {
+                        if(nickname.equals(this.cliController.getNickname()))
+                            System.err.println(nickname + " (you)");
+                        else
+                            System.out.println(nickname);
+                    }
+                } else if(line.equals("/closeChat")) {
+                    System.out.println("Chat is closing down!");
+                    this.isChatOpen = false;
+                    this.chatBuffer.clear();
+                } else {
+                    message.setPrivate(false);
+                    message.setMessage(line);
+                    this.client.sendMessage(message);
                 }
-            } else if (line.equals("--listPlayers")) {
-                System.out.println("Here's a list of all the players in the lobby: ");
-                for(String nickname : cliController.getNicknames()) {
-                    if(nickname.equals(this.cliController.getNickname()))
-                        System.err.println(nickname + " (you)");
-                    else
-                        System.out.println(nickname);
-                }
-            } else {
-                message.setPrivate(false);
-                message.setMessage(line);
-                this.client.sendMessage(message);
             }
         }
     }
@@ -139,9 +145,18 @@ public class CLI implements View {
 
     @Override
     public void receiveMessage(ChatMessage message) {
-        if(!message.isPrivate())
-            System.out.println(message.getSender() + ": " + message.getMessage());
-        else System.out.println(message.getSender() + ": psst, " + message.getMessage());
+        if(isChatOpen){
+            if(!message.getSender().equals(this.cliController.getNickname())){
+                if(!message.isPrivate())
+                    System.out.println(message.getSender() + ": " + message.getMessage());
+                else System.out.println(message.getSender() + ": psst, " + message.getMessage());
+            }
+        } else {
+            chatBuffer.add(message);
+            if(chatBuffer.size() > 50){
+                chatBuffer.removeFirst();
+            }
+        }
     }
 
     @Override
@@ -232,11 +247,11 @@ public class CLI implements View {
         System.out.println("[" + resourceCounter[4] + " " + resourceCounter[5] + " " + resourceCounter[6] + "]");
     }
 
-    public void printPlayerBoardCompactCard(){ //to be fixed!!
+    public void printPlayerBoardCompactCard(int id){ //to be fixed!!
         boolean printableRow;
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             printableRow = false;
-            PlaceableCard[] row = this.getPlacedCards(client.getIdLocal())[i];
+            PlaceableCard[] row = this.getPlacedCards(id)[i];
             for (PlaceableCard placeableCard : row)
                 if (placeableCard != null) {
                     printableRow = true;
@@ -300,16 +315,19 @@ public class CLI implements View {
                             /showCardAt [xCoord] [yCoord]: show a card in a given position
                             /showHandCards: show both cards in hand
                             /showOccupiedPositions: show positions where a card is already present
-                            /showBoard: show the player board
+                            /showOwnBoard: show the player board
+                            /showPlayerBoard [nickname]: show the board of a specific player
                             /showAvailablePositions: show available positions to place a card
                             /showObjectives: print personal & shared objective card
                             /placeCard [xCoord] [yCoord] [cardInHand {0-2}] [{front/back}]: place a card on the board
+                            /openChat: opens chat
                             """);
                     case "/showHandCards" -> showHandCards();
                     case "/showOccupiedPositions" -> showOccupiedPositions();
-                    case "/showBoard" -> printPlayerBoardCompactCard();
+                    case "/showOwnBoard" -> printPlayerBoardCompactCard(this.client.getIdLocal());
                     case "/showObjectives" -> showObjectives();
                     case "/showAvailablePositions" -> showAvailablePositions();
+                    case "/openChat" -> chatHandler(br);
                     default -> {
                         if(command.startsWith("/showCardAt")){
                             showCardAt(command);
@@ -332,6 +350,8 @@ public class CLI implements View {
                                 drawCard(choice);
                                 System.out.println("Your turn is done now!");
                             }
+                        } else if (command.startsWith("/showPlayerBoard")) {
+                            showPlayerBoard(command);
                         }
                         else
                             System.out.println("Command couldn't be recognized, please try again.");
@@ -349,23 +369,52 @@ public class CLI implements View {
                             /showCardAt [xCoord] [yCoord]: show a card in a given position
                             /showHandCards: show both cards in hand
                             /showOccupiedPositions: show positions where a card is already present
-                            /showBoard: show the player board
+                            /showOwnBoard: show player's personal board
+                            /showPlayerBoard [nickname]: show the board of a specific player
                             /showObjectives: print personal & shared objective card
-                            /openChat: opens chat. Type '@' to send a private message
+                            /openChat: opens chat
                             """);
                     case "/showHandCards" -> showHandCards();
                     case "/showOccupiedPositions" -> showOccupiedPositions();
-                    case "/showBoard" -> printPlayerBoardCompactCard();
+                    case "/showOwnBoard" -> printPlayerBoardCompactCard(this.client.getIdLocal());
                     case "/showObjectives" -> showObjectives();
-                    case "/openChat" -> System.out.flush(); /*todo*/
+                    case "/openChat" -> chatHandler(br);
                     default -> {
                         if(command.startsWith("/showCardAt"))
                             showCardAt(command);
+                        else if(command.startsWith("/showPlayerBoard"))
+                            showPlayerBoard(command);
                         else
                             System.out.println("Command couldn't be recognized, please try again.");
                     }
                 }
             }
+        }
+    }
+
+    private void chatHandler(BufferedReader br) {
+        this.isChatOpen = true;
+        try{
+            chatInputLoop(br);
+            this.isChatOpen = false;
+        } catch(IOException e){
+            System.err.println("An error occurred while reading the input.");
+        }
+    }
+
+    private void showPlayerBoard(String command) {
+        String[] nickname = command.split(" ");
+        if(nickname.length != 2)
+            System.out.println("Invalid command, try again.");
+        else{
+            for(int k = 0; k < this.cliController.getNicknames().length; k++){
+                if(this.cliController.getNicknames()[k].equals(nickname[1])){
+                    System.out.println("Player " + this.cliController.getNicknames()[k] +  "'s board: ");
+                    printPlayerBoardCompactCard(k);
+                    return;
+                }
+            }
+            System.out.println("The player you typed in is not in the game.");
         }
     }
 

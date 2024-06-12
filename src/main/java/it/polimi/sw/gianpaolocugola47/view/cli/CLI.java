@@ -437,7 +437,6 @@ public class CLI implements View {
                 else{
                     int[] coords = this.cliController.getCardCoords(x,y,this.getPlacedCards(client.getIdLocal()));
                     this.cliController.setCardSide(card, coordinates[4].equals("front"));
-                    System.err.println("Coords: " + coords[0] + " " + coords[1] + " " + this.cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal())));
                     return playCard(card, coords[0], coords[1], cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal())), coordinates[4].equals("front"));
                 }
             } else {

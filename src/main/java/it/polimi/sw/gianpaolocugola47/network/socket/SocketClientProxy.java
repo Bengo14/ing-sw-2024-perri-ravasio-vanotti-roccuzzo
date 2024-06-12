@@ -144,10 +144,12 @@ public class SocketClientProxy implements VirtualView {
 
     protected void getPlacedCardsResponse(PlaceableCard[][] placedCards) {
         output.println("getPlacedCards");
-        for(int i=0; i<placedCards.length; i++)
+        for(int i = 0; i < placedCards.length; i++)
             for (int j = 0 ; j < placedCards[i].length; j++)
-                if (placedCards[i][j] != null)
+                if (placedCards[i][j] != null) {
                     output.println(getCardId(placedCards[i][j]));
+                    output.println(placedCards[i][j].isFront());
+                }
                 else output.println(-1);
         output.flush();
     }

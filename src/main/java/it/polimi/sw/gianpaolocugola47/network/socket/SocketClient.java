@@ -56,9 +56,8 @@ public class SocketClient implements VirtualView, Client {
         String line;
 
         while (true) {
-
             line = line();
-            //System.err.println(line); // debug
+
             switch (line) {
 
                 case "setId" -> setIdAndRunCli(integer());
@@ -108,9 +107,10 @@ public class SocketClient implements VirtualView, Client {
                 }
 
                 case "decks" -> {
+                    //if cards are null, proxy prints -1 and Deck returns null (from hash map documentation)
                     ResourceCard resourceCardOnTop = (ResourceCard) Deck.getCardFromGivenId(integer());
                     GoldCard goldCardOnTop = (GoldCard) Deck.getCardFromGivenId(integer());
-                    updateDecks(resourceCardOnTop, goldCardOnTop, integer());
+                    updateDecks(resourceCardOnTop, goldCardOnTop, integer()); // cards and drawPos
                 }
 
                 case "points" -> {
@@ -146,15 +146,18 @@ public class SocketClient implements VirtualView, Client {
                     getCardsOnHandResponse = new ResourceCard[numOfPlayers][3];
                     for (int i=0; i<numOfPlayers; i++)
                         for(int j=0; j<3; j++)
-                            getCardsOnHandResponse[i][j] = (ResourceCard) Deck.getCardFromGivenId(integer());
+                            getCardsOnHandResponse[i][j] = (ResourceCard) Deck.getCardFromGivenId(integer()); // is null if card not present in that pos
                     setResponse();
                 }
 
                 case "getPlacedCards" -> {
                     getPlacedCardsResponse = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
                     for (int i=0; i<PlayerTable.getMatrixDimension(); i++)
-                        for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
-                            getPlacedCardsResponse[i][j] = Deck.getCardFromGivenId(integer());
+                        for(int j=0; j<PlayerTable.getMatrixDimension(); j++) {
+                            getPlacedCardsResponse[i][j] = Deck.getCardFromGivenId(integer()); // is null if card not placed in that pos
+                            if(getPlacedCardsResponse[i][j] != null)
+                                getPlacedCardsResponse[i][j].setFront(bool());
+                        }
                     setResponse();
                 }
 

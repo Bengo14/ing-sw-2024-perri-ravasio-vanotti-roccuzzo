@@ -197,9 +197,9 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void showWinner() {
+    public void showWinner(int id) {
         synchronized (client) {
-            this.client.showWinner();
+            this.client.showWinner(id);
         }
     }
 

@@ -13,7 +13,7 @@ public interface VirtualView extends Remote {
     void startGame() throws RemoteException;
     void setMyTurn() throws RemoteException;
     void gameOver() throws RemoteException;
-    void showWinner() throws RemoteException;
+    void showWinner(int id) throws RemoteException;
     int getId() throws RemoteException;
     void receiveMessage(ChatMessage message) throws RemoteException;
     void receivePrivateMessage(ChatMessage message) throws RemoteException;

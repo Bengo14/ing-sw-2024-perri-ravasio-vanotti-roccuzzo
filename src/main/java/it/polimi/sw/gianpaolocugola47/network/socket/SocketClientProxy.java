@@ -53,8 +53,9 @@ public class SocketClientProxy implements VirtualView {
     }
 
     @Override
-    public void showWinner() {
+    public void showWinner(int id) {
         output.println("winner");
+        output.println(id);
         output.flush();
     }
 

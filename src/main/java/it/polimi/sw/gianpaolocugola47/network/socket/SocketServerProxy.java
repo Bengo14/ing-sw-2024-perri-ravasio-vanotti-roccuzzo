@@ -11,7 +11,6 @@ import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
     private final PrintWriter output;

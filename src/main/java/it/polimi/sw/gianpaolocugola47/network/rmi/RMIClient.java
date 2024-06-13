@@ -149,11 +149,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             try{
                 this.view = new ViewGui();
                 this.view.setClient(this);
-                new Thread(() -> {
-                    Platform.startup(() -> {
-                        view.start();
-                    });
-                }).start();
+                new Thread(() -> Platform.startup(() -> view.start())).start();
             }catch(Exception e){
                 System.err.println("Error in starting the GUI. Shutting down.");
                 terminateLocal();
@@ -188,8 +184,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public void showWinner() throws RemoteException {
-        this.view.showWinner();
+    public void showWinner(int id) throws RemoteException {
+        this.view.showWinner(id);
     }
 
     @Override

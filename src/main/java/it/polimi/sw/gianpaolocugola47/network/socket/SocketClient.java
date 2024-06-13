@@ -65,7 +65,7 @@ public class SocketClient implements VirtualView, Client {
                 case "start" -> startGame();
                 case "turn" -> setMyTurn();
                 case "gameOver" -> gameOver();
-                case "winner" -> showWinner();
+                case "winner" -> showWinner(integer());
 
                 case "getNumPlayers" -> this.numOfPlayers = integer();
 
@@ -301,11 +301,7 @@ public class SocketClient implements VirtualView, Client {
             try{
                 this.view = new ViewGui();
                 this.view.setClient(this);
-                new Thread(() -> {
-                    Platform.startup(() -> {
-                        view.start();
-                    });
-                }).start();
+                new Thread(() -> Platform.startup(() -> view.start())).start();
             }catch(Exception e){
                 System.err.println("Error in starting GUI. Shutting down.");
                 System.exit(1);
@@ -325,8 +321,8 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
-    public void showWinner() {
-        this.view.showWinner();
+    public void showWinner(int id) {
+        this.view.showWinner(id);
     }
 
     @Override

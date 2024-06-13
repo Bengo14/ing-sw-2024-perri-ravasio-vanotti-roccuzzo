@@ -162,12 +162,16 @@ public class CLI implements View {
 
     @Override
     public void gameOver() {
-        /*todo*/
+        System.out.println("We are entering the last rounds of the game. Soon we will see who the winner is!");
     }
 
     @Override
-    public void showWinner() {
-        /*todo*/
+    public void showWinner(int id) {
+        if(id == this.client.getIdLocal())
+            System.out.println("Congratulations! You won the game!");
+        else
+            System.out.println("Player " + this.cliController.getNicknames()[id] + " won the game!");
+        System.out.println("Looking forward to play with you again :-)");
     }
 
     protected PlaceableCard[][] getPlacedCards(int id) {

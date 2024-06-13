@@ -253,9 +253,7 @@ public class ViewGui extends Application implements View {
 
     @Override
     public void receiveMessage(ChatMessage message) {
-        Platform.runLater(() -> {
-            gameController.receiveMessage(message);
-        });
+        Platform.runLater(() -> gameController.receiveMessage(message));
     }
 
     @Override
@@ -264,7 +262,8 @@ public class ViewGui extends Application implements View {
     }
 
     @Override
-    public void showWinner() {
+    public void showWinner(int id) {
+        //System.err.println("Player " + id + " won!"); testing purposes
         /*todo set winner scene*/
     }
 

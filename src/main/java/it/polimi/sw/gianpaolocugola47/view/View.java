@@ -7,8 +7,6 @@ import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
-import java.io.IOException;
-
 public interface View {
 
     void setClient(Client client);
@@ -19,7 +17,7 @@ public interface View {
     void showTurn();
     void receiveMessage(ChatMessage message);
     void gameOver();
-    void showWinner();
+    void showWinner(int id);
 
     StartingCard getStartingCard();
 

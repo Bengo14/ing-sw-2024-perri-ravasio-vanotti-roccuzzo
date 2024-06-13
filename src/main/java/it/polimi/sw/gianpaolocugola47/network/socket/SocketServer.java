@@ -192,8 +192,7 @@ public class SocketServer implements Observer {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
                 for(SocketClientHandler handler : this.clients)
-                    if(handler.getId() == winnerId)
-                        handler.showWinner();
+                    handler.showWinner(winnerId);
                 terminateGame(true, winnerId);
             }
         }

@@ -61,7 +61,9 @@ public class CLI implements View {
         ChatMessage message = new ChatMessage(cliController.getNickname(), cliController.getId());
         System.out.println("\nLast 50 unread messages: ");
         for(ChatMessage chatMessage : chatBuffer){
-            System.out.println(chatMessage.getSender() + ": " + chatMessage.getMessage());
+            if(!message.isPrivate())
+                System.out.println(message.getSender() + ": " + message.getMessage());
+            else System.out.println(message.getSender() + ": psst, " + message.getMessage());
         }
         while(isChatOpen) {
             if(client.isItMyTurn() != startingState){
@@ -137,9 +139,9 @@ public class CLI implements View {
     @Override
     public void showTurn() {
         if(client.isItMyTurn())
-            System.out.println("It's your turn!");
+            System.out.println("It's your turn! Press any key to continue.");
         else
-            System.out.println("It's not your turn, wait for the other players to finish.");
+            System.out.println("Your turn is done now!");
     }
 
     @Override
@@ -271,8 +273,8 @@ public class CLI implements View {
                     else
                         System.out.print(" ");
                 }
+                System.out.print("\n");
             }
-            System.out.print("\n");
         }
     }
 
@@ -281,8 +283,8 @@ public class CLI implements View {
         int[] boardPoints = this.cliController.getBoardPoints();
         int[] globalPoints = this.cliController.getGlobalPoints();
         String[] nicknames = this.cliController.getNicknames();
+        System.out.println("LEADERBOARD");
         try{
-            System.out.println("LEADERBOARD");
             for(int i = 0; i < nicknames.length; i++){
                 System.out.println(nicknames[i] + " || Board points: " + boardPoints[i] + " || Global points: " + globalPoints[i]);
                 if(i < nicknames.length - 1)
@@ -291,7 +293,13 @@ public class CLI implements View {
                     System.out.println("");
             }
         } catch(NullPointerException e){
-            System.out.println("No points to show yet.");
+            for(int i = 0; i < nicknames.length; i++){
+                System.out.println(nicknames[i] + " || Board points: " + 0 + " || Global points: " + 0);
+                if(i < nicknames.length - 1)
+                    System.out.println("--------------------");
+                else
+                    System.out.println("");
+            }
         }
     }
 
@@ -347,7 +355,6 @@ public class CLI implements View {
                                         System.out.println("Invalid card choice, must be between 0 and 5. Try again.");
                                 } while(true);
                                 drawCard(choice);
-                                System.out.println("Your turn is done now!");
                             }
                         } else if (command.startsWith("/showPlayerBoard")) {
                             showPlayerBoard(command);
@@ -478,7 +485,7 @@ public class CLI implements View {
                 System.out.println("Invalid command, try again.");
         }while(!command.equals("1") && !command.equals("2"));
         client.setSecretObjective();
-        System.out.println("Setup phase completed! Waiting for the other players to pick their cards.");
+        System.out.println("Setup phase completed! Waiting for the other players to pick their cards and play their first hand.");
         while(!client.isItMyTurn()){
             Thread.sleep(100);
         }

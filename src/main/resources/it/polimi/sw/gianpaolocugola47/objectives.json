@@ -52,7 +52,7 @@
     "imgPathFront" : "imgPathFrn",
     "imgPathBack" : "imgPathBck",
     "type" : "ResourceObjective",
-    "description" :"2 PLANT \nPoints: 2"
+    "description" :"3 PLANT \nPoints: 2"
   },
   {
     "id": 97,
@@ -61,7 +61,7 @@
     "imgPathFront" : "imgPathFrn",
     "imgPathBack" : "imgPathBck",
     "type" : "ResourceObjective",
-    "description" :"2 INSECTS \nPoints: 2"
+    "description" :"3 INSECTS \nPoints: 2"
   },
   {
     "id": 94,
@@ -70,7 +70,7 @@
     "imgPathFront" : "imgPathFrn",
     "imgPathBack" : "imgPathBck",
     "type" : "ResourceObjective",
-    "description" :"2 FUNGI \nPoints: 2"
+    "description" :"3 FUNGI \nPoints: 2"
   },
   {
     "id": 96,
@@ -79,7 +79,7 @@
     "imgPathFront" : "imgPathFrn",
     "imgPathBack" : "imgPathBck",
     "type" : "ResourceObjective",
-    "description" :"2 ANIMAL \nPoints: 2"
+    "description" :"3 ANIMAL \nPoints: 2"
   },
   {
     "id": 86,

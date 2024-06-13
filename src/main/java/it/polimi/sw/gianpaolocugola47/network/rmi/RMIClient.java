@@ -137,17 +137,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public void startGame() throws RemoteException {
 
         if(isCliChosen) {
-            this.view = new CLI(this);
-            new Thread(() -> view.start()).start();
+            try{
+                this.view = new CLI(this);
+                new Thread(() -> view.start()).start();
+            }catch(Exception e){
+                System.err.println("Error in starting the CLI. Shutting down.");
+                terminateLocal();
+            }
         }
         else {
-            this.view = new ViewGui();
-            this.view.setClient(this);
-            new Thread(() -> {
-                Platform.startup(() -> {
-                    view.start();
-                });
-            }).start();
+            try{
+                this.view = new ViewGui();
+                this.view.setClient(this);
+                new Thread(() -> {
+                    Platform.startup(() -> {
+                        view.start();
+                    });
+                }).start();
+            }catch(Exception e){
+                System.err.println("Error in starting the GUI. Shutting down.");
+                terminateLocal();
+            }
         }
     }
 

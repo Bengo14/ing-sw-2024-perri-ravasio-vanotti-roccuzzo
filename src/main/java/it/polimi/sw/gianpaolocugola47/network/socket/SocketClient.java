@@ -11,7 +11,6 @@ import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class SocketClient implements VirtualView, Client {
@@ -290,17 +289,27 @@ public class SocketClient implements VirtualView, Client {
         Deck.initDeck(); //init Deck's hashMap to retrieve cards by id
 
         if(isCliChosen) {
-            this.view = new CLI(this);
-            new Thread(() -> view.start()).start();
+            try{
+                this.view = new CLI(this);
+                new Thread(() -> view.start()).start();
+            }catch (Exception e){
+                System.err.println("Error in starting CLI. Shutting down.");
+                System.exit(1);
+            }
         }
         else {
-            this.view = new ViewGui();
-            this.view.setClient(this);
-            new Thread(() -> {
-                Platform.startup(() -> {
-                    view.start();
-                });
-            }).start();
+            try{
+                this.view = new ViewGui();
+                this.view.setClient(this);
+                new Thread(() -> {
+                    Platform.startup(() -> {
+                        view.start();
+                    });
+                }).start();
+            }catch(Exception e){
+                System.err.println("Error in starting GUI. Shutting down.");
+                System.exit(1);
+            }
         }
     }
 

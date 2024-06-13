@@ -56,8 +56,7 @@ public class CLI implements View {
         }
     }
 
-    private void chatInputLoop(BufferedReader br) throws IOException {
-        boolean startingState = isChatOpen;
+    private void chatInputLoop(BufferedReader br, boolean startingState) throws IOException {
         System.out.println("Chat service is on!\nType /listPlayers to see who your opponents are.\nStart a message with '@' to send a private message.\nType /closeChat to close the chat.");
         ChatMessage message = new ChatMessage(cliController.getNickname(), cliController.getId());
         System.out.println("\nLast 50 unread messages: ");
@@ -247,7 +246,7 @@ public class CLI implements View {
         System.out.println("[" + resourceCounter[4] + " " + resourceCounter[5] + " " + resourceCounter[6] + "]");
     }
 
-    public void printPlayerBoardCompactCard(int id){ //to be fixed!!
+    public void printPlayerBoardCompactCard(int id){
         boolean printableRow;
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             printableRow = false;
@@ -327,7 +326,7 @@ public class CLI implements View {
                     case "/showOwnBoard" -> printPlayerBoardCompactCard(this.client.getIdLocal());
                     case "/showObjectives" -> showObjectives();
                     case "/showAvailablePositions" -> showAvailablePositions();
-                    case "/openChat" -> chatHandler(br);
+                    case "/openChat" -> chatHandler(br, client.isItMyTurn());
                     default -> {
                         if(command.startsWith("/showCardAt")){
                             showCardAt(command);
@@ -378,7 +377,7 @@ public class CLI implements View {
                     case "/showOccupiedPositions" -> showOccupiedPositions();
                     case "/showOwnBoard" -> printPlayerBoardCompactCard(this.client.getIdLocal());
                     case "/showObjectives" -> showObjectives();
-                    case "/openChat" -> chatHandler(br);
+                    case "/openChat" -> chatHandler(br, client.isItMyTurn());
                     default -> {
                         if(command.startsWith("/showCardAt"))
                             showCardAt(command);
@@ -392,10 +391,10 @@ public class CLI implements View {
         }
     }
 
-    private void chatHandler(BufferedReader br) {
+    private void chatHandler(BufferedReader br, boolean startingState) {
         this.isChatOpen = true;
         try{
-            chatInputLoop(br);
+            chatInputLoop(br, startingState);
             this.isChatOpen = false;
         } catch(IOException e){
             System.err.println("An error occurred while reading the input.");
@@ -480,7 +479,9 @@ public class CLI implements View {
         }while(!command.equals("1") && !command.equals("2"));
         client.setSecretObjective();
         System.out.println("Setup phase completed! Waiting for the other players to pick their cards.");
-        Thread.sleep(1000);
+        while(!client.isItMyTurn()){
+            Thread.sleep(100);
+        }
         for (int i = 0; i < 50; i++) System.out.println();
     }
 
@@ -512,8 +513,15 @@ public class CLI implements View {
                     System.out.println("The x/y coordinates you typed in are not available. Use /showAvailablePositions to see where you may place your cards.");
                 else{
                     int[] coords = this.cliController.getCardCoords(x,y,this.getPlacedCards(client.getIdLocal()));
-                    this.cliController.setCardSide(card, coordinates[4].equals("front"));
-                    return playCard(card, coords[0], coords[1], cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal())), coordinates[4].equals("front"));
+                    int corner = cliController.getCorner(x, y, this.getPlacedCards(client.getIdLocal()));
+                    if(corner == -1){
+                        System.out.println("The position you typed in is not valid, try again.");
+                        return false;
+                    }
+                    else{
+                        this.cliController.setCardSide(card, coordinates[4].equals("front"));
+                        return playCard(card, coords[0], coords[1], corner , coordinates[4].equals("front"));
+                    }
                 }
             } else {
                 System.out.println("The parameters you typed in are not numbers, try again.");

@@ -149,7 +149,44 @@ public class CLIController {
 
     public int getCorner(int x, int y, PlaceableCard[][] localBoard){ //TO BE FINISHED! SOME CASES ARE STILL LEFT UNCHECKED.
         int dim = PlayerTable.getMatrixDimension();
-        if(x + 1 < dim && y + 1 < dim && x - 1 > 0 && y - 1 > 0){ //to dodge ArrayIndexOutOfBoundsException
+        //edge cases; board's corners
+        if(x == 0 && y == 0) //top left
+            return 0;
+        if(x == 0 && y == dim - 1) //top right
+            return 1;
+        if(x == dim -1 && y == 0) //bottom left
+            return 2;
+        if(x == dim - 1 && y == dim - 1) //bottom right
+            return 3;
+
+        //edge cases; board's edges
+        if(y == 0){ //only left-sided corners can be linked
+            if(localBoard[x-1][y+1] != null)
+                return 2;
+            if(localBoard[x+1][y+1] != null)
+                return 0;
+        }
+        if(y == dim-1){ //only right-sided corners can be linked
+            if(localBoard[x-1][y-1] != null)
+                return 3;
+            if(localBoard[x+1][y-1] != null)
+                return 1;
+        }
+        if(x == 0){ //only top-sided corners can be linked
+            if(localBoard[x+1][y-1] != null)
+                return 1;
+            if(localBoard[x+1][y+1] != null)
+                return 0;
+        }
+        if(x == dim-1){ //only bottom-sided corners can be linked
+            if(localBoard[x-1][y-1] != null)
+                return 3;
+            if(localBoard[x-1][y+1] != null)
+                return 2;
+        }
+
+        //common cases; board's inner cells
+        if(x + 1 < dim && y + 1 < dim && x - 1 >= 0 && y - 1 >= 0){ //to dodge ArrayIndexOutOfBoundsException
             if(localBoard[x-1][y-1] != null)
                 return 3;
             if(localBoard[x-1][y+1] != null)
@@ -159,7 +196,9 @@ public class CLIController {
             if(localBoard[x+1][y+1] != null)
                 return 0;
         }
-        return 0;
+
+        //something is wrong!
+        return -1;
     }
 
     public int[] getCardCoords(int x, int y, PlaceableCard[][] localBoard){

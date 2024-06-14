@@ -187,12 +187,12 @@ public class GameController implements Initializable {
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[3].getId()+".png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+gui.getLocalPlayerTable().getId()+".png")));
         labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
-        labelPlant.setText(":"+gui.getResourcesCounter()[1]);
-        labelInsect.setText(":"+gui.getResourcesCounter()[2]);
-        labelFungi.setText(":"+gui.getResourcesCounter()[3]);
-        labelInkwell.setText(":"+gui.getResourcesCounter()[4]);
-        labelManuscript.setText(":"+gui.getResourcesCounter()[5]);
-        labelQuill.setText(":"+gui.getResourcesCounter()[6]);
+        labelPlant.setText(":"+gui.getResourcesCounter()[2]);
+        labelInsect.setText(":"+gui.getResourcesCounter()[3]);
+        labelFungi.setText(":"+gui.getResourcesCounter()[1]);
+        labelInkwell.setText(":"+gui.getResourcesCounter()[5]);
+        labelManuscript.setText(":"+gui.getResourcesCounter()[6]);
+        labelQuill.setText(":"+gui.getResourcesCounter()[4]);
 
         if(gui.getLocalPlayerTable().getId() == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
@@ -294,12 +294,12 @@ public class GameController implements Initializable {
             winPoints = true;
         }
         labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
-        labelPlant.setText(":"+gui.getResourcesCounter()[1]);
-        labelInsect.setText(":"+gui.getResourcesCounter()[2]);
-        labelFungi.setText(":"+gui.getResourcesCounter()[3]);
-        labelInkwell.setText(":"+gui.getResourcesCounter()[4]);
-        labelManuscript.setText(":"+gui.getResourcesCounter()[5]);
-        labelQuill.setText(":"+gui.getResourcesCounter()[6]);
+        labelPlant.setText(":"+gui.getResourcesCounter()[2]);
+        labelInsect.setText(":"+gui.getResourcesCounter()[3]);
+        labelFungi.setText(":"+gui.getResourcesCounter()[1]);
+        labelInkwell.setText(":"+gui.getResourcesCounter()[5]);
+        labelManuscript.setText(":"+gui.getResourcesCounter()[6]);
+        labelQuill.setText(":"+gui.getResourcesCounter()[4]);
     }
 
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {

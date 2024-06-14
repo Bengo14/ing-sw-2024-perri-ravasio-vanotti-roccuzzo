@@ -215,6 +215,9 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
+    public int[] getResourcesCounter(){
+        return client.getResourceCounter(getLocalPlayerTable().getId());
+    }
 
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {

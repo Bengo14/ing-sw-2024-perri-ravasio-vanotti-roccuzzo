@@ -33,6 +33,8 @@ public class GameController implements Initializable {
     @FXML
     private Label turnLabel;
     @FXML
+    private Label labelAnimal, labelPlant, labelInsect, labelFungi, labelManuscript, labelInkwell, labelQuill;
+    @FXML
     private ImageView deck_gold,gold_1,gold_2;
     @FXML
     private ImageView deck_res,res_1,res_2;
@@ -184,6 +186,13 @@ public class GameController implements Initializable {
         gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[2].getId()+".png")));
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[3].getId()+".png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+gui.getLocalPlayerTable().getId()+".png")));
+        labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
+        labelPlant.setText(":"+gui.getResourcesCounter()[1]);
+        labelInsect.setText(":"+gui.getResourcesCounter()[2]);
+        labelFungi.setText(":"+gui.getResourcesCounter()[3]);
+        labelInkwell.setText(":"+gui.getResourcesCounter()[4]);
+        labelManuscript.setText(":"+gui.getResourcesCounter()[5]);
+        labelQuill.setText(":"+gui.getResourcesCounter()[6]);
 
         if(gui.getLocalPlayerTable().getId() == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
@@ -284,6 +293,13 @@ public class GameController implements Initializable {
         if(boardPoints[gui.getLocalPlayerTable().getId()]>=20 && !winPoints){
             winPoints = true;
         }
+        labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
+        labelPlant.setText(":"+gui.getResourcesCounter()[1]);
+        labelInsect.setText(":"+gui.getResourcesCounter()[2]);
+        labelFungi.setText(":"+gui.getResourcesCounter()[3]);
+        labelInkwell.setText(":"+gui.getResourcesCounter()[4]);
+        labelManuscript.setText(":"+gui.getResourcesCounter()[5]);
+        labelQuill.setText(":"+gui.getResourcesCounter()[6]);
     }
 
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {

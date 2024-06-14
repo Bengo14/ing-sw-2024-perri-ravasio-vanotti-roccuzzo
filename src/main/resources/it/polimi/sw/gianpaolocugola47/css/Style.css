@@ -61,6 +61,11 @@
 .selectable:hover{
     -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0);
 }
+.bold{
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFFEE;
+    -fx-font-size: 1.5em;
+}
 .baseSelectable{
     -fx-effect: dropshadow(gaussian, black, 20.0, 0, 0, 0);
 }

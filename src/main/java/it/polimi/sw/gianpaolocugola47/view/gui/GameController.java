@@ -301,9 +301,8 @@ public class GameController implements Initializable {
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
-        if(lastTurn&&gui.getLocalPlayerTable().getId()==gui.getNicknames().length){
+        if(lastTurn && gui.getLocalPlayerTable().getId()==gui.getNicknames().length-1){
             gui.gameOver();
-
         }
     }
 

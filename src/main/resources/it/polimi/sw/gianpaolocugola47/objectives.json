@@ -1,5 +1,138 @@
 [
   {
+    "id": 86,
+    "isAscending" : true,
+    "resource" : "FUNGI",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective",
+    "description" :"ASCENDING FUNGI \nPoints: 2"
+  },
+  {
+    "id": 87,
+    "isAscending" : false,
+    "resource" : "PLANT",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective",
+    "description" :"DESCENDING PLANT \nPoints: 2"
+  },
+  {
+    "id": 88,
+    "isAscending" : true,
+    "resource" : "ANIMAL",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective",
+    "description" :"ASCENDING ANIMAL \nPoints: 2"
+  },
+  {
+    "id": 89,
+    "isAscending" : false,
+    "resource" : "INSECTS",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "DiagonalPatternObjective",
+    "description" :"DESCENDING INSECTS \nPoints: 2"
+  },
+  {
+    "id": 90,
+    "orientation" : "bottomRight",
+    "mainResource" : "FUNGI",
+    "secondaryResource" : "PLANT",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective",
+    "description" :"MainResource:FUNGI SecondaryResource:PLANT \nOrientation:BottomRight  Points: 3"
+  },
+  {
+    "id": 91,
+    "orientation" : "bottomLeft",
+    "mainResource" : "PLANT",
+    "secondaryResource" : "INSECTS",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective",
+    "description" :"MainResource:PLANT SecondaryResource:INSECTS \nOrientation:BottomLeft  Points: 3"
+  },
+  {
+    "id": 92,
+    "orientation" : "topRight",
+    "mainResource" : "ANIMAL",
+    "secondaryResource" : "FUNGI",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective",
+    "description" :"MainResource:ANIMAL SecondaryResource:FUNGI \nOrientation:TopRight  Points: 3"
+  },
+  {
+    "id": 93,
+    "orientation" : "topLeft",
+    "mainResource" : "INSECTS",
+    "secondaryResource" : "ANIMAL",
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "LShapePatternObjective",
+    "description" :"MainResource:INSECTS SecondaryResource:ANIMAL \nOrientation:TopLeft  Points: 3"
+  },
+  {
+    "id": 94,
+    "resource" : "FUNGI",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective",
+    "description" :"3 FUNGI \nPoints: 2"
+  },
+  {
+    "id": 95,
+    "resource" : "PLANT",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective",
+    "description" :"3 PLANT \nPoints: 2"
+  },
+  {
+    "id": 96,
+    "resource" : "ANIMAL",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective",
+    "description" :"3 ANIMAL \nPoints: 2"
+  },
+  {
+    "id": 97,
+    "resource" : "INSECTS",
+    "points" : 2,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ResourceObjective",
+    "description" :"3 INSECTS \nPoints: 2"
+  },
+  {
+    "id": 98,
+    "itemsRequired" : [
+      "MANUSCRIPT",
+      "INKWELL",
+      "QUILL"
+    ],
+    "points" : 3,
+    "imgPathFront" : "imgPathFrn",
+    "imgPathBack" : "imgPathBck",
+    "type" : "ItemObjective",
+    "description" :"1 MANUSCRIPT, 1 INKWELL, 1 QUILL \nPoints: 3"
+  },
+  {
     "id": 99,
     "itemsRequired" : [
       "MANUSCRIPT"
@@ -31,138 +164,5 @@
     "imgPathBack" : "imgPathBck",
     "type" : "ItemObjective",
     "description" :"2 QUILL \nPoints: 2"
-  },
-  {
-    "id": 98,
-    "itemsRequired" : [
-      "MANUSCRIPT",
-      "INKWELL",
-      "QUILL"
-    ],
-    "points" : 3,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "ItemObjective",
-    "description" :"1 MANUSCRIPT, 1 INKWELL, 1 QUILL \nPoints: 3"
-  },
-  {
-    "id": 95,
-    "resource" : "PLANT",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "ResourceObjective",
-    "description" :"3 PLANT \nPoints: 2"
-  },
-  {
-    "id": 97,
-    "resource" : "INSECTS",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "ResourceObjective",
-    "description" :"3 INSECTS \nPoints: 2"
-  },
-  {
-    "id": 94,
-    "resource" : "FUNGI",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "ResourceObjective",
-    "description" :"3 FUNGI \nPoints: 2"
-  },
-  {
-    "id": 96,
-    "resource" : "ANIMAL",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "ResourceObjective",
-    "description" :"3 ANIMAL \nPoints: 2"
-  },
-  {
-    "id": 86,
-    "isAscending" : true,
-    "resource" : "FUNGI",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "DiagonalPatternObjective",
-    "description" :"ASCENDING FUNGI \nPoints: 2"
-  },
-  {
-    "id": 88,
-    "isAscending" : true,
-    "resource" : "ANIMAL",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "DiagonalPatternObjective",
-    "description" :"ASCENDING ANIMAL \nPoints: 2"
-  },
-  {
-    "id": 87,
-    "isAscending" : false,
-    "resource" : "PLANT",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "DiagonalPatternObjective",
-    "description" :"DESCENDING PLANT \nPoints: 2"
-  },
-  {
-    "id": 89,
-    "isAscending" : false,
-    "resource" : "INSECTS",
-    "points" : 2,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "DiagonalPatternObjective",
-    "description" :"DESCENDING INSECTS \nPoints: 2"
-  },
-  {
-    "id": 90,
-    "orientation" : "bottomRight",
-    "mainResource" : "FUNGI",
-    "secondaryResource" : "PLANT",
-    "points" : 3,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "LShapePatternObjective",
-    "description" :"MainResource:FUNGI SecondaryResource:PLANT \nOrientation:BottomRight  Points: 3"
-  },
-  {
-    "id": 92,
-    "orientation" : "topRight",
-    "mainResource" : "ANIMAL",
-    "secondaryResource" : "FUNGI",
-    "points" : 3,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "LShapePatternObjective",
-    "description" :"MainResource:ANIMAL SecondaryResource:FUNGI \nOrientation:TopRight  Points: 3"
-  },
-  {
-    "id": 93,
-    "orientation" : "topLeft",
-    "mainResource" : "INSECTS",
-    "secondaryResource" : "ANIMAL",
-    "points" : 3,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "LShapePatternObjective",
-    "description" :"MainResource:INSECTS SecondaryResource:ANIMAL \nOrientation:TopLeft  Points: 3"
-  },
-  {
-    "id": 91,
-    "orientation" : "bottomLeft",
-    "mainResource" : "PLANT",
-    "secondaryResource" : "INSECTS",
-    "points" : 3,
-    "imgPathFront" : "imgPathFrn",
-    "imgPathBack" : "imgPathBck",
-    "type" : "LShapePatternObjective",
-    "description" :"MainResource:PLANT SecondaryResource:INSECTS \nOrientation:BottomLeft  Points: 3"
   }
 ]

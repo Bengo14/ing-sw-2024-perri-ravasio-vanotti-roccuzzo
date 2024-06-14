@@ -3,14 +3,19 @@ package it.polimi.sw.gianpaolocugola47.controller;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
 
     private MainTable mainTable;
     private int currentPlayerId;
-    private int clientsConnected;
+    private int clientsConnected; // max number of clients in a given game. DOES NOT TAKE INTO ACCOUNT DISCONNECTIONS
     private int numOfPlayers;
     private int playersAdded;
+    private int numOfPlayersConnected; // checks whether all players are connected at a given time
     private int startingCardsAndObjAdded;
+    private final List<Boolean> connectedClients;
     private boolean isLastTurn;
 
     public Controller() {
@@ -20,7 +25,9 @@ public class Controller {
         this.startingCardsAndObjAdded = 0;
         this.clientsConnected = 0;
         this.numOfPlayers = -1;
+        this.numOfPlayersConnected = -1;
         this.isLastTurn = false;
+        this.connectedClients = new ArrayList<>();
     }
     public void resetGame() {
         this.mainTable = new MainTable();
@@ -50,6 +57,10 @@ public class Controller {
 
     public void addClientConnected(){
         this.clientsConnected++;
+    }
+
+    public int getNumOfPlayersConnected(){
+        return this.numOfPlayersConnected;
     }
 
     public int getClientsConnected(){
@@ -147,5 +158,17 @@ public class Controller {
     }
     public String[] getNicknames() {
         return mainTable.getNicknames();
+    }
+    public void setConnectedClient() {
+        connectedClients.add(true);
+        this.numOfPlayersConnected = connectedClients.size();
+    }
+    public void setDisconnectedClient(int index) {
+        for(Boolean b: connectedClients) {
+            if(connectedClients.indexOf(b) == index) {
+                connectedClients.set(index, false);
+                this.numOfPlayersConnected--;
+            }
+        }
     }
 }

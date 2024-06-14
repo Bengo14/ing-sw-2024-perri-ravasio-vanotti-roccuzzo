@@ -51,15 +51,11 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                    Thread.onSpinWait();
                //System.err.println("Ping control");
                VirtualView view = null;
-               int discId = 0;
                try {
                    synchronized (this.clients) {
                        for (VirtualView v : this.clients) {
                            view = v;
-                           if(view != null){
-                               discId = view.getId() + 1;
-                               v.ping();
-                           }
+                           v.ping();
                        }
                    }
                } catch (RemoteException e) {
@@ -67,27 +63,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                        try {
                            terminateGame(false, clients.indexOf(view)); // local id of dead client
                        } catch (RemoteException _) {}
-                   }/*
-                   synchronized(this.clients){ //during setup phase, the client is not added to the list yet. IndexOutOfBoundsException occurs
-                       try{
-                           this.clients.set(clients.indexOf(view), null);
-                           System.err.println("1-Client " + discId + " has disconnected.");
-                       } catch(IndexOutOfBoundsException _){
-                           terminateGame();
-                       }
                    }
-                   synchronized(controller){
-                       try{
-                           controller.setDisconnectedClient(discId);
-                       } catch(IndexOutOfBoundsException _){
-                           terminateGame();
-                       }
-                       System.err.println("2-Client " + discId + " has disconnected.");
-                       //todo: if == 1, start timeout
-                       if(controller.getNumOfPlayersConnected() == 0){
-                           terminateGame(); //if everyone has disconnected, terminate the game forcefully.
-                       }
-                   } */
                }
                try {
                    Thread.sleep(500);
@@ -146,7 +122,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                     System.out.println("New client connected");
                     this.terminated = false;
                     this.clients.add(client);
-                    this.controller.setConnectedClient();
                     this.controller.addClientConnected();
                     return this.controller.getClientsConnected() - 1;
                 }
@@ -309,18 +284,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
 
-    //to be added to the interface; to be updated
-    public void initViewAfterReconnection(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable, int playerId) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                try {
-                    for(VirtualView view : this.clients)
-                        if(view.getId() == playerId)
-                            view.initView(nicknames, globalObjectives, cardsOnHand[view.getId()], cardsOnTable);
-                } catch (RemoteException _) {}
-            }
-        }
-    }
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         synchronized (this.clients) {

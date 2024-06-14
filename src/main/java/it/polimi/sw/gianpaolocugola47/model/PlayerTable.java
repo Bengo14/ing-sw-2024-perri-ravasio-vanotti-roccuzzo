@@ -175,7 +175,7 @@ public class PlayerTable implements Serializable{
         return false; // all surrounding cards are null
     }
     private boolean checkCorner(int x, int y, int corner){
-        // this method checks only ONE corner, if need to check all corners it is to be called 4 times
+        // this method checks only ONE corner, to check all corners it is to be called 4 times
         x=setXCoordinate(x, corner);
         y=setYCoordinate(y, corner);
         if(this.placedCards[x][y]!=null){
@@ -229,7 +229,7 @@ public class PlayerTable implements Serializable{
             linkCards(x, y, corner);
     }
     private void linkCards(int x,int y, int corner) {
-        // mirror-links ONE corner for 2 cards, if need to link 4 corners it is to be called 4 times
+        // mirror-links ONE corner for 2 cards, to link 4 corners it is to be called 4 times
         if(this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
             if(corner==0 && x>=1 && y>=1)
                 linkCard(x, y, corner);

@@ -274,14 +274,15 @@ public class GameController implements Initializable {
             if(boardPoints[i]<=29)
                 boardPositions[boardPoints[i]].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+i+".png")));
         }
-        globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
-        if(globalPoints[gui.getLocalPlayerTable().getId()]>=20&& !winPoints){
-            winPoints = true;
-        }
         if(winPoints && gui.getLocalPlayerTable().getId()==0){
             lastTurn = true;
             lastTurnLabel.setText("Last turn!");
             lastTurnLabel.getStyleClass().add("tooltip");
+            lastTurnLabel.setStyle("-fx-font-weight: bold");
+        }
+        globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
+        if(boardPoints[gui.getLocalPlayerTable().getId()]>=20 && !winPoints){
+            winPoints = true;
         }
     }
 

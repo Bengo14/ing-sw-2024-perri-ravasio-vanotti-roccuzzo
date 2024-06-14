@@ -30,22 +30,22 @@ public class LShapePatternObjective extends Objectives{
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int patterns;
-        int shiftX =0;
+        int shiftX=0;
         int corner=0;
         if(this.orientation.equals("topLeft")){
-            shiftX-=2;
+            shiftX=-2;
             corner=0;
         }
         if(this.orientation.equals("topRight")) {
-            shiftX-=2;
+            shiftX=-2;
             corner=1;
         }
         if(this.orientation.equals("bottomLeft")) {
-            shiftX+=2;
+            shiftX=+2;
             corner=2;
         }
         if(this.orientation.equals("bottomRight")){
-            shiftX+=2;
+            shiftX=+2;
             corner=3;
         }
         patterns=LShapePatternsCounter(playerTable, shiftX, corner);
@@ -115,7 +115,7 @@ public class LShapePatternObjective extends Objectives{
                 x=x+(shift*verticalCardsRequired-1);
             }
             if(shift<0){
-                x=x-(shift*verticalCardsRequired+1);
+                x=x+(shift*verticalCardsRequired+1);
             }
             y=playerTable.setYCoordinate(y,corner);
             if(diagonalPatternVerifier(x,y,diagonalCardsRequired,corner,playerTable)){
@@ -162,7 +162,7 @@ public class LShapePatternObjective extends Objectives{
             x=x+(shift*verticalCardsRequired-1);
         }
         if(shift<0){
-            x=x-(shift*verticalCardsRequired+1);
+            x=x+(shift*verticalCardsRequired+1);
         }
         y=playerTable.setYCoordinate(y,corner);
         diagonalPatternFlagger(x,y,diagonalCardsRequired,corner,playerTable);

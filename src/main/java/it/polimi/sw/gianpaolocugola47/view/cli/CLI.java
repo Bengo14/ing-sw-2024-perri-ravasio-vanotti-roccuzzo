@@ -61,9 +61,9 @@ public class CLI implements View {
         ChatMessage message = new ChatMessage(cliController.getNickname(), cliController.getId());
         System.out.println("\nLast 50 unread messages: ");
         for(ChatMessage chatMessage : chatBuffer){
-            if(!message.isPrivate())
-                System.out.println(message.getSender() + ": " + message.getMessage());
-            else System.out.println(message.getSender() + ": psst, " + message.getMessage());
+            if(!chatMessage.isPrivate())
+                System.out.println(chatMessage.getSender() + ": " + chatMessage.getMessage());
+            else System.out.println(chatMessage.getSender() + ": psst, " + chatMessage.getMessage());
         }
         while(isChatOpen) {
             if(client.isItMyTurn() != startingState){
@@ -139,9 +139,9 @@ public class CLI implements View {
     @Override
     public void showTurn() {
         if(client.isItMyTurn())
-            System.out.println("It's your turn! Press any key to continue.");
+            System.out.println("It's your turn! Type /help to see all the available commands.");
         else
-            System.out.println("Your turn is done now!");
+            System.out.println("Your turn is done now! Type /help to see all the available commands");
     }
 
     @Override
@@ -490,9 +490,7 @@ public class CLI implements View {
         }while(!command.equals("1") && !command.equals("2"));
         client.setSecretObjective();
         System.out.println("Setup phase completed! Waiting for the other players to pick their cards and play their first hand.");
-        while(!client.isItMyTurn()){
-            Thread.sleep(100);
-        }
+        Thread.sleep(2000);
         for (int i = 0; i < 50; i++) System.out.println();
     }
 

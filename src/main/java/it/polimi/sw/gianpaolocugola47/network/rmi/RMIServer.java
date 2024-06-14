@@ -63,11 +63,11 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                        }
                    }
                } catch (RemoteException e) {
-                   /*synchronized (this.clients) { //old code
+                   synchronized (this.clients) { //old code
                        try {
                            terminateGame(false, clients.indexOf(view)); // local id of dead client
                        } catch (RemoteException _) {}
-                   }*/
+                   }/*
                    synchronized(this.clients){ //during setup phase, the client is not added to the list yet. IndexOutOfBoundsException occurs
                        try{
                            this.clients.set(clients.indexOf(view), null);
@@ -83,11 +83,11 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                            terminateGame();
                        }
                        System.err.println("2-Client " + discId + " has disconnected.");
-                       /*todo: if == 1, start timeout*/
+                       //todo: if == 1, start timeout
                        if(controller.getNumOfPlayersConnected() == 0){
                            terminateGame(); //if everyone has disconnected, terminate the game forcefully.
                        }
-                   }
+                   } */
                }
                try {
                    Thread.sleep(500);

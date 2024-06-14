@@ -164,11 +164,7 @@ public class Controller {
         this.numOfPlayersConnected = connectedClients.size();
     }
     public void setDisconnectedClient(int index) {
-        for(Boolean b: connectedClients) {
-            if(connectedClients.indexOf(b) == index) {
-                connectedClients.set(index, false);
-                this.numOfPlayersConnected--;
-            }
-        }
+        connectedClients.remove(index);
+        this.numOfPlayersConnected = connectedClients.size();
     }
 }

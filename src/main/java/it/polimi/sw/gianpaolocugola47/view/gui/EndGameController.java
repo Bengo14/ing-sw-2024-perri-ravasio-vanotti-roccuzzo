@@ -19,46 +19,28 @@ public class EndGameController implements Initializable {
     private Stage stage;
     @FXML
     private Button ExitGame_BTN;
-    private final TableView<PlayerTable> resultsTable = new TableView<>();
-
+    @FXML
+    private Label nameWinnerLable;
     @FXML
     private VBox leaderboardPane;
 
     @FXML
     private Label winner_LBL;
 
+
     public void showResults(int[] globalPoints, String[] nicknames) {
-     /* todo to be updated using new parameters (num of players by Array.length + points + nicknames)
-
-        // Create columns for the TableView
-        TableColumn<PlayerTable, String> nicknameColumn = new TableColumn<>("Nickname");
-        nicknameColumn.setCellValueFactory(new PropertyValueFactory<>("nickname")); // Assuming PlayerTable has a "nickname" property
-
-        TableColumn<PlayerTable, Integer> pointsColumn = new TableColumn<>("Points");
-        pointsColumn.setCellValueFactory(cellData -> new ReadOnlyIntegerWrapper(mainTable.getGlobalPoints(cellData.getValue().getId())).asObject());
-        // Add the columns to the TableView
-        resultsTable.getColumns().add(nicknameColumn);
-        resultsTable.getColumns().add(pointsColumn);
-
-        // Create an ObservableList to hold the PlayerTables
-        ObservableList<PlayerTable> resultsData = FXCollections.observableArrayList();
-
-        // Add the PlayerTables to the ObservableList
-        for (int i = 0; i < mainTable.getNumOfPlayers(); i++) {
-            resultsData.add(mainTable.getPlayerTable(i));
+     // todo to be updated using new parameters (num of players by Array.length + points + nicknames)
+        //print the player with the highest score
+        int max = 0;
+        int winner = 0;
+        for (int i = 0; i < globalPoints.length; i++) {
+            if (globalPoints[i] > max) {
+                max = globalPoints[i];
+                winner = i;
+            }
         }
+        nameWinnerLable.setText(nicknames[winner]+" is the winner with "+max+" points!");
 
-        // Sort the ObservableList based on the points
-        resultsData.sort((player1, player2) -> Integer.compare(mainTable.getGlobalPoints(player2.getId()), mainTable.getGlobalPoints(player1.getId())));
-
-        // Set the ObservableList as the items for the TableView
-        resultsTable.setItems(resultsData);
-
-        // Add the TableView to the leaderboardPane
-        leaderboardPane.getChildren().add(resultsTable);
-
-        // Display the winner
-        winner_LBL.setText("The winner is: " + resultsData.get(0).getNickName());*/
     }
 
     public void logOut(ActionEvent event){
@@ -74,10 +56,7 @@ public class EndGameController implements Initializable {
         }
     }
 
-//    public void handleExitGame() {
-//        javafx.application.Platform.exit();
-//        System.exit(0);
-//    }
+
     @Override
     public void initialize(URL url, ResourceBundle resources) {
 

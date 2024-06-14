@@ -74,7 +74,7 @@ public class GameController implements Initializable {
     @FXML
     private ScrollPane boardScrollPane;
     @FXML
-    private Label globalPointsLabel;
+    private Label globalPointsLabel,lastTurnLabel;
     @FXML
     private ImageView idPawn,isFirstPawn;
     @FXML
@@ -99,6 +99,8 @@ public class GameController implements Initializable {
     private ImageView[] cardsOnHand;
     private Button[] buttons;
     private ImageView[] table;
+    private boolean winPoints = false;
+    private boolean lastTurn = false;
 
 
     @Override
@@ -273,6 +275,14 @@ public class GameController implements Initializable {
                 boardPositions[boardPoints[i]].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+i+".png")));
         }
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
+        if(globalPoints[gui.getLocalPlayerTable().getId()]>=20&& !winPoints){
+            winPoints = true;
+        }
+        if(winPoints && gui.getLocalPlayerTable().getId()==0){
+            lastTurn = true;
+            lastTurnLabel.setText("Last turn!");
+            lastTurnLabel.getStyleClass().add("tooltip");
+        }
     }
 
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
@@ -290,6 +300,10 @@ public class GameController implements Initializable {
             imagePath += gui.getCardsOnHand()[i].isFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+        }
+        if(lastTurn&&gui.getLocalPlayerTable().getId()==gui.getNicknames().length){
+            gui.gameOver();
+
         }
     }
 

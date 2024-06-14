@@ -242,6 +242,7 @@ public class ViewGui extends Application implements View {
         });
     }
 
+
     @Override
     public void showTurn() { // called by client when turn status changes
         Platform.runLater(() -> {
@@ -251,6 +252,7 @@ public class ViewGui extends Application implements View {
         });
     }
 
+
     @Override
     public void receiveMessage(ChatMessage message) {
         Platform.runLater(() -> gameController.receiveMessage(message));
@@ -258,7 +260,7 @@ public class ViewGui extends Application implements View {
 
     @Override
     public void gameOver() {
-        /*todo set game over scene*/
+        Platform.runLater(() -> setScene("EndGame"));
     }
 
     @Override

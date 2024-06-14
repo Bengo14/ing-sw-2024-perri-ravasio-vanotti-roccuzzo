@@ -37,13 +37,6 @@ class LShapePatternObjectiveTest {
         System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(3, obj.checkPatternAndComputePoints(player));
     }
-    @Test
-    public void testIsSecondaryResourceMatchedAndNotFlagged(){
-
-
-    }
-
-
 
  }
 

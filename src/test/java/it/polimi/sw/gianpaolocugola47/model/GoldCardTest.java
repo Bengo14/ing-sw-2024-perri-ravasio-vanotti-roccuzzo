@@ -13,7 +13,7 @@ class GoldCardTest {
         assertEquals(Resources.FUNGI, g.getResourceCentreBack());
         assertTrue(g.isPointsForCorners());
         assertFalse(g.isPointsForItems());
-        assertNotEquals(Items.INKWELL, g.getItemThatGivesPoints());
+        assertNotEquals(Items.INKWELL, g.getItemRequired());
     }
     @Test
     public void testGetresourcedRequired() {

@@ -9,7 +9,7 @@ public class GoldCard extends ResourceCard {
     private ArrayList<Resources> resourcesRequired;
     private final boolean pointsForCorners;
     private final boolean pointsForItems;
-    private final Items itemThatGivesPoints;
+    private final Items itemRequired;
 
     /**
      * GoldCard constructor.
@@ -24,7 +24,7 @@ public class GoldCard extends ResourceCard {
         super(backImgPath, frontImgPath, points, resourceCentreBack);
         this.pointsForCorners = pointsForCorners;
         this.pointsForItems = pointsForItems;
-        this.itemThatGivesPoints = itemThatGivesPoints;
+        this.itemRequired = itemThatGivesPoints;
     }
 
     public ArrayList<Resources> getResourcesRequired() {
@@ -44,20 +44,20 @@ public class GoldCard extends ResourceCard {
             return "C";
         }
         if (pointsForItems) {
-            return Character.toString(itemThatGivesPoints.getSymbol());
+            return Character.toString(itemRequired.getSymbol());
         } else
             return "N/A";
     }
 
-    protected boolean isPointsForCorners() {
+    public boolean isPointsForCorners() {
         return pointsForCorners;
     }
 
-    protected Items getItemThatGivesPoints() {
-        return itemThatGivesPoints;
+    public Items getItemRequired() {
+        return itemRequired;
     }
 
-    protected boolean isPointsForItems() {
+    public boolean isPointsForItems() {
         return pointsForItems;
     }
 
@@ -95,7 +95,7 @@ public class GoldCard extends ResourceCard {
                 return points * coveredCorners; // 2*coveredCorners
             }
             if (this.isPointsForItems()) {
-                return points * playerTable.getResourceCounter(this.itemThatGivesPoints.ordinal() + 4); // points=ResourceCounter[item]
+                return points * playerTable.getResourceCounter(this.itemRequired.ordinal() + 4); // points=ResourceCounter[item]
             }
         }
         return 0; // GoldCard is not front

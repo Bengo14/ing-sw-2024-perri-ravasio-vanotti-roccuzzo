@@ -5,11 +5,11 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class PlaceableCardDeserializer {
+public class PlaceableCardDeserializer implements JsonDeserializer<PlaceableCard>{
     private final String objectiveTypeElementName;
     private final Gson gson;
     private final Map<String, Class<? extends PlaceableCard>> cardTypeRegistry;
-
+    //three types: ResourceCard, StartingCard, GoldCard
     public PlaceableCardDeserializer(String objectiveTypeElementName, Gson gson, Map<String, Class<? extends PlaceableCard>> cardTypeRegistry) {
         this.objectiveTypeElementName = objectiveTypeElementName;
         this.gson = gson;

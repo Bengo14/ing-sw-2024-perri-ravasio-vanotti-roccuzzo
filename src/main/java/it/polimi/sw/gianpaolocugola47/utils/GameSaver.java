@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GameSaver {
-    private final MainTable game;
+    private final MainTable game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
     private final Gson gson;
     private final String[] filePaths;
 

@@ -19,7 +19,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="88.0" prefWidth="1280.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Label fx:id="lastTurnLabel" prefHeight="18.0" prefWidth="198.0" stylesheets="@../css/Style.css">
+            <Label fx:id="lastTurnLabel" prefHeight="46.0" prefWidth="225.0" stylesheets="@../css/Style.css">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

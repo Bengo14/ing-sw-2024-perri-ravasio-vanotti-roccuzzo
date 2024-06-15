@@ -24,7 +24,7 @@ public class ItemObjective extends Objectives{
         this.itemsRequired = itemsRequired;
     }
 
-    protected ArrayList<Items> getItemsRequired() {
+    public ArrayList<Items> getItemsRequired() {
         return itemsRequired;
     }
 

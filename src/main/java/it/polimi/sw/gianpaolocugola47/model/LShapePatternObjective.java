@@ -10,6 +10,18 @@ public class LShapePatternObjective extends Objectives{
     private final Resources mainResource;
     private final Resources secondaryResource;
 
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public Resources getMainResource() {
+        return mainResource;
+    }
+
+    public Resources getSecondaryResource() {
+        return secondaryResource;
+    }
+
     /**
      * LShapePatternObjective constructor.
      *

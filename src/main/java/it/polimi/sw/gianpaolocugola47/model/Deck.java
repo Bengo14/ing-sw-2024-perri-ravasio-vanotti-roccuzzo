@@ -161,4 +161,20 @@ public class Deck {
             return null;
         }
     }
+
+    public static void setGoldCardsDeck(List<GoldCard> goldCardsDeck) {
+        Deck.goldCardsDeck = goldCardsDeck;
+    }
+
+    public static void setResourceCardsDeck(List<ResourceCard> resourceCardsDeck) {
+        Deck.resourceCardsDeck = resourceCardsDeck;
+    }
+
+    public static void setStartingCardsDeck(List<StartingCard> startingCardsDeck) {
+        Deck.startingCardsDeck = startingCardsDeck;
+    }
+
+    public static void setObjectiveCardsDeck(List<Objectives> objectiveCardsDeck) {
+        Deck.objectiveCardsDeck = objectiveCardsDeck;
+    }
 }

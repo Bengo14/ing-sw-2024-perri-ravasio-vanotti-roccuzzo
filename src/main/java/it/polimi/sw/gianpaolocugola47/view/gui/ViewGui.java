@@ -28,6 +28,7 @@ public class ViewGui extends Application implements View {
     private Scene scene;
     private Scene oldScene;
     private final HashMap<String, String> scenes;
+    private int idWinner;
     //private Media media;
 
     private StartingCardController startingCardController;
@@ -263,13 +264,18 @@ public class ViewGui extends Application implements View {
 
     @Override
     public void gameOver() {
-        Platform.runLater(() -> setScene("EndGame"));
+        int max = 0;
+        for (int i = 0; i < globalPoints.length; i++) {
+            if (globalPoints[i] > max) {
+                max = globalPoints[i];
+                idWinner = i;
+            }
+        }
     }
 
     @Override
     public void showWinner(int id) {
-        //System.err.println("Player " + id + " won!"); testing purposes
-        /*todo set winner scene*/
+        setScene("EndGame");
     }
 
     @Override

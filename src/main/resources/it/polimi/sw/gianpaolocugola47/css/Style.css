@@ -58,6 +58,15 @@
     -fx-max-width: 400px;
     -fx-wrap-text: true;
 }
+.lastTurn{
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 0.3em;
+    -fx-background-color: #F2E5BC; /* This is a parchment-like color */
+    -fx-text-fill: #000; /* Black color for the text */
+    -fx-max-width: 400px;
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+}
 .selectable:hover{
     -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0);
 }

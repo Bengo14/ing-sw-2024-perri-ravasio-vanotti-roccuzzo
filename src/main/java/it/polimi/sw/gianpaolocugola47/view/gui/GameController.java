@@ -186,13 +186,13 @@ public class GameController implements Initializable {
         gold_1.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[2].getId()+".png")));
         gold_2.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getCardsOnTable()[3].getId()+".png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+gui.getLocalPlayerTable().getId()+".png")));
-        labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
-        labelPlant.setText(":"+gui.getResourcesCounter()[2]);
-        labelInsect.setText(":"+gui.getResourcesCounter()[3]);
-        labelFungi.setText(":"+gui.getResourcesCounter()[1]);
-        labelInkwell.setText(":"+gui.getResourcesCounter()[5]);
-        labelManuscript.setText(":"+gui.getResourcesCounter()[6]);
-        labelQuill.setText(":"+gui.getResourcesCounter()[4]);
+        labelAnimal.setText(" "+gui.getResourcesCounter()[0]);
+        labelPlant.setText(" "+gui.getResourcesCounter()[2]);
+        labelInsect.setText(" "+gui.getResourcesCounter()[3]);
+        labelFungi.setText(" "+gui.getResourcesCounter()[1]);
+        labelInkwell.setText(" "+gui.getResourcesCounter()[5]);
+        labelManuscript.setText(" "+gui.getResourcesCounter()[6]);
+        labelQuill.setText(" "+gui.getResourcesCounter()[4]);
 
         if(gui.getLocalPlayerTable().getId() == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
@@ -286,20 +286,20 @@ public class GameController implements Initializable {
         if(winPoints && gui.getLocalPlayerTable().getId()==0){
             lastTurn = true;
             lastTurnLabel.setText("Last turn!");
-            lastTurnLabel.getStyleClass().add("tooltip");
-            lastTurnLabel.setStyle("-fx-font-weight: bold");
+            lastTurnLabel.getStyleClass().add("lastTurn");
+
         }
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
         if(boardPoints[gui.getLocalPlayerTable().getId()]>=20 && !winPoints){
             winPoints = true;
         }
-        labelAnimal.setText(":"+gui.getResourcesCounter()[0]);
-        labelPlant.setText(":"+gui.getResourcesCounter()[2]);
-        labelInsect.setText(":"+gui.getResourcesCounter()[3]);
-        labelFungi.setText(":"+gui.getResourcesCounter()[1]);
-        labelInkwell.setText(":"+gui.getResourcesCounter()[5]);
-        labelManuscript.setText(":"+gui.getResourcesCounter()[6]);
-        labelQuill.setText(":"+gui.getResourcesCounter()[4]);
+        labelAnimal.setText(" "+gui.getResourcesCounter()[0]);
+        labelPlant.setText(" "+gui.getResourcesCounter()[2]);
+        labelInsect.setText(" "+gui.getResourcesCounter()[3]);
+        labelFungi.setText(" "+gui.getResourcesCounter()[1]);
+        labelInkwell.setText(" "+gui.getResourcesCounter()[5]);
+        labelManuscript.setText(" "+gui.getResourcesCounter()[6]);
+        labelQuill.setText(" "+gui.getResourcesCounter()[4]);
     }
 
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
@@ -319,7 +319,7 @@ public class GameController implements Initializable {
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
         if(lastTurn && gui.getLocalPlayerTable().getId()==gui.getNicknames().length-1){
-            gui.gameOver();
+            gui.setScene("endGame");
         }
     }
 

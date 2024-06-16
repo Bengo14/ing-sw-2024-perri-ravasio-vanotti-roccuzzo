@@ -79,7 +79,7 @@ public class GoldCard extends ResourceCard {
 
     @Override
     public int getPoints(PlayerTable playerTable) {
-        if (this.isFront()) {
+        if(this.isFront()) {
             int points = this.getThisPoints();
             if (!this.isPointsForCorners() && !this.isPointsForItems()) {
                 return points; // default points
@@ -97,8 +97,9 @@ public class GoldCard extends ResourceCard {
             if (this.isPointsForItems()) {
                 return points * playerTable.getResourceCounter(this.itemRequired.ordinal() + 4); // points=ResourceCounter[item]
             }
-        }
-        return 0; // GoldCard is not front
+        } else
+            return 0; // card is not front
+        return 0;
     }
 
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable) {

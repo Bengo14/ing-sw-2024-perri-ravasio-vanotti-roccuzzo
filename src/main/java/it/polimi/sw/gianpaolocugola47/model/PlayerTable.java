@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 import static java.util.Arrays.sort;
@@ -11,14 +13,23 @@ import static java.util.Arrays.sort;
  *
  */
 public class PlayerTable implements Serializable{
-    private static final int MATRIX_DIMENSION = 22;
-    private static final int STARTING_CARD_POS = 10;
+    @Expose
+    public static final int MATRIX_DIMENSION = 22;
+    @Expose
+    public static final int STARTING_CARD_POS = 10;
+    @Expose
     private int id;
+    @Expose
     private String nickName;
+    @Expose
     private boolean canPlay;
+    @Expose
     private int[] resourceCounter;
+    @Expose
     private Objectives secretObjective;
+    @Expose
     private StartingCard startingCard;
+    @Expose
     private ResourceCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
 
@@ -327,5 +338,18 @@ public class PlayerTable implements Serializable{
 
     public void setCardOnHand(int position, ResourceCard cardOnHand){
         this.cardsOnHand[position] = cardOnHand;
+    }
+
+    public int[][] getCardIdMatrix(){
+        int[][] cardIdMatrix = new int[MATRIX_DIMENSION][MATRIX_DIMENSION];
+        for(int i=0; i<MATRIX_DIMENSION; i++){
+            for(int j=0; j<MATRIX_DIMENSION; j++){
+                if(placedCards[i][j] != null)
+                    cardIdMatrix[i][j] = placedCards[i][j].getId();
+                else
+                    cardIdMatrix[i][j] = -1;
+            }
+        }
+        return cardIdMatrix;
     }
 }

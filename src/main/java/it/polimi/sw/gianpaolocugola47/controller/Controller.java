@@ -87,9 +87,7 @@ public class Controller { //has to include nicknames of players
         this.playersAdded++;
         if(this.numOfPlayers == this.playersAdded){
             mainTable.startGame();
-            gameSaver = new GameSaver(this);
-            gameSaver.generateGameStatusJson();
-            gameSaver.generateDeckStatusJson();
+            this.gameSaver = new GameSaver(this); //all players are present, files for playerTables are correctly generated
         }
     }
 
@@ -160,9 +158,13 @@ public class Controller { //has to include nicknames of players
         computeWinner();
     }
     private void updateCurrentPlayer() {
-        if(currentPlayerId == mainTable.getNumOfPlayers()-1)
+        if(currentPlayerId == mainTable.getNumOfPlayers()-1){
             currentPlayerId = 0;
+        }
         else this.currentPlayerId++;
+        gameSaver.updateControllerStatus(this);
+        gameSaver.generateDeckStatusJson();
+        gameSaver.generateGameStatusJson();
     }
     private void computeWinner() {
         mainTable.computeWinnerAtEndGame();

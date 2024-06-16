@@ -22,7 +22,7 @@ public class GameSaver {
                 .setPrettyPrinting()
                 .create();
         this.boardFilePaths = new ArrayList<>(); //file below has to take nicknames into consideration
-        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json");
+        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json"); //controller & main table status
         this.initPlayerTableFiles();
         this.deckFilePaths = new String[4];
         this.deckFilePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
@@ -33,10 +33,7 @@ public class GameSaver {
     private void initPlayerTableFiles(){
         if(game != null) {
             for(String nickname : game.getMainTable().getNicknames()) { //playerTable excluding board
-                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/playerTableStatus/" + nickname + ".json");
-            }
-            for(String nickname : game.getMainTable().getNicknames()) { //board
-                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/boardStatus/" + nickname + ".json");
+                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus_" + nickname + ".json");
             }
         }
     }
@@ -45,10 +42,12 @@ public class GameSaver {
         Gson gsonContr = new GsonBuilder()
                 .registerTypeAdapter(Controller.class, controllerSerializer)
                 .create();
-        MainTableSerializer mainTableSerializer = new MainTableSerializer();
-        Gson gsonMainTable = new GsonBuilder()
-                .registerTypeAdapter(MainTable.class, mainTableSerializer)
+        PlayerTableSerializer playerTableSerializer = new PlayerTableSerializer();
+        Gson gsonPlayer = new GsonBuilder()
+                .registerTypeAdapter(PlayerTable.class, playerTableSerializer)
+                .excludeFieldsWithoutExposeAnnotation()
                 .create();
+        PlayerTable[] pt = game.getMainTable().getPlayersTables();
         try{
             Writer writer = new FileWriter(boardFilePaths.getFirst());
             gsonContr.toJson(game, writer);
@@ -56,6 +55,19 @@ public class GameSaver {
             writer.close();
         } catch (IOException e) {
             System.out.println("Couldn't save controller status.");
+            return false;
+        } try {
+            for(int i = 1; i < boardFilePaths.size(); i++) {
+                Writer ptWr = new FileWriter(boardFilePaths.get(i));
+                gsonPlayer.toJson(pt[i-1], ptWr);
+                ptWr.flush();
+                ptWr.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Couldn't save player table status.");
+            return false;
+        } catch(StackOverflowError e){
+            System.out.println("Stack overflow error.");
             return false;
         }
         return true;

@@ -23,7 +23,6 @@ public class GameSaver {
                 .create();
         this.boardFilePaths = new ArrayList<>(); //file below has to take nicknames into consideration
         this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json");
-        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/mainTableStatus.json");
         this.initPlayerTableFiles();
         this.deckFilePaths = new String[4];
         this.deckFilePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
@@ -33,8 +32,11 @@ public class GameSaver {
     }
     private void initPlayerTableFiles(){
         if(game != null) {
-            for(String nickname : game.getMainTable().getNicknames()) {
-                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/" + nickname + ".json");
+            for(String nickname : game.getMainTable().getNicknames()) { //playerTable excluding board
+                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/playerTableStatus/" + nickname + ".json");
+            }
+            for(String nickname : game.getMainTable().getNicknames()) { //board
+                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/boardStatus/" + nickname + ".json");
             }
         }
     }
@@ -54,14 +56,6 @@ public class GameSaver {
             writer.close();
         } catch (IOException e) {
             System.out.println("Couldn't save controller status.");
-            return false;
-        }try{
-            Writer writer = new FileWriter(boardFilePaths.get(1));
-            gsonMainTable.toJson(game.getMainTable(), writer);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Couldn't save main table status.");
             return false;
         }
         return true;

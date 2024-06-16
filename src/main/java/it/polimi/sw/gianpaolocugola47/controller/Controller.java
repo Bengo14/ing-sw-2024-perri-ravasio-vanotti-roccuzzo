@@ -13,7 +13,7 @@ public class Controller { //has to include nicknames of players
     private int playersAdded;
     private int startingCardsAndObjAdded;
     private boolean isLastTurn;
-    private GameSaver gameSaver; //game gets updated anytime a turn is finished (to be implemented)
+    private GameSaver gameSaver; //game gets updated anytime a player finishes his turn (to be implemented)
 
     public MainTable getMainTable() {
         return mainTable;

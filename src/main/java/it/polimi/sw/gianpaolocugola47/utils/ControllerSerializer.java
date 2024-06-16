@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
+import it.polimi.sw.gianpaolocugola47.model.MainTable;
 
 import java.lang.reflect.Type;
 
@@ -22,8 +23,9 @@ public class ControllerSerializer implements JsonSerializer<Controller> {
         jsonObject.addProperty("playersAdded", controller.getPlayersAdded());
         jsonObject.addProperty("startingCardsAndObjAdded", controller.getStartingCardsAndObjAdded());
         jsonObject.addProperty("isLastTurn", controller.isLastTurn());
-        //JsonElement mainTable = jsonSerializationContext.serialize(controller.getMainTable());
-        //jsonObject.add("mainTable", mainTable);
+        MainTableSerializer mainTableSerializer = new MainTableSerializer();
+        JsonElement mainTable = mainTableSerializer.serialize(controller.getMainTable(), MainTable.class, jsonSerializationContext);
+        jsonObject.add("mainTable", mainTable);
         return jsonObject;
     }
 }

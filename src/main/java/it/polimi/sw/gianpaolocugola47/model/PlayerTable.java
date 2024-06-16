@@ -16,11 +16,11 @@ public class PlayerTable implements Serializable{
     private int id;
     private String nickName;
     private boolean canPlay;
-    private final int[] resourceCounter;
+    private int[] resourceCounter;
     private Objectives secretObjective;
     private StartingCard startingCard;
     private ResourceCard[] cardsOnHand;
-    private final PlaceableCard[][] placedCards;
+    private PlaceableCard[][] placedCards;
 
     /**
      * Class PlayerTable's constructor.
@@ -45,6 +45,26 @@ public class PlayerTable implements Serializable{
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.cardsOnHand = new ResourceCard[3];
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public boolean isCanPlay() {
+        return canPlay;
+    }
+
+    public void setCanPlay(boolean canPlay) {
+        this.canPlay = canPlay;
+    }
+
+    public void setResourceCounter(int[] resourceCounter) {
+        this.resourceCounter = resourceCounter;
+    }
+
+    public void setPlacedCards(PlaceableCard[][] placedCards) {
+        this.placedCards = placedCards;
     }
 
     public void setStartingCard(StartingCard startingCard){
@@ -74,7 +94,7 @@ public class PlayerTable implements Serializable{
     protected int getResourceCounter(int position) {
         return resourceCounter[position];
     }
-    protected int[] getResourceCounter() {return resourceCounter;}
+    public int[] getResourceCounter() {return resourceCounter;}
     public Objectives getSecretObjective() {
         return secretObjective;
     }

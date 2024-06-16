@@ -2,8 +2,9 @@ package it.polimi.sw.gianpaolocugola47.controller;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
+import it.polimi.sw.gianpaolocugola47.utils.GameSaver;
 
-public class Controller {
+public class Controller { //has to include nicknames of players
 
     private MainTable mainTable;
     private int currentPlayerId;
@@ -12,6 +13,31 @@ public class Controller {
     private int playersAdded;
     private int startingCardsAndObjAdded;
     private boolean isLastTurn;
+    private GameSaver gameSaver; //game gets updated anytime a turn is finished (to be implemented)
+
+    public MainTable getMainTable() {
+        return mainTable;
+    }
+
+    public void setMainTable(MainTable mainTable) {
+        this.mainTable = mainTable;
+    }
+
+    public int getCurrentPlayerId() {
+        return currentPlayerId;
+    }
+
+    public int getPlayersAdded() {
+        return playersAdded;
+    }
+
+    public int getStartingCardsAndObjAdded() {
+        return startingCardsAndObjAdded;
+    }
+
+    public boolean isLastTurn() {
+        return isLastTurn;
+    }
 
     public Controller() {
         this.mainTable = new MainTable();
@@ -59,8 +85,12 @@ public class Controller {
     public void addPlayer(int id, String nickname) {
         mainTable.addPlayer(id, nickname);
         this.playersAdded++;
-        if(this.numOfPlayers == this.playersAdded)
+        if(this.numOfPlayers == this.playersAdded){
             mainTable.startGame();
+            gameSaver = new GameSaver(this);
+            gameSaver.generateGameStatusJson();
+            gameSaver.generateDeckStatusJson();
+        }
     }
 
     public int getNumOfPlayersCurrentlyAdded(){
@@ -112,6 +142,7 @@ public class Controller {
             if(isLastTurn) {
                 currentPlayerId = -1;
                 computeWinner();
+                gameSaver.resetFiles();
                 return;
             } else {
                 this.isLastTurn = true;

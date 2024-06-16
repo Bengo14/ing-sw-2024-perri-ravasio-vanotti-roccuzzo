@@ -2,7 +2,7 @@ package it.polimi.sw.gianpaolocugola47.view.cli;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 import it.polimi.sw.gianpaolocugola47.view.View;
 
 import java.io.BufferedReader;

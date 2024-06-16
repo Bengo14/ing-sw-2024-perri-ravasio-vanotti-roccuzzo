@@ -24,6 +24,49 @@ public class MainTable implements Observable {
     private int numOfPlayers;
     private final List<Observer> observers;
 
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
+    public ResourceCard[] getCardsOnTable() {
+        return cardsOnTable;
+    }
+
+    public void setCardsOnTable(ResourceCard[] cardsOnTable) {
+        this.cardsOnTable = cardsOnTable;
+    }
+
+    public Objectives[] getGlobalObjectives() {
+        return globalObjectives;
+    }
+
+    public void setGlobalObjectives(Objectives[] globalObjectives) {
+        this.globalObjectives = globalObjectives;
+    }
+
+    public int[] getBoardPoints() {
+        return boardPoints;
+    }
+
+    public void setBoardPoints(int[] boardPoints) {
+        this.boardPoints = boardPoints;
+    }
+
+    public int[] getGlobalPoints() {
+        return globalPoints;
+    }
+
+    public void setGlobalPoints(int[] globalPoints) {
+        this.globalPoints = globalPoints;
+    }
+
+    public PlayerTable[] getPlayersTables() {
+        return playersTables;
+    }
+
+    public void setPlayersTables(PlayerTable[] playersTables) {
+        this.playersTables = playersTables;
+    }
 
     public MainTable() {
         this.endGame = false;

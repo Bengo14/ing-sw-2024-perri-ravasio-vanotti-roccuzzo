@@ -7,7 +7,7 @@ import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;

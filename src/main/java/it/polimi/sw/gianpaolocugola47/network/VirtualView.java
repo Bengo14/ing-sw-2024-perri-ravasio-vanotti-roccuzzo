@@ -1,7 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.network;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

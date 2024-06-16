@@ -4,7 +4,7 @@
     <module name="GianpaoloCugola47" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="it.polimi.sw.gianpaolocugola47.utils.*" />
+        <option name="PATTERN" value="it.polimi.sw.gianpaolocugola47.network.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

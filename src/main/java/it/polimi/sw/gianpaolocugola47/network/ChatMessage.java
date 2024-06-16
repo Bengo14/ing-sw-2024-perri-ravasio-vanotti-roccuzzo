@@ -1,4 +1,4 @@
-package it.polimi.sw.gianpaolocugola47.utils;
+package it.polimi.sw.gianpaolocugola47.network;
 
 import java.io.Serializable;
 

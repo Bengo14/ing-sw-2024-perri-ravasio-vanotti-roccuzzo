@@ -2,12 +2,11 @@ package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;

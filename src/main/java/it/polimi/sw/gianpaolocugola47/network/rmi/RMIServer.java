@@ -6,7 +6,7 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

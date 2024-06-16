@@ -4,7 +4,7 @@ import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

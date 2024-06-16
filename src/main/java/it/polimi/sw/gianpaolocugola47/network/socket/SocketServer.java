@@ -6,7 +6,7 @@ import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
 import java.net.InetSocketAddress;

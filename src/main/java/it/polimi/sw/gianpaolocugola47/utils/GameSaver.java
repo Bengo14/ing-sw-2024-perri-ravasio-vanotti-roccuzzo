@@ -2,40 +2,72 @@ package it.polimi.sw.gianpaolocugola47.utils;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.*;
-import it.polimi.sw.gianpaolocugola47.exceptions.GameNotStartedException;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameSaver {
-    private final MainTable game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
+    private Controller game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
     private final Gson gson;
-    private final String[] filePaths;
+    private final String[] deckFilePaths;
+    private final List<String> boardFilePaths;
 
-    public GameSaver(MainTable game) {
+    public GameSaver(Controller game) {
         this.game = game;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        this.filePaths = new String[5];
-        this.filePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/mainTableStatus.json";
-        this.filePaths[1] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
-        this.filePaths[2] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusGold.json";
-        this.filePaths[3] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusStarting.json";
-        this.filePaths[4] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusObjectives.json";
+        this.boardFilePaths = new ArrayList<>(); //file below has to take nicknames into consideration
+        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json");
+        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/mainTableStatus.json");
+        this.initPlayerTableFiles();
+        this.deckFilePaths = new String[4];
+        this.deckFilePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
+        this.deckFilePaths[1] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusGold.json";
+        this.deckFilePaths[2] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusStarting.json";
+        this.deckFilePaths[3] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusObjectives.json";
     }
-
-    private void generateGameStatusJson() throws IOException {
-        try {
-            gson.toJson(this.game, new FileWriter(filePaths[0]));
-        } catch (JsonIOException e) {
-            e.printStackTrace();
+    private void initPlayerTableFiles(){
+        if(game != null) {
+            for(String nickname : game.getMainTable().getNicknames()) {
+                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/" + nickname + ".json");
+            }
         }
     }
+    public boolean generateGameStatusJson(){
+        ControllerSerializer controllerSerializer = new ControllerSerializer();
+        Gson gsonContr = new GsonBuilder()
+                .registerTypeAdapter(Controller.class, controllerSerializer)
+                .create();
+        MainTableSerializer mainTableSerializer = new MainTableSerializer();
+        Gson gsonMainTable = new GsonBuilder()
+                .registerTypeAdapter(MainTable.class, mainTableSerializer)
+                .create();
+        try{
+            Writer writer = new FileWriter(boardFilePaths.getFirst());
+            gsonContr.toJson(game, writer);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Couldn't save controller status.");
+            return false;
+        }try{
+            Writer writer = new FileWriter(boardFilePaths.get(1));
+            gsonMainTable.toJson(game.getMainTable(), writer);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Couldn't save main table status.");
+            return false;
+        }
+        return true;
+    }
 
-    public boolean generateDeckStatusJson() throws IOException {
+    public boolean generateDeckStatusJson()  {
         String s;
         DiagonalPatternObjectiveSerializer diagonalPatternObjectiveSerializer = new DiagonalPatternObjectiveSerializer();
         LShapePatternObjectiveSerializer lShapePatternObjectiveSerializer = new LShapePatternObjectiveSerializer();
@@ -60,8 +92,8 @@ public class GameSaver {
         } else {
             try{
                 Writer[] writer = new Writer[4];
-                for(int i = 1; i < 5; i++) {
-                    writer[i-1] = new FileWriter(filePaths[i]);
+                for(int i = 0; i < 4; i++) {
+                    writer[i] = new FileWriter(deckFilePaths[i]);
                 }
                 gson.toJson(Deck.getResourceCardsDeck(), writer[0]);
                 writer[0].flush();
@@ -94,8 +126,9 @@ public class GameSaver {
                 writer[3].append("]");
                 writer[3].flush();
                 writer[3].close();
-            } catch(JsonIOException e) {
-                e.printStackTrace();
+            } catch(JsonIOException | IOException e)  {
+                System.out.println("Couldn't save deck status.");
+                return false;
             }
         }
         return true;
@@ -104,9 +137,9 @@ public class GameSaver {
     public boolean loadDeckStatus(){
         Reader[] reader = new Reader[4];
         Type listOfCards;
-        for(int i = 1; i < 5; i++) {
+        for(int i = 0; i < 4; i++) {
             try {
-                reader[i-1] = new FileReader(filePaths[i]);
+                reader[i] = new FileReader(deckFilePaths[i]);
             } catch (FileNotFoundException e) {
                 System.out.println("File were not found, unable to load the game status.");
                 return false;
@@ -138,13 +171,29 @@ public class GameSaver {
         }
         return true;
     }
-    public void saveGameStatus() throws GameNotStartedException{
-        try{
-            if(!generateDeckStatusJson())
-                throw new GameNotStartedException("The game has not started yet, decks are empty.");
-            generateGameStatusJson();
-        } catch (IOException e) {
-            System.out.println("Unable to save the current game status onto the respective files.");
+
+    public boolean resetFiles(){
+        boolean correctDeletions = true;
+        for(String path : deckFilePaths) {
+            File f = new File(path);
+            if(f.exists()) {
+                if(!f.delete()){
+                    correctDeletions = false;
+                }
+            }
         }
+        for(String path : boardFilePaths) {
+            File f = new File(path);
+            if(f.exists()) {
+                if(!f.delete()){
+                    correctDeletions = false;
+                }
+            }
+        }
+        return correctDeletions;
+    }
+
+    public void updateControllerStatus(Controller game){
+        this.game = game;
     }
 }

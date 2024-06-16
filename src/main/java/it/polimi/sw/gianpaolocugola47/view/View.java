@@ -5,7 +5,7 @@ import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.utils.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 public interface View {
 

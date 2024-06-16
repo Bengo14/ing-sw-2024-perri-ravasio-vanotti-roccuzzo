@@ -27,7 +27,11 @@ public class EndGameController implements Initializable {
     @FXML
     private Label winner_LBL;
 
-
+    /**
+     * This method shows the results of the game.
+     * @param globalPoints the points of the players
+     * @param nicknames the nicknames of the players
+     */
     public void showResults(int[] globalPoints, String[] nicknames) {
      // todo to be updated using new parameters (num of players by Array.length + points + nicknames)
         //print the player with the highest score
@@ -43,6 +47,10 @@ public class EndGameController implements Initializable {
 
     }
 
+    /**
+     * this method create the logout button
+     * @param event
+     */
     public void logOut(ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");

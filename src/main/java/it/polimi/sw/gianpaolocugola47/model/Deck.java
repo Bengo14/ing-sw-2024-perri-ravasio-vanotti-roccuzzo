@@ -21,11 +21,16 @@ public class Deck {
     private static Random randomGenerator;
     private static final HashMap<Integer, PlaceableCard> placeableCardIdMap = new HashMap<>();
     private static final HashMap<Integer, Objectives> objectiveCardIdMap = new HashMap<>();
-
+    /**
+     * This method initializes the deck and shuffles it.
+     * */
     public static void initAndShuffleDeck() {
         initDeck();
         shuffleDeck();
     }
+    /**
+     * This method initializes the deck.
+     * */
     public static void initDeck() {
         randomGenerator = new Random(System.currentTimeMillis());
         generateStartingCardsDeck();
@@ -34,13 +39,18 @@ public class Deck {
         generateObjectiveCardsDeck();
         initHashMaps();
     }
+    /**
+     * This method shuffles the deck.
+     * */
     private static void shuffleDeck() {
         Collections.shuffle(goldCardsDeck,randomGenerator);
         Collections.shuffle(resourceCardsDeck,randomGenerator);
         Collections.shuffle(startingCardsDeck,randomGenerator);
         Collections.shuffle(objectiveCardsDeck,randomGenerator);
     }
-
+    /**
+     * This method initializes the hashmaps that map the card id to the card itself.
+     * */
     private static void initHashMaps(){
         for (GoldCard goldCard : goldCardsDeck) {
             placeableCardIdMap.put(goldCard.getId(),goldCard);
@@ -55,7 +65,9 @@ public class Deck {
             objectiveCardIdMap.put(objectives.getId(),objectives);
         }
     }
-
+    /**
+     * This method generates the resource cards deck.
+     * */
     private static void generateResourceCardsDeck() {
         Gson gson = new Gson();
         try {
@@ -66,6 +78,9 @@ public class Deck {
             e.printStackTrace();
         }
     }
+    /**
+     * This method generates the gold cards deck.
+     * */
     private static void generateGoldCardsDeck() {
         Gson gson = new Gson();
         try {
@@ -75,6 +90,9 @@ public class Deck {
             e.printStackTrace();
         }
     }
+    /**
+     * This method generates the objective cards deck.
+     * */
     private static void generateObjectiveCardsDeck(){
         ObjectiveDeserializer deserializer = new ObjectiveDeserializer("type");
         deserializer.registerObjectiveType("ItemObjective", ItemObjective.class);
@@ -90,6 +108,9 @@ public class Deck {
             e.printStackTrace();
         }
     }
+    /**
+     * This method generates the starting cards deck.
+     * */
     private static void generateStartingCardsDeck(){
         Gson gson = new Gson();
         try {
@@ -99,53 +120,100 @@ public class Deck {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This method draws a card from the resource deck.
+     * @return the drawn card.
+     * */
     protected static ResourceCard drawCardFromResourceDeck(){
         if(resourceCardsDeck.isEmpty())
             return null;
         return resourceCardsDeck.removeLast();
     }
+    /**
+     * This method draws a card from the gold deck.
+     * @return the drawn card.
+     * */
     protected static GoldCard drawCardFromGoldDeck(){
         if(goldCardsDeck.isEmpty())
             return null;
         return goldCardsDeck.removeLast();
     }
+    /**
+     * This method draws a card from the objective deck.
+     * @return the drawn card.
+     * */
     protected static Objectives drawCardFromObjectivesDeck(){
         if(objectiveCardsDeck.isEmpty())
             return null;
         return objectiveCardsDeck.removeLast();
     }
+    /**
+     * This method draws a card from the starting deck.
+     * @return the drawn card.
+     * */
     public static StartingCard drawCardFromStartingDeck(){
         if(startingCardsDeck.isEmpty())
             return null;
         return startingCardsDeck.removeLast();
     }
+    /**
+     * This method returns the gold cards deck.
+     * @return the gold cards deck.
+     * */
     public static List<GoldCard> getGoldCardsDeck() {
         return goldCardsDeck;
     }
+    /**
+     * This method returns the resource cards deck.
+     * @return the resource cards deck.
+     * */
     public static List<ResourceCard> getResourceCardsDeck() {
         return resourceCardsDeck;
     }
+    /**
+     * This method returns the starting cards deck.
+     * @return the starting cards deck.
+     * */
     public static List<StartingCard> getStartingCardsDeck() {
         return startingCardsDeck;
     }
+    /**
+     * This method returns the objective cards deck.
+     * @return the objective cards deck.
+     * */
     public static List<Objectives> getObjectiveCardsDeck() {
         return objectiveCardsDeck;
     }
+    /**
+     * This method check if the decks are empty.
+     * @return true if the decks are empty, false otherwise.
+     * */
     protected static boolean areDecksEmpty() {
         return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
     }
+    /**
+     * This method returns the gold card on top of the deck.
+     * @return the gold card on top of the deck.
+     * */
     public static GoldCard getGoldCardOnTop() {
         if(!goldCardsDeck.isEmpty())
             return goldCardsDeck.getLast();
         else return null;
     }
+    /**
+     * This method returns the resource card on top of the deck.
+     * @return the resource card on top of the deck.
+     * */
     public static ResourceCard getResourceCardOnTop() {
         if(!resourceCardsDeck.isEmpty())
             return resourceCardsDeck.getLast();
         else return null;
     }
-
+    /**
+     * This method returns the card from id.
+     * @param id the id of the card.
+     * @return the card with that id.
+     * */
     public static PlaceableCard getCardFromGivenId(int id){
         try{
             return placeableCardIdMap.get(id);
@@ -153,7 +221,11 @@ public class Deck {
             return null;
         }
     }
-
+    /**
+     * This method returns the objective card from id.
+     * @param id the id of the objective card.
+     * @return the objective card with that id.
+     * */
     public static Objectives getObjectiveCardFromGivenId(int id){
         try{
             return objectiveCardIdMap.get(id);
@@ -161,19 +233,31 @@ public class Deck {
             return null;
         }
     }
-
+    /**
+     * This method sets the gold cards deck.
+     * @param goldCardsDeck the gold cards deck.
+     * */
     public static void setGoldCardsDeck(List<GoldCard> goldCardsDeck) {
         Deck.goldCardsDeck = goldCardsDeck;
     }
-
+    /**
+     * This method sets the resource cards deck.
+     * @param resourceCardsDeck the resource cards deck.
+     * */
     public static void setResourceCardsDeck(List<ResourceCard> resourceCardsDeck) {
         Deck.resourceCardsDeck = resourceCardsDeck;
     }
-
+    /**
+     * This method sets the starting cards deck.
+     * @param startingCardsDeck the starting cards deck.
+     * */
     public static void setStartingCardsDeck(List<StartingCard> startingCardsDeck) {
         Deck.startingCardsDeck = startingCardsDeck;
     }
-
+    /**
+     * This method sets the objective cards deck.
+     * @param objectiveCardsDeck the objective cards deck.
+     * */
     public static void setObjectiveCardsDeck(List<Objectives> objectiveCardsDeck) {
         Deck.objectiveCardsDeck = objectiveCardsDeck;
     }

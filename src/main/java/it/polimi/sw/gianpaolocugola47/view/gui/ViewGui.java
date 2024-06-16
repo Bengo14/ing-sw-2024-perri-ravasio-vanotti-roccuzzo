@@ -45,7 +45,10 @@ public class ViewGui extends Application implements View {
     private int[] boardPoints;  //NOT on playerTable
     private String[] nicknames;
 
-
+    /**
+     * Constructor of the class
+     * It creates a new HashMap with the scenes of the game
+     */
     public ViewGui() {
         scenes = new HashMap<>();
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
@@ -54,12 +57,17 @@ public class ViewGui extends Application implements View {
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("OtherBoard", "/it/polimi/sw/gianpaolocugola47/fxml/OtherBoardFXML.fxml");
     }
-
+    /**
+     * This method sets the client of the view
+     * @param client the client that is using the view
+     */
     @Override
     public void setClient(Client client) {
         this.client = client;
     }
-
+    /**
+     * This method starts the view
+     */
     @Override
     public void start() {
         try {
@@ -68,7 +76,10 @@ public class ViewGui extends Application implements View {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This method starts the view
+     * @param stage the stage of the view
+     */
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -108,7 +119,11 @@ public class ViewGui extends Application implements View {
         delay.setOnFinished(event -> setScene("StartingCard"));
         delay.play();
     }
-
+    /**
+     * This method sets the scene of the view, given the name of the scene.
+     * It loads the fxml file of the scene and sets the controller of the scene
+     * @param sceneName the name of the scene
+     */
     public void setScene(String sceneName) {
         
         Platform.runLater(()-> {
@@ -140,6 +155,10 @@ public class ViewGui extends Application implements View {
         });
     }
 
+    /**
+     * This method creates the logout button and the allert that asks if the user wants to logout.
+     * @param primaryStage the stage of the view
+     */
     public void logOut(Stage primaryStage) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -158,7 +177,10 @@ public class ViewGui extends Application implements View {
             }
         });
     }
-
+    /**
+     * This method sets the scene of the view to the other board scene
+     * @param id the id of the player
+     */
     public void setOtherBoardScene(int id) {
         Platform.runLater(() -> {
             this.oldScene = stage.getScene();
@@ -178,7 +200,9 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
-
+    /**
+     * This method resets the scene of the view to the previous scene
+     */
     public void resetScene() {
         Platform.runLater(() -> {
             this.scene = oldScene;
@@ -186,7 +210,13 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
-
+    /**
+     * This method sets the scene of the view to the game scene
+     * @param nicknames the nicknames of the players
+     * @param globalObjectives the global objectives of the game
+     * @param cardsOnHand the cards on the hand of the player
+     * @param cardsOnTable the cards on the table
+     */
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
         Platform.runLater(() -> {
@@ -216,10 +246,20 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
+
+    /**
+     * This method get the resources counter of the player from the client.
+     * @return the resources counter of the player.
+     */
     public int[] getResourcesCounter(){
         return client.getResourceCounter(getLocalPlayerTable().getId());
     }
-
+    /**
+     * This method updates the deck.
+     * @param resourceCardOnTop the resource card on top of the deck.
+     * @param goldCardOnTop the gold card on top of the deck.
+     * @param drawPos the position of the card drawn.
+     */
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         Platform.runLater(() -> {
@@ -236,7 +276,11 @@ public class ViewGui extends Application implements View {
             gameController.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
         });
     }
-
+    /**
+     * This method updates the points of the player.
+     * @param boardPoints the points of the player.
+     * @param globalPoints the global points of the player.
+     */
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
         Platform.runLater(() -> {
@@ -246,7 +290,9 @@ public class ViewGui extends Application implements View {
         });
     }
 
-
+    /**
+     * This method shows the turn of the player.
+     */
     @Override
     public void showTurn() { // called by client when turn status changes
         Platform.runLater(() -> {
@@ -272,25 +318,45 @@ public class ViewGui extends Application implements View {
             }
         }
     }
-
+    /**
+     * This method shows the winner of the game.
+     * It sets the scene to the end game scene.
+     * @param id the id of the winner.
+     */
     @Override
     public void showWinner(int id) {
         setScene("EndGame");
     }
 
+    /**
+     * This method get the secret objective of the player from the client.
+     * @return the secret objective of the player.
+     */
     @Override
     public Objectives getSecretObjective() {
         return localPlayerTable.getSecretObjective();
     }
-
+    /**
+     * This method get the starting card of the player from the client.
+     * @return the starting card of the player.
+     */
     @Override
     public StartingCard getStartingCard() {
         return localPlayerTable.getStartingCard();
     }
 
+    /**
+     * This method show the turn of the player.
+     * @return true if it's the turn of the player, false otherwise.
+     */
     protected boolean isItMyTurn() {
         return client.isItMyTurn();
     }
+
+    /**
+     * This method gets the playable positions from the client.
+     * @return the playable positions.
+     */
     public boolean[][] getPlayablePositions() {
         return client.getPlayablePositions();
     }
@@ -298,6 +364,10 @@ public class ViewGui extends Application implements View {
         return client.playCard(hand, x, y, corner, isFront);
     }
 
+    /**
+     * This method draw a card from the deck.
+     * @param position the position of the card drawn.
+     */
     protected void drawCard(int position) {
 
         ResourceCard choice = null;
@@ -318,27 +388,51 @@ public class ViewGui extends Application implements View {
                 }
         client.drawCard(position);
     }
-
+    /**
+     * This method sends a message to other client.
+     * @param message the message to send.
+     */
     protected void sendMessage(ChatMessage message) {
         if (message.isPrivate())
             client.sendPrivateMessage(message);
         else client.sendMessage(message);
     }
+
+    /**
+     * This method gets the local player table
+     * @return the local player table
+     */
     protected PlayerTable getLocalPlayerTable() {
         return localPlayerTable;
     }
+
+    /**
+     * This method gets the cards on the table that can be picked up.
+     * @return the cards on the table that can be picked up.
+     */
     protected ResourceCard[] getCardsOnTable() {
         return cardsOnTable;
     }
+
+    /**
+     * This method gets the objectives of the match.
+     * @return the objectives of the match.
+     */
     protected Objectives[] getObjectives() {
         return objectives;
     }
+
+    /**
+     * This method gets the cards on the hand of the player.
+     * @return the cards on the hand of the player.
+     */
     protected ResourceCard[] getCardsOnHand() {
         return localPlayerTable.getCardsOnHand();
     }
     protected ResourceCard[][] getAllCardsOnHand() {
         return client.getCardsOnHand();
     }
+
     protected PlaceableCard[][] getPlacedCards(int id) {
         return client.getPlacedCards(id);
     }

@@ -24,14 +24,25 @@ public class DiagonalPatternObjective extends Objectives {
         this.resource = mainResource;
     }
 
+    /**
+     * This method returns the resource of the objective.
+     * @return the resource of the objective.
+     */
     public Resources getResource() {
         return resource;
     }
-
+    /**
+     * This method returns the type of the objective.
+     * @return true if it is ascending, false otherwise.
+     */
     public boolean isAscending() {
         return isAscending;
     }
-
+    /**
+     * This method checks the pattern and computes the points.
+     * @param playerTable the player table to check.
+     * @return the points computed * patterns.
+     */
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int patterns;
@@ -53,6 +64,12 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return this.getPoints()* patterns;
     }
+    /**
+     * This method counts the number of diagonal patterns.
+     * @param playerTable the player table to check.
+     * @param corner the corner to start from.
+     * @return the number of diagonal patterns.
+     */
     private int diagonalPatternsCounter(PlayerTable playerTable, int corner) {
         int patternsCounter = 0;
         int cardsRequired = 3;
@@ -81,9 +98,23 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return patternsCounter;
     }
+    /**
+     * This method checks if the resource is matched and not flagged.
+     * @param card the card to check.
+     * @return true if the resource is matched and not flagged, false otherwise.
+     */
     protected boolean isResourceMatchedAndNotFlagged(PlaceableCard card) {
         return card!=null && this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
+    /**
+     * This method verifies the diagonal pattern.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param cardsRequired the number of cards required.
+     * @param corner the corner to start from.
+     * @param playerTable the player table to check.
+     * @return true if the diagonal pattern is verified, false otherwise.
+     */
     private boolean diagonalPatternVerifier(int x, int y, int cardsRequired, int corner, PlayerTable playerTable){
         int cardsMatch=0;
         for (int i = 0; i < cardsRequired; i++) {
@@ -102,6 +133,14 @@ public class DiagonalPatternObjective extends Objectives {
         }
         return true; // diagonal pattern verified
     }
+    /**
+     * This method flags the diagonal pattern.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param cardsRequired the number of cards required.
+     * @param corner the corner to start from.
+     * @param playerTable the player table to check.
+     */
     private void diagonalPatternFlagger(int x, int y, int cardsRequired, int corner, PlayerTable playerTable) {
         for (int i = 0; i < cardsRequired; i++) {
             playerTable.getPlacedCard(x, y).setFlaggedForObjective(true);

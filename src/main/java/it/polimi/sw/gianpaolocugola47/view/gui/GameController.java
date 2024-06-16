@@ -103,7 +103,19 @@ public class GameController implements Initializable {
     private boolean winPoints = false;
     private boolean lastTurn = false;
 
-
+    /**
+     * Initializes the controller class.
+     * This method is automatically called after the fxml file has been loaded.
+     * It is used to initialize the controller.
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.ù
+     * added the zoom and drag functionality to the board
+     * created the matrix of the board positions
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -163,7 +175,12 @@ public class GameController implements Initializable {
         gold = new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png"));
     }
 
-
+    /**
+     * this metod links the gui to the controller
+     * @param gui the gui to link
+     * sets the starting card, the secret objective, the cards on hand and the objectives
+     * sets the resources counter, the id of the player and the ranking list, the first pawn and the global points
+     */
     public void start(ViewGui gui) {
         this.gui = gui;
 
@@ -215,7 +232,9 @@ public class GameController implements Initializable {
         chat.getItems().add("Type --listPlayers to see who your opponents are.");
         chat.getItems().add("Start a message with '@' to send a private message.");
     }
-
+    /**
+     * this method adds the zoom functionality to the board
+     */
     private void addZoomFunctionality() {
         boardPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
@@ -235,7 +254,9 @@ public class GameController implements Initializable {
             }
         });
     }
-
+    /**
+     * this method adds the drag functionality to the board
+     */
     private void addDragFunctionality() {
         boardPane.setOnMousePressed(event -> {
             mouseX = event.getSceneX();
@@ -250,7 +271,6 @@ public class GameController implements Initializable {
             boardPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
-
     public void receiveMessage(ChatMessage message) {
         if(message.getSenderId() != gui.getLocalPlayerTable().getId()) {
             if (!message.isPrivate())
@@ -261,10 +281,19 @@ public class GameController implements Initializable {
         }
     }
 
+    /**
+     * this method sets the turn label text
+     * @param text the text to set in the label
+     */
     public void setTurnLabelText(String text) {
         turnLabel.setText(text);
     }
 
+    /**
+     * this methods updates the points of the players, updates the ranking list and the resources counter
+     * @param boardPoints the points of the players on the board
+     * @param globalPoints the global points of the players
+     */
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
         rankingList.getItems().clear();
         String text;
@@ -301,6 +330,12 @@ public class GameController implements Initializable {
         labelQuill.setText(" "+gui.getResourcesCounter()[4]);
     }
 
+    /**
+     * this methods updates the deck of the resources and the gold deck on the board
+     * @param res the resource card to set in the deck or empty position
+     * @param gold the gold card to set in the deck or empty position
+     * @param drawPos the position of the card drawn on the table
+     */
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
         deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
         deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
@@ -322,6 +357,10 @@ public class GameController implements Initializable {
         }
     }
 
+    /**
+     * this method shows the other board of the player clicked in the ranking list
+     * @param event the mouse event
+     */
     @FXML
     public void handleRankingClick(MouseEvent event) {
         int id = rankingList.getFocusModel().getFocusedIndex();
@@ -329,19 +368,36 @@ public class GameController implements Initializable {
             gui.setOtherBoardScene(id);
     }
 
+    /**
+     * this methods switches the card image on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleSwitch_1(ActionEvent event) {
         switchCardImage(gui.getCardsOnHand()[0], hand_0);
     }
+    /**
+     * this methods switches the card image on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleSwitch_2(ActionEvent event) {
         switchCardImage(gui.getCardsOnHand()[1], hand_1);
     }
+    /**
+     * this methods switches the card image on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleSwitch_3(ActionEvent event) {
         switchCardImage(gui.getCardsOnHand()[2], hand_2);
     }
 
+    /**
+     * this method switches the image of the card
+     * @param card the card to switch
+     * @param imageView the image view of the card
+     */
     private void switchCardImage(ResourceCard card, ImageView imageView) {
         card.switchFrontBack();
         String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
@@ -349,30 +405,50 @@ public class GameController implements Initializable {
         imagePath += card.getId() + ".png";
         imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
     }
-
+    /**
+     * this method handles the click on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleHand0Click(MouseEvent event) {
         setImageViewBorder(hand_0);
         selectedCard = 0;
     }
+    /**
+     * this method handles the click on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleHand1Click(MouseEvent event) {
         setImageViewBorder(hand_1);
         selectedCard = 1;
     }
+    /**
+     * this method handles the click on the hand of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleHand2Click(MouseEvent event) {
         setImageViewBorder(hand_2);
         selectedCard = 2;
     }
-
+    /**
+     * this method sets the border of the image view clicked
+     * @param card the image view to set the border
+     */
     private void setImageViewBorder(ImageView card) {
         hand_0.getStyleClass().remove("selected-image");
         hand_1.getStyleClass().remove("selected-image");
         hand_2.getStyleClass().remove("selected-image");
         card.getStyleClass().add("selected-image");
     }
-
+    /**
+     * this method handles the click on the board of the player
+     * it shows the possible positions where the card can be placed with a gold image
+     * it places the card on the board in the gold image position clicked
+     * it removes the gold image from the board
+     * @param event the mouse event
+     */
     @FXML
     public void handleBoardClick(MouseEvent event) {
 
@@ -442,7 +518,10 @@ public class GameController implements Initializable {
             goldShowed = true;
         }
     }
-
+    /**
+     * this method disables the hand of the player, it is used when is not the turn of the player
+     * @param b the boolean to set the mouse transparent
+     */
     private void disableHand(boolean b) {
         hand_0.setMouseTransparent(b);
         hand_1.setMouseTransparent(b);
@@ -452,6 +531,10 @@ public class GameController implements Initializable {
         switch_3.setMouseTransparent(b);
     }
 
+    /**
+     * this method draws the card on the table of the player
+     * @param event the mouse event
+     */
     @FXML
     private void handleTableClick(MouseEvent event) {
         int pos = 0;
@@ -477,6 +560,10 @@ public class GameController implements Initializable {
         }
     }
 
+    /**
+     * this method handles the input of the chat
+     * @param event the action event
+     */
     @FXML
     private void handleChatInput(ActionEvent event) {
 
@@ -518,7 +605,10 @@ public class GameController implements Initializable {
             gui.sendMessage(message);
         }
     }
-
+    /**
+     * this method handles the key event of the chat input
+     * @param event the key event
+     */
     @FXML
     private void handleChatInputKey(KeyEvent event) {
         if(event.getCode().equals(KeyCode.ENTER))

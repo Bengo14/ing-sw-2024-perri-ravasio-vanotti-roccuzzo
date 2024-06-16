@@ -40,6 +40,13 @@ public class StartingCardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+    /**
+     * This method is called when the controller is created.
+     * It sets the client and the player table that are using this controller.
+     * It also sets the starting card of the player.
+     * @param client The client that is using this controller
+     * @param playerTable The player table that is using this controller
+     */
     public void start(Client client, PlayerTable playerTable) {
         this.client = client;
         this.playerTable = playerTable;
@@ -55,11 +62,17 @@ public class StartingCardController implements Initializable {
             starting_back.setImage(backImage);
         }
     }
-
+    /**
+     * @return The selected starting card
+     */
     public static StartingCard getSelectedStartingCard() {
         return selectedStartingCard;
     }
-
+    /**
+     * This method is called when the confirm button is clicked.
+     * It sets the front of the starting card and moves to the next scene.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleConfirmButtonClicked(ActionEvent event) {
 
@@ -81,21 +94,32 @@ public class StartingCardController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This method is called when the front of the starting card is clicked.
+     * It sets the front of the starting card and sets the border of the image view.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleStartingFrontClicked(MouseEvent event) {
         front = false;
         isStartingCardSelected = true;
         setImageViewBorder(starting_front);
     }
-
+    /**
+     * This method is called when the back of the starting card is clicked.
+     * It sets the front of the starting card and sets the border of the image view.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleStartingBackClicked(MouseEvent event) {
         front = true;
         isStartingCardSelected = true;
         setImageViewBorder(starting_back);
     }
-
+    /**
+     * This method sets the border of the selected image view.
+     * @param selectedImageView The image view that has to be selected
+     */
     private void setImageViewBorder(ImageView selectedImageView) {
         starting_front.getStyleClass().remove("selected-image");
         starting_back.getStyleClass().remove("selected-image");

@@ -36,7 +36,13 @@ public class SecretObjController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
+    /**
+     * This method is called when the controller is created.
+     * It sets the client and the player table that are using this controller.
+     * It also sets the starting card and draws the objectives of the player.
+     * @param client The client that is using this controller
+     * @param playerTable The player table that is using this controller
+     */
     public void start(Client client, PlayerTable playerTable) {
         this.client = client;
         this.playerTable = playerTable;
@@ -48,19 +54,31 @@ public class SecretObjController implements Initializable {
         String imagePath2 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+secretObjective2.getId()+".png";
         secret_2.setImage(new Image(getClass().getResourceAsStream(imagePath2)));
     }
-
+    /**
+     * This method is called when the first secret objective is clicked.
+     * It sets the selected objective to the first secret objective and sets the border of the image view.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleSecret1Clicked(MouseEvent event) {
         selectedObjective = secretObjective1;
         setImageViewBorder(secret_1);
     }
-
+    /**
+     * This method is called when the second secret objective is clicked.
+     * It sets the selected objective to the second secret objective and sets the border of the image view.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleSecret2Clicked(MouseEvent event) {
         selectedObjective = secretObjective2;
         setImageViewBorder(secret_2);
     }
-
+    /**
+     * This method is called when the send button is clicked.
+     * It sets the secret objective of the player and sends it to the server.
+     * @param event The event that triggered the method
+     */
     @FXML
     private void handleObjButtonClicked(ActionEvent event) {
         if (selectedObjective != null) {
@@ -74,7 +92,10 @@ public class SecretObjController implements Initializable {
             label.setText("Please select an objective");
         }
     }
-
+    /**
+     * This method sets the border of the selected image view.
+     * @param selectedImageView The image view that has to be selected
+     */
     private void setImageViewBorder(ImageView selectedImageView) {
         secret_1.getStyleClass().remove("selected-image");
         secret_2.getStyleClass().remove("selected-image");

@@ -56,7 +56,13 @@ public class OtherBoardController implements Initializable {
     private ViewGui gui;
     private ImageView [][] matrix;
 
-
+    /**
+     * Initializes the controller.
+     * This method is automatically called after the fxml file has been loaded.
+     * It creates a matrix of ImageViews that represent the board of the player
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addZoomFunctionality();
@@ -86,7 +92,9 @@ public class OtherBoardController implements Initializable {
                 {null,place_21_1,null,place_21_3,null,place_21_5,null,place_21_7,null,place_21_9,null,place_21_11,null,place_21_13,null,place_21_15,null,place_21_17,null,place_21_19,null,place_21_21}
         };
     }
-
+    /**
+     * Adds the zoom functionality to the board
+     */
     private void addZoomFunctionality() {
         boardPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.isControlDown()) {
@@ -106,7 +114,12 @@ public class OtherBoardController implements Initializable {
             }
         });
     }
-
+    /**
+     * Starts the controller and shows the board of the player
+     * It links the controller to the gui that is using it
+     * @param gui The gui that is using this controller
+     * @param id The id of the player
+     */
     public void start(ViewGui gui, int id) {
         this.gui = gui;
 
@@ -159,7 +172,9 @@ public class OtherBoardController implements Initializable {
         String front = placedCards[10][10].isFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
     }
-
+    /**
+     * Handles the go back button
+     */
     @FXML
     private void goBackHandler() {
         gui.resetScene();

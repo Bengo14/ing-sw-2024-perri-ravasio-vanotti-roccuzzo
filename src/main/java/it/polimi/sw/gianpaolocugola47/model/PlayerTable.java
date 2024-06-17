@@ -32,6 +32,10 @@ public class PlayerTable implements Serializable{
     @Expose
     private ResourceCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
+    @Expose
+    private int[][] cardIdMatrix = null;
+    @Expose
+    private boolean[][] cardSideMatrix = null;
 
     /**
      * Class PlayerTable's constructor.
@@ -48,6 +52,7 @@ public class PlayerTable implements Serializable{
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
+    public PlayerTable(){} //for Json parsing purposes
 
     public PlayerTable(int id){
         this.id = id;
@@ -136,7 +141,7 @@ public class PlayerTable implements Serializable{
     }
 
     /**
-     *This method checks if a card can be placed on another one and in case places it.
+     *This method checks if a card can be placed on another one and places it if that's the case.
      * @param onHandCard Card on player's hand, to be placed.
      * @param onTableCardX X coordinate of on table card.
      * @param onTableCardY Y coordinate of on table card.
@@ -351,5 +356,60 @@ public class PlayerTable implements Serializable{
             }
         }
         return cardIdMatrix;
+    }
+
+    public boolean[][] getCardSideMatrix() {
+        boolean[][] cardSideMatrix = new boolean[MATRIX_DIMENSION][MATRIX_DIMENSION];
+        for(int i=0; i<MATRIX_DIMENSION; i++){
+            for(int j=0; j<MATRIX_DIMENSION; j++){
+                if(placedCards[i][j] != null) //once a card is placed, it can be both true or false
+                    cardSideMatrix[i][j] = placedCards[i][j].isFront();
+                else //if a given position has no card, it is set to false. Since I already know where there are no cards placed, this is going to be ignored when rebuilding the card matrix
+                    cardSideMatrix[i][j] = false;
+            }
+        }
+        return cardSideMatrix;
+    }
+
+    public void idMatrixToCardMatrix(){ //to be called ONLY when parsing the id matrix from json
+        for(int i = 0; i < MATRIX_DIMENSION; i++){
+            for(int j = 0; j < MATRIX_DIMENSION; j++){
+                if(cardIdMatrix[i][j] == -1)
+                    placedCards[i][j] = null;
+                else {
+                    if(i == STARTING_CARD_POS && j == STARTING_CARD_POS){
+                        StartingCard s = (StartingCard) Deck.getCardFromGivenId(cardIdMatrix[i][j]);
+                        s.setFront(cardSideMatrix[i][j]);
+                        setStartingCard(s);
+                    }
+                    else{
+                        ResourceCard c = (ResourceCard) Deck.getCardFromGivenId(cardIdMatrix[i][j]);
+                        c.setFront(cardSideMatrix[i][j]);
+                        placedCards[i][j] = c;
+                        placedCards[i][j].setCoordinates(i, j);
+                        placedCards[i][j].updateResourceCounter(this.resourceCounter);
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < MATRIX_DIMENSION; i++){
+            for(int j = 0; j < MATRIX_DIMENSION; j++){
+                if(placedCards[i][j] != null){
+                    for(int corner = 0; corner < 4; corner++){
+                        linkCard(i, j, corner);
+                    }
+                }
+            }
+        }
+        this.cardIdMatrix = null;
+        this.cardSideMatrix = null;
+    }
+
+    public void setCardIdMatrix(int[][] cardIdMatrix) {
+        this.cardIdMatrix = cardIdMatrix;
+    }
+
+    public void setCardSideMatrix(boolean[][] cardSideMatrix) {
+        this.cardSideMatrix = cardSideMatrix;
     }
 }

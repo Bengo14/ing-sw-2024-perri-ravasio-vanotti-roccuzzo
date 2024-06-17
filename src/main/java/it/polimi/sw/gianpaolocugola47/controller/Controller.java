@@ -1,17 +1,25 @@
 package it.polimi.sw.gianpaolocugola47.controller;
 
+import com.google.gson.annotations.Expose;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.utils.GameSaver;
 
 public class Controller { //has to include nicknames of players
 
+    @Expose
     private MainTable mainTable;
+    @Expose
     private int currentPlayerId;
-    private int clientsConnected; // max number of clients in a given game. DOES NOT TAKE INTO ACCOUNT DISCONNECTIONS
+    @Expose
+    private int clientsConnected; // max number of clients in a given game
+    @Expose
     private int numOfPlayers;
+    @Expose
     private int playersAdded;
+    @Expose
     private int startingCardsAndObjAdded;
+    @Expose
     private boolean isLastTurn;
     private GameSaver gameSaver; //game gets updated anytime a player finishes his turn (to be implemented)
 
@@ -82,12 +90,44 @@ public class Controller { //has to include nicknames of players
         return this.clientsConnected;
     }
 
+    public void setCurrentPlayerId(int currentPlayerId) {
+        this.currentPlayerId = currentPlayerId;
+    }
+
+    public void setClientsConnected(int clientsConnected) {
+        this.clientsConnected = clientsConnected;
+    }
+
+    public void setPlayersAdded(int playersAdded) {
+        this.playersAdded = playersAdded;
+    }
+
+    public void setStartingCardsAndObjAdded(int startingCardsAndObjAdded) {
+        this.startingCardsAndObjAdded = startingCardsAndObjAdded;
+    }
+
+    public void setLastTurn(boolean lastTurn) {
+        isLastTurn = lastTurn;
+    }
+
+    public GameSaver getGameSaver() {
+        return gameSaver;
+    }
+
+    public void setGameSaver(GameSaver gameSaver) {
+        this.gameSaver = gameSaver;
+    }
+
     public void addPlayer(int id, String nickname) {
         mainTable.addPlayer(id, nickname);
         this.playersAdded++;
         if(this.numOfPlayers == this.playersAdded){
+            this.gameSaver = new GameSaver(this); //if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
+            if(false)
+                loadGame();
+            else
+                gameSaver.resetFiles();
             mainTable.startGame();
-            this.gameSaver = new GameSaver(this); //all players are present, files for playerTables are correctly generated
         }
     }
 
@@ -180,5 +220,17 @@ public class Controller { //has to include nicknames of players
     }
     public String[] getNicknames() {
         return mainTable.getNicknames();
+    }
+
+    public void loadGame(){
+        GameSaver gameSaver = new GameSaver(this);
+        Controller c = gameSaver.loadControllerStatus();
+        this.mainTable = c.getMainTable();
+        this.currentPlayerId = c.getCurrentPlayerId();
+        this.clientsConnected = c.getClientsConnected();
+        this.numOfPlayers = c.getNumOfPlayers();
+        this.playersAdded = c.getPlayersAdded();
+        this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
+        this.isLastTurn = c.isLastTurn();
     }
 }

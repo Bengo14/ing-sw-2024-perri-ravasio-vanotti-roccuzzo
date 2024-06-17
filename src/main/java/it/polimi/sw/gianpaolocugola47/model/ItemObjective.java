@@ -42,7 +42,7 @@ public class ItemObjective extends Objectives{
         int itemsSetCounter;
         //looking for a PAIR of the same item
         if(itemsRequired.size()<=1){
-            itemsSetCounter =playerTable.getResourceCounter(itemsRequired.getFirst().ordinal()+4)/2;
+            itemsSetCounter =playerTable.getResourceCounter(this.getItemsRequired().getFirst().ordinal()+4)/2;
         }else{
         //looking for a COMPLETE SET of all different items
             int[] array = new int[itemsRequired.size()];

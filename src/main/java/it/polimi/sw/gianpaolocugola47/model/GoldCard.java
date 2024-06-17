@@ -122,7 +122,7 @@ public class GoldCard extends ResourceCard {
                 return points * coveredCorners; // 2*coveredCorners
             }
             if (this.isPointsForItems()) {
-                return points * playerTable.getResourceCounter(this.itemRequired.ordinal() + 4); // points=ResourceCounter[item]
+                return points * playerTable.getResourceCounter(this.getItemRequired().ordinal() + 4); // points=ResourceCounter[item]
             }
         } else
             return 0; // card is not front

@@ -26,7 +26,7 @@ public class ResourceObjective extends Objectives{
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         // 1 resourceSet is 3 resources
         int resourceSetCounter;
-        resourceSetCounter = playerTable.getResourceCounter(this.resource.ordinal())/3;
+        resourceSetCounter = playerTable.getResourceCounter(this.getResource().ordinal())/3;
         return this.getPoints() * resourceSetCounter;
     }
 }

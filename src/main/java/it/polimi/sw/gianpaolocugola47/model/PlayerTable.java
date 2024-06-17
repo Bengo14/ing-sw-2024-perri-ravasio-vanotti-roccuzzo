@@ -146,18 +146,19 @@ public class PlayerTable implements Serializable{
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         int points;
         ResourceCard card = cardsOnHand[onHandCard];
+        if(card == null)
+            return -1;
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
             if(card instanceof GoldCard && card.isFront()){
                 if(isCheap((GoldCard) card))
                     placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
                 else
                     return -1; // GoldCard requisites not matched: not enough Resources on the table
-            }else
+            } else
                 placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
-        }else
+        } else
             return -1; // incorrect input: position is not buildable
         points = card.getPoints(this);
-        cardsOnHand[onHandCard] = null; // card that will be replaced drawing
         return points;
     }
     public int setXCoordinate(int x, int corner){

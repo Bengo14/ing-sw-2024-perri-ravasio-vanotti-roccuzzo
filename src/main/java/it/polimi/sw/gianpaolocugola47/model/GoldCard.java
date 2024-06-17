@@ -103,7 +103,7 @@ public class GoldCard extends ResourceCard {
     }
 
     private boolean checkIfCovers(int x, int y, int corner, PlayerTable playerTable) {
-        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x, y).getVisibleCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3 - corner];
+        return playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) != null && playerTable.getPlacedCard(x, y).getVisibleCorners()[corner].getLinkedCorner().equals(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getVisibleCorners()[3 - corner]);
     }
 
     @Override

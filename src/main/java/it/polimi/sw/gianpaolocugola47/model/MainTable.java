@@ -284,6 +284,7 @@ public class MainTable implements Observable {
             int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable
+            getPlayerTable(playerId).getCardsOnHand()[onHandCard] = null; // card that will be replaced drawing
             addBoardPoints(playerId, points);
             int objectivePoints = getPlayerTable(playerId).getObjectivePoints(globalObjectives);
             int globalPoints = getBoardPoints(playerId) + objectivePoints;

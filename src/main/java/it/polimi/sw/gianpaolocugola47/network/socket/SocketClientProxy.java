@@ -35,8 +35,9 @@ public class SocketClientProxy implements VirtualView {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(boolean isLoaded) {
         output.println("start");
+        output.println(isLoaded);
         output.flush();
     }
 

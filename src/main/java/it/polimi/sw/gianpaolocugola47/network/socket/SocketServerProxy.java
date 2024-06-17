@@ -11,6 +11,7 @@ import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
     private final PrintWriter output;
@@ -67,6 +68,12 @@ public class SocketServerProxy implements VirtualServer {
         output.println("setObj");
         output.println(playerId);
         output.println(obj.getId());
+        output.flush();
+    }
+
+    @Override
+    public void startGameFromFile() {
+        output.println("startFromFile");
         output.flush();
     }
 

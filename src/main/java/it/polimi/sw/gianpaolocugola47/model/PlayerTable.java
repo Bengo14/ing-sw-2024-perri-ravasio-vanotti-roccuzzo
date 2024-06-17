@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import static java.util.Arrays.sort;
 
@@ -408,5 +409,21 @@ public class PlayerTable implements Serializable{
 
     public void setCardSideMatrix(boolean[][] cardSideMatrix) {
         this.cardSideMatrix = cardSideMatrix;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerTable{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", canPlay=" + canPlay +
+                ", resourceCounter=" + Arrays.toString(resourceCounter) +
+                ", secretObjective=" + secretObjective +
+                ", startingCard=" + startingCard +
+                ", cardsOnHand=" + Arrays.toString(cardsOnHand) +
+                ", placedCards=" + Arrays.toString(placedCards) +
+                ", cardIdMatrix=" + Arrays.toString(cardIdMatrix) +
+                ", cardSideMatrix=" + Arrays.toString(cardSideMatrix) +
+                '}';
     }
 }

@@ -160,6 +160,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
     @Override
+    public void startGameFromFile() throws RemoteException {
+        synchronized (controller) {
+            this.controller.startGameFromFile();
+        }
+    }
+    @Override
     public boolean[][] getPlayablePositions(int playerId) throws RemoteException {
         synchronized (controller) {
             return this.controller.getPlayablePositions(playerId);
@@ -262,7 +268,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             if (!this.clients.isEmpty()) {
                 for(VirtualView view : this.clients) {
                     try {
-                        view.startGame();
+                        view.startGame(this.controller.isGameLoaded()); //to be sync?
                         System.out.println("Game started for client: " + view.getId());
                     } catch (RemoteException e) {
                         System.err.println("Failed to start game for client: " + view.getId());
@@ -272,6 +278,18 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             }
         }
     }
+
+    @Override
+    public void notifyObservers(MainTable mainTable) {
+        synchronized (this.clients) {
+            if (!this.clients.isEmpty()) {
+                for(VirtualView view : this.clients){
+                    /*todo*/
+                }
+            }
+        }
+    }
+
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
         synchronized (this.clients) {

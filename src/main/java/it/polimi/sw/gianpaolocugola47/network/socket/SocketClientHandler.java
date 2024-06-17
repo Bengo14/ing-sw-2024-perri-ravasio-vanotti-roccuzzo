@@ -62,6 +62,10 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
                     setSecretObjective(id, obj);
                 }
 
+                case "startFromFile" ->{
+                    startGameFromFile();
+                }
+
                 case "play" -> {
                     synchronized (client) {
                         client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer(), bool()));
@@ -176,9 +180,9 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(boolean isLoaded) {
         synchronized (client) {
-            this.client.startGame();
+            this.client.startGame(isLoaded);
         }
     }
 
@@ -283,6 +287,13 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     public void setSecretObjective(int playerId, Objectives obj) {
         synchronized (controller) {
             this.controller.setSecretObjectiveAndUpdateView(playerId, obj);
+        }
+    }
+
+    @Override
+    public void startGameFromFile() throws RemoteException {
+        synchronized (controller) {
+            this.controller.startGameFromFile();
         }
     }
 

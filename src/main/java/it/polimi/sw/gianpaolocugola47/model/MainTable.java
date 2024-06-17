@@ -69,6 +69,7 @@ public class MainTable implements Observable {
     }
 
     public MainTable() {
+        this.playersTables = new PlayerTable[4];
         this.endGame = false;
         this.cardsOnTable = new ResourceCard[4];
         this.globalObjectives = new Objectives[2];
@@ -89,6 +90,15 @@ public class MainTable implements Observable {
             this.observers.remove(observer);
         }
     }
+
+    @Override
+    public void notifyObservers(MainTable mainTable) {
+        synchronized (observers) {
+            for (Observer observer : observers)
+                observer.notifyObservers(mainTable);
+        }
+    }
+
     public StartingCard drawStartingCard() {
         return Deck.drawCardFromStartingDeck();
     }
@@ -197,6 +207,7 @@ public class MainTable implements Observable {
                 nicknames[i] = getPlayerTable(i).getNickName();
             else nicknames[i] = "";
         }
+        System.out.println(Arrays.toString(nicknames));
         return nicknames;
     }
     public ResourceCard[][] getCardsOnHand() {
@@ -352,7 +363,7 @@ public class MainTable implements Observable {
     /**
      * method used only for testing purposes
      */
-    protected void setPlayerTable(int i, PlayerTable player) {
+    public void setPlayerTable(int i, PlayerTable player) {
         playersTables[i] = player;
     }
 }

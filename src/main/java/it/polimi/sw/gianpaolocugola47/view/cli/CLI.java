@@ -27,6 +27,7 @@ public class CLI implements View {
     private final String ANSI_RESET = "\033[0m";
     private final CLIController cliController;
     private boolean isChatOpen;
+    private boolean isLoaded;
     private ArrayList<ChatMessage> chatBuffer = new ArrayList<>();
 
     /**
@@ -36,8 +37,10 @@ public class CLI implements View {
      * -a local copy of the player table, bar the placedCard matrix which is retrieved from the server
      * -global and board points counter
      * -the nicknames of the players currently present in the match
+     * @param isLoaded : true if the game is loaded from a previous save, false otherwise.
      */
-    public CLI(Client client) {
+    public CLI(Client client, boolean isLoaded) {
+        this.isLoaded = isLoaded;
         this.client = client;
         this.cliController = new CLIController(new PlayerTable(client.getIdLocal()));
     }
@@ -416,10 +419,16 @@ public class CLI implements View {
      */
     public void commandHandler() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try{
-            setupPhase(br);
-        }catch(InterruptedException e){
-            System.err.println("Interrupted");
+        if(!isLoaded){
+            try{
+                setupPhase(br);
+            }catch(InterruptedException e){
+                System.err.println("Interrupted");
+            }
+        } else {
+            System.out.println("Game loaded successfully!");
+            System.out.println("Type /help to see all the available commands.");
+            client.startGameFromFile();
         }
         while(true){
             if(client.isItMyTurn()){

@@ -95,21 +95,21 @@ public class GameSaver {
         }
         if(game != null){
             PlayerTable[] pt = loadPlayerTableStatus();
-            if(pt != null)
-                game.getMainTable().setPlayersTables(pt);
+            if(pt != null){
+                for(int i = 0; i < pt.length; i++)
+                    game.getMainTable().setPlayerTable(i, pt[i]);
+            }
         }
         return game; //game has to be updated in the controller
     }
 
-    private PlayerTable[] loadPlayerTableStatus(){
+    public PlayerTable[] loadPlayerTableStatus(){
         Reader[] reader = new Reader[boardFilePaths.size()-1];
         Type playerTable;
         PlayerTable[] pt = new PlayerTable[boardFilePaths.size()-1];
         Gson ptGson = new GsonBuilder()
                 .registerTypeAdapter(PlayerTable.class, new PlayerTableDeserializer())
                 .create();
-
-        System.err.println("\n");
         for(int i = 0; i < boardFilePaths.size()-1; i++) {
             try {
                 reader[i] = new FileReader(boardFilePaths.get(i+1));

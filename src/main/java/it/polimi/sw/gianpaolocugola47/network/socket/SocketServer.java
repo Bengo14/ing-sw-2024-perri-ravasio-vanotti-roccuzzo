@@ -2,6 +2,7 @@ package it.polimi.sw.gianpaolocugola47.network.socket;
 
 import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
+import it.polimi.sw.gianpaolocugola47.model.MainTable;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIServer;
@@ -147,6 +148,11 @@ public class SocketServer implements Observer {
     /* methods of interface Observer */
 
     @Override
+    public void notifyObservers(MainTable mainTable) {
+
+    }
+
+    @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
@@ -204,7 +210,7 @@ public class SocketServer implements Observer {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {
                 for(SocketClientHandler handler : this.clients)
-                    handler.startGame();
+                    handler.startGame(this.controller.isGameLoaded()); //to be sync?
             }
         }
     }

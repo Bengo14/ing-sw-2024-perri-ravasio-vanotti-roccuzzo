@@ -15,6 +15,8 @@ public interface Client {
 
     void setSecretObjective();
 
+    void startGameFromFile();
+
     boolean[][] getPlayablePositions();
 
     boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront);

@@ -33,7 +33,7 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
         JsonElement obj = gson.toJsonTree(playerTable.getSecretObjective(), new TypeToken<Objectives>(){}.getType());
         jsonObject.add("secretObjective", obj);
         JsonElement cards = gson.toJsonTree(playerTable.getCardsOnHand(), new TypeToken<ResourceCard[]>(){}.getType());
-        jsonObject.addProperty("cardsOnHand", cards.toString());
+        jsonObject.add("cardsOnHand", cards);
         JsonElement starting = jsonSerializationContext.serialize(playerTable.getStartingCard());
         jsonObject.add("startingCard", starting);
         JsonElement board = jsonSerializationContext.serialize(playerTable.getCardIdMatrix());

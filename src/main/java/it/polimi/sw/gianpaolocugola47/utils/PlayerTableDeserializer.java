@@ -32,7 +32,7 @@ public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
         Type listOfCards = new TypeToken<ResourceCard[]>() {}.getType();
         Type obj = new TypeToken<Objectives>() {}.getType();
         playerTable.setSecretObjective(gson.fromJson(jsonObject.get("secretObjective"), obj));
-        playerTable.setCardsOnHand(gson.fromJson(jsonObject.get("cardsOnHand").getAsString(), listOfCards));
+        playerTable.setCardsOnHand(gson.fromJson(jsonObject.get("cardsOnHand"), listOfCards));
         playerTable.setCardIdMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardIdMatrix"), int[][].class));
         playerTable.setCardSideMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardSideMatrix"), boolean[][].class));
         return playerTable;

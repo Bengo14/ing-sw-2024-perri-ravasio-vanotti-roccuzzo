@@ -9,7 +9,7 @@ public interface VirtualView extends Remote {
 
     void terminate() throws RemoteException;
     void ping() throws RemoteException;
-    void startGame() throws RemoteException;
+    void startGame(boolean isLoaded) throws RemoteException;
     void setMyTurn() throws RemoteException;
     void gameOver() throws RemoteException;
     void showWinner(int id) throws RemoteException;

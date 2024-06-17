@@ -22,7 +22,7 @@ public class Controller { //has to include nicknames of players
     @Expose
     private boolean isLastTurn;
     private GameSaver gameSaver;
-    private boolean isGameLoaded;
+    private boolean isGameLoaded = false;
 
     public MainTable getMainTable() {
         return mainTable;
@@ -68,7 +68,7 @@ public class Controller { //has to include nicknames of players
     }
 
     public void addModelObserver(Observer observer) {
-        mainTable.addObserver(observer);
+        this.mainTable.addObserver(observer);
     }
     public void removeModelObserver(Observer observer) {
         mainTable.removeObserver(observer);
@@ -125,7 +125,7 @@ public class Controller { //has to include nicknames of players
         if(this.numOfPlayers == this.playersAdded){
             this.gameSaver = new GameSaver(this); //if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
             if(gameSaver.checkIfRestarted(mainTable.getNicknames())){
-                //loadGame(); not yet working!
+                //this.isGameLoaded = true; breaks everything
                 System.err.println("game loaded from disk");
             }
             else{
@@ -152,10 +152,18 @@ public class Controller { //has to include nicknames of players
         mainTable.setPlayerSecretObjective(playerId, obj);
         startingCardsAndObjAdded++;
         if(startingCardsAndObjAdded == mainTable.getNumOfPlayers()) {
+            if(isGameLoaded)
+                loadGame();
             mainTable.initView();
             mainTable.updateDecks(5);
             mainTable.showTurn(currentPlayerId);
         }
+    }
+
+    public void startGameFromFile(){
+        mainTable.initView();
+        mainTable.updateDecks(5);
+        mainTable.showTurn(currentPlayerId);
     }
 
     public boolean[][] getPlayablePositions(int playerId) {
@@ -229,13 +237,7 @@ public class Controller { //has to include nicknames of players
     public void loadGame(){
         gameSaver.updateControllerStatus(this);
         Controller c = gameSaver.loadControllerStatus();
-        this.mainTable.setPlayersTables(c.getMainTable().getPlayersTables());
-        this.mainTable.setEndGame(c.getMainTable().isEndGame());
-        this.mainTable.setCardsOnTable(c.getMainTable().getCardsOnTable());
-        this.mainTable.setGlobalObjectives(c.getMainTable().getGlobalObjectives());
-        this.mainTable.setNumOfPlayers(c.getMainTable().getNumOfPlayers());
-        this.mainTable.setBoardPoints(c.getMainTable().getBoardPoints());
-        this.mainTable.setGlobalPoints(c.getMainTable().getGlobalPoints());
+        this.mainTable.notifyObservers(c.getMainTable());
         this.currentPlayerId = c.getCurrentPlayerId();
         this.clientsConnected = c.getClientsConnected();
         this.numOfPlayers = c.getNumOfPlayers();
@@ -243,5 +245,10 @@ public class Controller { //has to include nicknames of players
         this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
         this.isLastTurn = c.isLastTurn();
         gameSaver.updateControllerStatus(this);
+
+    }
+
+    public boolean isGameLoaded(){ //to be communicated to the respective views via the start() methods
+        return this.isGameLoaded;
     }
 }

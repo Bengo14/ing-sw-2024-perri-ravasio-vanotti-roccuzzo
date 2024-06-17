@@ -62,7 +62,7 @@ public class SocketClient implements VirtualView, Client {
                 case "setId" -> setIdAndRunCli(integer());
                 case "terminate" -> terminate();
                 case "ping" -> ping();
-                case "start" -> startGame();
+                case "start" -> startGame(Boolean.parseBoolean(line()));
                 case "turn" -> setMyTurn();
                 case "gameOver" -> gameOver();
                 case "winner" -> showWinner(integer());
@@ -285,12 +285,12 @@ public class SocketClient implements VirtualView, Client {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(boolean isLoaded) {
         Deck.initDeck(); //init Deck's hashMap to retrieve cards by id
 
         if(isCliChosen) {
             try{
-                this.view = new CLI(this);
+                this.view = new CLI(this,isLoaded);
                 new Thread(() -> view.start()).start();
             }catch (Exception e){
                 System.err.println("Error in starting CLI. Shutting down.");
@@ -299,7 +299,7 @@ public class SocketClient implements VirtualView, Client {
         }
         else {
             try{
-                this.view = new ViewGui();
+                this.view = new ViewGui(isLoaded);
                 this.view.setClient(this);
                 new Thread(() -> Platform.startup(() -> view.start())).start();
             }catch(Exception e){
@@ -390,6 +390,13 @@ public class SocketClient implements VirtualView, Client {
     public void setSecretObjective() {
         synchronized (server) {
             server.setSecretObjective(this.id, this.view.getSecretObjective());
+        }
+    }
+
+    @Override
+    public void startGameFromFile() {
+        synchronized (server) {
+            server.startGameFromFile();
         }
     }
 

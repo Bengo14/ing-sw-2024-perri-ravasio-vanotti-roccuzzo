@@ -134,11 +134,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
-    public void startGame() throws RemoteException {
+    public void startGame(boolean isLoaded) throws RemoteException {
 
         if(isCliChosen) {
             try{
-                this.view = new CLI(this);
+                this.view = new CLI(this,isLoaded);
                 new Thread(() -> view.start()).start();
             }catch(Exception e){
                 System.err.println("Error in starting the CLI. Shutting down.");
@@ -147,7 +147,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         }
         else {
             try{
-                this.view = new ViewGui();
+                this.view = new ViewGui(isLoaded);
                 this.view.setClient(this);
                 new Thread(() -> Platform.startup(() -> view.start())).start();
             }catch(Exception e){
@@ -251,6 +251,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             terminateLocal();
         }
     }
+
+    @Override
+    public void startGameFromFile() {
+        try {
+            synchronized (server) {
+                server.startGameFromFile();
+            }
+        } catch (RemoteException e) {
+            terminateLocal();
+        }
+    }
+
 
     @Override
     public boolean[][] getPlayablePositions() {

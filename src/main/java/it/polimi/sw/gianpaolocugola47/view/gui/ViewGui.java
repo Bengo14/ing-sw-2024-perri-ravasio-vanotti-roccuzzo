@@ -48,13 +48,16 @@ public class ViewGui extends Application implements View {
     private int[] globalPoints; //NOT on playerTable
     private int[] boardPoints;  //NOT on playerTable
     private String[] nicknames;
+    private boolean isLoaded;
 
     /**
      * Constructor of the class
      * It creates a new HashMap with the scenes of the game
+     * @param isLoaded : true if the game is loaded from a previous save, false otherwise.
      */
-    public ViewGui() {
+    public ViewGui(boolean isLoaded) {
         scenes = new HashMap<>();
+        this.isLoaded = isLoaded;
         scenes.put("PreGame", "/it/polimi/sw/gianpaolocugola47/fxml/PreGameFXML.fxml");
         scenes.put("StartingCard", "/it/polimi/sw/gianpaolocugola47/fxml/StartingCardFXML.fxml");
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");

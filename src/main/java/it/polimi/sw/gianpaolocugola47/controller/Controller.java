@@ -123,7 +123,7 @@ public class Controller { //has to include nicknames of players
         this.playersAdded++;
         if(this.numOfPlayers == this.playersAdded){
             this.gameSaver = new GameSaver(this); //if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
-            if(false)
+            if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
                 loadGame();
             else
                 gameSaver.resetFiles();
@@ -222,7 +222,7 @@ public class Controller { //has to include nicknames of players
         return mainTable.getNicknames();
     }
 
-    public void loadGame(){/*
+    public void loadGame(){
         GameSaver gameSaver = new GameSaver(this);
         Controller c = gameSaver.loadControllerStatus();
         this.mainTable = c.getMainTable();
@@ -231,6 +231,6 @@ public class Controller { //has to include nicknames of players
         this.numOfPlayers = c.getNumOfPlayers();
         this.playersAdded = c.getPlayersAdded();
         this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
-        this.isLastTurn = c.isLastTurn();*/
+        this.isLastTurn = c.isLastTurn();
     }
 }

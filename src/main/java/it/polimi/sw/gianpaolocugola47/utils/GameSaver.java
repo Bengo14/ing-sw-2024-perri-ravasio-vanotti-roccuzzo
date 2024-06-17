@@ -13,6 +13,7 @@ import java.util.List;
 public class GameSaver {
     private Controller game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
     private final Gson gson;
+    public final static String CONTROLLER_FILE_PATH = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json";
     private final String[] deckFilePaths;
     private final List<String> boardFilePaths;
 
@@ -22,7 +23,7 @@ public class GameSaver {
                 .setPrettyPrinting()
                 .create();
         this.boardFilePaths = new ArrayList<>(); //file below has to take nicknames into consideration
-        this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json"); //controller & main table status
+        this.boardFilePaths.add(CONTROLLER_FILE_PATH); //controller & main table status
         this.initPlayerTableFiles();
         this.deckFilePaths = new String[4];
         this.deckFilePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
@@ -30,10 +31,10 @@ public class GameSaver {
         this.deckFilePaths[2] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusStarting.json";
         this.deckFilePaths[3] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusObjectives.json";
     }
-    private void initPlayerTableFiles(){
+    private void initPlayerTableFiles(){ //even when game ends, file's paths keep getting generated with the original names, since players have to join with their original name
         if(game != null) {
-            for(String nickname : game.getMainTable().getNicknames()) { //playerTable excluding board
-                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus_" + nickname + ".json");
+            for(int i = 0; i < game.getNumOfPlayers(); i++) { //playerTable excluding board
+                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus" + i +".json");
             }
         }
     }
@@ -41,6 +42,7 @@ public class GameSaver {
         ControllerSerializer controllerSerializer = new ControllerSerializer();
         Gson gsonContr = new GsonBuilder()
                 .registerTypeAdapter(Controller.class, controllerSerializer)
+                .excludeFieldsWithoutExposeAnnotation()
                 .create();
         PlayerTableSerializer playerTableSerializer = new PlayerTableSerializer();
         Gson gsonPlayer = new GsonBuilder()
@@ -71,6 +73,61 @@ public class GameSaver {
             return false;
         }
         return true;
+    }
+    public Controller loadControllerStatus(){
+        Reader reader;
+        Type controller;
+        try {
+            reader = new FileReader(boardFilePaths.getFirst());
+        } catch (FileNotFoundException e) {
+            System.out.println("File were not found, unable to load the game status.");
+            return null;
+        }
+        controller = new TypeToken<Controller>() {}.getType();
+        Gson controllerGson = new GsonBuilder()
+                .registerTypeAdapter(Controller.class, new ControllerDeserializer())
+                .create();
+        game = controllerGson.fromJson(reader, controller);
+        try{
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Unable to close the file reader.");
+        }
+        if(game != null){
+            PlayerTable[] pt = loadPlayerTableStatus();
+            if(pt != null)
+                game.getMainTable().setPlayersTables(pt);
+        }
+        return game; //game has to be updated in the controller
+    }
+
+    public PlayerTable[] loadPlayerTableStatus(){
+        Reader[] reader = new Reader[boardFilePaths.size()-1];
+        Type playerTable;
+        PlayerTable[] pt = new PlayerTable[boardFilePaths.size()-1];
+        Gson ptGson = new GsonBuilder()
+                .registerTypeAdapter(PlayerTable.class, new PlayerTableDeserializer())
+                .create();
+
+        System.err.println("\n");
+        for(int i = 0; i < boardFilePaths.size()-1; i++) {
+            try {
+                System.err.println(boardFilePaths.get(i+1));
+                reader[i] = new FileReader(boardFilePaths.get(i+1));
+            } catch (FileNotFoundException e) {
+                System.out.println("File were not found, unable to load the game status.");
+                return null;
+            } try{
+                pt[i] = ptGson.fromJson(reader[i], new TypeToken<PlayerTable>() {}.getType());
+                reader[i].close();
+            } catch (IOException e) {
+                System.out.println("Unable to close the file reader.");
+                return null;
+            }
+        }
+        for(PlayerTable p : pt)
+            p.idMatrixToCardMatrix();
+        return pt;
     }
 
     public boolean generateDeckStatusJson()  {
@@ -139,7 +196,6 @@ public class GameSaver {
         }
         return true;
     }
-
     public boolean loadDeckStatus(){
         Reader[] reader = new Reader[4];
         Type listOfCards;
@@ -177,7 +233,6 @@ public class GameSaver {
         }
         return true;
     }
-
     public boolean resetFiles(){
         boolean correctDeletions = true;
         for(String path : deckFilePaths) {
@@ -198,8 +253,25 @@ public class GameSaver {
         }
         return correctDeletions;
     }
-
     public void updateControllerStatus(Controller game){
         this.game = game;
+    }
+
+    public boolean checkIfRestarted(String[] nicknames){
+        Reader reader;
+        Controller lc;
+        try {
+            reader = new FileReader(CONTROLLER_FILE_PATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("File were not found, unable to load the game status.");
+            return false;
+        }
+        /*todo: add nickname controls*/
+        try{
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Unable to close the file reader.");
+        }
+        return false;
     }
 }

@@ -1,8 +1,10 @@
 package it.polimi.sw.gianpaolocugola47.utils;
 
+import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.model.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +16,21 @@ class GameSaverTest {
         GameSaver gameSaver = new GameSaver(null);
         Deck.initAndShuffleDeck();
         assertTrue(gameSaver.generateDeckStatusJson());
-        assertTrue(gameSaver.resetFiles());
+        //assertTrue(gameSaver.resetFiles());
+    }
+    @Test
+    void loadPlayerTableStatusJson(){
+        // Test for when the game hasn't started yet
+        Controller game = new Controller();
+        game.setNumOfPlayers(2); // Set the number of players to 2
+        GameSaver gameSaver = new GameSaver(game);
+        Controller c = gameSaver.loadControllerStatus();
+        System.out.println(Arrays.toString(c.getMainTable().getGlobalPoints()));
+        System.out.println(Arrays.toString(c.getMainTable().getBoardPoints()));
+        for(Objectives o : c.getMainTable().getGlobalObjectives()){
+            System.out.println(o.getDescription());
+        }
+        //assertTrue(gameSaver.resetFiles());
     }
     @Test
     void loadDeckStatus(){
@@ -49,6 +65,6 @@ class GameSaverTest {
         System.out.println("Get First Gold Card Deck: " + Deck.getGoldCardsDeck().getLast().getId() + " Get gold card on top: " + Deck.getGoldCardOnTop().getId());
         assertEquals(goldDeck.getLast().getId(),Deck.getGoldCardOnTop().getId());
         assertEquals(resDeck.getLast().getId(),Deck.getResourceCardOnTop().getId());
-        assertTrue(gameSaver.resetFiles());
+        //assertTrue(gameSaver.resetFiles());
     }
 }

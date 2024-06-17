@@ -2,6 +2,7 @@
   <configuration default="false" name="RMIClient" type="Application" factoryName="Application" singleton="false">
     <option name="MAIN_CLASS_NAME" value="it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient" />
     <module name="GianpaoloCugola47" />
+    <option name="PROGRAM_PARAMETERS" value="--add-opens java.base/java.lang=com.google.gson" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="it.polimi.sw.gianpaolocugola47.network.*" />

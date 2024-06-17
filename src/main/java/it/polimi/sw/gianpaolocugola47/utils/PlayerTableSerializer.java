@@ -25,11 +25,9 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
     @Override
     public JsonElement serialize(PlayerTable playerTable, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("nickname", playerTable.getNickName());
+        jsonObject.addProperty("nickName", playerTable.getNickName());
         jsonObject.addProperty("id", playerTable.getId());
         jsonObject.addProperty("canPlay", playerTable.isCanPlay());
-        jsonObject.addProperty("MATRIX_DIMENSION", PlayerTable.getMatrixDimension());
-        jsonObject.addProperty("STARTING_CARD_POS", PlayerTable.getStartingCardPos());
         JsonElement resCount = jsonSerializationContext.serialize(playerTable.getResourceCounter());
         jsonObject.add("resourceCounter", resCount);
         JsonElement obj = gson.toJsonTree(playerTable.getSecretObjective(), new TypeToken<Objectives>(){}.getType());
@@ -40,6 +38,8 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
         jsonObject.add("startingCard", starting);
         JsonElement board = jsonSerializationContext.serialize(playerTable.getCardIdMatrix());
         jsonObject.add("cardIdMatrix", board);
+        JsonElement sides = jsonSerializationContext.serialize(playerTable.getCardSideMatrix());
+        jsonObject.add("cardSideMatrix", sides);
         return jsonObject;
     }
 }

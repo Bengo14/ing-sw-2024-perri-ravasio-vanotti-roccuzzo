@@ -6,7 +6,7 @@ import java.io.Serializable;
  * This class represents all the objectives in a game with their points,the reference at the front and back image
  * and the items,the resource and the pattern use for make the points.
  */
-public abstract class Objectives implements Serializable {
+public class Objectives implements Serializable {
 
     private final int points;
     private final String imgPathFront;
@@ -41,7 +41,9 @@ public abstract class Objectives implements Serializable {
         return imgPathBack;
     }
 
-    public abstract int checkPatternAndComputePoints(PlayerTable playerTable);
+    public int checkPatternAndComputePoints(PlayerTable playerTable){
+        return 0;
+    }
     public String getDescription(){
         return description;
     }

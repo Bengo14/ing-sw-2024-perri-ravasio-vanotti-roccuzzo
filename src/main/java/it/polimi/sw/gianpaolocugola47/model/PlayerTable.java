@@ -63,10 +63,6 @@ public class PlayerTable implements Serializable{
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
     public boolean isCanPlay() {
         return canPlay;
     }
@@ -372,6 +368,7 @@ public class PlayerTable implements Serializable{
     }
 
     public void idMatrixToCardMatrix(){ //to be called ONLY when parsing the id matrix from json
+        this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
         for(int i = 0; i < MATRIX_DIMENSION; i++){
             for(int j = 0; j < MATRIX_DIMENSION; j++){
                 if(cardIdMatrix[i][j] == -1)
@@ -394,9 +391,9 @@ public class PlayerTable implements Serializable{
         }
         for(int i = 0; i < MATRIX_DIMENSION; i++){
             for(int j = 0; j < MATRIX_DIMENSION; j++){
-                if(placedCards[i][j] != null){
+                if(placedCards[i][j] != null && i != STARTING_CARD_POS && j != STARTING_CARD_POS){
                     for(int corner = 0; corner < 4; corner++){
-                        linkCard(i, j, corner);
+                        linkCards(i, j, corner);
                     }
                 }
             }

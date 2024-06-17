@@ -483,7 +483,7 @@ public class GameController implements Initializable {
                             else if(i-x == -1 && j-y == 1) corner = 1;
                             else if(i-x == 1 && j-y == -1) corner = 2;
                             else if(i-x == 1 && j-y == 1) corner = 3;
-                            else return;
+                            else break;
 
                             if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].isFront())) {
                                 String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";

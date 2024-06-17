@@ -6,7 +6,7 @@ module it.polimi.sw.gianpaolocugola47 {
     requires java.rmi;
     requires java.desktop;
     requires error.prone.annotations;
-    requires org.junit.jupiter.api;
+    //requires org.junit.jupiter.api;
     opens it.polimi.sw.gianpaolocugola47 to javafx.fxml;
     opens it.polimi.sw.gianpaolocugola47.view.gui to javafx.fxml;
     opens it.polimi.sw.gianpaolocugola47.model to com.google.gson;

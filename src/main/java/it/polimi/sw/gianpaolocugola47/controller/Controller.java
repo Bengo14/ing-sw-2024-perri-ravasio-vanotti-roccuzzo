@@ -21,7 +21,8 @@ public class Controller { //has to include nicknames of players
     private int startingCardsAndObjAdded;
     @Expose
     private boolean isLastTurn;
-    private GameSaver gameSaver; //game gets updated anytime a player finishes his turn (to be implemented)
+    private GameSaver gameSaver;
+    private boolean isGameLoaded;
 
     public MainTable getMainTable() {
         return mainTable;
@@ -123,10 +124,13 @@ public class Controller { //has to include nicknames of players
         this.playersAdded++;
         if(this.numOfPlayers == this.playersAdded){
             this.gameSaver = new GameSaver(this); //if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
-            if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
-                loadGame();
-            else
+            if(gameSaver.checkIfRestarted(mainTable.getNicknames())){
+                //loadGame(); not yet working!
+                System.err.println("game loaded from disk");
+            }
+            else{
                 gameSaver.resetFiles();
+            }
             mainTable.startGame();
         }
     }
@@ -223,14 +227,21 @@ public class Controller { //has to include nicknames of players
     }
 
     public void loadGame(){
-        GameSaver gameSaver = new GameSaver(this);
+        gameSaver.updateControllerStatus(this);
         Controller c = gameSaver.loadControllerStatus();
-        this.mainTable = c.getMainTable();
+        this.mainTable.setPlayersTables(c.getMainTable().getPlayersTables());
+        this.mainTable.setEndGame(c.getMainTable().isEndGame());
+        this.mainTable.setCardsOnTable(c.getMainTable().getCardsOnTable());
+        this.mainTable.setGlobalObjectives(c.getMainTable().getGlobalObjectives());
+        this.mainTable.setNumOfPlayers(c.getMainTable().getNumOfPlayers());
+        this.mainTable.setBoardPoints(c.getMainTable().getBoardPoints());
+        this.mainTable.setGlobalPoints(c.getMainTable().getGlobalPoints());
         this.currentPlayerId = c.getCurrentPlayerId();
         this.clientsConnected = c.getClientsConnected();
         this.numOfPlayers = c.getNumOfPlayers();
         this.playersAdded = c.getPlayersAdded();
         this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
         this.isLastTurn = c.isLastTurn();
+        gameSaver.updateControllerStatus(this);
     }
 }

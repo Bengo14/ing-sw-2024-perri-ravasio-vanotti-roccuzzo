@@ -101,7 +101,7 @@ public class GameSaver {
         return game; //game has to be updated in the controller
     }
 
-    public PlayerTable[] loadPlayerTableStatus(){
+    private PlayerTable[] loadPlayerTableStatus(){
         Reader[] reader = new Reader[boardFilePaths.size()-1];
         Type playerTable;
         PlayerTable[] pt = new PlayerTable[boardFilePaths.size()-1];
@@ -112,7 +112,6 @@ public class GameSaver {
         System.err.println("\n");
         for(int i = 0; i < boardFilePaths.size()-1; i++) {
             try {
-                System.err.println(boardFilePaths.get(i+1));
                 reader[i] = new FileReader(boardFilePaths.get(i+1));
             } catch (FileNotFoundException e) {
                 System.out.println("File were not found, unable to load the game status.");
@@ -259,19 +258,39 @@ public class GameSaver {
 
     public boolean checkIfRestarted(String[] nicknames){
         Reader reader;
-        Controller lc;
+        Reader deckReader;
         try {
             reader = new FileReader(CONTROLLER_FILE_PATH);
         } catch (FileNotFoundException e) {
             System.out.println("File were not found, unable to load the game status.");
             return false;
         }
-        /*todo: add nickname controls*/
+        try{
+            for(String path : deckFilePaths) {
+                deckReader = new FileReader(path);
+                try{
+                    deckReader.close();
+                } catch (IOException _) {}
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Deck files were not found, starting a fresh new game.");
+            return false;
+        }
+        ArrayList<String> oldNicknames;
+        Type listOfNicknames = new TypeToken<ArrayList<String>>() {}.getType();
+        Gson gsonNick = new GsonBuilder().registerTypeAdapter(ArrayList.class, new OldNicknamesDeserializer()).create();
+        oldNicknames = gsonNick.fromJson(reader, listOfNicknames);
+        if(oldNicknames.size() != nicknames.length)
+            return false;
+        for(int i = 0; i < oldNicknames.size(); i++) {
+            if(!oldNicknames.get(i).equals(nicknames[i]))
+                return false;
+        }
         try{
             reader.close();
         } catch (IOException e) {
             System.out.println("Unable to close the file reader.");
         }
-        return false;
+        return true;
     }
 }

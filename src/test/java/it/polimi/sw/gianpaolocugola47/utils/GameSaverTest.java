@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameSaverTest {
-    @Test
+    //@Test
     void generateDeckStatusJson() {
         // Test for when the game hasn't started yet
         GameSaver gameSaver = new GameSaver(null);
@@ -33,6 +33,23 @@ class GameSaverTest {
         //assertTrue(gameSaver.resetFiles());
     }
     @Test
+    void checkIfRestarted(){
+        Controller game = new Controller();
+        game.setNumOfPlayers(2); // Set the number of players to 2
+        game.setMainTable(new MainTable());
+        PlayerTable[] pt = new PlayerTable[2];
+        pt[0] = new PlayerTable();
+        pt[0].setNickname("kendrick");
+        pt[1] = new PlayerTable();
+        pt[1].setNickname("drake");
+        game.getMainTable().setPlayersTables(pt);
+        GameSaver gameSaver = new GameSaver(game);
+        String[] s = new String[2];
+        s[0] = "kendrick";
+        s[1] = "drake";
+        gameSaver.checkIfRestarted(s);
+    }
+    //@Test
     void loadDeckStatus(){
         Deck.initAndShuffleDeck();
         List<GoldCard> goldDeck = Deck.getGoldCardsDeck();

@@ -19,7 +19,6 @@ public class ControllerDeserializer implements JsonDeserializer<Controller> {
         controller.setCurrentPlayerId(jsonObject.get("currentPlayerId").getAsInt());
         MainTable mainTable = context.deserialize(jsonObject.get("mainTable"), MainTable.class);
         controller.setMainTable(mainTable);
-        // Add other fields as needed
 
         return controller;
     }

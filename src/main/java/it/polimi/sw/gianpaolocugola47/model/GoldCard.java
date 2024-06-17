@@ -27,6 +27,10 @@ public class GoldCard extends ResourceCard {
         this.itemRequired = itemThatGivesPoints;
     }
 
+    /**
+     * This method return the resources required for the card.
+     * @return the resources required for the card.
+     */
     public ArrayList<Resources> getResourcesRequired() {
         return resourcesRequired;
     }
@@ -39,6 +43,10 @@ public class GoldCard extends ResourceCard {
         return retString.toString();
     }
 
+    /**
+     * This method return the points condition of the card.
+     * @return the points condition of the card.
+     */
     public String pointConditionToString() {
         if (pointsForCorners) {
             return "C";
@@ -49,18 +57,33 @@ public class GoldCard extends ResourceCard {
             return "N/A";
     }
 
+    /**
+     * This method return if the card give points for corners.
+     * @return true if the card give points for corners, false otherwise.
+     */
     public boolean isPointsForCorners() {
         return pointsForCorners;
     }
 
+    /**
+     * This method return the item required for the card.
+     * @return the item required for the card.
+     */
     public Items getItemRequired() {
         return itemRequired;
     }
-
+    /**
+     * This method return if the card give points for items.
+     * @return true if the card give points for items, false otherwise.
+     */
     public boolean isPointsForItems() {
         return pointsForItems;
     }
 
+    /**
+     * This method update the resource counter after a card is placed.
+     * @param counter the counter to update.
+     */
     @Override
     public void updateResourceCounter(int[] counter) {
         if (isFront()) {
@@ -76,7 +99,11 @@ public class GoldCard extends ResourceCard {
             counter[getResourceCentreBack().ordinal()]++;
         }
     }
-
+    /**
+     * This method return the points of the playerTable.
+     * @param playerTable the player table to check.
+     * @return the points of the playerTable.
+     */
     @Override
     public int getPoints(PlayerTable playerTable) {
         if(this.isFront()) {

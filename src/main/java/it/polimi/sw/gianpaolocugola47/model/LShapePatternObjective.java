@@ -39,6 +39,12 @@ public class LShapePatternObjective extends Objectives{
         this.secondaryResource = secondaryResource;
     }
 
+    /**
+     * This method checks if the player table contains the required pattern and computes the points.
+     * It also flags the cards that are part of the pattern.
+     * @param playerTable the player table to check.
+     * @return the points obtained by the player.
+     */
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int patterns;
@@ -70,6 +76,14 @@ public class LShapePatternObjective extends Objectives{
         }
         return this.getPoints()* patterns;
     }
+
+    /**
+     * This method counts the number of patterns present on the player table.
+     * @param playerTable the player table to check.
+     * @param shift the shift of the pattern.
+     * @param corner the corner of the pattern.
+     * @return the number of patterns present on the player table.
+     */
     private int LShapePatternsCounter(PlayerTable playerTable, int shift , int corner){
         int patternsCounter=0;
         int verticalCardsRequired=2;
@@ -137,6 +151,16 @@ public class LShapePatternObjective extends Objectives{
         }else
             return false; // verticalPattern failed
     }
+
+    /**
+     * This method checks if the player table contains the required pattern and flags the cards that are part of the pattern.
+     * @param x the x coordinate of the card.
+     * @param y the y coordinate of the card.
+     * @param verticalCardsRequired the number of vertical cards required.
+     * @param shift the shift of the pattern.
+     * @param playerTable the player table to check.
+     * @return true if the pattern is present, false otherwise.
+     */
     private boolean verticalPatternVerifier(int x, int y, int verticalCardsRequired, int shift, PlayerTable playerTable){
         int verticalCardsMatch=0;
         for (int i = 0; i < verticalCardsRequired; i++) {
@@ -148,6 +172,15 @@ public class LShapePatternObjective extends Objectives{
         }
         return verticalCardsMatch == verticalCardsRequired;
     }
+    /**
+     * This method checks if the player table contains the required pattern and flags the cards that are part of the pattern.
+     * @param x the x coordinate of the card.
+     * @param y the y coordinate of the card.
+     * @param diagonalCardsRequired the number of diagonal cards required.
+     * @param corner the corner of the pattern.
+     * @param playerTable the player table to check.
+     * @return true if the pattern is present, false otherwise.
+     */
     private boolean diagonalPatternVerifier(int x, int y, int diagonalCardsRequired, int corner, PlayerTable playerTable){
         int diagonalCardsMatch =0;
         for (int i = 0; i < diagonalCardsRequired; i++) {
@@ -168,6 +201,16 @@ public class LShapePatternObjective extends Objectives{
         }
         return diagonalCardsMatch == diagonalCardsRequired;
     }
+    /**
+     * This method flags the cards that are part of the pattern.
+     * @param x the x coordinate of the card.
+     * @param y the y coordinate of the card.
+     * @param verticalCardsRequired the number of vertical cards required.
+     * @param diagonalCardsRequired the number of diagonal cards required.
+     * @param shift the shift of the pattern.
+     * @param corner the corner of the pattern.
+     * @param playerTable the player table to check.
+     */
     private void LShapePatternFlagger(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         verticalPatternFlagger(x,y,verticalCardsRequired,shift,playerTable);
         if(shift>0){
@@ -179,12 +222,28 @@ public class LShapePatternObjective extends Objectives{
         y=playerTable.setYCoordinate(y,corner);
         diagonalPatternFlagger(x,y,diagonalCardsRequired,corner,playerTable);
     }
+    /**
+     * This method flags the vertical cards that are part of the pattern.
+     * @param x the x coordinate of the card.
+     * @param y the y coordinate of the card.
+     * @param verticalCardsRequired the number of vertical cards required.
+     * @param shift the shift of the pattern.
+     * @param playerTable the player table to check.
+     */
     private void verticalPatternFlagger(int x, int y, int verticalCardsRequired, int shift, PlayerTable playerTable){
         for (int k = 0; k < verticalCardsRequired; k++) {
             playerTable.getPlacedCard(x,y).setFlaggedForObjective(true);
             x=x+shift; // set coordinates to next vertical card
         }
     }
+    /**
+     * This method flags the diagonal cards that are part of the pattern.
+     * @param x the x coordinate of the card.
+     * @param y the y coordinate of the card.
+     * @param diagonalCardsRequired the number of diagonal cards required.
+     * @param corner the corner of the pattern.
+     * @param playerTable the player table to check.
+     */
     private void diagonalPatternFlagger(int x, int y, int diagonalCardsRequired, int corner, PlayerTable playerTable) {
         for (int i = 0; i < diagonalCardsRequired; i++) {
             playerTable.getPlacedCard(x, y).setFlaggedForObjective(true);

@@ -15,6 +15,10 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller of the secret objective scene.
+ * It contains the methods to set the secret objective of the player and to send it to the server.
+ */
 public class SecretObjController implements Initializable {
 
     @FXML

@@ -12,6 +12,10 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ * This class represents the deck of cards.
+ * It contains the methods to initialize and shuffle the deck, to draw a card from the deck and to get the card on top of the deck.
+ */
 public class Deck {
 
     private static List<GoldCard> goldCardsDeck;

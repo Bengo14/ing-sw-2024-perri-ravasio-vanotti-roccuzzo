@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller of the end game scene.
+ * It contains the methods to show the results of the game and to logout.
+ */
 public class EndGameController implements Initializable {
     private Stage stage;
     @FXML

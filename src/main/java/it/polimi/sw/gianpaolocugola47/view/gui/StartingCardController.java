@@ -18,7 +18,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
+/**
+ * This class is the controller of the starting card scene.
+ * It contains the methods to set the starting card of the player and to move to the next scene.
+ */
 public class StartingCardController implements Initializable {
 
     @FXML

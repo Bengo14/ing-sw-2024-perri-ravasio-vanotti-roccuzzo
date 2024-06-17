@@ -19,7 +19,11 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
-
+/**
+ * This class is the GUI view of the game.
+ * It extends the Application class and implements the View interface.
+ * It contains the methods to start the view, set the client of the view, set the scene of the view, reset the scene of the view.
+ */
 public class ViewGui extends Application implements View {
 
     private Client client;

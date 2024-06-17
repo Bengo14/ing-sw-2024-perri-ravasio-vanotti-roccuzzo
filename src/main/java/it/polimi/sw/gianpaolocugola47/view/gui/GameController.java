@@ -18,7 +18,10 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * This class is the controller of the game scene.
+ * It contains the methods to handle the game scene, such as the chat, the board, the cards and the ranking list.
+ */
 public class GameController implements Initializable {
 
     @FXML

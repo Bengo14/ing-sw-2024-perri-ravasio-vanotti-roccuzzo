@@ -14,6 +14,10 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller of the other board scene.
+ * It contains the methods to show the board of the other player.
+ */
 public class OtherBoardController implements Initializable {
 
     @FXML

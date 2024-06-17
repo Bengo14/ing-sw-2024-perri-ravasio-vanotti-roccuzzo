@@ -24,10 +24,19 @@ public class ItemObjective extends Objectives{
         this.itemsRequired = itemsRequired;
     }
 
+    /**
+     * This method returns the items required to achieve the points.
+     * @return the items required to achieve the points.
+     */
     public ArrayList<Items> getItemsRequired() {
         return itemsRequired;
     }
 
+    /**
+     * This method checks if the player table contains the required items and computes the points.
+     * @param playerTable the player table to check.
+     * @return the points obtained by the player.
+     */
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int itemsSetCounter;
@@ -45,7 +54,10 @@ public class ItemObjective extends Objectives{
         }
         return this.getPoints()* itemsSetCounter;
     }
-
+    /**
+     * This method returns a string representation of the ItemObjective.
+     * @return a string representation of the ItemObjective.
+     */
     public String toString(){
         return "ItemObjective: "+this.getPoints()+" points, required items: "+itemsRequired.toString();
     }

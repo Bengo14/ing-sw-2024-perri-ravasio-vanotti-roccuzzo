@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * This class represents the common board, and it contains the scoreboard,
- * the two decks(resources card and gold card) and the common objectives. The status changes
- * are managed by the {@link //Controller}.
+ * the two decks(resources card and gold card) and the common objectives.
+ * The status changes are managed by the {@link //Controller}.
  */
 public class MainTable implements Observable {
 

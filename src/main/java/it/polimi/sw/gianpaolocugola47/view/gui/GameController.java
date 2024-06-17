@@ -179,7 +179,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this metod links the gui to the controller
+     * This method links the gui to the controller
      * @param gui the gui to link
      * sets the starting card, the secret objective, the cards on hand and the objectives
      * sets the resources counter, the id of the player and the ranking list, the first pawn and the global points
@@ -236,7 +236,7 @@ public class GameController implements Initializable {
         chat.getItems().add("Start a message with '@' to send a private message.");
     }
     /**
-     * this method adds the zoom functionality to the board
+     * This method adds the zoom functionality to the board
      */
     private void addZoomFunctionality() {
         boardPane.addEventFilter(ScrollEvent.SCROLL, event -> {
@@ -258,7 +258,7 @@ public class GameController implements Initializable {
         });
     }
     /**
-     * this method adds the drag functionality to the board
+     * This method adds the drag functionality to the board
      */
     private void addDragFunctionality() {
         boardPane.setOnMousePressed(event -> {
@@ -285,7 +285,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this method sets the turn label text
+     * This method sets the turn label text
      * @param text the text to set in the label
      */
     public void setTurnLabelText(String text) {
@@ -293,7 +293,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this methods updates the points of the players, updates the ranking list and the resources counter
+     * This method updates the points of the players, updates the ranking list and the resources counter
      * @param boardPoints the points of the players on the board
      * @param globalPoints the global points of the players
      */
@@ -334,7 +334,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this methods updates the deck of the resources and the gold deck on the board
+     * This method updates the deck of the resources and the gold deck on the board
      * @param res the resource card to set in the deck or empty position
      * @param gold the gold card to set in the deck or empty position
      * @param drawPos the position of the card drawn on the table
@@ -361,7 +361,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this method shows the other board of the player clicked in the ranking list
+     * This method shows the other board of the player clicked in the ranking list
      * @param event the mouse event
      */
     @FXML
@@ -372,7 +372,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this methods switches the card image on the hand of the player
+     * This method switches the card image on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -380,7 +380,7 @@ public class GameController implements Initializable {
         switchCardImage(gui.getCardsOnHand()[0], hand_0);
     }
     /**
-     * this methods switches the card image on the hand of the player
+     * This method switches the card image on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -388,7 +388,7 @@ public class GameController implements Initializable {
         switchCardImage(gui.getCardsOnHand()[1], hand_1);
     }
     /**
-     * this methods switches the card image on the hand of the player
+     * This method switches the card image on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -397,7 +397,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * this method switches the image of the card
+     * This method switches the image of the card
      * @param card the card to switch
      * @param imageView the image view of the card
      */
@@ -409,7 +409,7 @@ public class GameController implements Initializable {
         imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
     }
     /**
-     * this method handles the click on the hand of the player
+     * This method handles the click on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -418,7 +418,7 @@ public class GameController implements Initializable {
         selectedCard = 0;
     }
     /**
-     * this method handles the click on the hand of the player
+     * This method handles the click on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -427,7 +427,7 @@ public class GameController implements Initializable {
         selectedCard = 1;
     }
     /**
-     * this method handles the click on the hand of the player
+     * This method handles the click on the hand of the player
      * @param event the mouse event
      */
     @FXML
@@ -436,7 +436,7 @@ public class GameController implements Initializable {
         selectedCard = 2;
     }
     /**
-     * this method sets the border of the image view clicked
+     * This method sets the border of the image view clicked
      * @param card the image view to set the border
      */
     private void setImageViewBorder(ImageView card) {
@@ -446,7 +446,7 @@ public class GameController implements Initializable {
         card.getStyleClass().add("selected-image");
     }
     /**
-     * this method handles the click on the board of the player
+     * This method handles the click on the board of the player
      * it shows the possible positions where the card can be placed with a gold image
      * it places the card on the board in the gold image position clicked
      * it removes the gold image from the board
@@ -478,12 +478,12 @@ public class GameController implements Initializable {
                     if(playablePos[i][j] && matrix[i][j] != null) {
                         matrix[i][j].setImage(null);
                         matrix[i][j].setMouseTransparent(true);
-
                         if(matrix[i][j].equals(image)) {
-                            if(i-x < 0 && j-y < 0) corner = 0;
-                            if(i-x < 0 && j-y > 0) corner = 1;
-                            if(i-x > 0 && j-y < 0) corner = 2;
-                            if(i-x > 0 && j-y > 0) corner = 3;
+                            if(i-x == -1 && j-y == -1) corner = 0;
+                            else if(i-x == -1 && j-y == 1) corner = 1;
+                            else if(i-x == 1 && j-y == -1) corner = 2;
+                            else if(i-x == 1 && j-y == 1) corner = 3;
+                            else return;
 
                             if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].isFront())) {
                                 String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";

@@ -243,15 +243,14 @@ public class PlayerTable implements Serializable{
         }else
             return true; // card is null
     }
-    private boolean isCheap(GoldCard card){
+    private boolean isCheap(GoldCard card) {
         int[] resCounter = new int[Resources.values().length];
         System.arraycopy(this.resourceCounter, 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
-        for(int i=0; i<card.getResourcesRequired().toArray().length; i++){
-            resCounter[card.getResourcesRequired().get(i).ordinal()]--; // decrease required resource
+        for(Resources res : card.getResourcesRequired()) {
+            resCounter[res.ordinal()]--; // decrease required resource
         }
         sort(resCounter);
         return resCounter[0] >= 0; // true: I have enough resources
-        // false: I don't have enough resources
     }
     private void placeCard(int x, int y, ResourceCard card) {
         this.placedCards[x][y]=card;

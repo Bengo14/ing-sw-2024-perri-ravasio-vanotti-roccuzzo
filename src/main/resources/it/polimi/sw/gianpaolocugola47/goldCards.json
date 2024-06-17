@@ -70,7 +70,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "QUILL"
+    "itemRequired": "QUILL"
   },
   {
     "id": 41,
@@ -143,7 +143,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "INKWELL"
+    "itemRequired": "INKWELL"
   },
   {
     "id": 42,
@@ -216,7 +216,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "MANUSCRIPT"
+    "itemRequired": "MANUSCRIPT"
   },
   {
     "id": 43,
@@ -290,7 +290,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 44,
@@ -364,7 +364,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 45,
@@ -438,7 +438,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 46,
@@ -511,7 +511,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 47,
@@ -584,7 +584,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 48,
@@ -657,7 +657,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 49,
@@ -732,7 +732,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 50,
@@ -805,7 +805,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "QUILL"
+    "itemRequired": "QUILL"
   },
   {
     "id": 51,
@@ -878,7 +878,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "MANUSCRIPT"
+    "itemRequired": "MANUSCRIPT"
   },
   {
     "id": 52,
@@ -951,7 +951,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "INKWELL"
+    "itemRequired": "INKWELL"
   },
   {
     "id": 53,
@@ -1025,7 +1025,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 54,
@@ -1099,7 +1099,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 55,
@@ -1173,7 +1173,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 56,
@@ -1246,7 +1246,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 57,
@@ -1319,7 +1319,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 58,
@@ -1392,7 +1392,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 59,
@@ -1467,7 +1467,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 60,
@@ -1540,7 +1540,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "INKWELL"
+    "itemRequired": "INKWELL"
   },
   {
     "id": 61,
@@ -1613,7 +1613,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "MANUSCRIPT"
+    "itemRequired": "MANUSCRIPT"
   },
   {
     "id": 62,
@@ -1686,7 +1686,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "QUILL"
+    "itemRequired": "QUILL"
   },
   {
     "id": 63,
@@ -1760,7 +1760,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 64,
@@ -1834,7 +1834,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 65,
@@ -1908,7 +1908,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 66,
@@ -1981,7 +1981,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 67,
@@ -2054,7 +2054,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 68,
@@ -2127,7 +2127,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 69,
@@ -2202,7 +2202,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 70,
@@ -2275,7 +2275,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "QUILL"
+    "itemRequired": "QUILL"
   },
   {
     "id": 71,
@@ -2348,7 +2348,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "MANUSCRIPT"
+    "itemRequired": "MANUSCRIPT"
   },
   {
     "id": 72,
@@ -2421,7 +2421,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": true,
-    "itemThatGivesPoints": "INKWELL"
+    "itemRequired": "INKWELL"
   },
   {
     "id": 73,
@@ -2495,7 +2495,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 74,
@@ -2569,7 +2569,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 75,
@@ -2643,7 +2643,7 @@
     ],
     "pointsForCorners": true,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 76,
@@ -2716,7 +2716,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 77,
@@ -2789,7 +2789,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 78,
@@ -2862,7 +2862,7 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   },
   {
     "id": 79,
@@ -2937,6 +2937,6 @@
     ],
     "pointsForCorners": false,
     "pointsForItems": false,
-    "itemThatGivesPoints": null
+    "itemRequired": null
   }
 ]

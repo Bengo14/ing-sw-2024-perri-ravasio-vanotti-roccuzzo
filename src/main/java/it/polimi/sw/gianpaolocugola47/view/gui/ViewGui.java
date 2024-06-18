@@ -379,6 +379,14 @@ public class ViewGui extends Application implements View {
     }
 
     /**
+     * This method gets the loaded condition.
+     * @return true if the game is loaded, false otherwise.
+     */
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    /**
      * This method draw a card from the deck.
      * @param position the position of the card drawn.
      */

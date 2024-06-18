@@ -24,6 +24,14 @@ class GoldCardTest {
     }
 
     @Test
+    public void testGetItemRequired(){
+        Deck.initDeck();
+        GoldCard gold = Deck.getGoldCardsDeck().get(0);
+        gold.getItemRequired();
+        System.out.println(gold.getItemRequired());
+    }
+
+    @Test
     public void testGetCardPointForPlacing() {
         MainTable main = new MainTable();
         Deck.initDeck();
@@ -71,26 +79,26 @@ class GoldCardTest {
     public void testGetCardPointForItems(){
         MainTable main = new MainTable();
         Deck.initDeck();
-        GoldCard g = Deck.getGoldCardsDeck().get(3);
-        StartingCard start = Deck.getStartingCardsDeck().get(1);
+        GoldCard g = Deck.getGoldCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().get(0);
         start.switchFrontBack();
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         main.setNumOfPlayers(2);
-        ResourceCard res_1 = Deck.getResourceCardsDeck().get(23);
-        ResourceCard res_2 = Deck.getResourceCardsDeck().get(16);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
         PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{res_1, res_2, g});
         main.setPlayerTable(1, player);
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1, obj);
-        main.turnCardOnHand(1,2, true);
         main.turnCardOnHand(1,0, true);
         main.turnCardOnHand(1,1, true);
-        main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
-        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 3, 1);
-        main.playCardAndUpdatePoints(2, 9, 11, 0, 1);
-        assertEquals(2, main.getBoardPoints(1));
-        assertEquals(2,player.getResourceCounter(6));
+        main.turnCardOnHand(1,2, true);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
+        main.playCardAndUpdatePoints(2, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
+        assertEquals(1, main.getBoardPoints(1));
+        assertEquals(1,player.getResourceCounter(4));
     }
+
     @Test
     public void testIsNotFront(){
         MainTable main = new MainTable();

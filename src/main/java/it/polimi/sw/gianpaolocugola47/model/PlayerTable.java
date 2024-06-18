@@ -15,9 +15,9 @@ import static java.util.Arrays.sort;
  */
 public class PlayerTable implements Serializable{
     @Expose
-    public static final int MATRIX_DIMENSION = 22;
+    public static final int MATRIX_DIMENSION = 22; //should be 141 (max n^ of cards on table by a player is 70)
     @Expose
-    public static final int STARTING_CARD_POS = 10;
+    public static final int STARTING_CARD_POS = 10; // should be 70
     @Expose
     private int id;
     @Expose

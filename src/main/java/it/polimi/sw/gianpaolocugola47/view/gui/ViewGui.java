@@ -119,12 +119,17 @@ public class ViewGui extends Application implements View {
             event.consume();
             logOut(stage);
         });
-
         this.stage = stage;
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(event -> setScene("StartingCard"));
-        delay.play();
+        if (!isLoaded) {
+            delay.setOnFinished(event -> setScene("StartingCard"));
+            delay.play();
+        } else {
+            client.startGameFromFile();
+            localPlayerTable.setStartingCard((StartingCard) client.getPlacedCards(client.getIdLocal())[PlayerTable.STARTING_CARD_POS][PlayerTable.STARTING_CARD_POS]);
+            localPlayerTable.setSecretObjective(client.getSecretObjective());
+        }
     }
     /**
      * This method sets the scene of the view, given the name of the scene.
@@ -143,6 +148,8 @@ public class ViewGui extends Application implements View {
                 System.out.println("Error loading scene " + sceneName);
                 client.terminateLocal();
             }
+
+
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
 

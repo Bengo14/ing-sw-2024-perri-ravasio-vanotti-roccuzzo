@@ -96,7 +96,7 @@
         "isItem" : false,
         "isResource": true,
         "item" : null,
-        "resource" : "INSECT"
+        "resource" : "INSECTS"
       },
       {
         "isBuildable" : true,

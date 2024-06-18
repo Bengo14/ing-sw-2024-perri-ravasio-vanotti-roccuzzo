@@ -467,4 +467,10 @@ public class ViewGui extends Application implements View {
     protected String[] getNicknames() {
         return nicknames;
     }
+    protected int[] getBoardPoints() {
+        return boardPoints;
+    }
+    protected int[] getGlobalPoints() {
+        return globalPoints;
+    }
 }

@@ -218,13 +218,13 @@ public class GameController implements Initializable {
         if(gui.getLocalPlayerTable().getId() == 0)
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
         
-        globalPointsLabel.setText("Global points: 0");
+        globalPointsLabel.setText("Global points: " + gui.getGlobalPoints()[gui.getLocalPlayerTable().getId()]);
         int num = gui.getNicknames().length-1;
         pos_0.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+num+".png")));
 
         String text;
         for(int i = 0; i<gui.getNicknames().length; i++) {
-            text = i + ") " + gui.getNicknames()[i] + " | " + "Board points: 0";
+            text = i + ") " + gui.getNicknames()[i] + " | " + "Board points: "+ gui.getBoardPoints()[gui.getLocalPlayerTable().getId()];
             rankingList.getItems().add(text);
         }
 

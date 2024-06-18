@@ -6,8 +6,18 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * This class is used to deserialize a MainTable object from a JSON string.
+ * It is used by the Gson library to convert a JSON string into a MainTable object.
+ * json fields are 1:1 on the MainTable object fields.
+ * Objectives and ResourceCards are deserialized with their own custom deserializer.
+ */
 public class MainTableDeserializer implements JsonDeserializer<MainTable> {
 
+    /**
+     * Deserializes a MainTable object from a JSON string.
+     * Used by the Gson builder.
+     */
     @Override
     public MainTable deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
@@ -39,6 +49,11 @@ public class MainTableDeserializer implements JsonDeserializer<MainTable> {
         return mainTable;
     }
 
+    /**
+     * Converts a JsonArray into an int array.
+     * @param jsonArray : jsonArray to be converted.
+     * @return : converted int array.
+     */
     private int[] jsonArrayToInt(JsonArray jsonArray) {
         int[] array = new int[jsonArray.size()];
         for (int i = 0; i < jsonArray.size(); i++) {

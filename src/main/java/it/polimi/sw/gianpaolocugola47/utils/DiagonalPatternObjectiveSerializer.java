@@ -8,7 +8,18 @@ import it.polimi.sw.gianpaolocugola47.model.DiagonalPatternObjective;
 
 import java.lang.reflect.Type;
 
+/**
+ * This class is used to serialize a DiagonalPatternObjective object into a JSON string.
+ * It is used by the Gson library to convert a DiagonalPatternObjective object into a JSON string.
+ * json fields are 1:1 on the DiagonalPatternObjective object fields with an additional "type" added.
+ * The latter is crucial when I need to deserialize an objective deck from a JSON string, since
+ * DiagnosticPatternObjective is a subclass of Objective.
+ */
 public class DiagonalPatternObjectiveSerializer implements JsonSerializer<DiagonalPatternObjective> {
+    /**
+     * Serializes a DiagonalPatternObjective object into a JSON string.
+     * Used by the Gson builder.
+     */
     @Override
     public JsonElement serialize(DiagonalPatternObjective diagonalPatternObjective, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();

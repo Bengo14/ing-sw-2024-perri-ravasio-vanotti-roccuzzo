@@ -6,8 +6,19 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * Custom serializer for the PlayerTable class.
+ * Used to serialize a PlayerTable object into a JSON representation.
+ * Ignores some parameters that are not serializable, such as the placedCard matrix, which is substituted
+ * with an int id card matrix and a boolean side matrix, used to rebuild the placedCard matrix once the
+ * playerTable is completely deserialized.
+ */
 public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
     private final Gson gson;
+
+    /**
+     * Constructor. Initializes the Gson object with the necessary type adapters.
+     */
     public PlayerTableSerializer() {
         RuntimeTypeAdapterFactory<ResourceCard> resourceCardAdapterFactory = RuntimeTypeAdapterFactory.of(ResourceCard.class, "type")
                 .registerSubtype(ResourceCard.class, "ResourceCard")
@@ -22,6 +33,11 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
                 .registerTypeAdapterFactory(objectivesAdapterFactory)
                 .create();
     }
+
+    /**
+     * Serializes a PlayerTable object into a JSON representation.
+     * Used by the GsonBuilder.
+     */
     @Override
     public JsonElement serialize(PlayerTable playerTable, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();

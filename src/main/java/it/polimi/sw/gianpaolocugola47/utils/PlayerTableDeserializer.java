@@ -6,7 +6,18 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * Custom deserializer for the PlayerTable class.
+ * Used to deserialize the JSON representation of a player into a PlayerTable object.
+ * Ignores some parameters that are not serializable, such as the placedCard matrix, which is substituted
+ * with an int id card matrix and a boolean side matrix, used to rebuild the placedCard matrix once the
+ * playerTable is completely deserialized.
+ */
 public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
+    /**
+     * Deserializes the JSON representation of a player into a PlayerTable object.
+     * Used by the GsonBuilder.
+     */
     @Override
     public PlayerTable deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
@@ -38,6 +49,11 @@ public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
         return playerTable;
     }
 
+    /**
+     * Converts a JSON array of integers into an array of integers.
+     * @param jsonArray : JSON array containing the integers.
+     * @return : array of integers.
+     */
     private int[] jsonArrayToInt(JsonArray jsonArray) {
         int[] array = new int[jsonArray.size()];
         for (int i = 0; i < jsonArray.size(); i++) {

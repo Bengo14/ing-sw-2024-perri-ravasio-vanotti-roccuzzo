@@ -9,6 +9,12 @@ import it.polimi.sw.gianpaolocugola47.model.MainTable;
 
 import java.lang.reflect.Type;
 
+/**
+ * This class is used to serialize a Controller object into a JSON string.
+ * It is used by the Gson library to convert a Controller object into a JSON string.
+ * json fields are 1:1 on the Controller object fields; the MainTable object is serialized using its own serializer.
+ * It also adds a nicknames field not present in the controller class, used to check if the server needs to load a previous game.
+ */
 public class ControllerSerializer implements JsonSerializer<Controller> {
     @Override
     public JsonElement serialize(Controller controller, Type type, JsonSerializationContext jsonSerializationContext) {

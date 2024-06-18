@@ -10,6 +10,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to save the current status of the game by the controller.
+ * It saves the controller status onto 1 + numOfPlayers different files (one for the controller and the mainTable,
+ * the other for each player's playerTable) and the deck status onto 4 different files (one for each different deck).
+ * This class can also be used to load the last available save onto the server and to check if such save is available in
+ * the first place.
+ * Lastly, it is used to reset the game files once the game has ended.
+ */
 public class GameSaver {
     private Controller game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
     private final Gson gson;
@@ -17,6 +25,10 @@ public class GameSaver {
     private final String[] deckFilePaths;
     private final List<String> boardFilePaths;
 
+    /**
+     * Constructor. Initializes the GsonBuilder and the file paths onto which the game is saved.
+     * @param game : controller instance of a game.
+     */
     public GameSaver(Controller game) {
         this.game = game;
         this.gson = new GsonBuilder()
@@ -31,13 +43,23 @@ public class GameSaver {
         this.deckFilePaths[2] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusStarting.json";
         this.deckFilePaths[3] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusObjectives.json";
     }
-    private void initPlayerTableFiles(){ //even when game ends, file's paths keep getting generated with the original names, since players have to join with their original name
+
+    /**
+     * Initializes player table files with their file path. The file path is based on the player's id.
+     * e.g.: src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus0.json
+     */
+    private void initPlayerTableFiles(){
         if(game != null) {
             for(int i = 0; i < game.getNumOfPlayers(); i++) { //playerTable excluding board
                 this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus" + i +".json");
             }
         }
     }
+
+    /**
+     * Generates the game status JSON files. It generates the controller status file and the player table status files.
+     * @return : true whether the operation was successful, false otherwise.
+     */
     public boolean generateGameStatusJson(){
         ControllerSerializer controllerSerializer = new ControllerSerializer();
         Gson gsonContr = new GsonBuilder()
@@ -75,6 +97,11 @@ public class GameSaver {
         }
         return true;
     }
+
+    /**
+     * Loads controller and mainTable (bar playerTables attribute) statuses from a json file.
+     * @return : the controller instance of a previous save. Null if files are not found.
+     */
     public Controller loadControllerStatus(){
         Reader reader;
         Type controller;
@@ -97,6 +124,10 @@ public class GameSaver {
         return game; //game has to be updated in the controller
     }
 
+    /**
+     * Loads the player tables of a previous save from the respective json files.
+     * @return : an array of player tables. Null if files are not found.
+     */
     public PlayerTable[] loadPlayerTableStatus(){
         Reader[] reader = new Reader[boardFilePaths.size()-1];
         Type playerTable;
@@ -123,6 +154,10 @@ public class GameSaver {
         return pt;
     }
 
+    /**
+     * Generates the deck status JSON files. It generates the resource, gold, starting and objective cards deck status files.
+     * @return : true whether the operation was successful, false otherwise.
+     */
     public boolean generateDeckStatusJson()  {
         String s;
         DiagonalPatternObjectiveSerializer diagonalPatternObjectiveSerializer = new DiagonalPatternObjectiveSerializer();
@@ -189,6 +224,11 @@ public class GameSaver {
         }
         return true;
     }
+
+    /**
+     * Loads the deck status of a previous save from the respective json files.
+     * @return : true whether the operation was successful, false otherwise.
+     */
     public boolean loadDeckStatus(){
         Reader[] reader = new Reader[4];
         Type listOfCards;
@@ -226,6 +266,11 @@ public class GameSaver {
         }
         return true;
     }
+
+    /**
+     * Resets all the game save related files once the game has ended.
+     * @return : true whether the operation was successful, false otherwise.
+     */
     public boolean resetFiles(){
         boolean correctDeletions = true;
         for(String path : deckFilePaths) {
@@ -246,10 +291,20 @@ public class GameSaver {
         }
         return correctDeletions;
     }
+
+    /**
+     * Updates the controller status.
+     * @param game : controller with updated parameters.
+     */
     public void updateControllerStatus(Controller game){
         this.game = game;
     }
 
+    /**
+     * Checks whether a game has to restart from a previous save or not.
+     * @param nicknames : nicknames of the freshly started matches.
+     * @return : true if the game has to restart from a previous save, false otherwise.
+     */
     public boolean checkIfRestarted(String[] nicknames){
         Reader reader;
         Reader deckReader;

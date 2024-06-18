@@ -13,6 +13,7 @@ public class MainTableSerializer implements JsonSerializer<MainTable> {
                 .registerSubtype(ResourceCard.class, "ResourceCard")
                 .registerSubtype(GoldCard.class, "GoldCard");
         RuntimeTypeAdapterFactory<Objectives> objectivesAdapterFactory = RuntimeTypeAdapterFactory.of(Objectives.class, "type")
+                .registerSubtype(Objectives.class, "Objectives")
                 .registerSubtype(ItemObjective.class, "ItemObjective")
                 .registerSubtype(ResourceObjective.class, "ResourceObjective")
                 .registerSubtype(LShapePatternObjective.class, "LShapePatternObjective")

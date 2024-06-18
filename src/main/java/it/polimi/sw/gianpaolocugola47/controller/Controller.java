@@ -125,7 +125,7 @@ public class Controller { //has to include nicknames of players
         if(this.numOfPlayers == this.playersAdded){
             this.gameSaver = new GameSaver(this); //if(gameSaver.checkIfRestarted(mainTable.getNicknames()))
             if(gameSaver.checkIfRestarted(mainTable.getNicknames())){
-                //this.isGameLoaded = true; breaks everything
+                this.isGameLoaded = true;
                 System.err.println("game loaded from disk");
             }
             else{
@@ -152,8 +152,6 @@ public class Controller { //has to include nicknames of players
         mainTable.setPlayerSecretObjective(playerId, obj);
         startingCardsAndObjAdded++;
         if(startingCardsAndObjAdded == mainTable.getNumOfPlayers()) {
-            if(isGameLoaded)
-                loadGame();
             mainTable.initView();
             mainTable.updateDecks(5);
             mainTable.showTurn(currentPlayerId);
@@ -161,6 +159,7 @@ public class Controller { //has to include nicknames of players
     }
 
     public void startGameFromFile(){
+        loadGame();
         mainTable.initView();
         mainTable.updateDecks(5);
         mainTable.showTurn(currentPlayerId);
@@ -215,8 +214,12 @@ public class Controller { //has to include nicknames of players
         }
         else this.currentPlayerId++;
         gameSaver.updateControllerStatus(this);
-        gameSaver.generateDeckStatusJson();
         gameSaver.generateGameStatusJson();
+        try{
+            gameSaver.generateDeckStatusJson();
+        } catch(StackOverflowError e){
+            System.err.println("StackOverflowError, couldn't save on file");
+        }
     }
     private void computeWinner() {
         mainTable.computeWinnerAtEndGame();
@@ -234,18 +237,31 @@ public class Controller { //has to include nicknames of players
         return mainTable.getNicknames();
     }
 
-    public void loadGame(){
+    public void loadGame(){ //issues: for some reason, each resource counter is doubled once loaded onto the MainTable
         gameSaver.updateControllerStatus(this);
         Controller c = gameSaver.loadControllerStatus();
-        this.mainTable.notifyObservers(c.getMainTable());
-        this.currentPlayerId = c.getCurrentPlayerId();
-        this.clientsConnected = c.getClientsConnected();
-        this.numOfPlayers = c.getNumOfPlayers();
-        this.playersAdded = c.getPlayersAdded();
-        this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
-        this.isLastTurn = c.isLastTurn();
+        if(c != null){
+            mainTable.setNumOfPlayers(c.getMainTable().getNumOfPlayers()); //HAS TO GO FIRST!
+            mainTable.setCardsOnTable(c.getMainTable().getCardsOnTable());
+            mainTable.setGlobalObjectives(c.getMainTable().getGlobalObjectives());
+            mainTable.setEndGame(c.getMainTable().isEndGame());
+            mainTable.setBoardPoints(c.getMainTable().getBoardPoints());
+            mainTable.setGlobalPoints(c.getMainTable().getGlobalPoints());
+            PlayerTable[] pt = gameSaver.loadPlayerTableStatus();
+            if(gameSaver.loadPlayerTableStatus() != null){
+                for(int i = 0; i<mainTable.getNumOfPlayers(); i++){
+                    mainTable.setPlayerTable(i, pt[i]);
+                }
+            }
+            this.currentPlayerId = c.getCurrentPlayerId();
+            this.clientsConnected = c.getClientsConnected();
+            this.numOfPlayers = c.getNumOfPlayers();
+            this.playersAdded = c.getPlayersAdded();
+            this.startingCardsAndObjAdded = c.getStartingCardsAndObjAdded();
+            this.isLastTurn = c.isLastTurn();
+            gameSaver.loadDeckStatus();
+        }
         gameSaver.updateControllerStatus(this);
-
     }
 
     public boolean isGameLoaded(){ //to be communicated to the respective views via the start() methods

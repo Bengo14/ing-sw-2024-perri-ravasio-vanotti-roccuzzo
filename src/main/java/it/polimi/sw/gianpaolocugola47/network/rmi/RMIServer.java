@@ -280,17 +280,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
     }
 
     @Override
-    public void notifyObservers(MainTable mainTable) {
-        synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                for(VirtualView view : this.clients){
-                    /*todo*/
-                }
-            }
-        }
-    }
-
-    @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable) {
         synchronized (this.clients) {
             if (!this.clients.isEmpty()) {

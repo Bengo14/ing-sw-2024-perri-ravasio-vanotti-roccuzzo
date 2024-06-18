@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 import com.google.gson.annotations.Expose;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import static java.util.Arrays.sort;
@@ -13,7 +12,7 @@ import static java.util.Arrays.sort;
  * the point on the board, all the point included the secret objective and the resource counter.
  *
  */
-public class PlayerTable implements Serializable{
+public class PlayerTable{
     @Expose
     public static final int MATRIX_DIMENSION = 22; //should be 141 (max n^ of cards on table by a player is 70)
     @Expose
@@ -33,9 +32,7 @@ public class PlayerTable implements Serializable{
     @Expose
     private ResourceCard[] cardsOnHand;
     private PlaceableCard[][] placedCards;
-    @Expose
     private int[][] cardIdMatrix = null;
-    @Expose
     private boolean[][] cardSideMatrix = null;
 
     /**
@@ -368,8 +365,10 @@ public class PlayerTable implements Serializable{
         return cardSideMatrix;
     }
 
-    public void idMatrixToCardMatrix(){ //to be called ONLY when parsing the id matrix from json
+    public void idMatrixToCardMatrix(int[] resourceCounterParameter){ //to be called ONLY when parsing the id matrix from json
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
+        int[] tempResCounter = new int[resourceCounterParameter.length];
+        System.arraycopy(resourceCounterParameter, 0, tempResCounter, 0, tempResCounter.length);
         for(int i = 0; i < MATRIX_DIMENSION; i++){
             for(int j = 0; j < MATRIX_DIMENSION; j++){
                 if(cardIdMatrix[i][j] == -1)
@@ -378,7 +377,7 @@ public class PlayerTable implements Serializable{
                     if(i == STARTING_CARD_POS && j == STARTING_CARD_POS){
                         StartingCard s = (StartingCard) Deck.getCardFromGivenId(cardIdMatrix[i][j]);
                         s.setFront(cardSideMatrix[i][j]);
-                        setStartingCard(s);
+                        setStartingCard(s); //issue: resource counter is doubled
                     }
                     else{
                         ResourceCard c = (ResourceCard) Deck.getCardFromGivenId(cardIdMatrix[i][j]);
@@ -399,6 +398,7 @@ public class PlayerTable implements Serializable{
                 }
             }
         }
+        System.arraycopy(tempResCounter, 0, this.resourceCounter, 0, resourceCounter.length);
         this.cardIdMatrix = null;
         this.cardSideMatrix = null;
     }

@@ -1,14 +1,12 @@
 package it.polimi.sw.gianpaolocugola47.observer;
 
 import it.polimi.sw.gianpaolocugola47.model.GoldCard;
-import it.polimi.sw.gianpaolocugola47.model.MainTable;
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 
 import java.rmi.RemoteException;
 
 public interface Observer {
-    void notifyObservers(MainTable mainTable);
     void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[][] cardsOnHand, ResourceCard[] cardsOnTable);
     void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos);
     void updatePoints(int[] boardPoints, int[] globalPoints);

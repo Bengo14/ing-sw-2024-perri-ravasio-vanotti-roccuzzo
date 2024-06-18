@@ -58,7 +58,8 @@ public class GameSaver {
         } catch (IOException e) {
             System.out.println("Couldn't save controller status.");
             return false;
-        } try {
+        }
+        try {
             for(int i = 1; i < boardFilePaths.size(); i++) {
                 Writer ptWr = new FileWriter(boardFilePaths.get(i));
                 gsonPlayer.toJson(pt[i-1], ptWr);
@@ -93,13 +94,6 @@ public class GameSaver {
         } catch (IOException e) {
             System.out.println("Unable to close the file reader.");
         }
-        if(game != null){
-            PlayerTable[] pt = loadPlayerTableStatus();
-            if(pt != null){
-                for(int i = 0; i < pt.length; i++)
-                    game.getMainTable().setPlayerTable(i, pt[i]);
-            }
-        }
         return game; //game has to be updated in the controller
     }
 
@@ -125,7 +119,7 @@ public class GameSaver {
             }
         }
         for(PlayerTable p : pt)
-            p.idMatrixToCardMatrix();
+            p.idMatrixToCardMatrix(p.getResourceCounter());
         return pt;
     }
 
@@ -280,6 +274,8 @@ public class GameSaver {
         Type listOfNicknames = new TypeToken<ArrayList<String>>() {}.getType();
         Gson gsonNick = new GsonBuilder().registerTypeAdapter(ArrayList.class, new OldNicknamesDeserializer()).create();
         oldNicknames = gsonNick.fromJson(reader, listOfNicknames);
+        if(oldNicknames == null)
+            return false;
         if(oldNicknames.size() != nicknames.length)
             return false;
         for(int i = 0; i < oldNicknames.size(); i++) {

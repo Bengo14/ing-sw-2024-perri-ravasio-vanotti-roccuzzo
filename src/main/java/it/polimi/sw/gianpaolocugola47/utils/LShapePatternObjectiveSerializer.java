@@ -23,7 +23,7 @@ public class LShapePatternObjectiveSerializer implements JsonSerializer<LShapePa
         jsonObject.add("orientation", orientation);
         jsonObject.add("mainResource", mainRes);
         jsonObject.add("secondaryResource", secRes);
-        jsonObject.addProperty("type", "DiagonalPatternObjective");
+        jsonObject.addProperty("type", "LShapePatternObjective");
         return jsonObject;
     }
 }

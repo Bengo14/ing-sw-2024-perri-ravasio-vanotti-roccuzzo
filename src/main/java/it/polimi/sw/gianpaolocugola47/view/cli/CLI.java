@@ -483,7 +483,6 @@ public class CLI implements View {
                             System.out.println("Command couldn't be recognized, please try again.");
                     }
                 }
-                /*checkIfGameHasEnded*/
             }
             if(!client.isItMyTurn()){
                 String command = br.readLine();

@@ -429,6 +429,8 @@ public class CLI implements View {
             System.out.println("Game loaded successfully!");
             System.out.println("Type /help to see all the available commands.");
             client.startGameFromFile();
+            this.cliController.getLocalPlayerTable().setStartingCard((StartingCard) client.getPlacedCards(client.getIdLocal())[PlayerTable.STARTING_CARD_POS][PlayerTable.STARTING_CARD_POS]);
+            this.cliController.getLocalPlayerTable().setSecretObjective(client.getSecretObjective());
         }
         while(true){
             if(client.isItMyTurn()){

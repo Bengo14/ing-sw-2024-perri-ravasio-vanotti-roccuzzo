@@ -215,11 +215,7 @@ public class Controller { //has to include nicknames of players
         else this.currentPlayerId++;
         gameSaver.updateControllerStatus(this);
         gameSaver.generateGameStatusJson();
-        try{
-            gameSaver.generateDeckStatusJson();
-        } catch(StackOverflowError e){
-            System.err.println("StackOverflowError, couldn't save on file");
-        }
+        gameSaver.generateDeckStatusJson();
     }
     private void computeWinner() {
         mainTable.computeWinnerAtEndGame();
@@ -237,7 +233,7 @@ public class Controller { //has to include nicknames of players
         return mainTable.getNicknames();
     }
 
-    public void loadGame(){ //issues: for some reason, each resource counter is doubled once loaded onto the MainTable
+    public void loadGame(){
         gameSaver.updateControllerStatus(this);
         Controller c = gameSaver.loadControllerStatus();
         if(c != null){
@@ -266,5 +262,9 @@ public class Controller { //has to include nicknames of players
 
     public boolean isGameLoaded(){ //to be communicated to the respective views via the start() methods
         return this.isGameLoaded;
+    }
+
+    public Objectives getSecretObjective(int playerId) {
+        return mainTable.getPlayerTable(playerId).getSecretObjective();
     }
 }

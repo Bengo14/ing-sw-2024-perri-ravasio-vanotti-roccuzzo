@@ -34,7 +34,7 @@ public class SocketClient implements VirtualView, Client {
     private PlaceableCard[][] getPlacedCardsResponse;
     private int[] getResourceCounterResponse;
     private boolean[][] getPlayPosResponse;
-
+    private Objectives getSecretObjectiveResponse;
 
     protected SocketClient(BufferedReader input, BufferedWriter output) {
         this.input = input;
@@ -410,6 +410,18 @@ public class SocketClient implements VirtualView, Client {
 
         response = false;
         return getPlayPosResponse;
+    }
+
+    @Override
+    public Objectives getSecretObjective() {
+        synchronized (server) {
+            server.getSecretObjective(this.id);
+        }
+        while(!response)
+            Thread.onSpinWait();
+
+        response = false;
+        return getSecretObjectiveResponse;
     }
 
     @Override

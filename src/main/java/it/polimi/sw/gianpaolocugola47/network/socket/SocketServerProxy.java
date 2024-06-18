@@ -11,7 +11,6 @@ import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
 
 public class SocketServerProxy implements VirtualServer {
     private final PrintWriter output;
@@ -111,6 +110,14 @@ public class SocketServerProxy implements VirtualServer {
         output.println(playerId);
         output.flush();
         return new PlaceableCard[0][];
+    }
+
+    @Override
+    public Objectives getSecretObjective(int playerId) {
+        output.println("getSecretObj");
+        output.println(playerId);
+        output.flush();
+        return null;
     }
 
     @Override

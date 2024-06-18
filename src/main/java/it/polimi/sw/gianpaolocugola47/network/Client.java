@@ -19,6 +19,8 @@ public interface Client {
 
     boolean[][] getPlayablePositions();
 
+    Objectives getSecretObjective();
+
     boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront);
 
     void drawCard(int position);

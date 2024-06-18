@@ -277,6 +277,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     @Override
+    public Objectives getSecretObjective() {
+        try {
+            synchronized (server) {
+                return server.getSecretObjective(this.id);
+            }
+        } catch (RemoteException e) {
+            terminateLocal();
+            return null;
+        }
+    }
+
+    @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront) {
         try {
             synchronized (server) {

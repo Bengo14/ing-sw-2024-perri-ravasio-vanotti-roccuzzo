@@ -196,6 +196,14 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return controller.getPlacedCards(playerId);
         }
     }
+
+    @Override
+    public Objectives getSecretObjective(int playerId) throws RemoteException {
+        synchronized (controller) {
+            return controller.getSecretObjective(playerId);
+        }
+    }
+
     @Override
     public int[] getResourceCounter(int playerId) throws RemoteException {
         synchronized (controller) {

@@ -62,9 +62,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
                     setSecretObjective(id, obj);
                 }
 
-                case "startFromFile" ->{
-                    startGameFromFile();
-                }
+                case "startFromFile" -> startGameFromFile();
 
                 case "play" -> {
                     synchronized (client) {
@@ -329,6 +327,13 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     public PlaceableCard[][] getPlacedCards(int playerId) {
         synchronized (controller) {
             return controller.getPlacedCards(playerId);
+        }
+    }
+
+    @Override
+    public Objectives getSecretObjective(int playerId) throws RemoteException {
+        synchronized (controller) {
+            return controller.getSecretObjective(playerId);
         }
     }
 

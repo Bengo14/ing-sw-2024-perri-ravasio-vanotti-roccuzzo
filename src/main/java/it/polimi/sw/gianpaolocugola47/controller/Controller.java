@@ -430,4 +430,12 @@ public class Controller { //has to include nicknames of players
     public Objectives getSecretObjective(int playerId) {
         return mainTable.getPlayerTable(playerId).getSecretObjective();
     }
+
+    /**
+     * Checks whether a game is loaded from a file or not.
+     * @return : true is the game is loaded from a file, false otherwise.
+     */
+    public boolean isGameLoaded() {
+        return isGameLoaded;
+    }
 }

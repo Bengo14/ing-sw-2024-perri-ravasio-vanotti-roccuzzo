@@ -44,4 +44,15 @@ class ControllerTest {
         controller.drawCard(1,0);
     }
 
+    @Test
+    public void testGetterAndSetters(){
+        Controller ctrl= new Controller();
+        MainTable main= new MainTable();
+        ctrl.setMainTable(main);
+        assertEquals(main,ctrl.getMainTable());
+
+//        assertEquals(0,ctrl.getNumOfPlayers());
+//        assertEquals(0,ctrl.getNumOfPlayersCurrentlyAdded());
+//        ctrl.addPlayer(0,"Mario");
+    }
 }

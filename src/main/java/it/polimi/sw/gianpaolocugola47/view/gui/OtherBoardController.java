@@ -58,6 +58,7 @@ public class OtherBoardController implements Initializable {
     Label label;
 
     private ViewGui gui;
+
     private ImageView [][] matrix;
 
     /**
@@ -118,6 +119,7 @@ public class OtherBoardController implements Initializable {
             }
         });
     }
+
     /**
      * Starts the controller and shows the board of the player
      * It links the controller to the gui that is using it
@@ -176,6 +178,7 @@ public class OtherBoardController implements Initializable {
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
     }
+
     /**
      * Handles the go back button
      */

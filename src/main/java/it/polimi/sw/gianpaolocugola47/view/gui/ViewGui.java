@@ -19,6 +19,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 /**
  * This class is the GUI view of the game.
  * It extends the Application class and implements the View interface.
@@ -64,6 +65,7 @@ public class ViewGui extends Application implements View {
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("OtherBoard", "/it/polimi/sw/gianpaolocugola47/fxml/OtherBoardFXML.fxml");
     }
+
     /**
      * This method sets the client of the view
      * @param client the client that is using the view
@@ -72,6 +74,7 @@ public class ViewGui extends Application implements View {
     public void setClient(Client client) {
         this.client = client;
     }
+
     /**
      * This method starts the view
      */
@@ -83,6 +86,7 @@ public class ViewGui extends Application implements View {
             e.printStackTrace();
         }
     }
+
     /**
      * This method starts the view
      * @param stage the stage of the view
@@ -131,6 +135,7 @@ public class ViewGui extends Application implements View {
             localPlayerTable.setSecretObjective(client.getSecretObjective());
         }
     }
+
     /**
      * This method sets the scene of the view, given the name of the scene.
      * It loads the fxml file of the scene and sets the controller of the scene
@@ -191,6 +196,7 @@ public class ViewGui extends Application implements View {
             }
         });
     }
+
     /**
      * This method sets the scene of the view to the other board scene
      * @param id the id of the player
@@ -214,6 +220,7 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
+
     /**
      * This method resets the scene of the view to the previous scene
      */
@@ -224,6 +231,7 @@ public class ViewGui extends Application implements View {
             stage.show();
         });
     }
+
     /**
      * This method sets the scene of the view to the game scene
      * @param nicknames the nicknames of the players
@@ -268,6 +276,7 @@ public class ViewGui extends Application implements View {
     public int[] getResourcesCounter(){
         return client.getResourceCounter(getLocalPlayerTable().getId());
     }
+
     /**
      * This method updates the deck.
      * @param resourceCardOnTop the resource card on top of the deck.
@@ -290,6 +299,7 @@ public class ViewGui extends Application implements View {
             gameController.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
         });
     }
+
     /**
      * This method updates the points of the player.
      * @param boardPoints the points of the player.
@@ -316,7 +326,6 @@ public class ViewGui extends Application implements View {
         });
     }
 
-
     @Override
     public void receiveMessage(ChatMessage message) {
         Platform.runLater(() -> gameController.receiveMessage(message));
@@ -332,6 +341,7 @@ public class ViewGui extends Application implements View {
             }
         }
     }
+
     /**
      * This method shows the winner of the game.
      * It sets the scene to the end game scene.
@@ -350,6 +360,7 @@ public class ViewGui extends Application implements View {
     public Objectives getSecretObjective() {
         return localPlayerTable.getSecretObjective();
     }
+
     /**
      * This method get the starting card of the player from the client.
      * @return the starting card of the player.
@@ -374,6 +385,7 @@ public class ViewGui extends Application implements View {
     public boolean[][] getPlayablePositions() {
         return client.getPlayablePositions();
     }
+
     protected boolean playCard(int hand, int x, int y, int corner, boolean isFront) {
         return client.playCard(hand, x, y, corner, isFront);
     }
@@ -410,6 +422,7 @@ public class ViewGui extends Application implements View {
                 }
         client.drawCard(position);
     }
+
     /**
      * This method sends a message to other client.
      * @param message the message to send.
@@ -451,6 +464,7 @@ public class ViewGui extends Application implements View {
     protected ResourceCard[] getCardsOnHand() {
         return localPlayerTable.getCardsOnHand();
     }
+
     protected ResourceCard[][] getAllCardsOnHand() {
         return client.getCardsOnHand();
     }
@@ -458,18 +472,23 @@ public class ViewGui extends Application implements View {
     protected PlaceableCard[][] getPlacedCards(int id) {
         return client.getPlacedCards(id);
     }
+
     protected ResourceCard getResourceCardOnTop() {
         return resourceCardOnTop;
     }
+
     protected GoldCard getGoldCardOnTop() {
         return goldCardOnTop;
     }
+
     protected String[] getNicknames() {
         return nicknames;
     }
+
     protected int[] getBoardPoints() {
         return boardPoints;
     }
+
     protected int[] getGlobalPoints() {
         return globalPoints;
     }

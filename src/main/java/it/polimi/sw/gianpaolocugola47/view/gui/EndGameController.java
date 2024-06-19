@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
  * It contains the methods to show the results of the game and to logout.
  */
 public class EndGameController implements Initializable {
+
     private Stage stage;
     @FXML
     private Button ExitGame_BTN;
@@ -27,7 +28,6 @@ public class EndGameController implements Initializable {
     private Label nameWinnerLable;
     @FXML
     private VBox leaderboardPane;
-
     @FXML
     private Label winner_LBL;
 
@@ -48,7 +48,6 @@ public class EndGameController implements Initializable {
             }
         }
         nameWinnerLable.setText(nicknames[winner]+" is the winner with "+max+" points!");
-
     }
 
     /**

@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola47.network;
 import java.io.Serializable;
 
 public class ChatMessage implements Serializable {
+
     private String message;
     private final String  sender;
     private String receiver;

@@ -19,7 +19,6 @@ public class CLIController {
     private int[] boardPoints;
     private String[] nicknames;
 
-
     public CLIController(PlayerTable localPlayerTable) {
         this.localPlayerTable = localPlayerTable;
     }

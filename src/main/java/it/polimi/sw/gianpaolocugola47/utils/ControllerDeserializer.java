@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
  * json fields are 1:1 on the Controller object fields; the MainTable object is deserialized using its own deserializer.
  */
 public class ControllerDeserializer implements JsonDeserializer<Controller> {
+
     /**
      * Deserializes a Controller object from a JSON string.
      * Used by the Gson builder.

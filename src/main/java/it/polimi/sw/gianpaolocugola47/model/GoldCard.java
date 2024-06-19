@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import java.util.ArrayList;
+
 /**
  * This class represents all the gold cards.
  * It extends the ResourceCard class.
@@ -8,6 +9,7 @@ import java.util.ArrayList;
  * plus the ResourceCard attributes.
  */
 public class GoldCard extends ResourceCard {
+
     private ArrayList<Resources> resourcesRequired;
     private final boolean pointsForCorners;
     private final boolean pointsForItems;
@@ -44,7 +46,7 @@ public class GoldCard extends ResourceCard {
      */
     public String resourcesRequiredToString() {
         StringBuilder retString = new StringBuilder();
-        for (Resources resource : resourcesRequired) {
+        for (Resources resource : getResourcesRequired()) {
             retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
         }
         return retString.toString();
@@ -56,11 +58,11 @@ public class GoldCard extends ResourceCard {
      * @return the points condition of the card.
      */
     public String pointConditionToString() {
-        if (pointsForCorners) {
+        if (isPointsForCorners()) {
             return "C";
         }
-        if (pointsForItems) {
-            return Character.toString(itemRequired.getSymbol());
+        if (isPointsForItems()) {
+            return Character.toString(getItemRequired().getSymbol());
         } else
             return "";
     }
@@ -80,6 +82,7 @@ public class GoldCard extends ResourceCard {
     public Items getItemRequired() {
         return itemRequired;
     }
+
     /**
      * This method returns whether the card give points for items or not.
      * @return true if the card give points for items, false otherwise.
@@ -107,6 +110,7 @@ public class GoldCard extends ResourceCard {
             counter[getResourceCentreBack().ordinal()]++;
         }
     }
+
     /**
      * This method returns the points given to the player after placing a specific gold card on the board.
      * @param playerTable the player table in which the card is played.
@@ -116,21 +120,21 @@ public class GoldCard extends ResourceCard {
     public int getPoints(PlayerTable playerTable) {
         if(this.getIsFront()) {
             int points = this.getThisPoints();
-            if (!this.isPointsForCorners() && !this.isPointsForItems()) {
+            if (!isPointsForCorners() && !isPointsForItems()) {
                 return points; // default points
             }
-            if (this.isPointsForCorners()) {
+            if (isPointsForCorners()) {
                 int coveredCorners = 0;
-                int x = this.getLine();
-                int y = this.getColumn();
+                int x = getLine();
+                int y = getColumn();
                 for (int corner = 0; corner < 4; corner++) {
                     if (checkIfCovers(x, y, corner, playerTable))
                         coveredCorners++;
                 }
-                return points * coveredCorners; // 2*coveredCorners
+                return points * coveredCorners; // 2 * coveredCorners
             }
-            if (this.isPointsForItems()) {
-                return points * playerTable.getResourceCounter(this.getItemRequired().ordinal() + 4); // points=ResourceCounter[item]
+            if (isPointsForItems()) {
+                return points * playerTable.getResourceCounter(getItemRequired().ordinal() + 4); // points=ResourceCounter[item]
             }
         } else
             return 0; // card is not front

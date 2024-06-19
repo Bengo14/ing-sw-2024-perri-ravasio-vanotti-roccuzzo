@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import java.util.ArrayList;
+
 /**
  * This class represents all the starting cards.
  */
@@ -34,23 +35,23 @@ public class StartingCard extends PlaceableCard {
      */
     public String resourcesCentreBackToString(){
         StringBuilder retString = new StringBuilder();
-        if(resourcesCentreBack.size() == 1){
+        if(getResourcesCentreBack().size() == 1){
             retString.append("   ");
-            for(Resources resource : resourcesCentreBack){
+            for(Resources resource : getResourcesCentreBack()){
                 retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
             }
             retString.append("   ");
         }
-        else if (resourcesCentreBack.size() == 2){
+        else if (getResourcesCentreBack().size() == 2){
             retString.append("  ");
-            for(Resources resource : resourcesCentreBack){
+            for(Resources resource : getResourcesCentreBack()){
                 retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
             }
             retString.append("  ");
         }
         else {
             retString.append("  ");
-            for(Resources resource : resourcesCentreBack){
+            for(Resources resource : getResourcesCentreBack()){
                 retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
             }
             retString.append("  ");
@@ -86,6 +87,6 @@ public class StartingCard extends PlaceableCard {
      * @return : the string representation of the starting card.
      */
     public String toString(){
-        return "StartingCard: resources: "+resourcesCentreBack.toString();
+        return "StartingCard: resources: "+getResourcesCentreBack().toString();
     }
 }

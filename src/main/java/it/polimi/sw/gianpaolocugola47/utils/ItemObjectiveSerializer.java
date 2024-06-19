@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
  * ItemObjective is a subclass of Objective.
  */
 public class ItemObjectiveSerializer implements JsonSerializer<ItemObjective> {
+
     /**
      * Serializes an ItemObjective object into a JSON string.
      * Used by the Gson builder.

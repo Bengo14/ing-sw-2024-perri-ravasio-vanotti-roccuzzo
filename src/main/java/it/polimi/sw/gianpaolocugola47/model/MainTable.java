@@ -25,6 +25,18 @@ public class MainTable implements Observable {
     private final List<Observer> observers;
 
     /**
+     * Constructor. It initializes the main table key parameters and the decks.
+     */
+    public MainTable() {
+        this.endGame = false;
+        this.cardsOnTable = new ResourceCard[4];
+        this.globalObjectives = new Objectives[2];
+        this.observers = new ArrayList<>();
+        Deck.initAndShuffleDeck();
+        initTable();
+    }
+
+    /**
      * Sets the endGame attribute.
      * @param endGame : true if the game has entered final phase, false otherwise.
      */
@@ -38,6 +50,15 @@ public class MainTable implements Observable {
      */
     public ResourceCard[] getCardsOnTable() {
         return cardsOnTable;
+    }
+
+    /**
+     * Returns the drawable card on the table for a specific position.
+     * @param index : the position identifier.
+     * @return : the specific drawable card on the table.
+     */
+    public ResourceCard getCardOnTable(int index) {
+        return cardsOnTable[index];
     }
 
     /**
@@ -113,18 +134,6 @@ public class MainTable implements Observable {
     }
 
     /**
-     * Constructor. It initializes the main table key parameters and the decks.
-     */
-    public MainTable() {
-        this.endGame = false;
-        this.cardsOnTable = new ResourceCard[4];
-        this.globalObjectives = new Objectives[2];
-        this.observers = new ArrayList<>();
-        Deck.initAndShuffleDeck();
-        initTable();
-    }
-
-    /**
      * Adds an observer to the list of observers.
      * @param observer : the observer to add.
      */
@@ -189,7 +198,7 @@ public class MainTable implements Observable {
     public void initView() {
         synchronized (observers) {
             for (Observer observer : observers)
-                observer.initView(getNicknames(), globalObjectives, getCardsOnHand(), cardsOnTable);
+                observer.initView(getNicknames(), getGlobalObjectives(), getCardsOnHand(), getCardsOnTable());
         }
     }
 
@@ -216,7 +225,7 @@ public class MainTable implements Observable {
         new Thread(()->{
             synchronized (observers) {
                 for (Observer observer : observers)
-                    observer.updatePoints(boardPoints, globalPoints);
+                    observer.updatePoints(getBoardPoints(), getGlobalPoints());
             }
         }).start();
     }
@@ -300,8 +309,7 @@ public class MainTable implements Observable {
      * @param nickName : the nickname of the player.
      */
     public void addPlayer(int id, String nickName) {
-
-        if(playersTables[id] == null) {
+        if(getPlayerTable(id) == null) {
             ResourceCard[] cardsOnHand = new ResourceCard[3];
             cardsOnHand[0] = Deck.drawCardFromResourceDeck();
             cardsOnHand[1] = Deck.drawCardFromResourceDeck();
@@ -315,8 +323,8 @@ public class MainTable implements Observable {
      * @return : the nicknames of all the players.
      */
     public String[] getNicknames() {
-        String[] nicknames = new String[numOfPlayers];
-        for(int i = 0; i<numOfPlayers; i++) {
+        String[] nicknames = new String[getNumOfPlayers()];
+        for(int i = 0; i<getNumOfPlayers(); i++) {
             if (getPlayerTable(i) != null)
                 nicknames[i] = getPlayerTable(i).getNickName();
             else nicknames[i] = "";
@@ -329,8 +337,8 @@ public class MainTable implements Observable {
      * @return : the cards on hand for all the players.
      */
     public ResourceCard[][] getCardsOnHand() {
-        ResourceCard[][] cards = new ResourceCard[numOfPlayers][3];
-        for(int i=0; i<numOfPlayers; i++)
+        ResourceCard[][] cards = new ResourceCard[getNumOfPlayers()][3];
+        for(int i=0; i<getNumOfPlayers(); i++)
             cards[i] = getPlayerTable(i).getCardsOnHand();
         return cards;
     }
@@ -395,7 +403,7 @@ public class MainTable implements Observable {
         ResourceCard choice = null;
 
         if(position==0||position==1||position==2||position==3) {
-            choice = cardsOnTable[position];
+            choice = getCardOnTable(position);
             cardsOnTable[position] = null;
             replaceCardOnTable(position);
         }
@@ -405,7 +413,7 @@ public class MainTable implements Observable {
             choice = Deck.drawCardFromGoldDeck();
 
         if(choice != null)
-            playersTables[playerId].setCardOnHandInTheEmptyPosition(choice);
+            getPlayerTable(playerId).setCardOnHandInTheEmptyPosition(choice);
         if(Deck.areDecksEmpty())
             setEndGame();
 
@@ -429,10 +437,10 @@ public class MainTable implements Observable {
      * @return : true if the player can play, false otherwise.
      */
     public boolean checkIfPlayerCanPlay(int playerId) {
-        if(playersTables[playerId].getCanPlay()) {
-            playersTables[playerId].checkIfCanPlay();
+        if(getPlayerTable(playerId).getCanPlay()) {
+            getPlayerTable(playerId).checkIfCanPlay();
         }
-        return playersTables[playerId].getCanPlay();
+        return getPlayerTable(playerId).getCanPlay();
         // if canPlay==false it can't be set to true again
     }
 
@@ -442,7 +450,7 @@ public class MainTable implements Observable {
      * @return : a matrix of booleans representing the playable positions.
      */
     public boolean[][] checkAllPlayablePositions(int playerId) {
-        PlayerTable playerTable = playersTables[playerId];
+        PlayerTable playerTable = getPlayerTable(playerId);
         boolean[][] matrix = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
         for(int i = 0; i < PlayerTable.getMatrixDimension(); i++) {
             for(int j = 0; j < PlayerTable.getMatrixDimension(); j++){
@@ -463,13 +471,13 @@ public class MainTable implements Observable {
      * @return : true if the player can play the card, false otherwise.
      */
     public boolean playCardAndUpdatePoints(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId) {
-        if(playersTables[playerId].getPlacedCard(onTableCardX, onTableCardY) != null) {
-            int points = playersTables[playerId].checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
+        if(getPlayerTable(playerId).getPlacedCard(onTableCardX, onTableCardY) != null) {
+            int points = getPlayerTable(playerId).checkAndPlaceCard(onHandCard, onTableCardX, onTableCardY, onTableCardCorner);
             if(points == -1)
                 return false; // GoldCard requisites not matched OR position is not buildable
             getPlayerTable(playerId).getCardsOnHand()[onHandCard] = null; // card that will be replaced drawing
             addBoardPoints(playerId, points);
-            int objectivePoints = getPlayerTable(playerId).getObjectivePoints(globalObjectives);
+            int objectivePoints = getPlayerTable(playerId).getObjectivePoints(getGlobalObjectives());
             int globalPoints = getBoardPoints(playerId) + objectivePoints;
             setGlobalPoints(playerId, globalPoints);
             if(getBoardPoints(playerId)>=20 && !getEndGame())
@@ -480,7 +488,6 @@ public class MainTable implements Observable {
             return false; // incorrect input: onTableCard is null
         }
     }
-
     /**
      * Adds points to the board points of a player.
      * @param player : the ID of the player.
@@ -495,7 +502,6 @@ public class MainTable implements Observable {
     private void setGlobalPoints(int player, int points) {
         this.globalPoints[player] = points;
     }
-
     /**
      * Sets the endGame attribute to true.
      */
@@ -536,16 +542,16 @@ public class MainTable implements Observable {
         int winnerPlayerId = 0;
         int max = 0;
         boolean draw = false;
-        int[] objectivePoints = new int[numOfPlayers];
+        int[] objectivePoints = new int[getNumOfPlayers()];
 
-        for(int i=0; i<numOfPlayers; i++){
-            objectivePoints[i] = globalPoints[i]-boardPoints[i];
-            if(globalPoints[i] >= max){
-                if(globalPoints[i] == max){
+        for(int i=0; i<getNumOfPlayers(); i++){
+            objectivePoints[i] = getBoardPoints(i)-getBoardPoints(i);
+            if(getGlobalPoints(i) >= max){
+                if(getGlobalPoints(i) == max){
                     draw = true;
                 }
                 else {
-                    max = globalPoints[i];
+                    max = getGlobalPoints(i);
                     winnerPlayerId = i;
                     draw = false;
                 }
@@ -553,8 +559,8 @@ public class MainTable implements Observable {
         }
         if(draw){
             int max1 = 0;
-            for(int i=0; i<numOfPlayers; i++){
-                if(globalPoints[i]==max && objectivePoints[i]>max1){
+            for(int i=0; i<getNumOfPlayers(); i++){
+                if(getGlobalPoints(i)==max && objectivePoints[i]>max1){
                     max1 = objectivePoints[i];
                     winnerPlayerId = i;
                 }

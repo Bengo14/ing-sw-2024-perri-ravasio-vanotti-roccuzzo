@@ -23,16 +23,20 @@ public class SecretObjController implements Initializable {
 
     @FXML
     ImageView secret_1;
+
     Objectives secretObjective1;
     @FXML
     ImageView secret_2;
+
     Objectives secretObjective2;
     @FXML
     Button obj_button;
     @FXML
     Label label;
     private Objectives selectedObjective;
+
     private Client client;
+
     private PlayerTable playerTable;
 
 
@@ -58,6 +62,7 @@ public class SecretObjController implements Initializable {
         String imagePath2 = "/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+secretObjective2.getId()+".png";
         secret_2.setImage(new Image(getClass().getResourceAsStream(imagePath2)));
     }
+
     /**
      * This method is called when the first secret objective is clicked.
      * It sets the selected objective to the first secret objective and sets the border of the image view.
@@ -68,6 +73,7 @@ public class SecretObjController implements Initializable {
         selectedObjective = secretObjective1;
         setImageViewBorder(secret_1);
     }
+
     /**
      * This method is called when the second secret objective is clicked.
      * It sets the selected objective to the second secret objective and sets the border of the image view.
@@ -78,6 +84,7 @@ public class SecretObjController implements Initializable {
         selectedObjective = secretObjective2;
         setImageViewBorder(secret_2);
     }
+
     /**
      * This method is called when the send button is clicked.
      * It sets the secret objective of the player and sends it to the server.
@@ -96,6 +103,7 @@ public class SecretObjController implements Initializable {
             label.setText("Please select an objective");
         }
     }
+
     /**
      * This method sets the border of the selected image view.
      * @param selectedImageView The image view that has to be selected

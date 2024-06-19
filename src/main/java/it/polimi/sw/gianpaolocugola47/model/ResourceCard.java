@@ -1,9 +1,11 @@
 package it.polimi.sw.gianpaolocugola47.model;
+
 /**
  * This class represents all the resource cards.
  *
  */
 public class ResourceCard extends PlaceableCard {
+
     private final Resources resourceCentreBack;
     private final int points;
 
@@ -78,10 +80,10 @@ public class ResourceCard extends PlaceableCard {
      * @return : the resourceCentreBack attribute formatted using ASCII escape codes.
      */
     public String resourceCentreBackToString(){
-        return "%s%s\u001B[0m".formatted(resourceCentreBack.getAsciiEscape(), resourceCentreBack.getSymbol());
+        return "%s%s\u001B[0m".formatted(getResourceCentreBack().getAsciiEscape(), getResourceCentreBack().getSymbol());
     }
 
     public String toString(){
-        return "ResourceCard: resource: "+resourceCentreBack.toString();
+        return "ResourceCard: resource: "+getResourceCentreBack().toString();
     }
 }

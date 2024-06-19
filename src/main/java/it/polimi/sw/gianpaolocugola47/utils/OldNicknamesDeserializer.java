@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Said nicknames are read from the "controllerStatus" file.
  */
 public class OldNicknamesDeserializer implements JsonDeserializer<ArrayList<String>> {
+
     /**
      * Deserializes the JSON representation of the old nicknames into an ArrayList of Strings.
      * Used by the GsonBuilder.

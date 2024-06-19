@@ -13,6 +13,7 @@ import static java.util.Arrays.sort;
  *
  */
 public class PlayerTable{
+
     @Expose
     public static final int MATRIX_DIMENSION = 22; //should be 141 (max n^ of cards on table by a player is 70)
     @Expose
@@ -251,7 +252,7 @@ public class PlayerTable{
      */
     public int checkAndPlaceCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner) {
         int points;
-        ResourceCard card = cardsOnHand[onHandCard];
+        ResourceCard card = getCardOnHand(onHandCard);
         if(card == null)
             return -1;
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
@@ -311,7 +312,7 @@ public class PlayerTable{
      * @return : true if the card can be placed, false otherwise.
      */
     public boolean isPlaceable(int x, int y) {
-        if(this.placedCards[x][y] == null && hasAtLeastOneSurroundingCard(x,y)){
+        if(getPlacedCard(x,y) == null && hasAtLeastOneSurroundingCard(x,y)){
                 int cornersVerified = 0;
                 for(int corner=0; corner<4; corner++){
                     if (checkCorner(x, y, corner))
@@ -341,7 +342,7 @@ public class PlayerTable{
             if(corner==3 && (x==getMatrixDimension()-1 || y==getMatrixDimension()-1))
                 return false; // all surrounding cards are null
 
-            if(placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)] != null)
+            if(getPlacedCard(setXCoordinate(x, corner), setYCoordinate(y, corner)) != null)
                 return true; // a surrounding card is not null
         }
         return false; // all surrounding cards are null
@@ -358,31 +359,31 @@ public class PlayerTable{
         // this method checks only ONE corner, to check all corners it is to be called 4 times
         x=setXCoordinate(x, corner);
         y=setYCoordinate(y, corner);
-        if(this.placedCards[x][y]!=null){
+        if(getPlacedCard(x,y)!=null){
             if(corner==0){
                 if(x>=1 && y>=1) {
-                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
+                    return getPlacedCard(x,y).getVisibleCorners()[3 - corner].isBuildable() && !getPlacedCard(x,y).getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==1){
                 if(x>=1 && y<=getMatrixDimension()-2) {
-                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
+                    return getPlacedCard(x,y).getVisibleCorners()[3 - corner].isBuildable() && !getPlacedCard(x,y).getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==2){
                 if(x<=getMatrixDimension()-2 && y>=1) {
-                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
+                    return getPlacedCard(x,y).getVisibleCorners()[3 - corner].isBuildable() && !getPlacedCard(x,y).getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
             }
             if(corner==3){
                 if(x<=getMatrixDimension()-2 && y<=getMatrixDimension()-2) {
-                    return this.placedCards[x][y].getVisibleCorners()[3 - corner].isBuildable() && !this.placedCards[x][y].getVisibleCorners()[3 - corner].isCovered();
+                    return getPlacedCard(x,y).getVisibleCorners()[3 - corner].isBuildable() && !getPlacedCard(x,y).getVisibleCorners()[3 - corner].isCovered();
                 } else {
                     return true; // card is on matrix's edge
                 }
@@ -400,7 +401,7 @@ public class PlayerTable{
      */
     private boolean isCheap(GoldCard card) {
         int[] resCounter = new int[Resources.values().length];
-        System.arraycopy(this.resourceCounter, 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
+        System.arraycopy(getResourceCounter(), 0, resCounter, 0, Resources.values().length); // resCounter only of Resources
         for(Resources res : card.getResourcesRequired()) {
             resCounter[res.ordinal()]--; // decrease required resource
         }
@@ -415,9 +416,9 @@ public class PlayerTable{
      * @param card : the card to be placed.
      */
     private void placeCard(int x, int y, ResourceCard card) {
-        this.placedCards[x][y]=card;
+        placedCards[x][y]=card;
         card.setCoordinates(x,y);
-        card.updateResourceCounter(this.resourceCounter);
+        card.updateResourceCounter(getResourceCounter());
         for (int corner = 0; corner < 4; corner++)
             linkCards(x, y, corner);
     }
@@ -430,7 +431,7 @@ public class PlayerTable{
      */
     private void linkCards(int x,int y, int corner) {
         // mirror-links ONE corner for 2 cards, to link 4 corners it is to be called 4 times
-        if(this.placedCards[setXCoordinate(x,corner)][setYCoordinate(y,corner)]!=null) {
+        if(getPlacedCard(setXCoordinate(x,corner),setYCoordinate(y,corner)) != null) {
             if(corner==0 && x>=1 && y>=1)
                 linkCard(x, y, corner);
             if(corner==1 && x>=1 && y<=getMatrixDimension()-2)
@@ -450,10 +451,10 @@ public class PlayerTable{
      */
     private void linkCard(int x, int y, int corner){
         // links corner AND decrease ResourceCounter[]
-        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner].setIsCovered();
-        decreaseResourceCounter(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner]);
-        this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner].setLinkedCorner(this.placedCards[x][y].getVisibleCorners()[corner]);
-        this.placedCards[x][y].getVisibleCorners()[corner].setLinkedCorner(this.placedCards[setXCoordinate(x, corner)][setYCoordinate(y, corner)].getVisibleCorners()[3-corner]);
+        getPlacedCard(setXCoordinate(x,corner),setYCoordinate(y,corner)).getVisibleCorners()[3-corner].setIsCovered();
+        decreaseResourceCounter(getPlacedCard(setXCoordinate(x,corner),setYCoordinate(y,corner)).getVisibleCorners()[3-corner]);
+        getPlacedCard(setXCoordinate(x,corner),setYCoordinate(y,corner)).getVisibleCorners()[3-corner].setLinkedCorner(getPlacedCard(x,y).getVisibleCorners()[corner]);
+        getPlacedCard(x,y).getVisibleCorners()[corner].setLinkedCorner(getPlacedCard(setXCoordinate(x,corner),setYCoordinate(y,corner)).getVisibleCorners()[3-corner]);
     }
 
     /**
@@ -462,9 +463,9 @@ public class PlayerTable{
      */
     private void decreaseResourceCounter(Corner corner) {
         if(corner.isResource()){
-            this.resourceCounter[corner.getResource().ordinal()]--;
+            resourceCounter[corner.getResource().ordinal()]--;
         } else if (corner.isItem()) {
-            this.resourceCounter[corner.getItem().ordinal() + 4]--;
+            resourceCounter[corner.getItem().ordinal() + 4]--;
         }
     }
 
@@ -515,7 +516,7 @@ public class PlayerTable{
      * @return : true if the player can place a card over the board card, false otherwise.
      */
     private boolean checkIfCanPlayOnCard(int x, int y){
-        if (this.placedCards[x][y]!=null){
+        if (getPlacedCard(x,y) != null){
             for (int corner=0; corner<4; corner++){
                 if(corner==0 && (x==0 || y==0))
                     corner++;
@@ -557,16 +558,16 @@ public class PlayerTable{
 
     /**
      * Used for serializing the player table to json, since the PlacedCard matrix is not serializable.
-     * Returns a int matrix with card's id are present at the coordinates of the respective cards,
+     * Returns an int matrix with card's id are present at the coordinates of the respective cards,
      * and -1 is set where the position is null.
      * @return : the card id matrix.
      */
     public int[][] getCardIdMatrix(){
-        int[][] cardIdMatrix = new int[MATRIX_DIMENSION][MATRIX_DIMENSION];
-        for(int i=0; i<MATRIX_DIMENSION; i++){
-            for(int j=0; j<MATRIX_DIMENSION; j++){
-                if(placedCards[i][j] != null)
-                    cardIdMatrix[i][j] = placedCards[i][j].getId();
+        int[][] cardIdMatrix = new int[getMatrixDimension()][getMatrixDimension()];
+        for(int i=0; i<getMatrixDimension(); i++){
+            for(int j=0; j<getMatrixDimension(); j++){
+                if(getPlacedCard(i,j) != null)
+                    cardIdMatrix[i][j] = getPlacedCard(i,j).getId();
                 else
                     cardIdMatrix[i][j] = -1;
             }
@@ -581,11 +582,11 @@ public class PlayerTable{
      * @return : th
      */
     public boolean[][] getCardSideMatrix() {
-        boolean[][] cardSideMatrix = new boolean[MATRIX_DIMENSION][MATRIX_DIMENSION];
-        for(int i=0; i<MATRIX_DIMENSION; i++){
-            for(int j=0; j<MATRIX_DIMENSION; j++){
-                if(placedCards[i][j] != null) //once a card is placed, it can be both true or false
-                    cardSideMatrix[i][j] = placedCards[i][j].getIsFront();
+        boolean[][] cardSideMatrix = new boolean[getMatrixDimension()][getMatrixDimension()];
+        for(int i=0; i<getMatrixDimension(); i++){
+            for(int j=0; j<getMatrixDimension(); j++){
+                if(getPlacedCard(i,j) != null) //once a card is placed, it can be both true or false
+                    cardSideMatrix[i][j] = getPlacedCard(i,j).getIsFront();
                 else //if a given position has no card, it is set to false. Since I already know where there are no cards placed, this is going to be ignored when rebuilding the card matrix
                     cardSideMatrix[i][j] = false;
             }

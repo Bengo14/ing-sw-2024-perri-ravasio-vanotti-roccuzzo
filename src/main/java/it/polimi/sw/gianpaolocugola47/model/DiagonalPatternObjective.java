@@ -31,6 +31,7 @@ public class DiagonalPatternObjective extends Objectives {
     public Resources getResource() {
         return resource;
     }
+
     /**
      * This method returns the type of the objective.
      * @return true if it is ascending, false otherwise.
@@ -38,6 +39,7 @@ public class DiagonalPatternObjective extends Objectives {
     public boolean isAscending() {
         return isAscending;
     }
+
     /**
      * This method checks if the pattern is present on a given board and, if that is the case, computes the points.
      * @param playerTable the player table to check.
@@ -49,7 +51,7 @@ public class DiagonalPatternObjective extends Objectives {
         int corner;
         int cardMatches = 0;
         // checks from top to bottom
-        if (this.isAscending) {
+        if (isAscending()) {
             corner = 2;
         } else {
             corner = 3;
@@ -104,7 +106,7 @@ public class DiagonalPatternObjective extends Objectives {
      * @return true if the resource is matched and not flagged, false otherwise.
      */
     protected boolean isResourceMatchedAndNotFlagged(PlaceableCard card) {
-        return card!=null && this.resource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
+        return card!=null && getResource().equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     /**
      * This method verifies the diagonal pattern.

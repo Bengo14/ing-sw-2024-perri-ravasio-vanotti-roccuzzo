@@ -22,13 +22,13 @@ public class LoginController implements Initializable {
 
     private Client client;
 
-
     /**
      * @return The client associated with this controller
      */
     Client getClient() {
         return client;
     }
+
     /**
      * Link this controller to the client that is using it.
      * @param client The client that is using this controller
@@ -36,6 +36,7 @@ public class LoginController implements Initializable {
     public void setClient(Client client) {
         this.client = client;
     }
+
     @FXML
     void sendNickname(ActionEvent event) {
         String nickname = nickname_LBL.getText();
@@ -48,12 +49,14 @@ public class LoginController implements Initializable {
             //this.client.setNickname(nickname);
         }
     }
+
     void nicknameAlreadyUsed() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Nickname already used");
         alert.showAndWait();
     }
+
     /**
      * Check if the string is valid, i.e. it contains only letters and numbers.
      * @param input The string to check

@@ -16,11 +16,12 @@ import java.lang.reflect.Type;
  * It also adds a nicknames field not present in the controller class, used to check if the server needs to load a previous game.
  */
 public class ControllerSerializer implements JsonSerializer<Controller> {
+
     @Override
     public JsonElement serialize(Controller controller, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();
-        //technically already present in mainTable; useful to have as the first parameter since the server has to check
-        //old nicknames to check if match is resuming.
+//        technically already present in mainTable; useful to have as the first parameter since the server has to check
+//        old nicknames to check if match is resuming.
         JsonElement nicknames = jsonSerializationContext.serialize(controller.getMainTable().getNicknames());
         jsonObject.add("oldNicknames", nicknames);
         jsonObject.addProperty("currentPlayerId", controller.getCurrentPlayerId());

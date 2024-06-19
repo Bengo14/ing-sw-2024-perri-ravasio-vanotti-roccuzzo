@@ -381,4 +381,3 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
         }
     }
 }
-

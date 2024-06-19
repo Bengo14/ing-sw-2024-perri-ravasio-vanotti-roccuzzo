@@ -12,6 +12,7 @@ import java.util.Map;
  * Used to deserialize the JSON representation of an objective into the correct subclass of Objectives.
  */
 public class ObjectiveDeserializer implements JsonDeserializer<Objectives> {
+
     private final String objectiveTypeElementName;
     private final Gson gson;
     private final Map<String, Class<? extends Objectives>> objectiveTypeRegistry;

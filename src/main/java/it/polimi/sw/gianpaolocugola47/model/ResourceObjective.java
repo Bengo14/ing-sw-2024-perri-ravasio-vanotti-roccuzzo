@@ -7,6 +7,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 public class ResourceObjective extends Objectives{
 
     private final Resources resource;
+
     /**
      * ResourceObjective constructor.
      * @param resource      the resource needed to receive points.

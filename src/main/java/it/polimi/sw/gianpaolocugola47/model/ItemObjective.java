@@ -41,24 +41,25 @@ public class ItemObjective extends Objectives{
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         int itemsSetCounter;
         //looking for a PAIR of the same item
-        if(itemsRequired.size()<=1){
-            itemsSetCounter =playerTable.getResourceCounter(this.getItemsRequired().getFirst().ordinal()+4)/2;
+        if(this.getItemsRequired().size()<=1){
+            itemsSetCounter =playerTable.getResourceCounter(getItemsRequired().getFirst().ordinal()+4)/2;
         }else{
         //looking for a COMPLETE SET of all different items
-            int[] array = new int[itemsRequired.size()];
-            for(int i = 0; i<itemsRequired.size(); i++){
+            int[] array = new int[getItemsRequired().size()];
+            for(int i = 0; i<getItemsRequired().size(); i++){
                 array[i]=playerTable.getResourceCounter(i+4);
             }
             Arrays.sort(array);
             itemsSetCounter =array[0];
         }
-        return this.getPoints()* itemsSetCounter;
+        return getPoints()* itemsSetCounter;
     }
+
     /**
      * This method returns a string representation of the ItemObjective.
      * @return a string representation of the ItemObjective.
      */
     public String toString(){
-        return "ItemObjective: "+this.getPoints()+" points, required items: "+itemsRequired.toString();
+        return "ItemObjective: "+getPoints()+" points, required items: "+getItemsRequired().toString();
     }
 }

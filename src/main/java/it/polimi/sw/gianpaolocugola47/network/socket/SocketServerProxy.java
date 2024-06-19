@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola47.network.socket;
 
-
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
@@ -13,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
 public class SocketServerProxy implements VirtualServer {
+
     private final PrintWriter output;
 
     public SocketServerProxy(BufferedWriter output) {
@@ -177,4 +177,3 @@ public class SocketServerProxy implements VirtualServer {
         return new boolean[0][];
     }
 }
-

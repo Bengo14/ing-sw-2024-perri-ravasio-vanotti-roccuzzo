@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameSaverTest {
+
     @Test
     void generateDeckStatusJson() {
         // Test for when the game hasn't started yet
@@ -18,6 +19,7 @@ class GameSaverTest {
         assertTrue(gameSaver.generateDeckStatusJson());
         //assertTrue(gameSaver.resetFiles());
     }
+
     @Test
     void loadPlayerTableStatusJson(){
         // Test for when the game hasn't started yet
@@ -74,4 +76,5 @@ class GameSaverTest {
         assertEquals(resDeck.getLast().getId(),Deck.getResourceCardOnTop().getId());
         //assertTrue(gameSaver.resetFiles());
     }
+
 }

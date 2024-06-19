@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
  * playerTable is completely deserialized.
  */
 public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
+
     private final Gson gson;
 
     /**

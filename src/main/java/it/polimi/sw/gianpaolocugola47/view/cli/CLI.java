@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static it.polimi.sw.gianpaolocugola47.model.Items.*;
 import static it.polimi.sw.gianpaolocugola47.model.Resources.*;
 
-//import java.io.IOException;
+// import java.io.IOException;
 
 /**
  * This class handles the view part of the game, more specifically it handles the Command Line Interface (CLI).
@@ -44,10 +44,12 @@ public class CLI implements View {
         this.client = client;
         this.cliController = new CLIController(new PlayerTable(client.getIdLocal()));
     }
+
     public CLI() {
         this.cliController = null;
         this.client = null;
     }
+
     @Override
     public void setClient(Client client) {
         this.client = client;

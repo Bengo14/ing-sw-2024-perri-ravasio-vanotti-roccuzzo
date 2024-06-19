@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
  * playerTable is completely deserialized.
  */
 public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
+
     /**
      * Deserializes the JSON representation of a player into a PlayerTable object.
      * Used by the GsonBuilder.

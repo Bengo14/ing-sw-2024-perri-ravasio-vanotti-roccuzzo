@@ -17,5 +17,4 @@ module it.polimi.sw.gianpaolocugola47 {
     exports it.polimi.sw.gianpaolocugola47.network.rmi to java.rmi;
     exports it.polimi.sw.gianpaolocugola47.view.gui to javafx.graphics;
     opens it.polimi.sw.gianpaolocugola47.network to com.google.gson;
-
 }

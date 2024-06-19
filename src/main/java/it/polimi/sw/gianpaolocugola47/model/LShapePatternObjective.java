@@ -10,18 +10,6 @@ public class LShapePatternObjective extends Objectives{
     private final Resources mainResource;
     private final Resources secondaryResource;
 
-    public String getOrientation() {
-        return orientation;
-    }
-
-    public Resources getMainResource() {
-        return mainResource;
-    }
-
-    public Resources getSecondaryResource() {
-        return secondaryResource;
-    }
-
     /**
      * LShapePatternObjective constructor.
      *
@@ -39,6 +27,18 @@ public class LShapePatternObjective extends Objectives{
         this.secondaryResource = secondaryResource;
     }
 
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public Resources getMainResource() {
+        return mainResource;
+    }
+
+    public Resources getSecondaryResource() {
+        return secondaryResource;
+    }
+
     /**
      * This method checks if the player table contains the required pattern and computes the points.
      * It also flags the cards that are part of the pattern.
@@ -50,19 +50,19 @@ public class LShapePatternObjective extends Objectives{
         int patterns;
         int shiftX=0;
         int corner=0;
-        if(this.orientation.equals("topLeft")){
+        if(getOrientation().equals("topLeft")){
             shiftX=-2;
             corner=0;
         }
-        if(this.orientation.equals("topRight")) {
+        if(getOrientation().equals("topRight")) {
             shiftX=-2;
             corner=1;
         }
-        if(this.orientation.equals("bottomLeft")) {
+        if(getOrientation().equals("bottomLeft")) {
             shiftX=+2;
             corner=2;
         }
-        if(this.orientation.equals("bottomRight")){
+        if(getOrientation().equals("bottomRight")){
             shiftX=+2;
             corner=3;
         }
@@ -74,7 +74,7 @@ public class LShapePatternObjective extends Objectives{
                     playerTable.getPlacedCard(i,j).setFlaggedForObjective(false);
             }
         }
-        return this.getPoints()* patterns;
+        return getPoints()* patterns;
     }
 
     /**
@@ -130,10 +130,10 @@ public class LShapePatternObjective extends Objectives{
      * checks if the ResourceOfTheCard==ResourceOfThePattern, also checks if card is flagged for objective
      */
     private boolean isMainResourceMatchedAndNotFlagged(PlaceableCard card){
-        return card!=null && this.mainResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
+        return card!=null && getMainResource().equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     private boolean isSecondaryResourceMatchedAndNotFlagged(PlaceableCard card){
-        return card!=null && this.secondaryResource.equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
+        return card!=null && getSecondaryResource().equals(((ResourceCard) card).getResourceCentreBack()) && !card.getIsFlaggedForObjective();
     }
     private boolean LShapePatternVerifier(int x, int y, int verticalCardsRequired, int diagonalCardsRequired, int shift, int corner, PlayerTable playerTable){
         if(verticalPatternVerifier(x, y, verticalCardsRequired,shift,playerTable)){
@@ -144,10 +144,8 @@ public class LShapePatternObjective extends Objectives{
                 x=x+(shift*verticalCardsRequired+1);
             }
             y=playerTable.setYCoordinate(y,corner);
-            if(diagonalPatternVerifier(x,y,diagonalCardsRequired,corner,playerTable)){
-                return true; // LShapePattern verified
-            }else
-                return false; // diagonalPattern failed
+            // diagonalPattern failed
+            return diagonalPatternVerifier(x, y, diagonalCardsRequired, corner, playerTable); // LShapePattern verified
         }else
             return false; // verticalPattern failed
     }
@@ -186,16 +184,15 @@ public class LShapePatternObjective extends Objectives{
         for (int i = 0; i < diagonalCardsRequired; i++) {
             if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isSecondaryResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 diagonalCardsMatch++;
-                /* ONLY NEEDED IF diagonalCardsRequired>1
-                if (diagonalCardsMatch <= diagonalCardsRequired - 1) {
-                    if (playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
-                        x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
-                        y = (playerTable.setYCoordinate(y, corner));
-                    } else {
-                        return false; // card is not linked to next card
-                    }
-                }
-                 */
+//                --- only needed on diagonalCardsRequired>1 ---
+//                if (diagonalCardsMatch <= diagonalCardsRequired - 1) {
+//                    if (playerTable.getPlacedCard(x, y).getCorners()[corner].getLinkedCorner() == playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)).getCorners()[3 - corner]) {
+//                        x = (playerTable.setXCoordinate(x, corner)); //set coordinates to next card
+//                        y = (playerTable.setYCoordinate(y, corner));
+//                    } else {
+//                        return false; // card is not linked to next card
+//                    }
+//                }
             } else
                 return false; // found StartingCard OR resource is not matched OR card is already flaggedForObjective OR card is null
         }

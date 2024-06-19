@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
  * ResourceCard and Objectives are serialized by registering a custom TypeAdapter in the controller.
  */
 public class MainTableSerializer implements JsonSerializer<MainTable> {
+
     private final Gson gson;
 
     /**

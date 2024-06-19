@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
  * LShapePatternObjective is a subclass of Objective.
  */
 public class LShapePatternObjectiveSerializer implements JsonSerializer<LShapePatternObjective> {
+
     /**
      * Serializes a LShapePatternObjective object into a JSON string.
      * Used by the Gson builder.

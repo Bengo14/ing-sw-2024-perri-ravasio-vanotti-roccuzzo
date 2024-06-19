@@ -13,6 +13,7 @@ public class Objectives implements Serializable {
     private final String imgPathBack;
     private int id;
     private String description;
+
     /**
      * Objectives constructor.
      *

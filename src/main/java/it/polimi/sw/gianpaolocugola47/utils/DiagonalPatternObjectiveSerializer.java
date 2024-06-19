@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
  * DiagnosticPatternObjective is a subclass of Objective.
  */
 public class DiagonalPatternObjectiveSerializer implements JsonSerializer<DiagonalPatternObjective> {
+
     /**
      * Serializes a DiagonalPatternObjective object into a JSON string.
      * Used by the Gson builder.

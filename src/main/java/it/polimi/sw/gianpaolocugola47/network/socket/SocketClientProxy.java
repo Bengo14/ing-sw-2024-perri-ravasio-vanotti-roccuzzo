@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola47.network.socket;
 
-
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
@@ -10,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class SocketClientProxy implements VirtualView {
+
     private final PrintWriter output;
 
     public SocketClientProxy(BufferedWriter output) {
@@ -191,6 +191,7 @@ public class SocketClientProxy implements VirtualView {
     private int getCardId(PlaceableCard card) {
         return card.getId();
     }
+
     private int getObjectiveId(Objectives obj) {
         return obj.getId();
     }

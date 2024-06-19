@@ -25,6 +25,7 @@ public class Deck {
     private static Random randomGenerator;
     private static final HashMap<Integer, PlaceableCard> placeableCardIdMap = new HashMap<>();
     private static final HashMap<Integer, Objectives> objectiveCardIdMap = new HashMap<>();
+
     /**
      * This method initializes the deck and shuffles it.
      * */
@@ -32,6 +33,7 @@ public class Deck {
         initDeck();
         shuffleDeck();
     }
+
     /**
      * This method initializes the deck.
      * HashMaps with the card id as key and the card itself as value are also initialized here.
@@ -46,6 +48,7 @@ public class Deck {
         generateObjectiveCardsDeck();
         initHashMaps();
     }
+
     /**
      * This method shuffles the deck using the previously initialized seed.
      * */
@@ -55,6 +58,7 @@ public class Deck {
         Collections.shuffle(startingCardsDeck,randomGenerator);
         Collections.shuffle(objectiveCardsDeck,randomGenerator);
     }
+
     /**
      * This method initializes the hashmaps that map the card id to the card itself.
      * */
@@ -72,6 +76,7 @@ public class Deck {
             objectiveCardIdMap.put(objectives.getId(),objectives);
         }
     }
+
     /**
      * This method generates the resource cards deck by parsing the cards from the respective json file.
      * */
@@ -85,6 +90,7 @@ public class Deck {
             e.printStackTrace();
         }
     }
+
     /**
      * This method generates the gold cards deck by parsing the cards from the respective json file.
      * */
@@ -97,6 +103,7 @@ public class Deck {
             e.printStackTrace();
         }
     }
+
     /**
      * This method generates the objective cards deck by parsing the cards from the respective json file.
      * The deserializer is used to parse the different types of objectives, respecting inheritance.
@@ -116,6 +123,7 @@ public class Deck {
             e.printStackTrace();
         }
     }
+
     /**
      * This method generates the starting cards deck by parsing the cards from the respective json file.
      * */
@@ -128,6 +136,7 @@ public class Deck {
             e.printStackTrace();
         }
     }
+
     /**
      * This method draws a card and removes it from the resource deck.
      * @return the drawn card, null if the deck is empty.
@@ -137,6 +146,7 @@ public class Deck {
             return null;
         return resourceCardsDeck.removeLast();
     }
+
     /**
      * This method draws a card  and removes it from the gold deck.
      * @return the drawn card, null if the deck is empty.
@@ -146,6 +156,7 @@ public class Deck {
             return null;
         return goldCardsDeck.removeLast();
     }
+
     /**
      * This method draws a card  and removes it from the objective deck.
      * @return the drawn card, null if the deck is empty.
@@ -155,6 +166,7 @@ public class Deck {
             return null;
         return objectiveCardsDeck.removeLast();
     }
+
     /**
      * This method draws a card  and removes it from the starting deck.
      * @return the drawn card, null if the deck is empty.
@@ -164,6 +176,7 @@ public class Deck {
             return null;
         return startingCardsDeck.removeLast();
     }
+
     /**
      * This method returns the gold cards deck.
      * @return the gold cards deck.
@@ -171,6 +184,7 @@ public class Deck {
     public static List<GoldCard> getGoldCardsDeck() {
         return goldCardsDeck;
     }
+
     /**
      * This method returns the resource cards deck.
      * @return the resource cards deck.
@@ -178,6 +192,7 @@ public class Deck {
     public static List<ResourceCard> getResourceCardsDeck() {
         return resourceCardsDeck;
     }
+
     /**
      * This method returns the starting cards deck.
      * @return the starting cards deck.
@@ -185,6 +200,7 @@ public class Deck {
     public static List<StartingCard> getStartingCardsDeck() {
         return startingCardsDeck;
     }
+
     /**
      * This method returns the objective cards deck.
      * @return the objective cards deck.
@@ -192,6 +208,7 @@ public class Deck {
     public static List<Objectives> getObjectiveCardsDeck() {
         return objectiveCardsDeck;
     }
+
     /**
      * This method check if the decks are empty.
      * @return true if the decks are empty, false otherwise.
@@ -199,6 +216,7 @@ public class Deck {
     protected static boolean areDecksEmpty() {
         return goldCardsDeck.isEmpty() && resourceCardsDeck.isEmpty();
     }
+
     /**
      * This method returns the gold card on top of the deck.
      * @return the gold card on top of the deck, null if the deck is empty.
@@ -208,6 +226,7 @@ public class Deck {
             return goldCardsDeck.getLast();
         else return null;
     }
+
     /**
      * This method returns the resource card on top of the deck.
      * @return the resource card on top of the deck.
@@ -217,6 +236,7 @@ public class Deck {
             return resourceCardsDeck.getLast();
         else return null;
     }
+
     /**
      * This method returns the card from id.
      * @param id the id of the card.
@@ -229,6 +249,7 @@ public class Deck {
             return null;
         }
     }
+
     /**
      * This method returns the objective card from id.
      * @param id the id of the objective card.
@@ -241,6 +262,7 @@ public class Deck {
             return null;
         }
     }
+
     /**
      * This method sets the gold cards deck. Used when parsing a previous match from a json file.
      * @param goldCardsDeck the gold cards deck.
@@ -248,6 +270,7 @@ public class Deck {
     public static void setGoldCardsDeck(List<GoldCard> goldCardsDeck) {
         Deck.goldCardsDeck = goldCardsDeck;
     }
+
     /**
      * This method sets the resource cards deck. Used when parsing a previous match from a json file.
      * @param resourceCardsDeck the resource cards deck.
@@ -255,6 +278,7 @@ public class Deck {
     public static void setResourceCardsDeck(List<ResourceCard> resourceCardsDeck) {
         Deck.resourceCardsDeck = resourceCardsDeck;
     }
+
     /**
      * This method sets the starting cards deck. Used when parsing a previous match from a json file.
      * @param startingCardsDeck the starting cards deck.
@@ -262,6 +286,7 @@ public class Deck {
     public static void setStartingCardsDeck(List<StartingCard> startingCardsDeck) {
         Deck.startingCardsDeck = startingCardsDeck;
     }
+
     /**
      * This method sets the objective cards deck. Used when parsing a previous match from a json file.
      * @param objectiveCardsDeck the objective cards deck.

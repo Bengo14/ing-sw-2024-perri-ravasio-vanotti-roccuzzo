@@ -1,9 +1,11 @@
 package it.polimi.sw.gianpaolocugola47.model;
+
 /**
  * This enumeration lists the resources of a card.
  * It includes the colour, the image path, the ASCII escape code and the symbol (used for printing symbols in the CLI) of each resource.
  */
 public enum Resources {
+
     ANIMAL("blue","","\033[0;34m", 'A'),
     FUNGI("red","", "\033[0;31m", 'F'),
     PLANT("green","", "\033[0;32m", 'P'),

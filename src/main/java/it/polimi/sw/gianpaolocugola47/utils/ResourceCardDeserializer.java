@@ -11,6 +11,7 @@ import java.util.Map;
  * Used to deserialize the JSON representation of a resource card into the correct subclass of ResourceCard.
  */
 public class ResourceCardDeserializer implements JsonDeserializer<PlaceableCard>{
+
     private final String cardTypeElementName;
     private final Gson gson;
     private final Map<String, Class<? extends ResourceCard>> cardTypeRegistry;

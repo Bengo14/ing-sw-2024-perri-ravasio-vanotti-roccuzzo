@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
  * ResourceObjective is a subclass of Objective.
  */
 public class ResourceObjectiveSerializer implements JsonSerializer<ResourceObjective> {
+
     /**
      * Serializes a ResourceObjective object into a JSON representation.
      * Used by the GsonBuilder.

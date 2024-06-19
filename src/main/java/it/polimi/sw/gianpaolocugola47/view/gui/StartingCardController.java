@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 /**
  * This class is the controller of the starting card scene.
  * It contains the methods to set the starting card of the player and to move to the next scene.
@@ -38,11 +37,11 @@ public class StartingCardController implements Initializable {
     @FXML
     Label label;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
     /**
      * This method is called when the controller is created.
      * It sets the client and the player table that are using this controller.
@@ -65,6 +64,7 @@ public class StartingCardController implements Initializable {
             starting_back.setImage(backImage);
         }
     }
+
     /**
      * @return The selected starting card
      */
@@ -97,6 +97,7 @@ public class StartingCardController implements Initializable {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called when the front of the starting card is clicked.
      * It sets the front of the starting card and sets the border of the image view.
@@ -108,6 +109,7 @@ public class StartingCardController implements Initializable {
         isStartingCardSelected = true;
         setImageViewBorder(starting_front);
     }
+
     /**
      * This method is called when the back of the starting card is clicked.
      * It sets the front of the starting card and sets the border of the image view.
@@ -119,6 +121,7 @@ public class StartingCardController implements Initializable {
         isStartingCardSelected = true;
         setImageViewBorder(starting_back);
     }
+
     /**
      * This method sets the border of the selected image view.
      * @param selectedImageView The image view that has to be selected

@@ -160,6 +160,7 @@ import java.util.Map;
  * }</pre>
  */
 public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
+
     private final Class<?> baseType;
     private final String typeFieldName;
     private final Map<String, Class<?>> labelToSubtype = new LinkedHashMap<>();

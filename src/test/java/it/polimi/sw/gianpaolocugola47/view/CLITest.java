@@ -13,7 +13,7 @@ class CLITest {
         System.out.println("\nCard id: " + resourceCard.getId());
         CLI cli = new CLI();
         cli.printResourceCard(resourceCard);
-        System.out.println("");
+        System.out.println();
         resourceCard.switchFrontBack();
         cli.printResourceCard(resourceCard);
     }
@@ -25,7 +25,7 @@ class CLITest {
         System.out.println("\nCard id: " + goldCard.getId());
         CLI cli = new CLI();
         cli.printGoldCard(goldCard);
-        System.out.println("");
+        System.out.println();
         goldCard.switchFrontBack();
         cli.printGoldCard(goldCard);
     }
@@ -37,7 +37,7 @@ class CLITest {
         System.out.println("\nCard id: " + startingCard.getId());
         CLI cli = new CLI();
         cli.printStartingCard(startingCard);
-        System.out.println("");
+        System.out.println();
         startingCard.switchFrontBack();
         cli.printStartingCard(startingCard);
     }
@@ -63,4 +63,5 @@ class CLITest {
         CLI cli = new CLI();
         cli.printResourceCounter(counter);
     }
+
 }

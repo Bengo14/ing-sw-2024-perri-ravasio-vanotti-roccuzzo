@@ -9,6 +9,7 @@ import java.util.Arrays;
  * It is inherited by the StartingCard, ResourceCard and GoldCard classes.
  */
 public abstract class PlaceableCard implements Serializable {
+
     private boolean isFront;
     private final String backImgPath;
     private final String frontImgPath;

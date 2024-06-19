@@ -170,7 +170,6 @@ public class Controller { //has to include nicknames of players
      * Sets the number of players added to the game. Used when loading from file.
      * @param playersAdded : number of players added to the game.
      */
-
     public void setPlayersAdded(int playersAdded) {
         this.playersAdded = playersAdded;
     }
@@ -309,7 +308,6 @@ public class Controller { //has to include nicknames of players
      * and eventually computes the winner.
      */
     private void endTurn() {
-
         updateCurrentPlayer();
         if(currentPlayerId == 0 && mainTable.getEndGame()) {
             if(isLastTurn) {
@@ -368,7 +366,6 @@ public class Controller { //has to include nicknames of players
      * @param playerId : id of the player who's placed cards are requested.
      * @return : the placed cards of the player.
      */
-
     public PlaceableCard[][] getPlacedCards(int playerId) {
         return mainTable.getPlacedCards(playerId);
     }

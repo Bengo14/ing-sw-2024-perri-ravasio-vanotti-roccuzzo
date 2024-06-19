@@ -262,6 +262,7 @@ public class ViewGui extends Application implements View {
             }
             this.gameController = fxmlLoader.getController();
             gameController.start(this);
+            gameController.updatePoints(boardPoints, globalPoints);
             scene = new Scene(root);
             stage.setScene(scene);
             showTurn();
@@ -486,10 +487,16 @@ public class ViewGui extends Application implements View {
     }
 
     protected int[] getBoardPoints() {
+        if(boardPoints == null){
+            boardPoints = new int[getNicknames().length];
+        }
         return boardPoints;
     }
 
     protected int[] getGlobalPoints() {
+        if(globalPoints == null){
+            globalPoints = new int[getNicknames().length];
+        }
         return globalPoints;
     }
 }

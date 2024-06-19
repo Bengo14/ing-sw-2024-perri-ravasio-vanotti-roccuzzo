@@ -290,7 +290,7 @@ public class MainTable implements Observable {
             int objectivePoints = getPlayerTable(playerId).getObjectivePoints(globalObjectives);
             int globalPoints = getBoardPoints(playerId) + objectivePoints;
             setGlobalPoints(playerId, globalPoints);
-            if(getBoardPoints(playerId)>=20 && !isEndGame())
+            if(getBoardPoints(playerId)>=20 && !getEndGame())
                 setEndGame();
             updatePoints();
             return true; // correct placement and points added
@@ -307,7 +307,7 @@ public class MainTable implements Observable {
     protected void setEndGame() {
         this.endGame = true;
     }
-    public boolean isEndGame() {
+    public boolean getEndGame() {
         return this.endGame;
     }
     public int getNumOfPlayers() {
@@ -318,7 +318,6 @@ public class MainTable implements Observable {
     }
 
     public int computeWinnerAtEndGame() {
-
         int winnerPlayerId = 0;
         int max = 0;
         boolean draw = false;

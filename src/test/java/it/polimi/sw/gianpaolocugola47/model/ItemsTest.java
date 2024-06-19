@@ -7,12 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ItemsTest {
 
     @Test
-    void test() {
+    void testItemsClass() {
         Items item = Items.QUILL;
         assertEquals("quill", item.getName());
         assertEquals("", item.getImgPath());
         assertEquals('q', item.getSymbol());
     }
-
 
 }

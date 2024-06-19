@@ -44,6 +44,7 @@ public class Objectives implements Serializable {
     public int checkPatternAndComputePoints(PlayerTable playerTable){
         return 0;
     }
+
     public String getDescription(){
         return description;
     }

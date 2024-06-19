@@ -118,7 +118,7 @@ public class DiagonalPatternObjective extends Objectives {
     private boolean diagonalPatternVerifier(int x, int y, int cardsRequired, int corner, PlayerTable playerTable){
         int cardsMatch=0;
         for (int i = 0; i < cardsRequired; i++) {
-            if (!(playerTable.getPlacedCard(x, y) instanceof StartingCard) && isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
+            if (isResourceMatchedAndNotFlagged(playerTable.getPlacedCard(x, y))) {
                 cardsMatch++;
                 if (cardsMatch <= cardsRequired - 1) {
                     if (!(playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner), playerTable.setYCoordinate(y, corner)) instanceof StartingCard) && playerTable.getPlacedCard(playerTable.setXCoordinate(x, corner),playerTable.setYCoordinate(y,corner))!=null) {
@@ -129,7 +129,7 @@ public class DiagonalPatternObjective extends Objectives {
                     }
                 }
             } else
-                return false; // found StartingCard OR resource is not matched OR card is already flaggedForObjective OR card is null
+                return false; // resource is not matched OR card is already flaggedForObjective OR card is null
         }
         return true; // diagonal pattern verified
     }

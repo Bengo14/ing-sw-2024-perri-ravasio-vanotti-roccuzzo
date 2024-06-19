@@ -50,7 +50,7 @@ public class MainTableSerializer implements JsonSerializer<MainTable> {
         JsonElement globalPoints = jsonSerializationContext.serialize(mainTable.getGlobalPoints());
         jsonObject.add("globalPoints", globalPoints);
         jsonObject.addProperty("numOfPlayers", mainTable.getNumOfPlayers());
-        jsonObject.addProperty("endGame", mainTable.isEndGame());
+        jsonObject.addProperty("endGame", mainTable.getEndGame());
         return jsonObject;
     }
 }

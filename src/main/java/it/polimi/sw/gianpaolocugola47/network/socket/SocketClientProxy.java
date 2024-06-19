@@ -150,7 +150,7 @@ public class SocketClientProxy implements VirtualView {
             for (int j = 0 ; j < placedCards[i].length; j++)
                 if (placedCards[i][j] != null) {
                     output.println(getCardId(placedCards[i][j]));
-                    output.println(placedCards[i][j].isFront());
+                    output.println(placedCards[i][j].getIsFront());
                 }
                 else output.println(-1);
         output.flush();

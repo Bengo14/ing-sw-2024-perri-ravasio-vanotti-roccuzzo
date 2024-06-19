@@ -70,10 +70,10 @@ class DeckTest {
         Deck.getResourceCardsDeck().clear();
         Deck.getGoldCardsDeck().clear();
         Deck.getObjectiveCardsDeck().clear();
-        assertEquals(null, Deck.drawCardFromResourceDeck());
-        assertEquals(null, Deck.drawCardFromGoldDeck());
-        assertEquals(null, Deck.drawCardFromStartingDeck());
-        assertEquals(null, Deck.drawCardFromObjectivesDeck());
+        assertNull(Deck.drawCardFromResourceDeck());
+        assertNull(Deck.drawCardFromGoldDeck());
+        assertNull(Deck.drawCardFromStartingDeck());
+        assertNull(Deck.drawCardFromObjectivesDeck());
         assertTrue(Deck.areDecksEmpty());
     }
 
@@ -82,6 +82,7 @@ class DeckTest {
         Deck.initDeck();
         assertNotNull(Deck.getResourceCardOnTop());
     }
+
     @Test
     public void testGoldCardOnTop () {
         Deck.initDeck();
@@ -136,8 +137,5 @@ class DeckTest {
         assertNotNull(Deck.getCardFromGivenId(41));
         assertNotNull(Deck.getCardFromGivenId(85));
     }
+
 }
-
-
-
-

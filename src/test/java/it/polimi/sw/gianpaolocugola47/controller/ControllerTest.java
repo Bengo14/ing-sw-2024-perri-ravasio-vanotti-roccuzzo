@@ -32,7 +32,6 @@ class ControllerTest {
         assertEquals(1, controller.getNumOfPlayersCurrentlyAdded());
     }
 
-
     @Test
     public void testDrawCard() {
         controller.setNumOfPlayers(2);
@@ -44,4 +43,5 @@ class ControllerTest {
         controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().get(0));
         controller.drawCard(1,0);
     }
+
 }

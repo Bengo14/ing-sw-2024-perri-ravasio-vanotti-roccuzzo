@@ -86,7 +86,7 @@ public class GoldCard extends ResourceCard {
      */
     @Override
     public void updateResourceCounter(int[] counter) {
-        if (isFront()) {
+        if (getIsFront()) {
             Corner[] visibleCorners = getVisibleCorners();
             for (int i = 0; i < 4; i++) {
                 Corner corner = visibleCorners[i];
@@ -106,7 +106,7 @@ public class GoldCard extends ResourceCard {
      */
     @Override
     public int getPoints(PlayerTable playerTable) {
-        if(this.isFront()) {
+        if(this.getIsFront()) {
             int points = this.getThisPoints();
             if (!this.isPointsForCorners() && !this.isPointsForItems()) {
                 return points; // default points

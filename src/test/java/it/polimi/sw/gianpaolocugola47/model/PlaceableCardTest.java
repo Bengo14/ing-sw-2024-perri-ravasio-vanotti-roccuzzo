@@ -1,40 +1,41 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlaceableCardTest {
 
-   /*@Test
-    public void testConstructor() {
-    PlaceableCard p = new PlaceableCard("back", "front");
-    assertNotNull(p);
-
-    }*/
-
-
     @Test
-    void switchFrontBack() {
+    public void switchFrontBack() {
         PlaceableCard p = new PlaceableCard("back", "front") {
             @Override
             public void updateResourceCounter(int[] counter) {
             }
         };
-        assert(p.isFront());
+        assert(p.getIsFront());
         p.switchFrontBack();
-        assert(!p.isFront());
+        assert(!p.getIsFront());
     }
+
     @Test
-    public void testGetvisibleCorner(){
+    public void testSetFront(){
+        Deck.initDeck();
+        PlaceableCard p = Deck.drawCardFromResourceDeck();
+        p.setFront(true);
+        assertTrue(p.getIsFront());
+    }
+
+    @Test
+    public void testFlaggedForObjective(){
+        Deck.initDeck();
+        PlaceableCard p = Deck.drawCardFromResourceDeck();
+        p.setFlaggedForObjective(true);
+        assertTrue(p.getIsFlaggedForObjective());
+    }
+
+    @Test
+    public void testGetVisibleCorner(){
         Deck.initDeck();
         PlaceableCard p = Deck.drawCardFromResourceDeck();
         Corner[] c = p.getVisibleCorners();
@@ -60,6 +61,7 @@ class PlaceableCardTest {
         assert(p.getLine() == 1);
         assert(p.getColumn() == 2);
     }
+
     @Test
     public void testGetImgPath(){
         PlaceableCard p = new PlaceableCard("back", "front") {
@@ -70,4 +72,5 @@ class PlaceableCardTest {
         assert(p.getBackImgPath().equals("back"));
         assert(p.getFrontImgPath().equals("front"));
     }
+
 }

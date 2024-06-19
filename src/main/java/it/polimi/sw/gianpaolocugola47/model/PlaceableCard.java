@@ -37,7 +37,7 @@ public abstract class PlaceableCard implements Serializable {
     public int getLine() {return this.line;}
     public int getColumn() {return this.column;}
 
-    public boolean isFront() {
+    public boolean getIsFront() {
         return isFront;
     }
 

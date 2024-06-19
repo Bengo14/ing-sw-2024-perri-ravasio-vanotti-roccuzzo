@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
-
 import org.junit.jupiter.api.Test;
 
 
@@ -8,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StartingCardTest {
+
     @Test
     public void testGetResourceCenterBack() {
         Deck.initDeck();
@@ -15,30 +15,48 @@ class StartingCardTest {
         assertNotNull(s.getResourcesCentreBack());
         StartingCard start = Deck.getStartingCardsDeck().get(0);
     }
+
     @Test
     public void testConstructor() {
+        StartingCard s = new StartingCard("backPath","frontPath");
+
         Deck.initDeck();
         StartingCard start = new StartingCard("back", "front");
         start.setCoordinates(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos());
     }
+
     @Test
     public void testGetResourceCenterFront() {
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(2);
+        StartingCard start_1 = Deck.getStartingCardsDeck().get(0);
+        StartingCard start_2 = Deck.getStartingCardsDeck().get(1);
+        StartingCard start_3 = Deck.getStartingCardsDeck().get(3);
+        StartingCard start_4 = Deck.getStartingCardsDeck().get(5);
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
-        MainTable main = new MainTable();
-        main.setNumOfPlayers(2);
-        PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{});
-        main.setPlayerTable(1,player);
 
-        main.setPlayerStartingCard(1,start);
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(4);
+        PlayerTable player_1 = new PlayerTable(0, "name_1", new ResourceCard[]{});
+        PlayerTable player_2 = new PlayerTable(1, "name_2", new ResourceCard[]{});
+        PlayerTable player_3 = new PlayerTable(2, "name_3", new ResourceCard[]{});
+        PlayerTable player_4 = new PlayerTable(3, "name_4", new ResourceCard[]{});
+
+        main.setPlayerTable(0, player_1);
+        main.setPlayerStartingCard(0,start_1);
+        main.setPlayerSecretObjective(0,obj);
+
+        main.setPlayerTable(1, player_2);
+        main.setPlayerStartingCard(1,start_2);
         main.setPlayerSecretObjective(1,obj);
 
-        System.out.println(player.getResourceCounter(0));
-        System.out.println(player.getResourceCounter(1));
-        System.out.println(player.getResourceCounter(2));
-        System.out.println(player.getResourceCounter(3));
+        start_3.setFront(true);
+        main.setPlayerTable(2, player_3);
+        main.setPlayerStartingCard(2,start_3);
+        main.setPlayerSecretObjective(2,obj);
 
+        main.setPlayerTable(3, player_4);
+        main.setPlayerStartingCard(3,start_4);
+        main.setPlayerSecretObjective(3,obj);
     }
 
 }

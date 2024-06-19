@@ -311,7 +311,7 @@ public class Controller { //has to include nicknames of players
     private void endTurn() {
 
         updateCurrentPlayer();
-        if(currentPlayerId == 0 && mainTable.isEndGame()) {
+        if(currentPlayerId == 0 && mainTable.getEndGame()) {
             if(isLastTurn) {
                 currentPlayerId = -1;
                 computeWinner();
@@ -402,7 +402,7 @@ public class Controller { //has to include nicknames of players
             mainTable.setNumOfPlayers(c.getMainTable().getNumOfPlayers()); //HAS TO GO FIRST!
             mainTable.setCardsOnTable(c.getMainTable().getCardsOnTable());
             mainTable.setGlobalObjectives(c.getMainTable().getGlobalObjectives());
-            mainTable.setEndGame(c.getMainTable().isEndGame());
+            mainTable.setEndGame(c.getMainTable().getEndGame());
             mainTable.setBoardPoints(c.getMainTable().getBoardPoints());
             mainTable.setGlobalPoints(c.getMainTable().getGlobalPoints());
             PlayerTable[] pt = gameSaver.loadPlayerTableStatus();

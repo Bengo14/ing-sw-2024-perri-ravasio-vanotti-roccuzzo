@@ -51,7 +51,7 @@ public class StartingCard extends PlaceableCard {
 
     @Override
     public void updateResourceCounter(int[] counter) {
-        if(isFront()) {
+        if(getIsFront()) {
             for(int i=0; i<4; i++)
                 counter[i]++;
         }

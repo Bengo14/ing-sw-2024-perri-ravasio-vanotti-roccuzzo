@@ -43,7 +43,7 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("nickName", playerTable.getNickName());
         jsonObject.addProperty("id", playerTable.getId());
-        jsonObject.addProperty("canPlay", playerTable.isCanPlay());
+        jsonObject.addProperty("canPlay", playerTable.getCanPlay());
         JsonElement resCount = jsonSerializationContext.serialize(playerTable.getResourceCounter());
         jsonObject.add("resourceCounter", resCount);
         JsonElement obj = gson.toJsonTree(playerTable.getSecretObjective(), new TypeToken<Objectives>(){}.getType());

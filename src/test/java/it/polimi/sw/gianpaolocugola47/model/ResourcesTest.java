@@ -14,4 +14,5 @@ class ResourcesTest {
         assertEquals("\033[0;34m", resource.getAsciiEscape());
         assertEquals('A', resource.getSymbol());
     }
+
 }

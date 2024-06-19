@@ -9,14 +9,15 @@ class ResourceObjectiveTest {
     @Test
     public void testConstructorPlant(){
         Deck.initDeck();
-        ResourceObjective plant = (ResourceObjective) Deck.getObjectiveCardsDeck().get(4);
+        ResourceObjective plant = (ResourceObjective) Deck.getObjectiveCardsDeck().get(9);
         assertEquals(Resources.PLANT,plant.getResource());
         assertNotNull(plant);
     }
+
     @Test
     public void testConstructorInsect(){
         Deck.initDeck();
-        ResourceObjective insect = (ResourceObjective) Deck.getObjectiveCardsDeck().get(5);
+        ResourceObjective insect = (ResourceObjective) Deck.getObjectiveCardsDeck().get(11);
         assertEquals(Resources.INSECTS,insect.getResource());
         assertNotNull(insect);
     }
@@ -24,55 +25,41 @@ class ResourceObjectiveTest {
     @Test
     public void testConstructorFungi(){
         Deck.initDeck();
-        ResourceObjective fungi = (ResourceObjective) Deck.getObjectiveCardsDeck().get(6);
+        ResourceObjective fungi = (ResourceObjective) Deck.getObjectiveCardsDeck().get(8);
         assertEquals(Resources.FUNGI,fungi.getResource());
         assertNotNull(fungi);
     }
+
     @Test
     public void testConstructorAnimal(){
         Deck.initDeck();
-        ResourceObjective animal = (ResourceObjective) Deck.getObjectiveCardsDeck().get(7);
+        ResourceObjective animal = (ResourceObjective) Deck.getObjectiveCardsDeck().get(10);
         assertEquals(Resources.ANIMAL,animal.getResource());
         assertNotNull(animal);
         ResourceObjective obj = new ResourceObjective("front","back",Resources.ANIMAL);
     }
-
 
     @Test
     public void checkPatternAndComputePoints() {
         MainTable main = new MainTable();
         Deck.initDeck();
         main.setNumOfPlayers(2);
-        StartingCard start = Deck.getStartingCardsDeck().get(2);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(4);
-//        ResourceObjective plant = (ResourceObjective) obj;
-        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(6);
-        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
-        ResourceCard plant_3 = Deck.getResourceCardsDeck().get(12);
-        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{plant_1,plant_2,plant_3});
+        StartingCard start = Deck.getStartingCardsDeck().get(1);
+        Objectives obj = Deck.getObjectiveCardsDeck().get(11);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(32);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(35);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(36);
+        PlayerTable player = new PlayerTable(1,"name",new ResourceCard[]{res_1, res_2,res_3});
         main.setPlayerTable(1,player);
         main.setPlayerStartingCard(1,start);
-        System.out.println(player.getResourceCounter(2)+"Starting card\n");
         main.setPlayerSecretObjective(1,obj);
+        res_1.setFront(true);
+        res_2.setFront(true);
+        res_3.setFront(true);
         main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
-        //verify if the card is played
-        assertNotNull(player.getPlacedCard(9,9));
-        System.out.println(player.getResourceCounter(2)+" First card\n");
         main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,1);
-        assertNotNull(player.getPlacedCard(9,11));
-        System.out.println(player.getResourceCounter(2)+" Second card\n");
-        main.playCardAndUpdatePoints(2,9,11,3,1);
-        System.out.println(player.getResourceCounter(0)+"\n");
-        System.out.println(player.getResourceCounter(1)+"\n");
-        System.out.println(player.getResourceCounter(2)+" Third card\n");
-        System.out.println(player.getResourceCounter(3)+"\n");
-        System.out.println(player.getResourceCounter(4)+"\n");
-        System.out.println(player.getResourceCounter(5)+"\n");
-        System.out.println(player.getResourceCounter(6)+" End element\n");
-
-
-        System.out.println(obj.checkPatternAndComputePoints(player)+"\n");
+        main.playCardAndUpdatePoints(2,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
         assertEquals(2,obj.checkPatternAndComputePoints(player));
-
    }
+
 }

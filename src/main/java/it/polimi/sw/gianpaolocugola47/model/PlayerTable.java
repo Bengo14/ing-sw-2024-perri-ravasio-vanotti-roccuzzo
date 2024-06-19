@@ -50,7 +50,8 @@ public class PlayerTable{
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
-    public PlayerTable(){} //for Json parsing purposes
+
+    public PlayerTable(){} //for JSON parsing purposes
 
     public PlayerTable(int id){
         this.id = id;
@@ -61,9 +62,23 @@ public class PlayerTable{
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
     }
 
-    public boolean isCanPlay() {
-        return canPlay;
+    public static int getMatrixDimension() {
+        return MATRIX_DIMENSION;
     }
+
+    public static int getStartingCardPos() {return STARTING_CARD_POS;}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {this.id = id;}
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public boolean getCanPlay(){return canPlay;}
 
     public void setCanPlay(boolean canPlay) {
         this.canPlay = canPlay;
@@ -73,8 +88,22 @@ public class PlayerTable{
         this.resourceCounter = resourceCounter;
     }
 
-    public void setPlacedCards(PlaceableCard[][] placedCards) {
-        this.placedCards = placedCards;
+    public int[] getResourceCounter() {return resourceCounter;}
+
+    protected int getResourceCounter(int position) {
+        return resourceCounter[position];
+    }
+
+    public Objectives getSecretObjective() {
+        return secretObjective;
+    }
+
+    public void setSecretObjective(Objectives objective){
+        this.secretObjective = objective;
+    }
+
+    public StartingCard getStartingCard() {
+        return startingCard;
     }
 
     public void setStartingCard(StartingCard startingCard){
@@ -84,42 +113,22 @@ public class PlayerTable{
         startingCard.updateResourceCounter(this.resourceCounter);
     }
 
-    public void setSecretObjective(Objectives objective){
-        this.secretObjective = objective;
-    }
+    public ResourceCard[] getCardsOnHand(){return cardsOnHand;}
 
-    public static int getMatrixDimension() {
-        return MATRIX_DIMENSION;
-    }
-    public static int getStartingCardPos() {return STARTING_CARD_POS;}
-    public int getId() {
-        return id;
-    }
-    public String getNickName() {
-        return nickName;
-    }
-    public boolean getCanPlay(){return canPlay;}
-    private void unsetCanPlay(){this.canPlay = false;}
-    public void setId(int id) {this.id = id;}
-    protected int getResourceCounter(int position) {
-        return resourceCounter[position];
-    }
-    public int[] getResourceCounter() {return resourceCounter;}
-    public Objectives getSecretObjective() {
-        return secretObjective;
-    }
-    public StartingCard getStartingCard() {
-        return startingCard;
-    }
     public ResourceCard getCardOnHand(int position) {
         return cardsOnHand[position];
     }
-    public ResourceCard[] getCardsOnHand(){return cardsOnHand;}
+
+    public PlaceableCard[][] getPlacedCards(){
+        return placedCards;
+    }
+
     public PlaceableCard getPlacedCard(int x, int y) {
         return this.placedCards[x][y];
     }
-    public PlaceableCard[][] getPlacedCards(){
-        return placedCards;
+
+    public void setPlacedCards(PlaceableCard[][] placedCards) {
+        this.placedCards = placedCards;
     }
 
     public void setCardOnHandInTheEmptyPosition(ResourceCard card) {
@@ -130,6 +139,7 @@ public class PlayerTable{
             }
         }
     }
+
     public void turnCardOnHand(int cardPosition, boolean isFront){
         this.cardsOnHand[cardPosition].setFront(isFront);
     }
@@ -148,7 +158,7 @@ public class PlayerTable{
         if(card == null)
             return -1;
         if(isPlaceable(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner))){
-            if(card instanceof GoldCard && card.isFront()){
+            if(card instanceof GoldCard && card.getIsFront()){
                 if(isCheap((GoldCard) card))
                     placeCard(setXCoordinate(onTableCardX, onTableCardCorner), setYCoordinate(onTableCardY, onTableCardCorner), card);
                 else
@@ -302,7 +312,7 @@ public class PlayerTable{
             for (int j=0; j<getMatrixDimension(); j++){
                 {
                     if(i==getMatrixDimension()-1 && j==getMatrixDimension()-1) {
-                        unsetCanPlay();
+                        setCanPlay(false);
                         return; // no playable position found
                     }
                     if(checkIfCanPlayOnCard(i, j))
@@ -357,7 +367,7 @@ public class PlayerTable{
         for(int i=0; i<MATRIX_DIMENSION; i++){
             for(int j=0; j<MATRIX_DIMENSION; j++){
                 if(placedCards[i][j] != null) //once a card is placed, it can be both true or false
-                    cardSideMatrix[i][j] = placedCards[i][j].isFront();
+                    cardSideMatrix[i][j] = placedCards[i][j].getIsFront();
                 else //if a given position has no card, it is set to false. Since I already know where there are no cards placed, this is going to be ignored when rebuilding the card matrix
                     cardSideMatrix[i][j] = false;
             }

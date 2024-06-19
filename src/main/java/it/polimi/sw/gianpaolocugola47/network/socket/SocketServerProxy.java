@@ -57,7 +57,7 @@ public class SocketServerProxy implements VirtualServer {
         output.println("setStarting");
         output.println(playerId);
         output.println(card.getId());
-        output.println(card.isFront());
+        output.println(card.getIsFront());
         output.flush();
         return new Objectives[0];
     }

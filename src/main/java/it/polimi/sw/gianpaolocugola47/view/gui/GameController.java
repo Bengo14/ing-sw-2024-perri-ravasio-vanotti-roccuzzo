@@ -189,7 +189,7 @@ public class GameController implements Initializable {
         if(gui.isLoaded()){
             loadScene();
         }
-        if (gui.getStartingCard().isFront()) {
+        if (gui.getStartingCard().getIsFront()) {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         } else {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/front_"+gui.getStartingCard().getId()+".png")));
@@ -347,13 +347,13 @@ public class GameController implements Initializable {
 
         if(drawPos>=0 && drawPos<=3) {
             String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-            imagePath += gui.getCardsOnTable()[drawPos].isFront() ? "front_" : "back_";
+            imagePath += gui.getCardsOnTable()[drawPos].getIsFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
             table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
         for(int i = 0; i<3; i++) {
             String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-            imagePath += gui.getCardsOnHand()[i].isFront() ? "front_" : "back_";
+            imagePath += gui.getCardsOnHand()[i].getIsFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
@@ -406,7 +406,7 @@ public class GameController implements Initializable {
     private void switchCardImage(ResourceCard card, ImageView imageView) {
         card.switchFrontBack();
         String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-        imagePath += card.isFront() ? "front_" : "back_";
+        imagePath += card.getIsFront() ? "front_" : "back_";
         imagePath += card.getId() + ".png";
         imageView.setImage(new Image(getClass().getResourceAsStream(imagePath)));
     }
@@ -487,9 +487,9 @@ public class GameController implements Initializable {
                             else if(i-x == 1 && j-y == 1) corner = 3;
                             else break;
 
-                            if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].isFront())) {
+                            if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].getIsFront())) {
                                 String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-                                imagePath += gui.getCardsOnHand()[selectedCard].isFront() ? "front_" : "back_";
+                                imagePath += gui.getCardsOnHand()[selectedCard].getIsFront() ? "front_" : "back_";
                                 imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
                                 matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
                                 matrix[i][j].setMouseTransparent(false);
@@ -554,11 +554,11 @@ public class GameController implements Initializable {
         for (int i = 0; i < placedCards.length; i++)
             for (int j = 0; j < placedCards[i].length; j++)
                 if(placedCards[i][j] != null && matrix[i][j] != null) {
-                    String front = placedCards[i][j].isFront() ? "front_" : "back_";
+                    String front = placedCards[i][j].getIsFront() ? "front_" : "back_";
                     matrix[i][j].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[i][j].getId() + ".png")));
                 }
 
-        String front = placedCards[10][10].isFront() ? "back_" : "front_";
+        String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
     }
     /**

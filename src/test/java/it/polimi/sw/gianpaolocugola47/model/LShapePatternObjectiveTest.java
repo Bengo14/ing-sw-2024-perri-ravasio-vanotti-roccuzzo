@@ -6,19 +6,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LShapePatternObjectiveTest {
 
-
     @Test
     public void testConstructor() {
         LShapePatternObjective obj = new LShapePatternObjective(3, "imgPathFront", "imgPathBack", "topLeft", Resources.PLANT, Resources.INSECTS);
         assertEquals(3, obj.getPoints());
         assertEquals("imgPathFront", obj.getImgPathFront());
         assertEquals("imgPathBack", obj.getImgPathBack());
-
     }
+
+    @Test
+    public void testGettersAndSetters() {
+        Deck.initDeck();
+        LShapePatternObjective obj = (LShapePatternObjective) Deck.getObjectiveCardsDeck().get(5);
+        assertEquals("bottomLeft", obj.getOrientation());
+        assertEquals(Resources.PLANT, obj.getMainResource());
+        assertEquals(Resources.INSECTS, obj.getSecondaryResource());
+    }
+
     @Test
     public void testCheckPatternAndComputePointsBottomLeft(){
         MainTable main = new MainTable();
-
         Deck.initDeck();
         main.setNumOfPlayers(2);
         StartingCard start = Deck.getStartingCardsDeck().get(0);
@@ -36,12 +43,14 @@ class LShapePatternObjectiveTest {
         main.playCardAndUpdatePoints(2,11,9,2,1);
         System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(3, obj.checkPatternAndComputePoints(player));
+
+        LShapePatternObjective obj_2 = (LShapePatternObjective) Deck.getObjectiveCardsDeck().get(7);
+        assertEquals(0, obj_2.checkPatternAndComputePoints(player));
     }
 
     @Test
     public void testCheckPatternAndComputePointsTopRight(){
         MainTable main = new MainTable();
-
         Deck.initDeck();
         main.setNumOfPlayers(2);
         StartingCard start = Deck.getStartingCardsDeck().get(0);
@@ -57,7 +66,11 @@ class LShapePatternObjectiveTest {
         main.playCardAndUpdatePoints(0,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),0,1);
         main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),2,1);
         main.playCardAndUpdatePoints(2,PlayerTable.getStartingCardPos()-1,PlayerTable.getStartingCardPos()-1,1,1);
-        System.out.println(obj.checkPatternAndComputePoints(player));
         assertEquals(3, obj.checkPatternAndComputePoints(player));
+
+        // test other objectives
+        LShapePatternObjective obj_3 = (LShapePatternObjective) Deck.getObjectiveCardsDeck().get(4);
+        assertEquals(0, obj_3.checkPatternAndComputePoints(player));
     }
+
  }

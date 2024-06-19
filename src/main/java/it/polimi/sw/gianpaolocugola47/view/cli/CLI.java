@@ -269,7 +269,7 @@ public class CLI implements View {
         String colour = resourceCard.getResourceCentreBack().getAsciiEscape();
         Corner[] corners = resourceCard.getCorners();
         System.out.println(colour + "+-------+" + ANSI_RESET);
-        if(resourceCard.isFront()){
+        if(resourceCard.getIsFront()){
             System.out.println(colour + "|" + ANSI_RESET + corners[0].getCornerType() + "  " + resourceCard.getThisPoints() + "  " + corners[1].getCornerType() + colour + "|" + ANSI_RESET);
             System.out.println(colour + "|       |" + ANSI_RESET);
             System.out.println(colour + "|" + ANSI_RESET + corners[2].getCornerType() + "     " + corners[3].getCornerType() + colour + "|" + ANSI_RESET);
@@ -290,7 +290,7 @@ public class CLI implements View {
         String color = goldCard.getResourceCentreBack().getAsciiEscape();
         Corner[] corners = goldCard.getCorners();
         System.out.println(color + "+-------+" + ANSI_RESET);
-        if(goldCard.isFront()){
+        if(goldCard.getIsFront()){
             if(goldCard.pointConditionToString().equals("N/A"))
                 System.out.println(color + "|" + ANSI_RESET + corners[0].getCornerType() + "  " + goldCard.getThisPoints() + "  " + corners[1].getCornerType() + color + "|" + ANSI_RESET);
             else
@@ -304,7 +304,7 @@ public class CLI implements View {
             System.out.println(color + "|" + ANSI_RESET + corners[6].getCornerType() + "     " + corners[7].getCornerType() + color + "|" + ANSI_RESET);
         }
         System.out.println(color + "+-------+" + ANSI_RESET);
-        if(goldCard.isFront())
+        if(goldCard.getIsFront())
             System.out.println("Resources required to play this card: " + goldCard.resourcesRequiredToString());
     }
 
@@ -315,7 +315,7 @@ public class CLI implements View {
     public void printStartingCard(StartingCard startingCard) {
         Corner[] corners = startingCard.getCorners();
         System.out.println("+-------+");
-        if(startingCard.isFront()){
+        if(startingCard.getIsFront()){
             System.out.println("|" + corners[0].getCornerType() + "     " + corners[1].getCornerType() + "|");
             System.out.println("|       |");
             System.out.println("|" + corners[2].getCornerType() + "     " + corners[3].getCornerType() + "|");
@@ -757,7 +757,7 @@ public class CLI implements View {
     private void showCardsOnTable(){
         System.out.println("________________________\nBOARD CARDS");
         for(ResourceCard card: this.cliController.getCardsOnTable()){
-            if(!card.isFront())
+            if(!card.getIsFront())
                 card.switchFrontBack();
             if(card instanceof GoldCard)
                 this.printGoldCard((GoldCard) card);

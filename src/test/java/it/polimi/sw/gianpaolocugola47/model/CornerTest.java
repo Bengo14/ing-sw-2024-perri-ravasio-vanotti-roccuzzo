@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
 class CornerTest {
+
     @Test
     public void testConstructorAndGetterCorner() {
         Corner c = new Corner(false, false, false,null, Resources.INSECTS);
@@ -19,6 +18,7 @@ class CornerTest {
         c.setLinkedCorner(new Corner(true,true,true,null,null));
         assertNotNull(c.getLinkedCorner());
     }
+
     @Test
     public void testSetIsCovered() {
         Corner c = new Corner(false,false,false,Items.INKWELL,null);
@@ -26,7 +26,8 @@ class CornerTest {
         c.setIsCovered();
         assertTrue(c.isCovered());
     }
-   @Test
+
+    @Test
     public void testGetResourceAndGetItem() {
         Corner c_resource = new Corner(false,false,true,null,Resources.INSECTS);
         assertEquals(Resources.INSECTS, c_resource.getResource());

@@ -2,6 +2,8 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoldCardTest {
@@ -15,66 +17,75 @@ class GoldCardTest {
         assertFalse(g.isPointsForItems());
         assertNotEquals(Items.INKWELL, g.getItemRequired());
     }
+
     @Test
-    public void testGetresourcedRequired() {
+    public void testGetResourcedRequired() {
         Deck.initDeck();
         GoldCard gold = Deck.getGoldCardsDeck().get(0);
-        gold.getResourcesRequired();
-        System.out.println(gold.getResourcesRequired());
+        ArrayList<Resources> requisites = new ArrayList<>();
+        requisites.add(Resources.FUNGI);
+        requisites.add(Resources.FUNGI);
+        requisites.add(Resources.ANIMAL);
+        assertEquals(requisites, gold.getResourcesRequired());
     }
 
     @Test
     public void testGetItemRequired(){
         Deck.initDeck();
         GoldCard gold = Deck.getGoldCardsDeck().get(0);
-        gold.getItemRequired();
-        System.out.println(gold.getItemRequired());
+        assertEquals(Items.QUILL, gold.getItemRequired());
     }
 
     @Test
     public void testGetCardPointForPlacing() {
         MainTable main = new MainTable();
         Deck.initDeck();
-        GoldCard g = Deck.getGoldCardsDeck().get(0);
-        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(12);
-        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
+        GoldCard g = Deck.getGoldCardsDeck().get(16);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(10);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         StartingCard start = Deck.getStartingCardsDeck().get(2);
+        start.setFront(true);
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         main.setNumOfPlayers(2);
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
         main.setPlayerTable(1,p);
-        main.turnCardOnHand(1,1, true);
         main.turnCardOnHand(1,0, true);
+        main.turnCardOnHand(1,1, true);
         main.turnCardOnHand(1,2, true);
         main.setPlayerStartingCard(1,start);
         main.setPlayerSecretObjective(1,obj);
-        main.playCardAndUpdatePoints(0,10,10,0,1);
-        main.playCardAndUpdatePoints(1,10,10,1,1);
-        main.playCardAndUpdatePoints(2,10,10,2,1);
-
-        assertEquals(5, main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),1,1);
+        assertEquals(0, main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),2,1);
+        assertEquals(0, main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(2, PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
+        assertEquals(3, main.getBoardPoints(1));
     }
+
     @Test
     public void testGetCardPointForCorners() {
         MainTable main = new MainTable();
         Deck.initDeck();
-        GoldCard g = Deck.getGoldCardsDeck().get(11);
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
-        start.switchFrontBack();
+        GoldCard g = Deck.getGoldCardsDeck().get(13);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(10);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
+        StartingCard start = Deck.getStartingCardsDeck().get(3);
+        start.setFront(true);
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         main.setNumOfPlayers(2);
-        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(6);
-        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(7);
-        PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{plant_1, plant_2, g});
-        main.setPlayerTable(1, player);
-        main.setPlayerStartingCard(1, start);
-        main.setPlayerSecretObjective(1, obj);
+        PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
+        main.setPlayerTable(1,p);
         main.turnCardOnHand(1,2, true);
-        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
-        main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
-        main.playCardAndUpdatePoints(2, 9, 9, 1, 1);
+        main.setPlayerStartingCard(1,start);
+        main.setPlayerSecretObjective(1,obj);
+        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),2,1);
+        assertEquals(0, main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(1,PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos(),3,1);
+        assertEquals(0, main.getBoardPoints(1));
+        main.playCardAndUpdatePoints(2, PlayerTable.getStartingCardPos()+1,PlayerTable.getStartingCardPos()+1,2,1);
         assertEquals(4, main.getBoardPoints(1));
     }
+
     @Test
     public void testGetCardPointForItems(){
         MainTable main = new MainTable();
@@ -85,7 +96,7 @@ class GoldCardTest {
         Objectives obj = Deck.getObjectiveCardsDeck().get(0);
         main.setNumOfPlayers(2);
         ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
-        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(4);
         PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{res_1, res_2, g});
         main.setPlayerTable(1, player);
         main.setPlayerStartingCard(1, start);
@@ -93,10 +104,10 @@ class GoldCardTest {
         main.turnCardOnHand(1,0, true);
         main.turnCardOnHand(1,1, true);
         main.turnCardOnHand(1,2, true);
-        main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
-        main.playCardAndUpdatePoints(2, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0, 1);
-        assertEquals(1, main.getBoardPoints(1));
-        assertEquals(1,player.getResourceCounter(4));
+        main.playCardAndUpdatePoints(1, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
+        main.playCardAndUpdatePoints(2, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 2, 1);
+        assertEquals(2,player.getResourceCounter(4));
+        assertEquals(2, main.getBoardPoints(1));
     }
 
     @Test
@@ -115,23 +126,5 @@ class GoldCardTest {
         main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
         assertEquals(0, main.getBoardPoints(1));
     }
-    @Test
-    public void testUpdateResourceCounter(){
-       MainTable main = new MainTable();
-       Deck.initDeck();
-       GoldCard g = Deck.getGoldCardsDeck().get(3);
-       StartingCard start = Deck.getStartingCardsDeck().get(1);
-       start.switchFrontBack();
-       main.setNumOfPlayers(2);
-       PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{g});
-       main.setPlayerTable(1, player);
-       Objectives obj = Deck.getObjectiveCardsDeck().get(0);
-       main.setPlayerStartingCard(1, start);
-       main.setPlayerSecretObjective(1,obj);
-       main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
-    }
-
 
 }
-
-

@@ -3,7 +3,9 @@ package it.polimi.sw.gianpaolocugola47.model;
 import java.util.ArrayList;
 /**
  * This class represents all the gold cards.
- * Have the required of a card and the points that can do.
+ * It extends the ResourceCard class.
+ * It contains the resources required to play the card, the points for corners, the points for items, the item required
+ * plus the ResourceCard attributes.
  */
 public class GoldCard extends ResourceCard {
     private ArrayList<Resources> resourcesRequired;
@@ -35,6 +37,11 @@ public class GoldCard extends ResourceCard {
         return resourcesRequired;
     }
 
+    /**
+     * This method return the resourcesRequired attribute in a string format using ASCII escape codes to
+     * represent the respective colors. Used for printing gold cards in the CLI.
+     * @return :
+     */
     public String resourcesRequiredToString() {
         StringBuilder retString = new StringBuilder();
         for (Resources resource : resourcesRequired) {
@@ -44,7 +51,8 @@ public class GoldCard extends ResourceCard {
     }
 
     /**
-     * This method return the points condition of the card.
+     * This method returns a character representing the points condition of the card.
+     * Used for printing gold cards in the CLI.
      * @return the points condition of the card.
      */
     public String pointConditionToString() {
@@ -54,11 +62,11 @@ public class GoldCard extends ResourceCard {
         if (pointsForItems) {
             return Character.toString(itemRequired.getSymbol());
         } else
-            return "N/A";
+            return "";
     }
 
     /**
-     * This method return if the card give points for corners.
+     * This method returns if the card give points for corners.
      * @return true if the card give points for corners, false otherwise.
      */
     public boolean isPointsForCorners() {
@@ -66,14 +74,14 @@ public class GoldCard extends ResourceCard {
     }
 
     /**
-     * This method return the item required for the card.
+     * This method returns the item required for the card.
      * @return the item required for the card.
      */
     public Items getItemRequired() {
         return itemRequired;
     }
     /**
-     * This method return if the card give points for items.
+     * This method returns whether the card give points for items or not.
      * @return true if the card give points for items, false otherwise.
      */
     public boolean isPointsForItems() {
@@ -81,7 +89,7 @@ public class GoldCard extends ResourceCard {
     }
 
     /**
-     * This method update the resource counter after a card is placed.
+     * This method updates the resource counter after a card is placed.
      * @param counter the counter to update.
      */
     @Override
@@ -100,9 +108,9 @@ public class GoldCard extends ResourceCard {
         }
     }
     /**
-     * This method return the points of the playerTable.
-     * @param playerTable the player table to check.
-     * @return the points of the playerTable.
+     * This method returns the points given to the player after placing a specific gold card on the board.
+     * @param playerTable the player table in which the card is played.
+     * @return the number points obtained.
      */
     @Override
     public int getPoints(PlayerTable playerTable) {

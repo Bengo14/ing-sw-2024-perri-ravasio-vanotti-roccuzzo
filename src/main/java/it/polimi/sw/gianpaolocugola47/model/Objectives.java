@@ -25,26 +25,52 @@ public class Objectives implements Serializable {
         this.imgPathFront = imgPathFront;
         this.imgPathBack = imgPathBack;
     }
+
+    /**
+     * Returns the objectives id.
+     * @return : the id of the objective.
+     */
     public int getId(){
         return id;
     }
 
+    /**
+     * Returns the points of the objective.
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Returns the image path of the objective, front side.
+     * @return : the image path of the objective.
+     */
     public String getImgPathFront() {
         return imgPathFront;
     }
 
+    /**
+     * Returns the image path of the objective, back side.
+     * @return : the image path of the objective.
+     */
     public String getImgPathBack() {
         return imgPathBack;
     }
 
+    /**
+     * This method checks if the pattern of the player is the same of the objective and if that is true it computes the points.
+     * Implemented in the subclasses.
+     * @param playerTable : the player table of the player.
+     * @return : the points made by the player.
+     */
     public int checkPatternAndComputePoints(PlayerTable playerTable){
         return 0;
     }
 
+    /**
+     * Returns the description of the objective. Used for printing objectives card in the CLI.
+     * @return : the description of the objective.
+     */
     public String getDescription(){
         return description;
     }

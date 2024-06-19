@@ -24,6 +24,11 @@ public class ResourceCard extends PlaceableCard {
         return this.resourceCentreBack;
     }
 
+    /**
+     * This method returns the points given to the player after placing a specific resource card on the board.
+     * @param playerTable : the player table of the player that placed the card.
+     * @return : the number of points obtained.
+     */
     public int getPoints(PlayerTable playerTable){
         if(this.getIsFront())
             return this.points;
@@ -32,6 +37,12 @@ public class ResourceCard extends PlaceableCard {
         // nothing else needed
     }
 
+    /**
+     * This method returns the points attribute.
+     * If the card is placed on the back, it gives no points; otherwise, it returns the number of
+     * points specified by the respective attribute.
+     * @return : the number of points obtained.
+     */
     public int getThisPoints(){
         if(this.getIsFront())
             return this.points;
@@ -39,6 +50,10 @@ public class ResourceCard extends PlaceableCard {
             return 0;
     }
 
+    /**
+     * This method updates the resource counter after a card is placed.
+     * @param counter : the counter to update.
+     */
     @Override
     public void updateResourceCounter(int[] counter) {
         if(getIsFront()){
@@ -57,6 +72,11 @@ public class ResourceCard extends PlaceableCard {
         }
     }
 
+    /**
+     * This method returns the resourceCentreBack attribute formatted using ASCII escape codes.
+     * Used for printing resource cards in the CLI.
+     * @return : the resourceCentreBack attribute formatted using ASCII escape codes.
+     */
     public String resourceCentreBackToString(){
         return "%s%s\u001B[0m".formatted(resourceCentreBack.getAsciiEscape(), resourceCentreBack.getSymbol());
     }

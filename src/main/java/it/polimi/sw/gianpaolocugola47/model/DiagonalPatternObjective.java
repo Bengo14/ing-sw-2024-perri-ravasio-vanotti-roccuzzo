@@ -2,7 +2,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 /**
  * This class represents pattern-oriented objectives, i.e. objectives that give points only if a certain card
- * pattern is present on a given player table.
+ * pattern is present on a given player table. It extends the Objectives class.
  */
 public class DiagonalPatternObjective extends Objectives {
 
@@ -39,7 +39,7 @@ public class DiagonalPatternObjective extends Objectives {
         return isAscending;
     }
     /**
-     * This method checks the pattern and computes the points.
+     * This method checks if the pattern is present on a given board and, if that is the case, computes the points.
      * @param playerTable the player table to check.
      * @return the points computed * patterns.
      */

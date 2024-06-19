@@ -19,10 +19,19 @@ public class StartingCard extends PlaceableCard {
         setCoordinates(PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos());
     }
 
+    /**
+     * Sets the resources of the centre back of the card.
+     * @return : the resources of the centre back of the card.
+     */
     public ArrayList<Resources> getResourcesCentreBack() {
         return this.resourcesCentreBack;
     }
 
+    /**
+     * This method return the resourcesCentreBack attribute in a string format using ASCII escape codes to
+     * represent the respective colors. Used for printing starting cards in the CLI.
+     * @return : the resourcesCentreBack attribute in a string format.
+     */
     public String resourcesCentreBackToString(){
         StringBuilder retString = new StringBuilder();
         if(resourcesCentreBack.size() == 1){
@@ -35,7 +44,7 @@ public class StartingCard extends PlaceableCard {
         else if (resourcesCentreBack.size() == 2){
             retString.append("  ");
             for(Resources resource : resourcesCentreBack){
-                retString.append("%s %s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
+                retString.append("%s%s\u001B[0m".formatted(resource.getAsciiEscape(), resource.getSymbol()));
             }
             retString.append("  ");
         }
@@ -49,6 +58,10 @@ public class StartingCard extends PlaceableCard {
         return retString.toString();
     }
 
+    /**
+     * Updates the resource counter once the starting card is placed.
+     * @param counter : the resource counter.
+     */
     @Override
     public void updateResourceCounter(int[] counter) {
         if(getIsFront()) {
@@ -68,6 +81,10 @@ public class StartingCard extends PlaceableCard {
         }
     }
 
+    /**
+     * String representation of the starting card.
+     * @return : the string representation of the starting card.
+     */
     public String toString(){
         return "StartingCard: resources: "+resourcesCentreBack.toString();
     }

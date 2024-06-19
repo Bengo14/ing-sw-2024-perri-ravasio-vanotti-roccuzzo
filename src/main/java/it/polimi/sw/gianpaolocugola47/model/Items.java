@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.model;
 /**
  * This enumeration lists the items.
+ * It includes the name, the image path and the symbol (used for printing symbols in the CLI) of each item.
  */
 public enum Items {
     QUILL("quill","", 'q'),

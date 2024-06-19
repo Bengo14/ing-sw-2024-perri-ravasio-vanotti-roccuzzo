@@ -18,10 +18,19 @@ public class ResourceObjective extends Objectives{
         this.resource = resource;
     }
 
+    /**
+     * Returns the resource needed to receive points.
+     * @return : the resource needed to receive points.
+     */
     public Resources getResource() {
         return resource;
     }
 
+    /**
+     * Checks if the player table contains the required resource three times and computes the points.
+     * @param playerTable : the player table of the player.
+     * @return : the points made by the player.
+     */
     @Override
     public int checkPatternAndComputePoints(PlayerTable playerTable) {
         // 1 resourceSet is 3 resources

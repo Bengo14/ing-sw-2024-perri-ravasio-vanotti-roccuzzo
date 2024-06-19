@@ -34,6 +34,9 @@ public class Deck {
     }
     /**
      * This method initializes the deck.
+     * HashMaps with the card id as key and the card itself as value are also initialized here.
+     * The latter are later used for network communication purposes.
+     * At last, this method generates the seed used to randomize the shuffle process.
      * */
     public static void initDeck() {
         randomGenerator = new Random(System.currentTimeMillis());
@@ -44,7 +47,7 @@ public class Deck {
         initHashMaps();
     }
     /**
-     * This method shuffles the deck.
+     * This method shuffles the deck using the previously initialized seed.
      * */
     private static void shuffleDeck() {
         Collections.shuffle(goldCardsDeck,randomGenerator);
@@ -70,7 +73,7 @@ public class Deck {
         }
     }
     /**
-     * This method generates the resource cards deck.
+     * This method generates the resource cards deck by parsing the cards from the respective json file.
      * */
     private static void generateResourceCardsDeck() {
         Gson gson = new Gson();
@@ -83,7 +86,7 @@ public class Deck {
         }
     }
     /**
-     * This method generates the gold cards deck.
+     * This method generates the gold cards deck by parsing the cards from the respective json file.
      * */
     private static void generateGoldCardsDeck() {
         Gson gson = new Gson();
@@ -95,7 +98,8 @@ public class Deck {
         }
     }
     /**
-     * This method generates the objective cards deck.
+     * This method generates the objective cards deck by parsing the cards from the respective json file.
+     * The deserializer is used to parse the different types of objectives, respecting inheritance.
      * */
     private static void generateObjectiveCardsDeck(){
         ObjectiveDeserializer deserializer = new ObjectiveDeserializer("type");
@@ -113,7 +117,7 @@ public class Deck {
         }
     }
     /**
-     * This method generates the starting cards deck.
+     * This method generates the starting cards deck by parsing the cards from the respective json file.
      * */
     private static void generateStartingCardsDeck(){
         Gson gson = new Gson();
@@ -125,8 +129,8 @@ public class Deck {
         }
     }
     /**
-     * This method draws a card from the resource deck.
-     * @return the drawn card.
+     * This method draws a card and removes it from the resource deck.
+     * @return the drawn card, null if the deck is empty.
      * */
     protected static ResourceCard drawCardFromResourceDeck(){
         if(resourceCardsDeck.isEmpty())
@@ -134,8 +138,8 @@ public class Deck {
         return resourceCardsDeck.removeLast();
     }
     /**
-     * This method draws a card from the gold deck.
-     * @return the drawn card.
+     * This method draws a card  and removes it from the gold deck.
+     * @return the drawn card, null if the deck is empty.
      * */
     protected static GoldCard drawCardFromGoldDeck(){
         if(goldCardsDeck.isEmpty())
@@ -143,8 +147,8 @@ public class Deck {
         return goldCardsDeck.removeLast();
     }
     /**
-     * This method draws a card from the objective deck.
-     * @return the drawn card.
+     * This method draws a card  and removes it from the objective deck.
+     * @return the drawn card, null if the deck is empty.
      * */
     protected static Objectives drawCardFromObjectivesDeck(){
         if(objectiveCardsDeck.isEmpty())
@@ -152,8 +156,8 @@ public class Deck {
         return objectiveCardsDeck.removeLast();
     }
     /**
-     * This method draws a card from the starting deck.
-     * @return the drawn card.
+     * This method draws a card  and removes it from the starting deck.
+     * @return the drawn card, null if the deck is empty.
      * */
     public static StartingCard drawCardFromStartingDeck(){
         if(startingCardsDeck.isEmpty())
@@ -197,7 +201,7 @@ public class Deck {
     }
     /**
      * This method returns the gold card on top of the deck.
-     * @return the gold card on top of the deck.
+     * @return the gold card on top of the deck, null if the deck is empty.
      * */
     public static GoldCard getGoldCardOnTop() {
         if(!goldCardsDeck.isEmpty())
@@ -238,28 +242,28 @@ public class Deck {
         }
     }
     /**
-     * This method sets the gold cards deck.
+     * This method sets the gold cards deck. Used when parsing a previous match from a json file.
      * @param goldCardsDeck the gold cards deck.
      * */
     public static void setGoldCardsDeck(List<GoldCard> goldCardsDeck) {
         Deck.goldCardsDeck = goldCardsDeck;
     }
     /**
-     * This method sets the resource cards deck.
+     * This method sets the resource cards deck. Used when parsing a previous match from a json file.
      * @param resourceCardsDeck the resource cards deck.
      * */
     public static void setResourceCardsDeck(List<ResourceCard> resourceCardsDeck) {
         Deck.resourceCardsDeck = resourceCardsDeck;
     }
     /**
-     * This method sets the starting cards deck.
+     * This method sets the starting cards deck. Used when parsing a previous match from a json file.
      * @param startingCardsDeck the starting cards deck.
      * */
     public static void setStartingCardsDeck(List<StartingCard> startingCardsDeck) {
         Deck.startingCardsDeck = startingCardsDeck;
     }
     /**
-     * This method sets the objective cards deck.
+     * This method sets the objective cards deck. Used when parsing a previous match from a json file.
      * @param objectiveCardsDeck the objective cards deck.
      * */
     public static void setObjectiveCardsDeck(List<Objectives> objectiveCardsDeck) {

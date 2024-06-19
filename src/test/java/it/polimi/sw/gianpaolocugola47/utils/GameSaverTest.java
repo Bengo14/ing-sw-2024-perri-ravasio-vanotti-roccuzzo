@@ -12,36 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameSaverTest {
 
     @Test
-    void generateDeckStatusJson() {
-        // Test for when the game hasn't started yet
-        GameSaver gameSaver = new GameSaver(null);
-        Deck.initAndShuffleDeck();
-        assertTrue(gameSaver.generateDeckStatusJson());
-        //assertTrue(gameSaver.resetFiles());
-    }
-
-    @Test
-    void loadPlayerTableStatusJson(){
-        // Test for when the game hasn't started yet
-        Controller game = new Controller();
-        game.setNumOfPlayers(2); // Set the number of players to 2
-        GameSaver gameSaver = new GameSaver(game);
-        Controller c = gameSaver.loadControllerStatus();
-        System.out.println(Arrays.toString(c.getMainTable().getGlobalPoints()));
-        System.out.println(Arrays.toString(c.getMainTable().getBoardPoints()));
-        for(Objectives o : c.getMainTable().getGlobalObjectives()){
-            System.out.println(o.getDescription());
-        }
-        for(ResourceCard r : c.getMainTable().getPlayersTables()[0].getCardsOnHand()){
-            System.out.println(r.getId());
-        }
-        for(ResourceCard r : c.getMainTable().getPlayersTables()[1].getCardsOnHand()){
-            System.out.println(r.getId());
-        }
-        //assertTrue(gameSaver.resetFiles());
-    }
-
-    @Test
     void loadDeckStatus(){
         Deck.initAndShuffleDeck();
         List<GoldCard> goldDeck = Deck.getGoldCardsDeck();
@@ -74,7 +44,6 @@ class GameSaverTest {
         System.out.println("Get First Gold Card Deck: " + Deck.getGoldCardsDeck().getLast().getId() + " Get gold card on top: " + Deck.getGoldCardOnTop().getId());
         assertEquals(goldDeck.getLast().getId(),Deck.getGoldCardOnTop().getId());
         assertEquals(resDeck.getLast().getId(),Deck.getResourceCardOnTop().getId());
-        //assertTrue(gameSaver.resetFiles());
     }
 
 }

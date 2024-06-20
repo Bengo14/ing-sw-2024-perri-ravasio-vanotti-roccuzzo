@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -125,7 +126,6 @@ public class GameController implements Initializable {
 
         addZoomFunctionality();
         addDragFunctionality();
-
         cardsOnHand = new ImageView[] {hand_0, hand_1, hand_2};
         buttons = new Button[] {switch_1, switch_2, switch_3};
         table = new ImageView[] {res_1, res_2, gold_1, gold_2, deck_res, deck_gold};
@@ -481,29 +481,36 @@ public class GameController implements Initializable {
                         matrix[i][j].setImage(null);
                         matrix[i][j].setMouseTransparent(true);
                         if(matrix[i][j].equals(image)) {
-                            if(i-x == -1 && j-y == -1) corner = 0;
-                            else if(i-x == -1 && j-y == 1) corner = 1;
-                            else if(i-x == 1 && j-y == -1) corner = 2;
-                            else if(i-x == 1 && j-y == 1) corner = 3;
+                            if(i - x == -1 && j - y == -1) corner = 0;
+                            else if(i - x == -1 && j - y == 1) corner = 1;
+                            else if(i - x == 1 && j - y == -1) corner = 2;
+                            else if(i - x == 1 && j - y == 1) corner = 3;
                             else break;
 
-                            if(gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].getIsFront())) {
-                                String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-                                imagePath += gui.getCardsOnHand()[selectedCard].getIsFront() ? "front_" : "back_";
-                                imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
-                                matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
-                                matrix[i][j].setMouseTransparent(false);
-                                matrix[i][j].toFront();
-                                cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
-                                cardsOnHand[selectedCard].setImage(null);
-                                gui.getCardsOnHand()[selectedCard] = null;
-                                disableHand(false);
-                                cardsOnHand[selectedCard].setMouseTransparent(true);
-                                buttons[selectedCard].setMouseTransparent(true);
-                                selectedCard = -1;
-                                cardPlayed = true;
-                                disableTable(false);
-                            } else disableHand(false);
+                            if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length) {
+                                if (gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].getIsFront())) {
+                                    String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+                                    imagePath += gui.getCardsOnHand()[selectedCard].getIsFront() ? "front_" : "back_";
+                                    imagePath += gui.getCardsOnHand()[selectedCard].getId() + ".png";
+                                    matrix[i][j].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+                                    matrix[i][j].setMouseTransparent(false);
+                                    matrix[i][j].toFront();
+                                    cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
+                                    cardsOnHand[selectedCard].setImage(null);
+                                    gui.getCardsOnHand()[selectedCard] = null;
+                                    disableHand(false);
+                                    cardsOnHand[selectedCard].setMouseTransparent(true);
+                                    buttons[selectedCard].setMouseTransparent(true);
+                                    selectedCard = -1;
+                                    cardPlayed = true;
+                                    disableTable(false);
+                                } else {
+                                    disableHand(false);
+                                }
+                            } else {
+                                // Posizione fuori dalla matrice: gestisci l'errore come desiderato
+                                System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
+                            }
                         }
                     }
             goldShowed = false;
@@ -515,9 +522,15 @@ public class GameController implements Initializable {
             this.playablePos = gui.getPlayablePositions();
             for (int i = 0; i < playablePos.length; i++)
                 for (int j = 0; j < playablePos[i].length; j++)
-                    if(playablePos[i][j] && matrix[i][j] != null) {
-                        matrix[i][j].setImage(gold);
-                        matrix[i][j].setMouseTransparent(false);
+                    if (playablePos[i][j] && matrix[i][j] != null) {
+                        // Assicura che la posizione sia valida prima di assegnare gold
+                        if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length) {
+                            matrix[i][j].setImage(gold);
+                            matrix[i][j].setMouseTransparent(false);
+                        } else {
+                            // Posizione fuori dalla matrice
+                            System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
+                        }
                     }
             disableHand(true);
             goldShowed = true;

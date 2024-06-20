@@ -188,6 +188,12 @@
     -fx-border-color: transparent;
     -fx-font-size: 1.5em;
 }
+.board-pane {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 500px;
+}
 
 #leaderboardTable .table-column-header {
     -fx-text-alignment: center;

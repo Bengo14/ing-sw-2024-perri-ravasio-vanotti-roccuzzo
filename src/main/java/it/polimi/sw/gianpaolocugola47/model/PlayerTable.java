@@ -209,7 +209,11 @@ public class PlayerTable{
      * @return : the card placed on the player's board at the specified position.
      */
     public PlaceableCard getPlacedCard(int x, int y) {
-        return this.placedCards[x][y];
+        if (x >= 0 && x < getMatrixDimension() && y >= 0 && y < getMatrixDimension()) {
+            return placedCards[x][y];
+        } else {
+            return null;
+        }
     }
 
     /**

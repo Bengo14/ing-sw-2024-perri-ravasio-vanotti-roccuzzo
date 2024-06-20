@@ -166,6 +166,8 @@ public class ViewGui extends Application implements View {
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
                     endGameController.showResults(globalPoints, nicknames);
+                    endGameController.setClient(client);
+                    endGameController.setStage(stage);
                     break;
                 case "Game":
                     break;

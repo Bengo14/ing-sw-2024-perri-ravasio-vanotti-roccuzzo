@@ -55,7 +55,6 @@ public class SocketServerProxy implements VirtualServer {
     @Override
     public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
         output.println("setStarting");
-        output.println(playerId);
         output.println(card.getId());
         output.println(card.getIsFront());
         output.flush();
@@ -65,7 +64,6 @@ public class SocketServerProxy implements VirtualServer {
     @Override
     public void setSecretObjective(int playerId, Objectives obj) {
         output.println("setObj");
-        output.println(playerId);
         output.println(obj.getId());
         output.flush();
     }

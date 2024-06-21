@@ -169,8 +169,6 @@ public class ViewGui extends Application implements View {
                     endGameController.setClient(client);
                     endGameController.setStage(stage);
                     break;
-                case "Game":
-                    break;
             }
             stage.show();
         });

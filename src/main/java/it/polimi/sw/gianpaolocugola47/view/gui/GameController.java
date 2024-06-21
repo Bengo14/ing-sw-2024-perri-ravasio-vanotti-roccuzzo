@@ -342,14 +342,21 @@ public class GameController implements Initializable {
      * @param drawPos the position of the card drawn on the table
      */
     public void updateDecks(ResourceCard res, GoldCard gold, int drawPos) {
-        deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
-        deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
+        if(res != null)
+            deck_res.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+res.getId()+".png")));
+        else deck_res.setImage(null);
 
-        if(drawPos>=0 && drawPos<=3) {
+        if(gold != null)
+            deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
+        else deck_gold.setImage(null);
+
+        if(drawPos>=0 && drawPos<=3 && gui.getCardsOnTable()[drawPos] != null) {
             String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
             imagePath += gui.getCardsOnTable()[drawPos].getIsFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
             table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+        } else if(gui.getCardsOnTable()[drawPos] == null) {
+            table[drawPos].setImage(null);
         }
         for(int i = 0; i<3; i++) {
             String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
@@ -357,7 +364,7 @@ public class GameController implements Initializable {
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
-        if(lastTurn && gui.getLocalPlayerTable().getId()==gui.getNicknames().length-1){
+        if(lastTurn && gui.getLocalPlayerTable().getId() == gui.getNicknames().length-1){
             gui.setScene("endGame");
         }
     }
@@ -508,7 +515,7 @@ public class GameController implements Initializable {
                                     disableHand(false);
                                 }
                             } else {
-                                // Posizione fuori dalla matrice: gestisci l'errore come desiderato
+                                // position out of matrix bounds
                                 System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
                             }
                         }
@@ -528,7 +535,7 @@ public class GameController implements Initializable {
                             matrix[i][j].setImage(gold);
                             matrix[i][j].setMouseTransparent(false);
                         } else {
-                            // Posizione fuori dalla matrice
+                            // position out of matrix bounds
                             System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
                         }
                     }
@@ -610,9 +617,9 @@ public class GameController implements Initializable {
 
     private void disableTable(boolean b) {
         for(ImageView img : table) {
-            img.setMouseTransparent(b);
             if(img.getImage() == null)
                 img.setMouseTransparent(true);
+            else img.setMouseTransparent(b);
         }
     }
 

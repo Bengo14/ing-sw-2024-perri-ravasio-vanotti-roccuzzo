@@ -1,4 +1,4 @@
-# Progetto Ingegneria del Software 2023/2024
+![image](https://github.com/Bengo14/ing-sw-2024-perri-ravasio-vanotti-roccuzzo/assets/161148893/f07915b8-d5f0-414b-869c-7abca7c9755d)# Progetto Ingegneria del Software 2023/2024
 ![](src/main/resources/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg)
 Codex naturalis is a game developed by Cranio Creations, as a physical board game.
 
@@ -7,7 +7,7 @@ This project is a digital adaptation of the game, developed by the **GC47** team
 The team members are:
 
 - [Beniamino Perri]()
-- [Nicolò ravasio]()
+- [Nicolò Ravasio](https://github.com/nicoloravasio)
 - [Paolo Vanotti]()
 - [Davide Roccuzzo]()
 

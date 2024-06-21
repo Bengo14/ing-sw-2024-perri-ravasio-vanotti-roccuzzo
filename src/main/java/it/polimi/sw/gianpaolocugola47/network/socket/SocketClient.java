@@ -578,7 +578,7 @@ public class SocketClient implements VirtualView, Client {
             }
         }
         try {
-            Socket socket = new Socket(SocketServer.SERVER_ADDRESS, SocketServer.SERVER_PORT);
+            Socket socket = new Socket(ip, port);
             InputStreamReader socketRx = new InputStreamReader(socket.getInputStream());
             OutputStreamWriter socketTx = new OutputStreamWriter(socket.getOutputStream());
 

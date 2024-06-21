@@ -8,7 +8,7 @@ The team members are:
 
 - [Beniamino Perri]()
 - [Nicolò Ravasio](https://github.com/nicoloravasio)
-- [Paolo Vanotti]()
+- [Paolo Vanotti](https://github.com/Van-Paolo)
 - [Davide Roccuzzo]()
 
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class SocketServer implements Observer {
 
-    public static final int SERVER_PORT = 8080;
+    public static final int SERVER_PORT = 12345;
     public static final String SERVER_ADDRESS = "127.0.0.1";
     private static SocketServer server;
     private final ServerSocket listenSocket;

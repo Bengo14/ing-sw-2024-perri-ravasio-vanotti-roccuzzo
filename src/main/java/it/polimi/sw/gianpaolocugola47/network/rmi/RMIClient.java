@@ -20,6 +20,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+
 public class RMIClient extends UnicastRemoteObject implements VirtualView, Client {
 
     private final VirtualServer server;
@@ -404,15 +405,35 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         }
     }
 
-    public static void main(String[] args) {
-
+    public static void connectToServer(){
+        int port = 0;
+        String ip;
+        boolean done = false;
+        System.out.println("Insert the server IP: ");
+        Scanner scan = new Scanner(System.in);
+        ip = scan.next();
+        while(!done){
+            System.out.println("Insert the server port: ");
+            String command = scan.next();
+            try {
+                port = Integer.parseInt(command);
+                done=true;
+            } catch (NumberFormatException e ){
+                System.out.println(e.getMessage() + " try again");
+            }
+        }
         try {
-            Registry registry = LocateRegistry.getRegistry(RMIServer.SERVER_ADDRESS, RMIServer.SERVER_PORT);
+            Registry registry = LocateRegistry.getRegistry(ip,port);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
         } catch(RemoteException | NotBoundException e) {
             System.err.println(e.getMessage() + "\nServer is not up yet... Try again later.");
-            System.exit(1);
+            connectToServer();
         }
     }
+
+    public static void main(String[] args) {
+        connectToServer();
+    }
+
 }

@@ -2,8 +2,10 @@ package it.polimi.sw.gianpaolocugola47.network.socket;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
+import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
+import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 import it.polimi.sw.gianpaolocugola47.view.cli.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
@@ -11,6 +13,10 @@ import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 public class SocketClient implements VirtualView, Client {
@@ -554,8 +560,23 @@ public class SocketClient implements VirtualView, Client {
         return input.readLine();
     }
 
-    public static void main(String[] args) {
-
+    public static void connectToServer(){
+        int port = 0;
+        String ip;
+        boolean done = false;
+        System.out.println("Insert the server IP: ");
+        Scanner scan = new Scanner(System.in);
+        ip = scan.next();
+        while(!done){
+            System.out.println("Insert the server port: ");
+            String command = scan.next();
+            try {
+                port = Integer.parseInt(command);
+                done=true;
+            } catch (NumberFormatException e ){
+                System.out.println(e.getMessage() + " try again");
+            }
+        }
         try {
             Socket socket = new Socket(SocketServer.SERVER_ADDRESS, SocketServer.SERVER_PORT);
             InputStreamReader socketRx = new InputStreamReader(socket.getInputStream());
@@ -565,7 +586,13 @@ public class SocketClient implements VirtualView, Client {
 
         } catch (IOException e) {
             System.err.println(e.getMessage() + "\nServer is not up yet... Try again later.");
-            System.exit(1);
+            connectToServer();
         }
     }
+
+    public static void main(String[] args) {
+        connectToServer();
+    }
+
+
 }

@@ -7,7 +7,7 @@ This project is a digital adaptation of the game, developed by the **GC47** team
 The team members are:
 
 - [Beniamino Perri]()
-- [Nicolò ravasio]()
+- [Nicolò Ravasio](https://github.com/nicoloravasio)
 - [Paolo Vanotti]()
 - [Davide Roccuzzo]()
 

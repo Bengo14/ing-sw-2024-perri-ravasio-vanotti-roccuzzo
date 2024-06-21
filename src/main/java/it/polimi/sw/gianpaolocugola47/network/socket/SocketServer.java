@@ -71,16 +71,17 @@ public class SocketServer implements Observer {
                 } else {
 
                     System.out.println("New client connected");
-                    this.terminated = false;
-                    this.clients.add(handler);
                     this.controller.addClientConnected();
-                    handler.setId(controller.getClientsConnected() - 1);
 
                     new Thread(() -> {
                         try {
                             handler.runVirtualView();
                         } catch (IOException _) {}
                     }).start();
+
+                    handler.setId(controller.getClientsConnected() - 1);
+                    this.clients.add(handler);
+                    this.terminated = false;
                 }
             }
         }
@@ -98,7 +99,7 @@ public class SocketServer implements Observer {
                         handler.ping();
 
                     try {
-                        clients.wait(100);
+                        clients.wait(500);
                     } catch (InterruptedException _) {}
 
                     for (SocketClientHandler handler : this.clients)

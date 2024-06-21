@@ -17,7 +17,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     private final BufferedReader input;
     private final SocketClientProxy client;
     private int id;
-    private boolean pingAck = false;
+    private boolean pingAck = true;
 
     public SocketClientHandler(Controller controller, SocketServer socketServer, BufferedReader input, BufferedWriter output) {
         this.controller = controller;
@@ -48,18 +48,16 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
                 }
 
                 case "setStarting" -> {
-                    int id = integer();
                     StartingCard card = (StartingCard) Deck.getCardFromGivenId(integer());
                     if(bool()) {card.switchFrontBack();}
                     synchronized (client) {
-                        client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(id, card));
+                        client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(this.id, card));
                     }
                 }
 
                 case "setObj" -> {
-                    int id = integer();
                     Objectives obj = Deck.getObjectiveCardFromGivenId(integer());
-                    setSecretObjective(id, obj);
+                    setSecretObjective(this.id, obj);
                 }
 
                 case "startFromFile" -> startGameFromFile();

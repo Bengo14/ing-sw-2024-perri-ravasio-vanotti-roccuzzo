@@ -9,7 +9,7 @@ The team members are:
 - [Beniamino Perri]()
 - [Nicolò Ravasio](https://github.com/nicoloravasio)
 - [Paolo Vanotti](https://github.com/Van-Paolo)
-- [Davide Roccuzzo]()
+- [Davide Roccuzzo](https://github.com/Roccuzz0)
 
 
 ## What was implemented

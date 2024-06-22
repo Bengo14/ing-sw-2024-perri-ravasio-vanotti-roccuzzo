@@ -7,7 +7,10 @@ import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+/**
+ * This interface is used to define the methods that the server must implement.
+ * The server is the entity that manages the game and the clients.
+ */
 public interface VirtualServer extends Remote {
 
     int connect(VirtualView client) throws RemoteException;

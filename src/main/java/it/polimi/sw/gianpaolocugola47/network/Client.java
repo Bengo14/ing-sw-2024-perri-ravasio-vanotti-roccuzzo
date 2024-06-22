@@ -4,7 +4,10 @@ import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import it.polimi.sw.gianpaolocugola47.model.StartingCard;
-
+/**
+ * This interface is used to define the methods that the client must implement.
+ * The client is the player that is connected to the server and that can play the game.
+ */
 public interface Client {
 
     void terminateLocal();

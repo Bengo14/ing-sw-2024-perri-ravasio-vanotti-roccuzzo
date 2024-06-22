@@ -5,6 +5,10 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * This interface is used to define the methods that the virtual view must implement.
+ * The virtual view is the entity that manages the communication between the server and the clients.
+ */
 public interface VirtualView extends Remote {
 
     void terminate() throws RemoteException;

@@ -4,9 +4,7 @@ import it.polimi.sw.gianpaolocugola47.observer.Observable;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class represents the common board, and it contains the scoreboard,
@@ -594,5 +592,12 @@ public class MainTable implements Observable {
                 ", numOfPlayers=" + numOfPlayers +
                 ", observers=" + observers +
                 '}';
+    }
+    /**
+     * Returns the observers.
+     * @return : the observers.
+     */
+    public Collection<Object> getObservers() {
+        return Collections.singleton(observers);
     }
 }

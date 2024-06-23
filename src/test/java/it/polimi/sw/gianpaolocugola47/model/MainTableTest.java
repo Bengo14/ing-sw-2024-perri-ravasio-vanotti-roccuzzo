@@ -35,6 +35,31 @@ class MainTableTest {
         assertNotNull(mainTable.getGlobalPoints());
         assertNotNull(mainTable.getPlayersTables());
     }
+    @Test
+    public void testRemoveObserver() {
+        MainTable mainTable = new MainTable();
+        mainTable.removeObserver(stub);
+        //the observer is in the list of observer, i?ve not rhe getObserver method
+        assertFalse(mainTable.getObservers().contains(stub));
+    }
+    @Test
+    public void testSetEndGame() {
+        MainTable mainTable = new MainTable();
+        mainTable.setEndGame(true);
+        assertTrue(mainTable.getEndGame());
+    }
+    @Test
+    public void testGetCardsOnTable() {
+        MainTable mainTable = new MainTable();
+        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().get(0)});
+        assertNotNull(mainTable.getCardsOnTable());
+    }
+    @Test
+    public void getCardOnTable() {
+        MainTable mainTable = new MainTable();
+        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().get(0)});
+        assertNotNull(mainTable.getCardOnTable(0));
+    }
 
     @Test
     public void setEndGame() {
@@ -164,6 +189,50 @@ class MainTableTest {
     }
 
     @Test
+    public void testInitView(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        main.initView();
+        assertNotNull(main.getPlayersTables());
+    }
+
+    @Test
+    public void testGetNicknames(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        main.addPlayer(0, "name_1");
+        main.addPlayer(1, "name_2");
+        String[] nicknames = main.getNicknames();
+        assertEquals("name_1", nicknames[0]);
+        assertEquals("name_2", nicknames[1]);
+    }
+    @Test
+    public void testGetCardsOnHand(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
+        PlayerTable player_1 = new PlayerTable(0, "name", new ResourceCard[]{res_1});
+        main.setPlayerTable(0, player_1);
+        PlayerTable player_2 = new PlayerTable(1, "name", new ResourceCard[]{res_2, res_3});
+        main.setPlayerTable(1, player_2);
+        assertNotNull(main.getCardsOnHand());
+    }
+    @Test
+    public void testGetResourceCounter(){
+        MainTable main = new MainTable();
+        main.setNumOfPlayers(2);
+        ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res_2 = Deck.getResourceCardsDeck().get(1);
+        ResourceCard res_3 = Deck.getResourceCardsDeck().get(2);
+        PlayerTable player_1 = new PlayerTable(0, "name", new ResourceCard[]{res_1});
+        main.setPlayerTable(0, player_1);
+        StartingCard start = main.drawStartingCard();
+        main.setPlayerStartingCard(0, start);
+        assertNotNull(main.getResourceCounter(0));
+    }
+    @Test
     public void TestAddPlayer(){
         MainTable main = new MainTable();
         main.setNumOfPlayers(2);
@@ -190,6 +259,7 @@ class MainTableTest {
         main.setPlayerSecretObjective(0, obj_1);
         main.setPlayerSecretObjective(1, obj_2);
         start_1.switchFrontBack();
+        start_2.switchFrontBack();
         res_1.switchFrontBack();
         res_2.switchFrontBack();
         main.setPlayerStartingCard(0, start_1);

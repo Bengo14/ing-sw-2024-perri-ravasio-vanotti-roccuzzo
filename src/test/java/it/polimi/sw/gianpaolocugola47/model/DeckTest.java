@@ -74,6 +74,8 @@ class DeckTest {
         assertNull(Deck.drawCardFromGoldDeck());
         assertNull(Deck.drawCardFromStartingDeck());
         assertNull(Deck.drawCardFromObjectivesDeck());
+        assertNull(Deck.getResourceCardOnTop());
+        assertNull(Deck.getGoldCardOnTop());
         assertTrue(Deck.areDecksEmpty());
     }
 

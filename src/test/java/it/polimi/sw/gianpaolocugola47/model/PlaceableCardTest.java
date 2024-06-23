@@ -72,5 +72,28 @@ class PlaceableCardTest {
         assert(p.getBackImgPath().equals("back"));
         assert(p.getFrontImgPath().equals("front"));
     }
+    @Test
+    public void testGetCorners(){
+        PlaceableCard p = new PlaceableCard("back", "front") {
+            @Override
+            public void updateResourceCounter(int[] counter) {
+            }
+        };
+        Corner[] c = p.getCorners();
+        assertEquals(8,c.length);
+        for (int i = 0; i < 8; i++) {
+            assertEquals(c[i], p.getCorners()[i]);
+        }
+    }
+    @Test
+    public void testGetPoints(){
+        PlayerTable player = new PlayerTable();
+        PlaceableCard p = new PlaceableCard("back", "front") {
+            @Override
+            public void updateResourceCounter(int[] counter) {
+            }
+        };
+        assertEquals(0,p.getPoints(player));
+    }
 
 }

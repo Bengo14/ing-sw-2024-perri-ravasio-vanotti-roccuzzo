@@ -58,5 +58,17 @@ class StartingCardTest {
         main.setPlayerStartingCard(3,start_4);
         main.setPlayerSecretObjective(3,obj);
     }
+    @Test
+    public void testResourcesCentreBackToString() {
+        Deck.initDeck();
+        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        assertEquals("   \u001B[0;35mI\u001B[0m   ", start.resourcesCentreBackToString());
+        Deck.initDeck();
+        StartingCard start_2 = Deck.getStartingCardsDeck().get(2);
+        assertEquals("  \u001B[0;31mF\u001B[0m\u001B[0;32mP\u001B[0m  ", start_2.resourcesCentreBackToString());
+        Deck.initDeck();
+        StartingCard start_3 = Deck.getStartingCardsDeck().get(4);
+        assertEquals("  \u001B[0;34mA\u001B[0m\u001B[0;35mI\u001B[0m\u001B[0;32mP\u001B[0m  ", start_3.resourcesCentreBackToString());
+    }
 
 }

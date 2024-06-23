@@ -327,11 +327,18 @@ public class ViewGui extends Application implements View {
         });
     }
 
+    /**
+     * This method receives a message from the client.
+     * @param message the message received.
+     */
     @Override
     public void receiveMessage(ChatMessage message) {
         Platform.runLater(() -> gameController.receiveMessage(message));
     }
 
+    /**
+     * This method shows the winner of the game.
+     */
     @Override
     public void gameOver() {
         int max = 0;
@@ -387,6 +394,15 @@ public class ViewGui extends Application implements View {
         return client.getPlayablePositions();
     }
 
+    /**
+     * This method plays a card.
+     * @param hand the hand of the player.
+     * @param x the x position of the card.
+     * @param y the y position of the card.
+     * @param corner the corner of the card.
+     * @param isFront true if the card is front, false otherwise.
+     * @return true if the card can be played, false otherwise.
+     */
     protected boolean playCard(int hand, int x, int y, int corner, boolean isFront) {
         return client.playCard(hand, x, y, corner, isFront);
     }
@@ -466,33 +482,59 @@ public class ViewGui extends Application implements View {
         return localPlayerTable.getCardsOnHand();
     }
 
+    /**
+     * This method gets all the cards on the hand of the players.
+     * @return all the cards on the hand of the players.
+     */
     protected ResourceCard[][] getAllCardsOnHand() {
         return client.getCardsOnHand();
     }
 
+    /**
+     * This method gets all the placed cards of the players.
+     * @param id the id of the player.
+     * @return all the placed cards of the players.
+     */
     protected PlaceableCard[][] getPlacedCards(int id) {
         return client.getPlacedCards(id);
     }
 
+    /**
+     * This method gets the resource card on top of the deck.
+     * @return the resource card on top of the deck.
+     */
     protected ResourceCard getResourceCardOnTop() {
         return resourceCardOnTop;
     }
 
+    /**
+     * This method gets the gold card on top of the deck.
+     * @return the gold card on top of the deck.
+     */
     protected GoldCard getGoldCardOnTop() {
         return goldCardOnTop;
     }
-
+    /**
+     * This method gets the nicknames of the players.
+     * @return the nicknames of the players.
+     */
     protected String[] getNicknames() {
         return nicknames;
     }
-
+    /**
+     * This method gets the Board Points of the players.
+     * @return the Board Points of the players.
+     */
     protected int[] getBoardPoints() {
         if(boardPoints == null){
             boardPoints = new int[getNicknames().length];
         }
         return boardPoints;
     }
-
+    /**
+     * This method gets the Global Points of the players.
+     * @return the Global Points of the players.
+     */
     protected int[] getGlobalPoints() {
         if(globalPoints == null){
             globalPoints = new int[getNicknames().length];

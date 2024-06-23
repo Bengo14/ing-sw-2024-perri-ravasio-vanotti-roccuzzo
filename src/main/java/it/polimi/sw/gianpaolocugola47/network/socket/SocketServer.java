@@ -51,11 +51,7 @@ public class SocketServer implements Observer {
 
         while ((clientSocket = this.listenSocket.accept()) != null) { // accept() waits until a client joins
 
-            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
-            OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
-
-            SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new BufferedWriter(socketTx));
-
+            SocketClientHandler handler = new SocketClientHandler(this.controller, this, clientSocket);
             connect(handler);
         }
     }
@@ -76,7 +72,7 @@ public class SocketServer implements Observer {
                     new Thread(() -> {
                         try {
                             handler.runVirtualView();
-                        } catch (IOException _) {}
+                        } catch (IOException | ClassNotFoundException _) {}
                     }).start();
 
                     handler.setId(controller.getClientsConnected() - 1);

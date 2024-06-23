@@ -320,7 +320,6 @@ public class GameController implements Initializable {
             lastTurn = true;
             lastTurnLabel.setText("Last turn!");
             lastTurnLabel.getStyleClass().add("lastTurn");
-
         }
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
         if(boardPoints[gui.getLocalPlayerTable().getId()]>=20 && !winPoints){

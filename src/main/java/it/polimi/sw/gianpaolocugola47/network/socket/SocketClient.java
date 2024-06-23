@@ -2,10 +2,8 @@ package it.polimi.sw.gianpaolocugola47.network.socket;
 
 import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
-import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 import it.polimi.sw.gianpaolocugola47.view.cli.CLI;
 import it.polimi.sw.gianpaolocugola47.view.gui.ViewGui;
 import it.polimi.sw.gianpaolocugola47.view.View;
@@ -13,196 +11,59 @@ import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 public class SocketClient implements VirtualView, Client {
-    private final BufferedReader input;
     private final SocketServerProxy server;
+    private final Socket socket;
     private int id;
     private View view;
     private boolean isCliChosen = false;
-    private int numOfPlayers = 0;
+    protected int numOfPlayers = 0;
     private String nickname = "";
     private boolean isMyTurn = false;
     private volatile boolean response = false;
 
     /* --- attributes for socket responses --- */
-    private boolean nickAvailableResponse;
-    private String[] nicknamesResponse;
-    private StartingCard drawStartingCardResponse;
-    private Objectives[] setStartingResponse;
-    private boolean playResponse;
-    private ResourceCard[][] getCardsOnHandResponse;
-    private PlaceableCard[][] getPlacedCardsResponse;
-    private int[] getResourceCounterResponse;
-    private boolean[][] getPlayPosResponse;
+    boolean nickAvailableResponse;
+    String[] nicknamesResponse;
+    StartingCard drawStartingCardResponse;
+    Objectives[] setStartingResponse;
+    boolean playResponse;
+    ResourceCard[][] getCardsOnHandResponse;
+    PlaceableCard[][] getPlacedCardsResponse;
+    int[] getResourceCounterResponse;
+    boolean[][] getPlayPosResponse;
     private Objectives getSecretObjectiveResponse;
 
-    protected SocketClient(BufferedReader input, BufferedWriter output) {
-        this.input = input;
-        this.server = new SocketServerProxy(output);
+    protected SocketClient(Socket socket) throws IOException {
+        this.server = new SocketServerProxy(socket.getOutputStream());
+        this.socket = socket;
     }
 
     public void run() {
         new Thread(() -> {
             try {
                 runVirtualServer();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 terminate();
             }
         }).start();
     }
 
-    private void runVirtualServer() throws IOException {
-        String line;
-
+    private void runVirtualServer() throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         while (true) {
-            line = line();
-
-            switch (line) {
-
-                case "setId" -> setIdAndRunCli(integer());
-                case "terminate" -> terminate();
-                case "ping" -> ping();
-                case "start" -> startGame(Boolean.parseBoolean(line()));
-                case "turn" -> setMyTurn();
-                case "gameOver" -> gameOver();
-                case "winner" -> showWinner(integer());
-
-                case "getNumPlayers" -> this.numOfPlayers = integer();
-
-                case "message" -> {
-                    String sender = line();
-                    int id = integer();
-                    String msg = line();
-                    ChatMessage message = new ChatMessage(sender, id);
-                    message.setMessage(msg);
-                    receiveMessage(message);
-                }
-
-                case "privateMessage" -> {
-                    String sender = line();
-                    int id = integer();
-                    String msg = line();
-                    ChatMessage message = new ChatMessage(sender, id);
-                    message.setMessage(msg);
-                    receivePrivateMessage(message);
-                }
-
-                case "init" -> {
-                    String[] nicknames = new String[numOfPlayers];
-                    Objectives[] globalObjectives = new Objectives[2];
-                    ResourceCard[] cardsOnHand = new ResourceCard[3];
-                    ResourceCard[] cardsOnTable = new ResourceCard[4];
-
-                    for (int i = 0; i < numOfPlayers; i++)
-                        nicknames[i] = line();
-                    for (int i = 0; i < 2; i++)
-                        globalObjectives[i] = Deck.getObjectiveCardFromGivenId(integer());
-                    for (int i = 0; i < 3; i++)
-                        cardsOnHand[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
-                    for (int i = 0; i < 4; i++)
-                        cardsOnTable[i] = (ResourceCard) Deck.getCardFromGivenId(integer());
-
-                    initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
-                }
-
-                case "decks" -> {
-                    //if cards are null, proxy prints -1 and Deck returns null (from hash map documentation)
-                    ResourceCard resourceCardOnTop = (ResourceCard) Deck.getCardFromGivenId(integer());
-                    GoldCard goldCardOnTop = (GoldCard) Deck.getCardFromGivenId(integer());
-                    updateDecks(resourceCardOnTop, goldCardOnTop, integer()); // cards and drawPos
-                }
-
-                case "points" -> {
-                    int[] boardPoints = new int[numOfPlayers];
-                    int[] globalPoints = new int[numOfPlayers];
-
-                    for (int i = 0; i < numOfPlayers; i++)
-                        boardPoints[i] = integer();
-                    for (int i = 0; i < numOfPlayers; i++)
-                        globalPoints[i] = integer();
-
-                    updatePoints(boardPoints, globalPoints);
-                }
-
-                case "drawStarting" -> {
-                    drawStartingCardResponse = (StartingCard) Deck.getCardFromGivenId(integer());
-                    setResponse();
-                }
-
-                case "setStarting" -> {
-                    setStartingResponse = new Objectives[2];
-                    setStartingResponse[0] = Deck.getObjectiveCardFromGivenId(integer());
-                    setStartingResponse[1] = Deck.getObjectiveCardFromGivenId(integer());
-                    setResponse();
-                }
-
-                case "play" -> {
-                    playResponse = bool();
-                    setResponse();
-                }
-
-                case "getCardsOnHand" -> {
-                    getCardsOnHandResponse = new ResourceCard[numOfPlayers][3];
-                    for (int i=0; i<numOfPlayers; i++)
-                        for(int j=0; j<3; j++)
-                            getCardsOnHandResponse[i][j] = (ResourceCard) Deck.getCardFromGivenId(integer()); // is null if card not present in that pos
-                    setResponse();
-                }
-
-                case "getPlacedCards" -> {
-                    getPlacedCardsResponse = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
-                    for (int i=0; i<PlayerTable.getMatrixDimension(); i++)
-                        for(int j=0; j<PlayerTable.getMatrixDimension(); j++) {
-                            getPlacedCardsResponse[i][j] = Deck.getCardFromGivenId(integer()); // is null if card not placed in that pos
-                            if(getPlacedCardsResponse[i][j] != null)
-                                getPlacedCardsResponse[i][j].setFront(bool());
-                        }
-                    setResponse();
-                }
-
-                case "getResourceCounter" -> {
-                    getResourceCounterResponse = new int[7];
-                    for(int i=0; i<7; i++)
-                        getResourceCounterResponse[i] = integer();
-                    setResponse();
-                }
-
-                case "getPlayPos" -> {
-                    getPlayPosResponse = new boolean[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
-                    for(int i=0; i<PlayerTable.getMatrixDimension(); i++)
-                        for(int j=0; j<PlayerTable.getMatrixDimension(); j++)
-                            getPlayPosResponse[i][j] = bool();
-                    setResponse();
-                }
-
-                case "nickAvailable" -> {
-                    nickAvailableResponse = bool();
-                    setResponse();
-                }
-
-                case "getNick" -> {
-                   nicknamesResponse = new String[numOfPlayers];
-                   for(int i=0; i<numOfPlayers; i++)
-                       nicknamesResponse[i] = line();
-                   setResponse();
-                }
-
-                default -> System.err.println("[INVALID MESSAGE]");
-            }
+            SocketMessage message = (SocketMessage) ois.readObject();
+            message.doAction(this);
         }
     }
 
-    private void setResponse() {
+    protected void setResponse() {
         this.response = true;
     }
 
-    private void setIdAndRunCli(int id) {
+    protected void setIdAndRunCli(int id) {
 
         if(id == -1) {
             System.err.println("Connection refused: match already started/full or number of players not set...");
@@ -550,17 +411,7 @@ public class SocketClient implements VirtualView, Client {
         return nickAvailableResponse;
     }
 
-    private int integer() throws IOException {
-        return Integer.parseInt(line());
-    }
-    private boolean bool() throws IOException {
-        return Boolean.parseBoolean(line());
-    }
-    private String line() throws IOException {
-        return input.readLine();
-    }
-
-    public static void connectToServer(){
+    public static void connectToServer() {
         int port = 0;
         String ip;
         boolean done = false;
@@ -579,10 +430,7 @@ public class SocketClient implements VirtualView, Client {
         }
         try {
             Socket socket = new Socket(ip, port);
-            InputStreamReader socketRx = new InputStreamReader(socket.getInputStream());
-            OutputStreamWriter socketTx = new OutputStreamWriter(socket.getOutputStream());
-
-            new SocketClient(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
+            new SocketClient(socket).run();
 
         } catch (IOException e) {
             System.err.println(e.getMessage() + "\nServer is not up yet... Try again later.");
@@ -593,6 +441,4 @@ public class SocketClient implements VirtualView, Client {
     public static void main(String[] args) {
         connectToServer();
     }
-
-
 }

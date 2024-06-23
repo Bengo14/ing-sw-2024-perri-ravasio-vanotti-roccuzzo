@@ -9,154 +9,47 @@ import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.rmi.RemoteException;
 
 public class SocketClientHandler implements VirtualView, VirtualServer {
     private final Controller controller;
     private final SocketServer socketServer;
-    private final BufferedReader input;
-    private final SocketClientProxy client;
-    private int id;
-    private boolean pingAck = true;
+    protected final SocketClientProxy client;
+    private final Socket socket;
+    protected int id;
+    protected boolean pingAck = true;
 
-    public SocketClientHandler(Controller controller, SocketServer socketServer, BufferedReader input, BufferedWriter output) {
+    public SocketClientHandler(Controller controller, SocketServer socketServer, Socket socket) throws IOException {
         this.controller = controller;
         this.socketServer = socketServer;
-        this.input = input;
-        this.client = new SocketClientProxy(output);
+        this.socket = socket;
+        this.client = new SocketClientProxy(socket.getOutputStream());
     }
 
-    public void runVirtualView() throws IOException {
-        String line;
+    public void runVirtualView() throws IOException, ClassNotFoundException {
 
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         while (true) {
-            line = line();
-
-            switch (line) {
-
-                case "ping" -> {
-                    synchronized (this) {this.pingAck = true;}
-                }
-                case "numPlayers" -> setNumOfPlayers(integer());
-
-                case "addPlayer" -> addPlayer(integer(), line());
-
-                case "drawStarting" -> {
-                    synchronized (client) {
-                        client.drawStartingCardResponse(drawStartingCard());
-                    }
-                }
-
-                case "setStarting" -> {
-                    StartingCard card = (StartingCard) Deck.getCardFromGivenId(integer());
-                    if(bool()) {card.switchFrontBack();}
-                    synchronized (client) {
-                        client.setStartingCardAndDrawObjectivesResponse(setStartingCardAndDrawObjectives(this.id, card));
-                    }
-                }
-
-                case "setObj" -> {
-                    Objectives obj = Deck.getObjectiveCardFromGivenId(integer());
-                    setSecretObjective(this.id, obj);
-                }
-
-                case "startFromFile" -> startGameFromFile();
-
-                case "play" -> {
-                    synchronized (client) {
-                        client.playCardResponse(playCard(integer(), integer(), integer(), integer(), integer(), bool()));
-                    }
-                }
-
-                case "draw" -> drawCard(integer(), integer());
-
-                case "getCardsOnHand" -> {
-                    synchronized (client) {
-                        client.getCardsOnHandResponse(getCardsOnHand());
-                    }
-                }
-
-                case "getPlacedCards" -> {
-                    synchronized (client) {
-                        client.getPlacedCardsResponse(getPlacedCards(integer()));
-                    }
-                }
-
-                case "getResourceCounter" -> {
-                    synchronized (client) {
-                        client.getResourceCounterResponse(getResourceCounter(integer()));
-                    }
-                }
-
-                case "message" -> {
-                    String sender = line();
-                    int id = integer();
-                    String msg = line();
-                    ChatMessage message = new ChatMessage(sender, id);
-                    message.setMessage(msg);
-                    sendMessage(message);
-                }
-                case "privateMessage" -> {
-                    String receiver = line();
-                    String sender = line();
-                    int id = integer();
-                    String msg = line();
-                    ChatMessage message = new ChatMessage(sender, id);
-                    message.setReceiver(receiver);
-                    message.setMessage(msg);
-                    sendPrivateMessage(message);
-                }
-
-                case "nickAvailable" -> {
-                    synchronized (client) {
-                        client.isNicknameAvailableResponse(isNicknameAvailable(line()));
-                    }
-                }
-
-                case "getNick" -> {
-                    synchronized (client) {
-                        client.getNicknamesResponse(getNicknames());
-                    }
-                }
-
-                case "getNumPlayers" -> {
-                    synchronized (client) {
-                        client.getNumOfPlayersResponse(getNumOfPlayers());
-                    }
-                }
-
-                case "getPlayPos" -> {
-                    synchronized (client) {
-                        client.getPlayablePositionsResponse(getPlayablePositions(integer()));
-                    }
-                }
-
-                default -> System.err.println("[INVALID MESSAGE]");
-            }
+            SocketMessage message = (SocketMessage) ois.readObject();
+            message.doAction(this);
         }
     }
 
-    private int integer() throws IOException {
-        return Integer.parseInt(line());
-    }
-
-    private boolean bool() throws IOException {
-        return Boolean.parseBoolean(line());
-    }
-
-    private String line() throws IOException {
-        return input.readLine();
-    }
-
     protected void setId(int id) {
-        this.client.setId(id);
         this.id = id;
+        this.client.setId(id);
     }
 
     protected synchronized boolean getPingAck() {
          boolean ping = pingAck;
          pingAck = false;
          return ping;
+    }
+
+    protected synchronized void setPingAck() {
+        pingAck = true;
     }
 
     /* methods of interface VirtualView */
@@ -287,7 +180,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public void startGameFromFile() throws RemoteException {
+    public void startGameFromFile() {
         synchronized (controller) {
             this.controller.startGameFromFile();
         }
@@ -329,7 +222,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     }
 
     @Override
-    public Objectives getSecretObjective(int playerId) throws RemoteException {
+    public Objectives getSecretObjective(int playerId) {
         synchronized (controller) {
             return controller.getSecretObjective(playerId);
         }

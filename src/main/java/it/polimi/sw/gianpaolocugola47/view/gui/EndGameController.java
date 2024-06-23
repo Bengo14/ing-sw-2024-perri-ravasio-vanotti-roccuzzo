@@ -30,8 +30,6 @@ public class EndGameController implements Initializable {
     @FXML
     private Label nameWinnerLable;
     @FXML
-    private VBox leaderboardPane;
-    @FXML
     private Label winner_LBL;
 
     /**
@@ -40,7 +38,6 @@ public class EndGameController implements Initializable {
      * @param nicknames the nicknames of the players
      */
     public void showResults(int[] globalPoints, String[] nicknames) {
-     // todo to be updated using new parameters (num of players by Array.length + points + nicknames)
         //print the player with the highest score
         int max = 0;
         int winner = 0;

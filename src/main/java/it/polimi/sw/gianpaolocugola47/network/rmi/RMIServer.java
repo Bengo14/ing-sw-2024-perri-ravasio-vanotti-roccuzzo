@@ -577,7 +577,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             if (!this.clients.isEmpty()) {
                 try {
                     for(VirtualView view : this.clients)
-                        if(view != null){
+                        if(view != null) {
                             view.showWinner(winnerId);
                         }
                     terminateGame(true, winnerId);

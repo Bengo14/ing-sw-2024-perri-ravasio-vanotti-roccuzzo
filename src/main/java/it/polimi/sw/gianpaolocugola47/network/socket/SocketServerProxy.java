@@ -8,20 +8,24 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
-import java.io.BufferedWriter;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class SocketServerProxy implements VirtualServer {
 
-    private final PrintWriter output;
+    private final ObjectOutputStream output;
 
-    public SocketServerProxy(BufferedWriter output) {
-        this.output = new PrintWriter(output);
+    public SocketServerProxy(OutputStream output) throws IOException {
+        this.output = new ObjectOutputStream(output);
     }
 
     public void pingAck() {
-        output.println("ping");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("ping");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -32,146 +36,227 @@ public class SocketServerProxy implements VirtualServer {
 
     @Override
     public void setNumOfPlayers(int num) {
-        output.println("numPlayers");
-        output.println(num);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("numPlayers");
+        message.addData(num);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void addPlayer(int id, String nickname) {
-        output.println("addPlayer");
-        output.println(id);
-        output.println(nickname);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("addPlayer");
+        message.addData(id);
+        message.addData(nickname);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public StartingCard drawStartingCard() {
-        output.println("drawStarting");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("drawStarting");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public Objectives[] setStartingCardAndDrawObjectives(int playerId, StartingCard card) {
-        output.println("setStarting");
-        output.println(card.getId());
-        output.println(card.getIsFront());
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("setStarting");
+        message.addData(card);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Objectives[0];
     }
 
     @Override
     public void setSecretObjective(int playerId, Objectives obj) {
-        output.println("setObj");
-        output.println(obj.getId());
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("setObj");
+        message.addData(obj);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void startGameFromFile() {
-        output.println("startFromFile");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("startFromFile");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, int playerId, boolean isFront) {
-        output.println("play");
-        output.println(onHandCard);
-        output.println(onTableCardX);
-        output.println(onTableCardY);
-        output.println(onTableCardCorner);
-        output.println(playerId);
-        output.println(isFront);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("play");
+        message.addData(onHandCard);
+        message.addData(onTableCardX);
+        message.addData(onTableCardY);
+        message.addData(onTableCardCorner);
+        message.addData(isFront);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public void drawCard(int position, int playerId) {
-        output.println("draw");
-        output.println(position);
-        output.println(playerId);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("draw");
+        message.addData(position);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public ResourceCard[][] getCardsOnHand() {
-        output.println("getCardsOnHand");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getCardsOnHand");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new ResourceCard[0][];
     }
 
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
-        output.println("getPlacedCards");
-        output.println(playerId);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getPlacedCards");
+        message.addData(playerId);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new PlaceableCard[0][];
     }
 
     @Override
     public Objectives getSecretObjective(int playerId) {
-        output.println("getSecretObj");
-        output.println(playerId);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getSecretObj");
+        message.addData(playerId);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public int[] getResourceCounter(int playerId) {
-        output.println("getResourceCounter");
-        output.println(playerId);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getResourceCounter");
+        message.addData(playerId);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new int[0];
     }
 
     @Override
-    public void sendMessage(ChatMessage message) {
-        output.println("message");
-        output.println(message.getSender());
-        output.println(message.getSenderId());
-        output.println(message.getMessage());
-        output.flush();
+    public void sendMessage(ChatMessage msg) {
+        SocketMessage message = new SocketMessage();
+        message.addData("message");
+        message.addData(msg);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void sendPrivateMessage(ChatMessage message) {
-        output.println("privateMessage");
-        output.println(message.getReceiver());
-        output.println(message.getSender());
-        output.println(message.getSenderId());
-        output.println(message.getMessage());
-        output.flush();
+    public void sendPrivateMessage(ChatMessage msg) {
+        SocketMessage message = new SocketMessage();
+        message.addData("privateMessage");
+        message.addData(msg);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean isNicknameAvailable(String nickname) {
-        output.println("nickAvailable");
-        output.println(nickname);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("nickAvailable");
+        message.addData(nickname);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public String[] getNicknames() {
-        output.println("getNick");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getNick");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new String[0];
     }
 
     @Override
     public int getNumOfPlayers() {
-        output.println("getNumPlayers");
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getNumPlayers");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     @Override
     public boolean[][] getPlayablePositions(int playerId) {
-        output.println("getPlayPos");
-        output.println(playerId);
-        output.flush();
+        SocketMessage message = new SocketMessage();
+        message.addData("getPlayPos");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new boolean[0][];
     }
 }

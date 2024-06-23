@@ -154,7 +154,6 @@ public class ViewGui extends Application implements View {
                 client.terminateLocal();
             }
 
-
             scene.getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             stage.setScene(scene);
 

@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
+import it.polimi.sw.gianpaolocugola47.controller.Controller;
 import it.polimi.sw.gianpaolocugola47.observer.Observable;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 
@@ -9,7 +10,7 @@ import java.util.*;
 /**
  * This class represents the common board, and it contains the scoreboard,
  * the drawable cards present on the table and the common objectives.
- * The status changes are managed by the {@link //Controller}.
+ * The status changes are managed by the {@link Controller}.
  */
 public class MainTable implements Observable {
 

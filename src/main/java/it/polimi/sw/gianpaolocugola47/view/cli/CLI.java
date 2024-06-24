@@ -415,7 +415,7 @@ public class CLI implements View {
     }
 
     /**
-     * Handles user's input & commands. The bulk of the game's logic is contained in this method. Methods needed to display
+     * This method handles user's input & commands. The bulk of the game's logic is contained in this method. More methods needed to display
      * important information (such as the leaderboard, the player's board, the cards in hand, the objectives, etc.) are called here
      * when the user send correct commands, which can be displayed by typing "/help".
      */

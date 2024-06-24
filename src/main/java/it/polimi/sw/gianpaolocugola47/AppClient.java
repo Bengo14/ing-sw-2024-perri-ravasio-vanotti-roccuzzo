@@ -1,20 +1,20 @@
 package it.polimi.sw.gianpaolocugola47;
 
-import it.polimi.sw.gianpaolocugola47.network.Client;
-import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
-import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
+/**
+ * This class is the launcher of the client side of the application
+ */
 public class AppClient {
-
+    /**
+     * This method is the main client method, it asks the user to choose the connection type and then connects to the server
+     * @throws IOException if the connection fails
+     */
     public void main() throws IOException {
-        BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+
         System.out.println("Choose the connection type: \n1 = RMI \n2 = SOCKET");
         Scanner scan = new Scanner(System.in);
         String command = scan.next();
@@ -25,9 +25,9 @@ public class AppClient {
         }
         if(command.equals("1"))
             RMIClient.connectToServer();
-        else if(command.equals("2")){
+        else
             SocketClient.connectToServer();
-        }
+
     }
 }
 

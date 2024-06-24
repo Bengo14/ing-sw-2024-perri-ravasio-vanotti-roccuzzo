@@ -591,9 +591,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
      * It creates a new RMI server with the given controller and binds it to the registry.
      * It also initializes the socket server.
      * It is called when the server is started.
-     * @param args the arguments of the main method
      */
-    public static void main(String[] args) {
+    public static void startServer() {
 
         if(RMIServer.server == null) {
 

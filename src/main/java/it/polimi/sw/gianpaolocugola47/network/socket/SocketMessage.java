@@ -7,18 +7,32 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a message that can be sent through a socket connection.
+ * It contains a list of objects that represent the data of the message.
+ * The first object of the list is always a string that represents the action that the message wants to perform.
+ */
 public class SocketMessage implements Serializable {
 
     private final List <Object> data;
-
+    /**
+     * Constructor of the class.
+     */
     protected SocketMessage() {
         this.data = new ArrayList<Object>();
     }
-
+    /**
+     * This method adds an object to the list of data.
+     * @param o the object to add
+     */
     protected void addData(Object o) {
         this.data.add(o);
     }
 
+    /**
+     * This method calls the correct method of the client based on the action that the message wants to perform.
+     * @param client the client that will receive the message
+     */
     protected void doAction(SocketClient client) {
         switch ((String) data.removeFirst()) {
 
@@ -110,7 +124,10 @@ public class SocketMessage implements Serializable {
             default -> System.err.println("[INVALID MESSAGE]");
         }
     }
-
+    /**
+     * This method calls the correct method of the handler based on the action that the message wants to perform.
+     * @param handler the handler that will receive the message
+     */
     protected void doAction(SocketClientHandler handler) {
 
         switch ((String) data.removeFirst()) {

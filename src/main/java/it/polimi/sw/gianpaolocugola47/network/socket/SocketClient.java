@@ -13,6 +13,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * This class represents the client side of the socket connection.
+ */
 public class SocketClient implements VirtualView, Client {
     private final SocketServerProxy server;
     private final Socket socket;
@@ -36,11 +39,20 @@ public class SocketClient implements VirtualView, Client {
     boolean[][] getPlayPosResponse;
     private Objectives getSecretObjectiveResponse;
 
+    /**
+     * Constructor of the class.
+     * @param socket the socket to connect to the server
+     * @throws IOException if an I/O error occurs when creating the output stream
+     */
     protected SocketClient(Socket socket) throws IOException {
         this.server = new SocketServerProxy(socket.getOutputStream());
         this.socket = socket;
     }
-
+    /**
+     * This method starts the client side of the connection.
+     * It creates a new thread to run the virtual server.
+     * The virtual server reads the messages sent by the server and executes the corresponding actions.
+     */
     public void run() {
         new Thread(() -> {
             try {
@@ -51,6 +63,13 @@ public class SocketClient implements VirtualView, Client {
         }).start();
     }
 
+    /**
+     * This method runs the virtual server.
+     * It reads the messages sent by the server and executes the corresponding actions.
+     * The method is blocking, so it will wait for the server to send a message.
+     * @throws IOException if an I/O error occurs when creating the input stream
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
     private void runVirtualServer() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         while (true) {
@@ -59,10 +78,17 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method sets the response attribute to true.
+     */
     protected void setResponse() {
         this.response = true;
     }
 
+    /**
+     * This method sets the id attribute to the given id and runs the CLI.
+     * @param id the id to set
+     */
     protected void setIdAndRunCli(int id) {
 
         if(id == -1) {
@@ -82,7 +108,12 @@ public class SocketClient implements VirtualView, Client {
             }
         }).start();
     }
-
+    /**
+     * This method runs the CLI.
+     * It asks the user to choose the interface and the number of players.
+     * It also asks the user to insert the nickname.
+     * @throws IOException if an I/O error occurs when reading the input
+     */
     private void runCli() throws IOException {
 
         String tempNick;
@@ -138,12 +169,22 @@ public class SocketClient implements VirtualView, Client {
 
     /* --- methods of interface VirtualView --- */
 
+    /**
+     * This method terminates the game.
+     * It prints a message and exits the program.
+     * It is called when the server sends a message to terminate the game.
+     */
     @Override
     public void terminate() {
         System.err.println("\nTerminating the game...");
         System.exit(1);
     }
 
+    /**
+     * This method pings the server.
+     * It is called when the server sends a message to ping.
+     * It sends an ack to the server.
+     */
     @Override
     public void ping() {
         synchronized (server) {
@@ -151,6 +192,12 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method starts the game.
+     * It initializes the deck and starts the CLI or the GUI.
+     * It is called when the server sends a message to start the game.
+     * @param isLoaded true if the game is loaded, false otherwise
+     */
     @Override
     public void startGame(boolean isLoaded) {
         Deck.initDeck(); //init Deck's hashMap to retrieve cards by id
@@ -176,27 +223,53 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method sets the turn attribute to true and shows the turn.
+     * It is called when the server sends a message to set the turn.
+     * It also shows the turn on the CLI or the GUI.
+     */
     @Override
     public void setMyTurn() {
         this.isMyTurn = true;
         view.showTurn();
     }
 
+    /**
+     * This method calla the gameOver method of the view.
+     * It is called when the server sends a message to end the game.
+     */
     @Override
     public void gameOver() {
         this.view.gameOver();
     }
 
+    /**
+     * This method shows the winner.
+     * It is called when the server sends a message to show the winner.
+     * It shows the winner on the CLI or the GUI.
+     * @param id the id of the winner
+     */
     @Override
     public void showWinner(int id) {
         this.view.showWinner(id);
     }
 
+    /**
+     * This method returns the id of the client.
+     * It is called when the server sends a message to get the id.
+     * @return the id of the client
+     */
     @Override
     public int getId() { // not used here
         return getIdLocal();
     }
 
+    /**
+     * This method receives a message and shows it.
+     * It is called when the server sends a message to receive a message.
+     * It shows the message on the CLI or the GUI.
+     * @param message the message to receive
+     */
     @Override
     public void receiveMessage(ChatMessage message) {
         synchronized (view) {
@@ -204,6 +277,12 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method receives a private message and shows it.
+     * It is called when the server sends a message to receive a private message.
+     * It shows the private message on the CLI or the GUI.
+     * @param message the private message to receive
+     */
     @Override
     public void receivePrivateMessage(ChatMessage message) {
         message.setPrivate(true);
@@ -212,16 +291,38 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method initializes the view.
+     * It is called when the server sends a message to initialize the view.
+     * It initializes the view with the given parameters.
+     * @param nicknames the nicknames of the players
+     * @param globalObjectives the global objectives
+     * @param cardsOnHand the cards on hand
+     * @param cardsOnTable the cards on table
+     */
     @Override
     public void initView(String[] nicknames, Objectives[] globalObjectives, ResourceCard[] cardsOnHand, ResourceCard[] cardsOnTable) {
         this.view.initView(nicknames, globalObjectives, cardsOnHand, cardsOnTable);
     }
-
+    /**
+     * This method updates the decks.
+     * It is called when the server sends a message to update the decks.
+     * It updates the decks with the given parameters.
+     * @param resourceCardOnTop the resource card on top
+     * @param goldCardOnTop the gold card on top
+     * @param drawPos the draw position
+     */
     @Override
     public void updateDecks(ResourceCard resourceCardOnTop, GoldCard goldCardOnTop, int drawPos) {
         this.view.updateDecks(resourceCardOnTop, goldCardOnTop, drawPos);
     }
-
+    /**
+     * This method updates the points.
+     * It is called when the server sends a message to update the points.
+     * It updates the points with the given parameters.
+     * @param boardPoints the board points
+     * @param globalPoints the global points
+     */
     @Override
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
         this.view.updatePoints(boardPoints, globalPoints);
@@ -229,6 +330,12 @@ public class SocketClient implements VirtualView, Client {
 
     /* --- methods of interface Client --- */
 
+    /**
+     * This method draws a starting card.
+     * It is called when the server sends a message to draw a starting card.
+     * It draws a starting card and returns it.
+     * @return the starting card drawn
+     */
     @Override
     public StartingCard drawStartingCard() {
         synchronized (server) {
@@ -241,6 +348,12 @@ public class SocketClient implements VirtualView, Client {
         return drawStartingCardResponse;
     }
 
+    /**
+     * This method sets the starting card and draws the objectives.
+     * It is called when the server sends a message to set the starting card and draw the objectives.
+     * It sets the starting card and draws the objectives.
+     * @return the objectives drawn
+     */
     @Override
     public Objectives[] setStartingCardAndDrawObjectives() {
         synchronized (server) {
@@ -252,7 +365,10 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return setStartingResponse;
     }
-
+    /**
+     * This method sets the secret objective.
+     * It is called when the server sends a message to set the secret objective.
+     */
     @Override
     public void setSecretObjective() {
         synchronized (server) {
@@ -260,6 +376,9 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method starts the game from a file previously saved.
+     */
     @Override
     public void startGameFromFile() {
         synchronized (server) {
@@ -267,6 +386,12 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method returns the playable positions.
+     * It is called when the server sends a message to get the playable positions.
+     * It returns the playable positions.
+     * @return the playable positions
+     */
     @Override
     public boolean[][] getPlayablePositions() {
         synchronized (server) {
@@ -278,7 +403,12 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return getPlayPosResponse;
     }
-
+    /**
+     * This method returns the secret objective.
+     * It is called when the server sends a message to get the secret objective.
+     * It returns the secret objective.
+     * @return the secret objective
+     */
     @Override
     public Objectives getSecretObjective() {
         synchronized (server) {
@@ -290,7 +420,17 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return getSecretObjectiveResponse;
     }
-
+    /**
+     * This method plays a card.
+     * It is called when the server sends a message to play a card.
+     * It plays a card and returns true if the card is played, false otherwise.
+     * @param onHandCard the card on hand
+     * @param onTableCardX the card on table x
+     * @param onTableCardY the card on table y
+     * @param onTableCardCorner the card on table corner
+     * @param isFront true if the card is front, false otherwise
+     * @return true if the card is played, false otherwise
+     */
     @Override
     public boolean playCard(int onHandCard, int onTableCardX, int onTableCardY, int onTableCardCorner, boolean isFront) {
         synchronized (server) {
@@ -303,6 +443,12 @@ public class SocketClient implements VirtualView, Client {
         return playResponse;
     }
 
+    /**
+     * This method draws a card.
+     * It is called when the server sends a message to draw a card.
+     * It draws a card.
+     * @param position the position to draw the card
+     */
     @Override
     public void drawCard(int position) {
         synchronized (server) {
@@ -312,6 +458,12 @@ public class SocketClient implements VirtualView, Client {
         view.showTurn();
     }
 
+    /**
+     * This method returns the cards on hand.
+     * It is called when the server sends a message to get the cards on hand.
+     * It returns the cards on hand.
+     * @return the cards on hand
+     */
     @Override
     public ResourceCard[][] getCardsOnHand() {
         synchronized (server) {
@@ -323,7 +475,13 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return getCardsOnHandResponse;
     }
-
+    /**
+     * This method returns the placed cards.
+     * It is called when the server sends a message to get the placed cards.
+     * It returns the placed cards.
+     * @param playerId the id of the player
+     * @return the placed cards
+     */
     @Override
     public PlaceableCard[][] getPlacedCards(int playerId) {
         synchronized (server) {
@@ -336,6 +494,13 @@ public class SocketClient implements VirtualView, Client {
         return getPlacedCardsResponse;
     }
 
+    /**
+     * This method returns the resource counter.
+     * It is called when the server sends a message to get the resource counter.
+     * It returns the resource counter.
+     * @param playerId the id of the player
+     * @return the resource counter
+     */
     @Override
     public int[] getResourceCounter(int playerId) {
         synchronized (server) {
@@ -347,7 +512,12 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return getResourceCounterResponse;
     }
-
+    /**
+     * This method returns the nicknames.
+     * It is called when the server sends a message to get the nicknames.
+     * It returns the nicknames.
+     * @return the nicknames
+     */
     @Override
     public String[] getNicknames() {
         synchronized (server) {
@@ -360,6 +530,10 @@ public class SocketClient implements VirtualView, Client {
         return nicknamesResponse;
     }
 
+    /**
+     * This method sends a message.
+     * @param msg the message to send
+     */
     @Override
     public void sendMessage(ChatMessage msg) {
         synchronized (server) {
@@ -367,39 +541,63 @@ public class SocketClient implements VirtualView, Client {
         }
     }
 
+    /**
+     * This method sends a private message.
+     * @param msg the private message to send
+     */
     @Override
     public void sendPrivateMessage(ChatMessage msg) {
         synchronized (server) {
             server.sendPrivateMessage(msg);
         }
     }
-
+    /**
+     * This method returns the id of the client locally.
+     * @return the id of the client
+     */
     @Override
     public int getIdLocal() {
         return this.id;
     }
 
+    /**
+     * This method returns the nickname of the client locally.
+     * @return the nickname of the client
+     */
     @Override
     public String getNicknameLocal() {
         return this.nickname;
     }
 
+    /**
+     * This method returns true if it is the turn of the client, false otherwise.
+     * @return true if it is the turn of the client, false otherwise
+     */
     @Override
     public boolean isItMyTurn() {
         return isMyTurn;
     }
-
+    /**
+     * This method terminates the client locally.
+     */
     @Override
     public void terminateLocal() {
         terminate();
     }
 
+    /**
+     * This method gets the number of players.
+     */
     private void getNumOfPlayers() {
         synchronized (server) {
             server.getNumOfPlayers();
         }
     }
-
+    /**
+     * This method checks if the nickname is available.
+     * @param nickname the nickname to check
+     * @return true if the nickname is available, false otherwise
+     */
     private boolean isNicknameAvailable(String nickname) {
         synchronized (server) {
             server.isNicknameAvailable(nickname);
@@ -410,7 +608,12 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return nickAvailableResponse;
     }
-
+    /**
+     * This method connects to the server.
+     * It asks the user to insert the server IP and port.
+     * It creates a new socket and runs the client.
+     * If the connection fails, it asks the user to try again.
+     */
     public static void connectToServer() {
         int port = 0;
         String ip;
@@ -437,7 +640,11 @@ public class SocketClient implements VirtualView, Client {
             connectToServer();
         }
     }
-
+    /**
+     * This method starts the client.
+     * It connects to the server.
+     * @param args the arguments of the program
+     */
     public static void main(String[] args) {
         connectToServer();
     }

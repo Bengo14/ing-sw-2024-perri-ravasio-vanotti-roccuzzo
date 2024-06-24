@@ -349,21 +349,22 @@ public class GameController implements Initializable {
             deck_gold.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gold.getId()+".png")));
         else deck_gold.setImage(null);
 
-        if(drawPos>=0 && drawPos<=3 && gui.getCardsOnTable()[drawPos] != null) {
-            String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
-            imagePath += gui.getCardsOnTable()[drawPos].getIsFront() ? "front_" : "back_";
-            imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
-            table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
-        } else if(gui.getCardsOnTable()[drawPos] == null) {
-            table[drawPos].setImage(null);
+        if(drawPos>=0 && drawPos<=3) {
+            if (gui.getCardsOnTable()[drawPos] != null) {
+                String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
+                imagePath += gui.getCardsOnTable()[drawPos].getIsFront() ? "front_" : "back_";
+                imagePath += gui.getCardsOnTable()[drawPos].getId() + ".png";
+                table[drawPos].setImage(new Image(getClass().getResourceAsStream(imagePath)));
+            } else table[drawPos].setImage(null);
         }
+
         for(int i = 0; i<3; i++) {
             String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
             imagePath += gui.getCardsOnHand()[i].getIsFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
         }
-        if(lastTurn && gui.getLocalPlayerTable().getId() == gui.getNicknames().length-1){
+        if(lastTurn && gui.getLocalPlayerTable().getId() == gui.getNicknames().length-1) {
             gui.setScene("endGame");
         }
     }

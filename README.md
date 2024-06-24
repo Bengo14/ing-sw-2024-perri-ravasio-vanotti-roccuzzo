@@ -16,7 +16,6 @@ The team members are:
 
 | Feature                  | Implemented |
 |--------------------------|------------|
-| CLI                      | ✔️         |
 | Base rules               | ✔️         |
 | Complete rules           | ✔️         |
 | CLI                      | ✔️         |

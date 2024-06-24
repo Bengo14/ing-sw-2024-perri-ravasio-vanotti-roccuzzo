@@ -640,12 +640,4 @@ public class SocketClient implements VirtualView, Client {
             connectToServer();
         }
     }
-    /**
-     * This method starts the client.
-     * It connects to the server.
-     * @param args the arguments of the program
-     */
-    public static void main(String[] args) {
-        connectToServer();
-    }
 }

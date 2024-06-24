@@ -589,13 +589,4 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             connectToServer();
         }
     }
-    /**
-     * Main method of the class.
-     * It calls the connectToServer method.
-     * @param args the arguments of the main method.
-     */
-    public static void main(String[] args) {
-        connectToServer();
-    }
-
 }

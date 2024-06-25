@@ -7,9 +7,9 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.gianpaolocugola47.utils.ObjectiveDeserializer;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -84,9 +84,13 @@ public class Deck {
         Gson gson = new Gson();
         try {
             Type listOfCards = new TypeToken<ArrayList<ResourceCard>>() {}.getType();
-            resourceCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/resourceCards.json"),listOfCards);
-        }
-        catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            InputStream is = Deck.class.getResourceAsStream("/it/polimi/sw/gianpaolocugola47/resourceCards.json");
+            if (is == null) {
+                throw new FileNotFoundException("Cannot find resource file " + "/it/polimi/sw/gianpaolocugola47/resourceCards.json");
+            }
+            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            resourceCardsDeck = gson.fromJson(reader, listOfCards);
+        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -98,7 +102,12 @@ public class Deck {
         Gson gson = new Gson();
         try {
             Type listOfCards = new TypeToken<ArrayList<GoldCard>>() {}.getType();
-            goldCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/goldCards.json"),listOfCards);
+            InputStream is = Deck.class.getResourceAsStream("/it/polimi/sw/gianpaolocugola47/goldCards.json");
+            if (is == null) {
+                throw new FileNotFoundException("Cannot find resource file " + "/it/polimi/sw/gianpaolocugola47/goldCards.json");
+            }
+            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            goldCardsDeck = gson.fromJson(reader, listOfCards);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -118,7 +127,12 @@ public class Deck {
                 .registerTypeAdapter(Objectives.class, deserializer)
                 .create();
         try {
-            objectiveCardsDeck =  gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/objectives.json"),new TypeToken<List<Objectives>>(){}.getType());
+            InputStream is = Deck.class.getResourceAsStream("/it/polimi/sw/gianpaolocugola47/objectives.json");
+            if (is == null) {
+                throw new FileNotFoundException("Cannot find resource file " + "/it/polimi/sw/gianpaolocugola47/objectives.json");
+            }
+            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            objectiveCardsDeck =  gson.fromJson(reader, new TypeToken<List<Objectives>>(){}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -131,7 +145,12 @@ public class Deck {
         Gson gson = new Gson();
         try {
             Type listOfCards = new TypeToken<ArrayList<StartingCard>>() {}.getType();
-            startingCardsDeck = gson.fromJson(new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola47/startingCards.json"),listOfCards);
+            InputStream is = Deck.class.getResourceAsStream("/it/polimi/sw/gianpaolocugola47/startingCards.json");
+            if (is == null) {
+                throw new FileNotFoundException("Cannot find resource file " + "/it/polimi/sw/gianpaolocugola47/startingCards.json");
+            }
+            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+            startingCardsDeck = gson.fromJson(reader, listOfCards);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }

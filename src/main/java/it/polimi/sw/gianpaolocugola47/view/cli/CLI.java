@@ -29,6 +29,7 @@ public class CLI implements View {
     private boolean isChatOpen;
     private boolean isLoaded;
     private final ArrayList<ChatMessage> chatBuffer = new ArrayList<>();
+    private boolean isGameFinished;
 
     /**
      * Constructor method for this class. cliController handles data-related game saved locally, more specifically:
@@ -43,6 +44,7 @@ public class CLI implements View {
         this.isLoaded = isLoaded;
         this.client = client;
         this.cliController = new CLIController(new PlayerTable(client.getIdLocal()));
+        this.isGameFinished = false;
     }
 
     public CLI() {
@@ -236,6 +238,7 @@ public class CLI implements View {
         else
             System.out.println("Player " + this.cliController.getNicknames()[id] + " won the game!");
         System.out.println("Looking forward to play with you again :-)");
+        isGameFinished = true;
     }
 
     /**
@@ -418,7 +421,7 @@ public class CLI implements View {
             this.cliController.getLocalPlayerTable().setStartingCard((StartingCard) client.getPlacedCards(client.getIdLocal())[PlayerTable.STARTING_CARD_POS][PlayerTable.STARTING_CARD_POS]);
             this.cliController.getLocalPlayerTable().setSecretObjective(client.getSecretObjective());
         }
-        while(true){
+        while(!isGameFinished){
             if(client.isItMyTurn()){
                 printPoints();
                 printResourceCounter(client.getResourceCounter(client.getIdLocal()));

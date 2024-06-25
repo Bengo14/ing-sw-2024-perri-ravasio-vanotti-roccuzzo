@@ -21,6 +21,7 @@ import java.util.List;
  * It is responsible for accepting new clients and managing the connection with them.
  * It also implements the Observer interface to receive updates from the controller and send them to the clients.
  */
+@SuppressWarnings("ALL")
 public class SocketServer implements Observer {
 
     public static final int SERVER_PORT = 12345;

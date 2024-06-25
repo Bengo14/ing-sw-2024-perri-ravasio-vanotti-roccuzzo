@@ -5,9 +5,6 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.network.VirtualServer;
 import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -18,6 +15,7 @@ import java.rmi.RemoteException;
  * It implements both the VirtualView and VirtualServer interfaces, so it can receive messages from the server and send messages to the client.
  * It also has a reference to the controller and the socket server, so it can interact with them.
  */
+@SuppressWarnings("ALL")
 public class SocketClientHandler implements VirtualView, VirtualServer {
     private final Controller controller;
     private final SocketServer socketServer;

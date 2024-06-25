@@ -16,6 +16,7 @@ import java.util.Scanner;
 /**
  * This class represents the client side of the socket connection.
  */
+@SuppressWarnings("ALL")
 public class SocketClient implements VirtualView, Client {
     private final SocketServerProxy server;
     private final Socket socket;
@@ -114,6 +115,7 @@ public class SocketClient implements VirtualView, Client {
      * It also asks the user to insert the nickname.
      * @throws IOException if an I/O error occurs when reading the input
      */
+
     private void runCli() throws IOException {
 
         String tempNick;

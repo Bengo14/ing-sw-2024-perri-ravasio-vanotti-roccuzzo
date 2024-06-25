@@ -23,6 +23,8 @@ import java.util.Scanner;
 /**
  * This class represents the client side of the RMI connection.
  */
+
+@SuppressWarnings("ALL")
 public class RMIClient extends UnicastRemoteObject implements VirtualView, Client {
 
     private final VirtualServer server;

@@ -5,11 +5,11 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
-import java.util.Arrays;
 
 /**
  * This class is a proxy for the client, it is used to send messages to the client through the socket.
  */
+@SuppressWarnings("ALL")
 public class SocketClientProxy implements VirtualView {
 
     private final ObjectOutputStream output;

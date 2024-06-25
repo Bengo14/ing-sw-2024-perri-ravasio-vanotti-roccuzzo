@@ -19,7 +19,7 @@ public class SocketMessage implements Serializable {
      * Constructor of the class.
      */
     protected SocketMessage() {
-        this.data = new ArrayList<Object>();
+        this.data = new ArrayList<>();
     }
     /**
      * This method adds an object to the list of data.

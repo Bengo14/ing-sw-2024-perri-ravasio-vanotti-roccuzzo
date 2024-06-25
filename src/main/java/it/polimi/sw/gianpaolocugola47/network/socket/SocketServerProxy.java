@@ -14,6 +14,7 @@ import java.io.*;
  * This class is a proxy for the server, it is used to send messages to the client
  * through the socket connection.
  */
+@SuppressWarnings("ALL")
 public class SocketServerProxy implements VirtualServer {
 
     private final ObjectOutputStream output;

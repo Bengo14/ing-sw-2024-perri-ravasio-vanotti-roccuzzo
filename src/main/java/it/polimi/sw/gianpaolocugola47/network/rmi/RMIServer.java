@@ -21,6 +21,7 @@ import java.util.List;
  * It implements the VirtualServer interface and extends the UnicastRemoteObject class.
  * It also implements the Observer interface to receive updates from the model.
  */
+@SuppressWarnings("ALL")
 public class RMIServer extends UnicastRemoteObject implements VirtualServer, Observer {
 
     public static final int SERVER_PORT = 1234;

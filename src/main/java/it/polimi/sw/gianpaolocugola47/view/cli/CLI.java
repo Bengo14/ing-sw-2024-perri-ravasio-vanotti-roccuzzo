@@ -28,7 +28,7 @@ public class CLI implements View {
     private final CLIController cliController;
     private boolean isChatOpen;
     private boolean isLoaded;
-    private ArrayList<ChatMessage> chatBuffer = new ArrayList<>();
+    private final ArrayList<ChatMessage> chatBuffer = new ArrayList<>();
 
     /**
      * Constructor method for this class. cliController handles data-related game saved locally, more specifically:
@@ -182,22 +182,6 @@ public class CLI implements View {
     @Override
     public Objectives getSecretObjective() {
         return cliController.getSecretObjective();
-    }
-
-    /**
-     * Gets global points counter.
-     * @return : global points counter.
-     */
-    private int[] getGlobalPoints() {
-        return cliController.getGlobalPoints();
-    }
-
-    /**
-     * Gets board points counter.
-     * @return : board points counter.
-     */
-    private int[] getBoardPoints() {
-        return cliController.getBoardPoints();
     }
 
     /**
@@ -374,7 +358,7 @@ public class CLI implements View {
                                     System.out.print(resourceCard.getResourceCentreBack().getAsciiEscape() + "R" + ANSI_RESET);
                             case GoldCard goldCard ->
                                     System.out.print(goldCard.getResourceCentreBack().getAsciiEscape() + "G" + ANSI_RESET);
-                            case StartingCard startingCard -> System.out.print("S");
+                            case StartingCard _ -> System.out.print("S");
                             default -> {}
                         }
                     }
@@ -728,10 +712,10 @@ public class CLI implements View {
             if(isAPositiveNumber(coordinates[1]) && isAPositiveNumber(coordinates[2]) && Integer.parseInt(coordinates[1]) < PlayerTable.getMatrixDimension() && Integer.parseInt(coordinates[2]) < PlayerTable.getMatrixDimension()){
                 if(this.getPlacedCards(client.getIdLocal())[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])] != null){
                     PlaceableCard card = this.getPlacedCards(client.getIdLocal())[Integer.parseInt(coordinates[1])][Integer.parseInt(coordinates[2])];
-                    if(card instanceof ResourceCard)
-                        this.printResourceCard((ResourceCard) card);
-                    else if(card instanceof GoldCard)
+                    if(card instanceof GoldCard)
                         this.printGoldCard((GoldCard) card);
+                    else if(card instanceof ResourceCard)
+                        this.printResourceCard((ResourceCard) card);
                     else
                         this.printStartingCard((StartingCard) card);
                 }

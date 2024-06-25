@@ -106,7 +106,10 @@ public class SocketMessage implements Serializable {
             }
 
             case "getResourceCounter" -> {
-                client.getResourceCounterResponse = (int[]) data.removeFirst();
+                int[] resourceCounter = new int[7];
+                for (int i = 0; i < 7; i++)
+                    resourceCounter[i] = (int) data.removeFirst();
+                client.getResourceCounterResponse = resourceCounter;
                 client.setResponse();
             }
 

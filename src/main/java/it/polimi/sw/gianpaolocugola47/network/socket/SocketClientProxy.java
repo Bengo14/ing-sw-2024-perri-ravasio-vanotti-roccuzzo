@@ -346,7 +346,8 @@ public class SocketClientProxy implements VirtualView {
     protected void getResourceCounterResponse(int[] resourceCounter) {
         SocketMessage message = new SocketMessage();
         message.addData("getResourceCounter");
-        message.addData(resourceCounter);
+        for(int i = 0; i<resourceCounter.length; i++)
+            message.addData(resourceCounter[i]);
         try {
             output.writeObject(message);
         } catch (IOException e) {

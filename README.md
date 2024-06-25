@@ -37,19 +37,19 @@ The team members are:
 
 ### Running the server
 
-To run the server, navigate to the `deliverables` to `jar` where the jar file is located and run it.
+To run the server, navigate to the `./deliverables/jar` folder where the jar file is located and run it.
 This is done via the command line with the following command:
 
 ```sh
-java --eneable-preview -jar AppServer.jar
+java --enable-preview -jar AppServer.jar
 ```
 
 ### Running the client
 
-To run the server, navigate to the `deliverables` to `jar` where the jar file is located and run it.
+To run the client, navigate to the `./deliverables/jar` folder where the jar file is located and run it.
 This is done via the command line with the following command:
 
 ```sh
-java --eneable-preview -jar AppClient.jar
+java --enable-preview -jar AppClient.jar
 ```
 Note that you have to run the server before the client.

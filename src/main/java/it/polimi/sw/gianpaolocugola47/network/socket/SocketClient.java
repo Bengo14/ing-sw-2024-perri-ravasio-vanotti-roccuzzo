@@ -18,6 +18,7 @@ import java.util.Scanner;
  */
 @SuppressWarnings("ALL")
 public class SocketClient implements VirtualView, Client {
+    private static final int PORT = 8080;
     private final SocketServerProxy server;
     private final Socket socket;
     private int id;
@@ -623,18 +624,8 @@ public class SocketClient implements VirtualView, Client {
         System.out.println("Insert the server IP: ");
         Scanner scan = new Scanner(System.in);
         ip = scan.next();
-        while(!done){
-            System.out.println("Insert the server port: ");
-            String command = scan.next();
-            try {
-                port = Integer.parseInt(command);
-                done=true;
-            } catch (NumberFormatException e ){
-                System.out.println(e.getMessage() + " try again");
-            }
-        }
         try {
-            Socket socket = new Socket(ip, port);
+            Socket socket = new Socket(ip, PORT);
             new SocketClient(socket).run();
 
         } catch (IOException e) {

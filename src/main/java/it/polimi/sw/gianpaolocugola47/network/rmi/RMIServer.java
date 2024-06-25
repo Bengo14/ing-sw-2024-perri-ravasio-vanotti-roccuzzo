@@ -8,12 +8,15 @@ import it.polimi.sw.gianpaolocugola47.network.socket.SocketServer;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class represents the RMI server that manages the connection with the clients.
@@ -594,21 +597,20 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
      * It is called when the server is started.
      */
     public static void startServer() {
-
         if(RMIServer.server == null) {
-
             String name = "VirtualServer";
-            System.setProperty("java.rmi.server.hostname", SERVER_ADDRESS);
             Controller controller = new Controller();
-
+            String ip = "";
             try {
+                ip = InetAddress.getLocalHost().getHostAddress();
+                System.setProperty("java.rmi.server.hostname", ip);
                 RMIServer.server = new RMIServer(controller);
                 Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
                 registry.rebind(name, RMIServer.server);
-            } catch (RemoteException e) {
+            } catch (RemoteException | UnknownHostException e) {
                 e.printStackTrace();
             }
-            System.err.println("Server ready ---> IP: " + SERVER_ADDRESS + ", Port: " + SERVER_PORT);
+            System.err.println("Server ready ---> IP: " + ip + ", Port: " + SERVER_PORT);
             SocketServer.initSocketServer(controller);
         }
     }

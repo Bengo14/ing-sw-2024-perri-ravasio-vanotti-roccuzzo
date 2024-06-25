@@ -9,12 +9,14 @@ import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class represents the server side of the socket connection.
@@ -24,8 +26,7 @@ import java.util.List;
 @SuppressWarnings("ALL")
 public class SocketServer implements Observer {
 
-    public static final int SERVER_PORT = 12345;
-    public static final String SERVER_ADDRESS = "127.0.0.1";
+    public static final int SERVER_PORT = 8080;
     private static SocketServer server;
     private final ServerSocket listenSocket;
     private final Controller controller;
@@ -340,13 +341,13 @@ public class SocketServer implements Observer {
      * @param controller the controller
      */
     public static void initSocketServer(Controller controller) {
-
         try {
-            ServerSocket serverSocket = new ServerSocket();
-            InetSocketAddress endpoint = new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT);
-            serverSocket.bind(endpoint);
-            System.out.println("Socket Server ready ---> IP: "+SERVER_ADDRESS+", Port: "+SERVER_PORT);
 
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            ServerSocket serverSocket = new ServerSocket();
+            InetSocketAddress endpoint = new InetSocketAddress(ip, SERVER_PORT);
+            serverSocket.bind(endpoint);
+            System.out.println("Socket Server ready ---> IP: "+ ip +", Port: "+SERVER_PORT);
             SocketServer.server = new SocketServer(serverSocket, controller);
             SocketServer.server.run();
         } catch (IOException e) {

@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 @SuppressWarnings("ALL")
 public class RMIClient extends UnicastRemoteObject implements VirtualView, Client {
-
+    private static final int PORT = 1234;
     private final VirtualServer server;
     private volatile boolean terminate = false;
     private View view;
@@ -566,24 +566,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
      * If the connection is successful, it creates a new RMIClient and runs it.
      */
     public static void connectToServer(){
-        int port = 0;
         String ip;
         boolean done = false;
         System.out.println("Insert the server IP: ");
         Scanner scan = new Scanner(System.in);
         ip = scan.next();
-        while(!done){
-            System.out.println("Insert the server port: ");
-            String command = scan.next();
-            try {
-                port = Integer.parseInt(command);
-                done=true;
-            } catch (NumberFormatException e ){
-                System.out.println(e.getMessage() + " try again");
-            }
-        }
         try {
-            Registry registry = LocateRegistry.getRegistry(ip,port);
+            Registry registry = LocateRegistry.getRegistry(ip,PORT);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
         } catch(RemoteException | NotBoundException e) {

@@ -28,7 +28,6 @@ import java.util.Scanner;
 public class RMIServer extends UnicastRemoteObject implements VirtualServer, Observer {
 
     public static final int SERVER_PORT = 1234;
-    public static final String SERVER_ADDRESS = "127.0.0.1";
     private static RMIServer server;
     private final Controller controller;
     private final List<VirtualView> clients;

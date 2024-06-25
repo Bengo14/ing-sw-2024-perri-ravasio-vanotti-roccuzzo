@@ -572,7 +572,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         Scanner scan = new Scanner(System.in);
         ip = scan.next();
         try {
-            Registry registry = LocateRegistry.getRegistry(ip,PORT);
+            Registry registry = LocateRegistry.getRegistry(ip, PORT);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             new RMIClient(server).run();
         } catch(RemoteException | NotBoundException e) {

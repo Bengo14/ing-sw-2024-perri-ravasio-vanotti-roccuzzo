@@ -623,13 +623,14 @@ public class SocketClient implements VirtualView, Client {
         System.out.println("Insert the server IP: ");
         Scanner scan = new Scanner(System.in);
         ip = scan.next();
-        while(!done){
+
+        while(!done) {
             System.out.println("Insert the server port: ");
             String command = scan.next();
             try {
                 port = Integer.parseInt(command);
-                done=true;
-            } catch (NumberFormatException e ){
+                done = true;
+            } catch (NumberFormatException e ) {
                 System.out.println(e.getMessage() + " try again");
             }
         }

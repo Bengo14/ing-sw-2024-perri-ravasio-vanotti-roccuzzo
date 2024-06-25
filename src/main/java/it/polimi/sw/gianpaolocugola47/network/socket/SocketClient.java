@@ -16,9 +16,8 @@ import java.util.Scanner;
 /**
  * This class represents the client side of the socket connection.
  */
-@SuppressWarnings("ALL")
 public class SocketClient implements VirtualView, Client {
-    private static final int PORT = 8080;
+
     private final SocketServerProxy server;
     private final Socket socket;
     private int id;
@@ -31,12 +30,12 @@ public class SocketClient implements VirtualView, Client {
 
     /* --- attributes for socket responses --- */
     boolean nickAvailableResponse;
-    String[] nicknamesResponse;
-    StartingCard drawStartingCardResponse;
-    Objectives[] setStartingResponse;
+    protected String[] nicknamesResponse;
+    protected StartingCard drawStartingCardResponse;
+    protected Objectives[] setStartingResponse;
     boolean playResponse;
-    ResourceCard[][] getCardsOnHandResponse;
-    PlaceableCard[][] getPlacedCardsResponse;
+    protected ResourceCard[][] getCardsOnHandResponse;
+    protected PlaceableCard[][] getPlacedCardsResponse;
     int[] getResourceCounterResponse;
     boolean[][] getPlayPosResponse;
     private Objectives getSecretObjectiveResponse;
@@ -624,8 +623,18 @@ public class SocketClient implements VirtualView, Client {
         System.out.println("Insert the server IP: ");
         Scanner scan = new Scanner(System.in);
         ip = scan.next();
+        while(!done){
+            System.out.println("Insert the server port: ");
+            String command = scan.next();
+            try {
+                port = Integer.parseInt(command);
+                done=true;
+            } catch (NumberFormatException e ){
+                System.out.println(e.getMessage() + " try again");
+            }
+        }
         try {
-            Socket socket = new Socket(ip, PORT);
+            Socket socket = new Socket(ip, port);
             new SocketClient(socket).run();
 
         } catch (IOException e) {

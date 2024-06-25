@@ -15,9 +15,9 @@ import static java.util.Arrays.sort;
 public class PlayerTable{
 
     @Expose
-    public static final int MATRIX_DIMENSION = 22; //should be 141 (max n^ of cards on table by a player is 70)
+    public static final int MATRIX_DIMENSION = 22;
     @Expose
-    public static final int STARTING_CARD_POS = 10; // should be 70
+    public static final int STARTING_CARD_POS = 10;
     @Expose
     private int id;
     @Expose
@@ -46,7 +46,7 @@ public class PlayerTable{
     public PlayerTable(int id, String nickName, ResourceCard[] cardsOnHand) {
         this.id = id;
         this.nickName = nickName;
-        this.canPlay = true;  //default
+        this.canPlay = true;
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];

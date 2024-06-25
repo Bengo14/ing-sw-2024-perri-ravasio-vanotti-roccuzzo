@@ -27,6 +27,5 @@ public class AppClient {
             RMIClient.connectToServer();
         else
             SocketClient.connectToServer();
-
     }
 }

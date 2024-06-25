@@ -241,8 +241,10 @@ public class SocketClientProxy implements VirtualView {
     public void updatePoints(int[] boardPoints, int[] globalPoints) {
         SocketMessage message = new SocketMessage();
         message.addData("points");
-        message.addData(boardPoints);
-        message.addData(globalPoints);
+        for (int i = 0; i < boardPoints.length; i++)
+            message.addData(boardPoints[i]);
+        for (int i = 0; i < globalPoints.length; i++)
+            message.addData(globalPoints[i]);
         try {
             output.writeObject(message);
         } catch (IOException e) {

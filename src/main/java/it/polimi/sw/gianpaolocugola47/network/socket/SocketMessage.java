@@ -71,8 +71,12 @@ public class SocketMessage implements Serializable {
             }
 
             case "points" -> {
-                int[] boardPoints = (int[]) data.removeFirst();
-                int[] globalPoints = (int[]) data.removeFirst();
+                int[] boardPoints = new int[client.numOfPlayers];
+                int[] globalPoints = new int[client.numOfPlayers];
+                for (int i = 0; i < boardPoints.length; i++)
+                    boardPoints[i] = (int) data.removeFirst();
+                for (int i = 0; i < globalPoints.length; i++)
+                    globalPoints[i] = (int) data.removeFirst();
                 client.updatePoints(boardPoints, globalPoints);
             }
 

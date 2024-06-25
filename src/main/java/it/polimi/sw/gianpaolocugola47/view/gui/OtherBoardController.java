@@ -172,11 +172,10 @@ public class OtherBoardController implements Initializable {
             for (int j = 0; j < placedCards[i].length; j++)
                 if(placedCards[i][j] != null && matrix[i][j] != null) {
                     String front = placedCards[i][j].getIsFront() ? "front_" : "back_";
+                    if(i == 10 && j == 10)
+                        front = placedCards[i][j].getIsFront() ? "back_" : "front_";
                     matrix[i][j].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[i][j].getId() + ".png")));
                 }
-
-        String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
-        matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
     }
 
     /**

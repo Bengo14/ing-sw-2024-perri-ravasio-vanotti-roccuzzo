@@ -178,6 +178,7 @@ public class GameController implements Initializable {
 
         gold = new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/gold.png"));
     }
+
     /**
      * This method links the gui to the controller
      * @param gui the gui to link
@@ -189,6 +190,7 @@ public class GameController implements Initializable {
         if(gui.isLoaded()){
             loadScene();
         }
+
         if (gui.getStartingCard().getIsFront()) {
             place_10_10.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/back_"+gui.getStartingCard().getId()+".png")));
         } else {
@@ -237,6 +239,7 @@ public class GameController implements Initializable {
         chat.getItems().add("Type --listPlayers to see who your opponents are.");
         chat.getItems().add("Start a message with '@' to send a private message.");
     }
+
     /**
      * This method adds the zoom functionality to the board
      */
@@ -259,6 +262,7 @@ public class GameController implements Initializable {
             }
         });
     }
+
     /**
      * This method adds the drag functionality to the board
      */
@@ -276,6 +280,7 @@ public class GameController implements Initializable {
             boardPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
+
     public void receiveMessage(ChatMessage message) {
         if(message.getSenderId() != gui.getLocalPlayerTable().getId()) {
             if (!message.isPrivate())
@@ -472,8 +477,9 @@ public class GameController implements Initializable {
 
         if (image.getImage().equals(gold)) {
 
-            int x = 0, y = 0, corner = 0;
+            int x = 0, y = 0, corner;
             selectedImage.getStyleClass().remove("play");
+            disableHand(false);
 
             for (int i = 0; i < playablePos.length; i++)
                 for (int j = 0; j < playablePos[i].length; j++)
@@ -492,9 +498,9 @@ public class GameController implements Initializable {
                             else if(i - x == -1 && j - y == 1) corner = 1;
                             else if(i - x == 1 && j - y == -1) corner = 2;
                             else if(i - x == 1 && j - y == 1) corner = 3;
-                            else break;
+                            else corner = -1;
 
-                            if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length) {
+                            if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length && corner != -1) {
                                 if (gui.playCard(selectedCard, x, y, corner, gui.getCardsOnHand()[selectedCard].getIsFront())) {
                                     String imagePath = "/it/polimi/sw/gianpaolocugola47/graphics/cards/";
                                     imagePath += gui.getCardsOnHand()[selectedCard].getIsFront() ? "front_" : "back_";
@@ -505,18 +511,12 @@ public class GameController implements Initializable {
                                     cardsOnHand[selectedCard].getStyleClass().remove("selected-image");
                                     cardsOnHand[selectedCard].setImage(null);
                                     gui.getCardsOnHand()[selectedCard] = null;
-                                    disableHand(false);
                                     cardsOnHand[selectedCard].setMouseTransparent(true);
                                     buttons[selectedCard].setMouseTransparent(true);
                                     selectedCard = -1;
                                     cardPlayed = true;
                                     disableTable(false);
-                                } else {
-                                    disableHand(false);
                                 }
-                            } else {
-                                // position out of matrix bounds
-                                System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
                             }
                         }
                     }
@@ -530,24 +530,60 @@ public class GameController implements Initializable {
             for (int i = 0; i < playablePos.length; i++)
                 for (int j = 0; j < playablePos[i].length; j++)
                     if (playablePos[i][j] && matrix[i][j] != null) {
-                        // Assicura che la posizione sia valida prima di assegnare gold
                         if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[i].length) {
                             matrix[i][j].setImage(gold);
                             matrix[i][j].setMouseTransparent(false);
-                        } else {
-                            // position out of matrix bounds
-                            System.err.println("Tentativo di assegnare gold a una posizione fuori dalla matrice.");
                         }
                     }
             disableHand(true);
             goldShowed = true;
         }
     }
+    /**
+     * This method disables the hand of the player, it is used when is not the turn of the player
+     * @param b the boolean to set the mouse transparent
+     */
+    private void disableHand(boolean b) {
+        hand_0.setMouseTransparent(b);
+        hand_1.setMouseTransparent(b);
+        hand_2.setMouseTransparent(b);
+        switch_1.setMouseTransparent(b);
+        switch_2.setMouseTransparent(b);
+        switch_3.setMouseTransparent(b);
+    }
+
+    /**
+     * This method draws the card on the table of the player
+     * @param event the mouse event
+     */
+    @FXML
+    private void handleTableClick(MouseEvent event) {
+        int pos = 0;
+        ImageView source = (ImageView) event.getSource();
+
+        for(int i = 0; i < table.length; i++)
+            if(table[i].equals(source)) {
+                pos = i;
+                break;
+            }
+        gui.drawCard(pos);
+        disableHand(false);
+        disableTable(true);
+        cardPlayed = false;
+    }
+
+    private void disableTable(boolean b) {
+        for(ImageView img : table) {
+            if(img.getImage() == null)
+                img.setMouseTransparent(true);
+            else img.setMouseTransparent(b);
+        }
+    }
 
     /**
      * This method loads the scene of the board of the player for a reconnection
      */
-    public void loadScene(){
+    public void loadScene() {
         PlaceableCard[][] placedCards = this.gui.getPlacedCards(gui.getLocalPlayerTable().getId());
 
         for(int k = 10; k < placedCards.length; k += 2)
@@ -580,47 +616,6 @@ public class GameController implements Initializable {
 
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
-    }
-    /**
-     * This method disables the hand of the player, it is used when is not the turn of the player
-     * @param b the boolean to set the mouse transparent
-     */
-    private void disableHand(boolean b) {
-        hand_0.setMouseTransparent(b);
-        hand_1.setMouseTransparent(b);
-        hand_2.setMouseTransparent(b);
-        switch_1.setMouseTransparent(b);
-        switch_2.setMouseTransparent(b);
-        switch_3.setMouseTransparent(b);
-    }
-
-    /**
-     * This method draws the card on the table of the player
-     * @param event the mouse event
-     */
-    @FXML
-    private void handleTableClick(MouseEvent event) {
-        int pos = 0;
-        ImageView source = (ImageView) event.getSource();
-        Image image = source.getImage();
-
-        for(int i = 0; i < table.length; i++)
-            if(table[i].equals(source)) {
-                pos = i;
-                break;
-            }
-        gui.drawCard(pos);
-        disableHand(false);
-        disableTable(true);
-        cardPlayed = false;
-    }
-
-    private void disableTable(boolean b) {
-        for(ImageView img : table) {
-            if(img.getImage() == null)
-                img.setMouseTransparent(true);
-            else img.setMouseTransparent(b);
-        }
     }
 
     /**

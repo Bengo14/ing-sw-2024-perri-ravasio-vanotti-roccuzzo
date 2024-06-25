@@ -35,4 +35,21 @@ The team members are:
 | Model       | 78% (15/19)    | 96% (220/227)   | 87%(692/789)  |
 | Controller | 100% (1/1)     | 52% (20/38)     | 48%(54/112)    |
 
-## How to run the project
+### Running the server
+
+To run the server, navigate to the `deliverables` to `jar` where the jar file is located and run it.
+This is done via the command line with the following command:
+
+```sh
+java --eneable-preview -jar AppServer.jar
+```
+
+### Running the client
+
+To run the server, navigate to the `deliverables` to `jar` where the jar file is located and run it.
+This is done via the command line with the following command:
+
+```sh
+java --eneable-preview -jar AppClient.jar
+```
+Note that you have to run the server before the client.

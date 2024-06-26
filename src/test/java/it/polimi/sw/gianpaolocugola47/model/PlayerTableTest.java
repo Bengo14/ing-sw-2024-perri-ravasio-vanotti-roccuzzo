@@ -20,7 +20,7 @@ class PlayerTableTest {
     }
 
     @Test
-    public void testgetCardIdMatrix(){
+    public void testGetCardIdMatrix(){
         Deck.initDeck();
         ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
         ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);

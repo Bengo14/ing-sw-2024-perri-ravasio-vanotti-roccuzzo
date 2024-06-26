@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.gianpaolocugola47.model.*;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Custom deserializer for the PlayerTable class.
@@ -47,6 +48,7 @@ public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
         playerTable.setCardsOnHand(gson.fromJson(jsonObject.get("cardsOnHand"), listOfCards));
         playerTable.setCardIdMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardIdMatrix"), int[][].class));
         playerTable.setCardSideMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardSideMatrix"), boolean[][].class));
+        /*todo* deserialize arraylist*/
         return playerTable;
     }
 

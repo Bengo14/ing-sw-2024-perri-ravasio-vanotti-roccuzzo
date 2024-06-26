@@ -57,6 +57,8 @@ public class PlayerTableSerializer implements JsonSerializer<PlayerTable> {
         jsonObject.add("cardIdMatrix", board);
         JsonElement sides = jsonSerializationContext.serialize(playerTable.getCardSideMatrix());
         jsonObject.add("cardSideMatrix", sides);
+        JsonElement order = jsonSerializationContext.serialize(playerTable.getPlaceOrder());
+        jsonObject.add("placeOrder", order);
         return jsonObject;
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.sw.gianpaolocugola47.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static java.util.Arrays.sort;
@@ -35,6 +36,8 @@ public class PlayerTable{
     private PlaceableCard[][] placedCards;
     private int[][] cardIdMatrix = null;
     private boolean[][] cardSideMatrix = null;
+    @Expose
+    private ArrayList<int[]> placeOrder;
 
     /**
      * Class PlayerTable's constructor.
@@ -50,6 +53,7 @@ public class PlayerTable{
         this.resourceCounter = new int[]{0,0,0,0,0,0,0};
         this.cardsOnHand = cardsOnHand;
         this.placedCards = new PlaceableCard[MATRIX_DIMENSION][MATRIX_DIMENSION];
+        this.placeOrder = new ArrayList<>();
     }
 
     /**
@@ -421,6 +425,10 @@ public class PlayerTable{
      */
     private void placeCard(int x, int y, ResourceCard card) {
         placedCards[x][y]=card;
+        int[] coords = new int[2];
+        coords[0] = x;
+        coords[1] = y;
+        placeOrder.add(coords);
         card.setCoordinates(x,y);
         card.updateResourceCounter(getResourceCounter());
         for (int corner = 0; corner < 4; corner++)
@@ -678,5 +686,13 @@ public class PlayerTable{
                 ", cardIdMatrix=" + Arrays.toString(cardIdMatrix) +
                 ", cardSideMatrix=" + Arrays.toString(cardSideMatrix) +
                 '}';
+    }
+
+    public ArrayList<int[]> getPlaceOrder() {
+        return placeOrder;
+    }
+
+    public void setPlaceOrder(ArrayList<int[]> placeOrder) {
+        this.placeOrder = placeOrder;
     }
 }

@@ -151,7 +151,6 @@ public class GameSaver {
         }
         for(PlayerTable p : pt){
             p.idMatrixToCardMatrix(p.getResourceCounter());
-            System.out.println("Ciao: " + p.getPlaceOrder());
         }
         return pt;
     }

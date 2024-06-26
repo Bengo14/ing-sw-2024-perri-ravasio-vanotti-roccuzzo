@@ -48,7 +48,7 @@ public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
         playerTable.setCardsOnHand(gson.fromJson(jsonObject.get("cardsOnHand"), listOfCards));
         playerTable.setCardIdMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardIdMatrix"), int[][].class));
         playerTable.setCardSideMatrix(jsonDeserializationContext.deserialize(jsonObject.get("cardSideMatrix"), boolean[][].class));
-        /*todo* deserialize arraylist*/
+        playerTable.setPlaceOrder(jsonArrayToArrayList(jsonObject.get("placeOrder").getAsJsonArray()));
         return playerTable;
     }
 
@@ -63,5 +63,23 @@ public class PlayerTableDeserializer implements JsonDeserializer<PlayerTable> {
             array[i] = jsonArray.get(i).getAsInt();
         }
         return array;
+    }
+
+    /**
+     * Converts a JSON array of int[] into an arraylist of int[]-
+     * @param jsonArray : JSON array containing the int[].
+     * @return : arraylist of int[].
+     */
+    private ArrayList<int[]> jsonArrayToArrayList(JsonArray jsonArray) {
+        ArrayList<int[]> placeOrder = new ArrayList<>();
+        for (JsonElement arrayElem : jsonArray) {
+            JsonArray innerArray = arrayElem.getAsJsonArray();
+            int[] intArray = new int[innerArray.size()];
+            for (int i = 0; i < innerArray.size(); i++) {
+                intArray[i] = innerArray.get(i).getAsInt();
+            }
+            placeOrder.add(intArray);
+        }
+        return placeOrder;
     }
 }

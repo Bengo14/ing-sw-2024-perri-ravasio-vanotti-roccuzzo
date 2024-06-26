@@ -688,10 +688,20 @@ public class PlayerTable{
                 '}';
     }
 
+    /**
+     * This method returns the arraylist containing the order in which the cards were placed on the board, characterized by the coordinates of a
+     * given card. The order of insertion in the arraylist is equivalent to the order of insertion in the card matrix.
+     * @return : arraylist of card's coordinates from least to most recent card placed.
+     */
     public ArrayList<int[]> getPlaceOrder() {
         return placeOrder;
     }
 
+    /**
+     * This method sets the arraylist containing the order in which the cards were placed on the board, characterized by the coordinates of a
+     * given card. The order of insertion in the arraylist is equivalent to the order of insertion in the card matrix.
+     * @param placeOrder : the arraylist of card's coordinates, from least to most recent card placed.
+     */
     public void setPlaceOrder(ArrayList<int[]> placeOrder) {
         this.placeOrder = placeOrder;
     }

@@ -256,7 +256,6 @@ public class SocketServerProxy implements VirtualServer {
     public Objectives getSecretObjective(int playerId) {
         SocketMessage message = new SocketMessage();
         message.addData("getSecretObj");
-        message.addData(playerId);
         try {
             output.writeObject(message);
         } catch (IOException e) {

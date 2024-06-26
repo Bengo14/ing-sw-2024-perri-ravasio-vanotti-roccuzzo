@@ -286,6 +286,17 @@ public class SocketClientProxy implements VirtualView {
         }
     }
 
+    protected void getSecretObjectiveResponse(Objectives obj) {
+        SocketMessage message = new SocketMessage();
+        message.addData("getSecretObj");
+        message.addData(obj);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * This method is used to receive a message from the client. It creates a new SocketMessage,
      * add the string "play" and the provided bool to the message data, and then sends this

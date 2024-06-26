@@ -30,16 +30,16 @@ public class SocketClient implements VirtualView, Client {
     private volatile boolean response = false;
 
     /* --- attributes for socket responses --- */
-    boolean nickAvailableResponse;
+    protected boolean nickAvailableResponse;
     protected String[] nicknamesResponse;
     protected StartingCard drawStartingCardResponse;
     protected Objectives[] setStartingResponse;
-    boolean playResponse;
+    protected boolean playResponse;
     protected ResourceCard[][] getCardsOnHandResponse;
     protected PlaceableCard[][] getPlacedCardsResponse;
-    int[] getResourceCounterResponse;
-    boolean[][] getPlayPosResponse;
-    private Objectives getSecretObjectiveResponse;
+    protected int[] getResourceCounterResponse;
+    protected boolean[][] getPlayPosResponse;
+    protected Objectives getSecretObjectiveResponse;
 
     /**
      * Constructor of the class.

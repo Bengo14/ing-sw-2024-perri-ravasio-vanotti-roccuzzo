@@ -90,6 +90,11 @@ public class SocketMessage implements Serializable {
                 client.setResponse();
             }
 
+            case "getSecretObj" -> {
+                client.getSecretObjectiveResponse = (Objectives) data.removeFirst();
+                client.setResponse();
+            }
+
             case "play" -> {
                 client.playResponse = (boolean) data.removeFirst();
                 client.setResponse();
@@ -164,6 +169,8 @@ public class SocketMessage implements Serializable {
             }
 
             case "startFromFile" -> handler.startGameFromFile();
+
+            case "getSecretObj" -> handler.client.getSecretObjectiveResponse(handler.getSecretObjective(handler.id));
 
             case "play" -> {
                 synchronized (handler.client) {

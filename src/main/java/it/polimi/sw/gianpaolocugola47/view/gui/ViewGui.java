@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -185,7 +187,7 @@ public class ViewGui extends Application implements View {
             alert.setContentText("Are you sure you want to logout?");
             Stage dialogStage = (Stage) alert.getDialogPane().getScene().getWindow();
             dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
-            alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/style.css").toExternalForm());
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             alert.getDialogPane().getStyleClass().add("tooltip");
             alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
             if (alert.showAndWait().get() == ButtonType.OK) {
@@ -195,7 +197,6 @@ public class ViewGui extends Application implements View {
             }
         });
     }
-
     /**
      * This method sets the scene of the view to the other board scene
      * @param id the id of the player

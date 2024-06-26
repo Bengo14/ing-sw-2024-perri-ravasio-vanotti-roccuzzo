@@ -81,7 +81,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
                } catch (RemoteException e) {
                    synchronized (this.clients) { //old code
                        try {
-                           terminateGame(false, clients.indexOf(view)); // local id of dead client
+                           terminateGame(clients.indexOf(view)); // local id of dead client
                        } catch (RemoteException _) {}
                    }
                }
@@ -110,24 +110,17 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
      * This method terminates the game.
      * If the game is ended, it sends the game over message to the clients.
      * If some client has disconnected, it sends the terminate message to the clients.
-     * @param gameOver true if the game is ended or false if some client has disconnected
+     *
      * @param clientId the id of the client that has disconnected
      * @throws RemoteException if there is an error in the remote connection
      */
-    private void terminateGame(boolean gameOver, int clientId) throws RemoteException {
-        System.err.println("terminating the game...");
+    private void terminateGame(int clientId) throws RemoteException {
+        System.err.println("Terminating the game...");
         this.terminated = true;
-
-        if(gameOver) { // the game is ended
-            for (VirtualView view : clients)
-                if (view.getId() != clientId) // consider real id
-                    view.gameOver();
-        } else { // some client has disconnected
-            for (VirtualView view : clients)
-                if (clients.indexOf(view) != clientId) // consider local id
-                    view.terminate();
-            new Thread(() -> SocketServer.getServer().terminateGame()).start();
-        }
+        for (VirtualView view : clients)
+            if (clients.indexOf(view) != clientId) // consider local id
+                view.terminate();
+        new Thread(() -> SocketServer.getServer().terminateGame()).start();
         resetGame();
     }
     /**
@@ -558,7 +551,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             if (!this.clients.isEmpty()) {
                 try {
                     for(VirtualView view : this.clients)
-                        if(view != null){
+                        if(view != null) {
                             if(view.getId() == playerId)
                                 view.setMyTurn();
                         }
@@ -579,10 +572,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             if (!this.clients.isEmpty()) {
                 try {
                     for(VirtualView view : this.clients)
-                        if(view != null) {
-                            view.showWinner(winnerId);
-                        }
-                    terminateGame(true, winnerId);
+                        view.showWinner(winnerId);
                 } catch (RemoteException ignored) {}
             }
         }

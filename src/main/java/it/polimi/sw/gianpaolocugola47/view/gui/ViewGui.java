@@ -33,8 +33,6 @@ public class ViewGui extends Application implements View {
     private Scene scene;
     private Scene oldScene;
     private final HashMap<String, String> scenes;
-    private int idWinner;
-    //private Media media;
 
     private StartingCardController startingCardController;
     private EndGameController endGameController;
@@ -43,13 +41,14 @@ public class ViewGui extends Application implements View {
 
     private PlayerTable localPlayerTable;
     private Objectives[] objectives;
-    private ResourceCard[] cardsOnTable; //cards on table that can be picked up
-    private GoldCard goldCardOnTop; //NOT on playerTable
-    private ResourceCard resourceCardOnTop; //NOT on playerTable
-    private int[] globalPoints; //NOT on playerTable
-    private int[] boardPoints;  //NOT on playerTable
+    private ResourceCard[] cardsOnTable;
+    private GoldCard goldCardOnTop;
+    private ResourceCard resourceCardOnTop;
+    private int[] globalPoints;
+    private int[] boardPoints;
     private String[] nicknames;
     private final boolean isLoaded;
+    private int winnerId;
 
     /**
      * Constructor of the class
@@ -117,13 +116,14 @@ public class ViewGui extends Application implements View {
         stage.setX(0);
         stage.setY(0);
         stage.setResizable(true);
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
+        this.stage = stage;
 
         stage.setOnCloseRequest(event -> {
             event.consume();
-            logOut(stage);
+            logOut(this.stage);
         });
-        this.stage = stage;
+
         setScene("PreGame");
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         if (!isLoaded) {
@@ -164,7 +164,7 @@ public class ViewGui extends Application implements View {
                     break;
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
-                    endGameController.showResults(globalPoints, nicknames);
+                    endGameController.showResults(globalPoints, nicknames, winnerId);
                     endGameController.setClient(client);
                     endGameController.setStage(stage);
                     break;
@@ -175,9 +175,9 @@ public class ViewGui extends Application implements View {
 
     /**
      * This method creates the logout button and the alert that asks if the user wants to log out.
-     * @param primaryStage the stage of the view
+     * @param stage the stage of the view
      */
-    public void logOut(Stage primaryStage) {
+    public void logOut(Stage stage) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Logout");
@@ -189,8 +189,7 @@ public class ViewGui extends Application implements View {
             alert.getDialogPane().getStyleClass().add("tooltip");
             alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
             if (alert.showAndWait().get() == ButtonType.OK) {
-                System.out.println("Logged out successfully");
-                primaryStage.close();
+                stage.close();
                 client.terminateLocal();
             }
         });
@@ -336,25 +335,12 @@ public class ViewGui extends Application implements View {
 
     /**
      * This method shows the winner of the game.
-     */
-    @Override
-    public void gameOver() {
-        int max = 0;
-        for (int i = 0; i < globalPoints.length; i++) {
-            if (globalPoints[i] > max) {
-                max = globalPoints[i];
-                idWinner = i;
-            }
-        }
-    }
-
-    /**
-     * This method shows the winner of the game.
      * It sets the scene to the end game scene.
      * @param id the id of the winner.
      */
     @Override
     public void showWinner(int id) {
+        this.winnerId = id;
         setScene("EndGame");
     }
 

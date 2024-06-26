@@ -41,7 +41,6 @@ public class SocketMessage implements Serializable {
             case "ping" -> client.ping();
             case "start" -> client.startGame((boolean) data.removeFirst());
             case "turn" -> client.setMyTurn();
-            case "gameOver" -> client.gameOver();
             case "winner" -> client.showWinner((int) data.removeFirst());
 
             case "getNumPlayers" -> client.numOfPlayers = (int) data.removeFirst();

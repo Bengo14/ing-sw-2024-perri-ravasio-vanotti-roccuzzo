@@ -16,10 +16,7 @@ public interface View {
     void updatePoints(int[] boardPoints, int[] globalPoints);
     void showTurn();
     void receiveMessage(ChatMessage message);
-    void gameOver();
     void showWinner(int id);
-
     StartingCard getStartingCard();
-
     Objectives getSecretObjective();
 }

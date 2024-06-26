@@ -112,6 +112,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
             this.client.startGame(isLoaded);
         }
     }
+
     /**
      * This method sets the turn of the client.
      * It is synchronized to avoid conflicts between threads.
@@ -122,16 +123,7 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
             this.client.setMyTurn();
         }
     }
-    /**
-     * This method calls the game over method of the client.
-     * It is synchronized to avoid conflicts between threads.
-     */
-    @Override
-    public void gameOver() {
-        synchronized (client) {
-            this.client.gameOver();
-        }
-    }
+
     /**
      * This method calls the show winner method of the client.
      * It is synchronized to avoid conflicts between threads.

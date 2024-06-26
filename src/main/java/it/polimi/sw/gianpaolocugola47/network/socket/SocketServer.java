@@ -124,7 +124,7 @@ public class SocketServer implements Observer {
 
                     for (SocketClientHandler handler : this.clients)
                         if (!handler.getPingAck()) {
-                            terminateGame(false, clients.indexOf(handler));
+                            terminateGame(clients.indexOf(handler));
                             break;
                         }
                 }
@@ -149,23 +149,16 @@ public class SocketServer implements Observer {
     /**
      * This method terminates the game.
      * It sends a terminate message to all clients except the one with the specified id and resets the game.
-     * @param gameOver true if the game is ended, false if some client has disconnected
+     *
      * @param clientId the id of the client that has disconnected
      */
-    private void terminateGame(boolean gameOver, int clientId) {
-        System.err.println("terminating the game...");
+    private void terminateGame(int clientId) {
+        System.err.println("Terminating the game...");
         this.terminated = true;
-
-        if(gameOver) { // the game is ended
-            for (SocketClientHandler handler : clients)
-                if (handler.getId() != clientId) // consider real id
-                    handler.gameOver();
-        } else { // some client has disconnected
-            for (SocketClientHandler handler : clients)
-                if (clients.indexOf(handler) != clientId) // consider local id
-                    handler.terminate();
-            new Thread(() -> RMIServer.getServer().terminateGame()).start();
-        }
+        for (SocketClientHandler handler : clients)
+            if (clients.indexOf(handler) != clientId) // consider local id
+                handler.terminate();
+        new Thread(() -> RMIServer.getServer().terminateGame()).start();
         resetGame();
     }
     /**
@@ -249,11 +242,9 @@ public class SocketServer implements Observer {
     @Override
     public void showWinner(int winnerId) {
         synchronized (this.clients) {
-            if (!this.clients.isEmpty()) {
-                for(SocketClientHandler handler : this.clients)
-                    handler.showWinner(winnerId);
-                terminateGame(true, winnerId);
-            }
+        if (!this.clients.isEmpty())
+            for(SocketClientHandler handler : this.clients)
+                handler.showWinner(winnerId);
         }
     }
 

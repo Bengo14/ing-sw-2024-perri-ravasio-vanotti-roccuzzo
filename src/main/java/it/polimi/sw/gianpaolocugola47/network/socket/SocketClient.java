@@ -238,15 +238,6 @@ public class SocketClient implements VirtualView, Client {
     }
 
     /**
-     * This method calla the gameOver method of the view.
-     * It is called when the server sends a message to end the game.
-     */
-    @Override
-    public void gameOver() {
-        this.view.gameOver();
-    }
-
-    /**
      * This method shows the winner.
      * It is called when the server sends a message to show the winner.
      * It shows the winner on the CLI or the GUI.

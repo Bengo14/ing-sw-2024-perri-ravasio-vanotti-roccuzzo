@@ -220,16 +220,8 @@ public class CLI implements View {
     }
 
     /**
-     * Alerts the player that the game is about to end and that we are in the last round.
-     */
-    @Override
-    public void gameOver() {
-        System.out.println("We are entering the last rounds of the game. Soon we will see who the winner is!");
-    }
-
-    /**
      * Shows the winner of the game.
-     * @param id: int; winner's id.
+     * @param id: winner's id.
      */
     @Override
     public void showWinner(int id) {

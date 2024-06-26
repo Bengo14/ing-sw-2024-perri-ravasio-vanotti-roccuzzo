@@ -17,32 +17,36 @@ import java.util.ResourceBundle;
  * It contains the methods to show the results of the game and to logout.
  */
 public class EndGameController implements Initializable {
+
     private Client client;
     private Stage stage;
     @FXML
     private Button ExitGame_BTN;
     @FXML
-    private Label nameWinnerLable;
+    private Label nameWinnerLabel;
     @FXML
     private Label winner_LBL;
 
     /**
      * This method shows the results of the game.
-     * @param globalPoints the points of the players
+     *
+     * @param globalPoints the final points of the players
      * @param nicknames the nicknames of the players
+     * @param winnerId the winner player's id
      */
-    public void showResults(int[] globalPoints, String[] nicknames) {
-        //print the player with the highest score
+    public void showResults(int[] globalPoints, String[] nicknames, int winnerId) {
+
         int max = 0;
-        int winner = 0;
-        for (int i = 0; i < globalPoints.length; i++) {
-            if (globalPoints[i] > max) {
+        for (int i = 0; i < globalPoints.length; i++)
+            if (globalPoints[i] > max)
                 max = globalPoints[i];
-                winner = i;
-            }
-        }
-        nameWinnerLable.setText(nicknames[winner]+" is the winner with "+max+" points!");
+
+        nameWinnerLabel.setText(nicknames[winnerId] + " is the winner with " + max + " points!");
+        if(winnerId == client.getIdLocal())
+            winner_LBL.setText("You win!");
+        else winner_LBL.setText("You have lost!");
     }
+
     void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -51,10 +55,10 @@ public class EndGameController implements Initializable {
     }
 
     /**
-     * this method create the logout button
+     * This method handles the logout event
      * @param event the event of the button
      */
-    public void logOut(ActionEvent event){
+    public void logOut(ActionEvent event) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Logout");
@@ -66,16 +70,12 @@ public class EndGameController implements Initializable {
             alert.getDialogPane().getStyleClass().add("tooltip");
             alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
             if (alert.showAndWait().get() == ButtonType.OK) {
-                System.out.println("Logged out successfully");
                 stage.close();
                 client.terminateLocal();
             }
         });
     }
 
-
     @Override
-    public void initialize(URL url, ResourceBundle resources) {
-
-    }
+    public void initialize(URL url, ResourceBundle resources) {}
 }

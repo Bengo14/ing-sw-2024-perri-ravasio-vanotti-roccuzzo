@@ -15,7 +15,7 @@ public interface VirtualView extends Remote {
     void ping() throws RemoteException;
     void startGame(boolean isLoaded) throws RemoteException;
     void setMyTurn() throws RemoteException;
-    void gameOver() throws RemoteException;
+
     void showWinner(int id) throws RemoteException;
     int getId() throws RemoteException;
     void receiveMessage(ChatMessage message) throws RemoteException;

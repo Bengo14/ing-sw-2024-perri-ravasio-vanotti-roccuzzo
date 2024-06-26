@@ -108,22 +108,6 @@ public class SocketClientProxy implements VirtualView {
 
     /**
      * This method is used to send a message to the client. It creates a new SocketMessage,
-     * adds the string "gameOver" to the message data, and then sends this
-     * message to the client through the output stream.
-     */
-    @Override
-    public void gameOver() {
-        SocketMessage message = new SocketMessage();
-        message.addData("gameOver");
-        try {
-            output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * This method is used to send a message to the client. It creates a new SocketMessage,
      * adds the string "showWinner" and the provided id to the message data, and then sends
      * this message to the client through the output stream.
      * @param id The ID of the winner.

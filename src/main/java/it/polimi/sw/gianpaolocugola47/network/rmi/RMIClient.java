@@ -183,14 +183,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
             }
         }
     }
-    /**
-     * This method is used to call the gameOver method of the view.
-     *
-     */
-    @Override
-    public void gameOver() throws RemoteException {
-        this.view.gameOver();
-    }
+
     /**
      * This method is used to create the view.
      * @param nicknames the nicknames of the players.

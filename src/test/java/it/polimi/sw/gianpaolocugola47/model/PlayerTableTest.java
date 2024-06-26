@@ -20,6 +20,28 @@ class PlayerTableTest {
     }
 
     @Test
+    public void testgetCardIdMatrix(){
+        Deck.initDeck();
+        ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
+        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
+        p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().getFirst());
+        assertNotNull(p.getCardIdMatrix());
+    }
+
+    @Test
+    public void testGetCardSideMatrix(){
+        Deck.initDeck();
+        ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);
+        ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
+        ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
+        PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
+        p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().getFirst());
+        assertNotNull(p.getCardSideMatrix());
+    }
+
+    @Test
     public void setCardOnHandInTheEmptyPosition() {
         Deck.initDeck();
         ResourceCard plant_0 = Deck.getResourceCardsDeck().get(6);

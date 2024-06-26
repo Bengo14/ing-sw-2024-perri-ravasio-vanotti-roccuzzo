@@ -1,7 +1,6 @@
 package it.polimi.sw.gianpaolocugola47.model;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 

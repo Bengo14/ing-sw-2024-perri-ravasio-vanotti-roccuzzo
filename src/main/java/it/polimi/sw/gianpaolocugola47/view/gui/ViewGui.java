@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -51,7 +49,7 @@ public class ViewGui extends Application implements View {
     private int[] globalPoints; //NOT on playerTable
     private int[] boardPoints;  //NOT on playerTable
     private String[] nicknames;
-    private boolean isLoaded;
+    private final boolean isLoaded;
 
     /**
      * Constructor of the class
@@ -176,7 +174,7 @@ public class ViewGui extends Application implements View {
     }
 
     /**
-     * This method creates the logout button and the allert that asks if the user wants to logout.
+     * This method creates the logout button and the allert that asks if the user wants to log out.
      * @param primaryStage the stage of the view
      */
     public void logOut(Stage primaryStage) {

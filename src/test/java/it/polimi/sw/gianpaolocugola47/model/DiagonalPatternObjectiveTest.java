@@ -16,9 +16,9 @@ class DiagonalPatternObjectiveTest {
     @Test
     void testIsResourceMatchedAndNotFlagged() {
         Deck.initDeck();
-        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(0);
+        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().getFirst();
         // Test when everything matches
-        ResourceCard resourceCard = Deck.getResourceCardsDeck().get(0);
+        ResourceCard resourceCard = Deck.getResourceCardsDeck().getFirst();
         assertTrue(obj.isResourceMatchedAndNotFlagged(resourceCard));
         // Test when the Resource does not match
         ResourceCard resourceCard_2 = Deck.getResourceCardsDeck().get(10);
@@ -34,9 +34,9 @@ class DiagonalPatternObjectiveTest {
     public void testCheckPatternAndComputePoints(){
         MainTable main = new MainTable();
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         // testing Ascending
-        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().get(0);
+        DiagonalPatternObjective obj = (DiagonalPatternObjective) Deck.getObjectiveCardsDeck().getFirst();
         ResourceCard fungi_1 = Deck.getResourceCardsDeck().get(0);
         ResourceCard fungi_2 = Deck.getResourceCardsDeck().get(1);
         ResourceCard fungi_3 = Deck.getResourceCardsDeck().get(2);

@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.Objectives;
 import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
-import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 import it.polimi.sw.gianpaolocugola47.network.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

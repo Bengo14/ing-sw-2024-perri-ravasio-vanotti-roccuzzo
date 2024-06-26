@@ -28,7 +28,7 @@ class LShapePatternObjectiveTest {
         MainTable main = new MainTable();
         Deck.initDeck();
         main.setNumOfPlayers(2);
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         ResourceCard plant_1 = Deck.getResourceCardsDeck().get(10);
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         ResourceCard insect = Deck.getResourceCardsDeck().get(30);
@@ -53,10 +53,10 @@ class LShapePatternObjectiveTest {
         MainTable main = new MainTable();
         Deck.initDeck();
         main.setNumOfPlayers(2);
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         ResourceCard animal_1 = Deck.getResourceCardsDeck().get(20);
         ResourceCard animal_2 = Deck.getResourceCardsDeck().get(21);
-        ResourceCard fungi = Deck.getResourceCardsDeck().get(0);
+        ResourceCard fungi = Deck.getResourceCardsDeck().getFirst();
         LShapePatternObjective obj = (LShapePatternObjective) Deck.getObjectiveCardsDeck().get(6);
         PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{animal_1, animal_2, fungi});
         main.setPlayerTable(1,player);

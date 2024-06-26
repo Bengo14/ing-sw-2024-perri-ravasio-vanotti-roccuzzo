@@ -26,14 +26,14 @@ class PlayerTableTest {
         ResourceCard plant_1 = Deck.getResourceCardsDeck().get(7);
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{plant_0,plant_1,plant_2});
-        p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().get(0));
+        p.setCardOnHandInTheEmptyPosition(Deck.getResourceCardsDeck().getFirst());
         assertNotNull(p.getCardOnHand(2));
     }
 
     @Test
     public void testIsPlaceable(){
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         PlayerTable p = new PlayerTable(0, "name",new ResourceCard[]{});
         p.setStartingCard(start);
         assertTrue(p.isPlaceable(PlayerTable.STARTING_CARD_POS-1, PlayerTable.STARTING_CARD_POS-1));
@@ -59,7 +59,7 @@ class PlayerTableTest {
     public void testCheckAndPlaceCard(){
         Deck.initDeck();
         StartingCard start = Deck.getStartingCardsDeck().get(2);
-        ResourceCard res = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res = Deck.getResourceCardsDeck().getFirst();
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
 
@@ -70,7 +70,7 @@ class PlayerTableTest {
     @Test
     public void testPlaceStartingCard(){
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{});
         p.setStartingCard(start);
         assertNotNull(p.getPlacedCard(PlayerTable.getStartingCardPos(),PlayerTable.getStartingCardPos()));
@@ -79,7 +79,7 @@ class PlayerTableTest {
     @Test
     public void testIsCheap(){
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         ResourceCard fungi_0 = Deck.getResourceCardsDeck().get(6);
         ResourceCard fungi_1 = Deck.getResourceCardsDeck().get(7);
         GoldCard gold = Deck.getGoldCardsDeck().get(2);
@@ -121,8 +121,8 @@ class PlayerTableTest {
     @Test
     public void testSetPlacedCards(){
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
-        ResourceCard res = Deck.getResourceCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
+        ResourceCard res = Deck.getResourceCardsDeck().getFirst();
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
         p.checkAndPlaceCard(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 0);
@@ -148,7 +148,7 @@ class PlayerTableTest {
     public void testGetCardsOnHand(){
         Deck.initDeck();
         StartingCard start = Deck.getStartingCardsDeck().get(2);
-        ResourceCard res = Deck.getResourceCardsDeck().get(0);
+        ResourceCard res = Deck.getResourceCardsDeck().getFirst();
         PlayerTable p = new PlayerTable(0,"name",new ResourceCard[]{res});
         p.setStartingCard(start);
         assertNotNull(p.getCardsOnHand());

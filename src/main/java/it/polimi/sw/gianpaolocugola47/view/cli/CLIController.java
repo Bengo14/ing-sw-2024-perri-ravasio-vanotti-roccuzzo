@@ -182,8 +182,8 @@ public class CLIController {
 
     /**
      * Returns the corner over which the card placed in position x,y will be placed
-     * @param x: x coordinate of the position of the card that is yet to be placed,, representing the row.
-     * @param y: y coordinate of the position of the card that is yet to be placed,, representing the column.
+     * @param x: x coordinate of the position of the card that is yet to be placed, representing the row.
+     * @param y: y coordinate of the position of the card that is yet to be placed, representing the column.
      * @param localBoard: matrix of PlaceableCard that represents the board.
      * @return : an integer representing the corner over which the card placed in position x,y will be placed.
      */
@@ -259,7 +259,7 @@ public class CLIController {
     }
 
     /**
-     * Updates the decks and the drawable card on the table once a card has be drawn.
+     * Updates the decks and the drawable card on the table once a card has to be drawn.
      * @param position: position of the card that has been drawn.
      */
     public void updateDecksAndBoard(int position){

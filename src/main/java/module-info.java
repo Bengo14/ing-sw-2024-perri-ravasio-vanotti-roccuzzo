@@ -1,10 +1,8 @@
 module it.polimi.sw.gianpaolocugola47 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.controlsfx.controls;
     requires com.google.gson;
     requires java.rmi;
-    requires java.desktop;
     requires error.prone.annotations;
     opens it.polimi.sw.gianpaolocugola47 to javafx.fxml;
     opens it.polimi.sw.gianpaolocugola47.view.gui to javafx.fxml;

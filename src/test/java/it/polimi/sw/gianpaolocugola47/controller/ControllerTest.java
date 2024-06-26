@@ -40,7 +40,7 @@ class ControllerTest {
         controller.drawStartingCard();
         controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
         controller.setStartingCardAndDrawObjectives(1,Deck.drawCardFromStartingDeck());
-        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().get(0));
+        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
         controller.drawCard(1,0);
     }
 

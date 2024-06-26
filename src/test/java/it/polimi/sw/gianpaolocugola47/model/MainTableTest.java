@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTableTest {
 
-    RMIServer stub = RMIServer.getServer();
+    final RMIServer stub = RMIServer.getServer();
 
     @Test
     public void testConstructor() {
@@ -20,7 +20,7 @@ class MainTableTest {
         Deck.initDeck();
         MainTable mainTable = new MainTable();
         mainTable.setEndGame(false);
-        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().get(0)});
+        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().getFirst()});
         mainTable.setGlobalObjectives(Deck.getObjectiveCardsDeck().toArray(new Objectives[0]));
         mainTable.setBoardPoints(new int[]{4, 0});
         mainTable.setGlobalPoints(new int[]{6, 2});
@@ -51,13 +51,13 @@ class MainTableTest {
     @Test
     public void testGetCardsOnTable() {
         MainTable mainTable = new MainTable();
-        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().get(0)});
+        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().getFirst()});
         assertNotNull(mainTable.getCardsOnTable());
     }
     @Test
     public void getCardOnTable() {
         MainTable mainTable = new MainTable();
-        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().get(0)});
+        mainTable.setCardsOnTable(new GoldCard[]{Deck.getGoldCardsDeck().getFirst()});
         assertNotNull(mainTable.getCardOnTable(0));
     }
 
@@ -275,7 +275,7 @@ class MainTableTest {
         main.setNumOfPlayers(2);
         Deck.initDeck();
         StartingCard start = Deck.getStartingCardsDeck().get(2);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         ResourceCard res = Deck.getResourceCardsDeck().get(17);
         res.switchFrontBack();
         PlayerTable player = new PlayerTable(0, "name", new ResourceCard[]{res});

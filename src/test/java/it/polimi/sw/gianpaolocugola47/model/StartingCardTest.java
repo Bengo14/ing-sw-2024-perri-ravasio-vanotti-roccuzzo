@@ -13,7 +13,7 @@ class StartingCardTest {
         Deck.initDeck();
         StartingCard s = Deck.drawCardFromStartingDeck();
         assertNotNull(s.getResourcesCentreBack());
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
     }
 
     @Test
@@ -32,7 +32,7 @@ class StartingCardTest {
         StartingCard start_2 = Deck.getStartingCardsDeck().get(1);
         StartingCard start_3 = Deck.getStartingCardsDeck().get(3);
         StartingCard start_4 = Deck.getStartingCardsDeck().get(5);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
 
         MainTable main = new MainTable();
         main.setNumOfPlayers(4);
@@ -61,7 +61,7 @@ class StartingCardTest {
     @Test
     public void testResourcesCentreBackToString() {
         Deck.initDeck();
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         assertEquals("   \u001B[0;35mI\u001B[0m   ", start.resourcesCentreBackToString());
         Deck.initDeck();
         StartingCard start_2 = Deck.getStartingCardsDeck().get(2);

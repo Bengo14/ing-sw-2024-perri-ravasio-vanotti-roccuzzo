@@ -59,11 +59,11 @@ public class LShapePatternObjective extends Objectives{
             corner=1;
         }
         if(getOrientation().equals("bottomLeft")) {
-            shiftX=+2;
+            shiftX= 2;
             corner=2;
         }
         if(getOrientation().equals("bottomRight")){
-            shiftX=+2;
+            shiftX= 2;
             corner=3;
         }
         patterns=LShapePatternsCounter(playerTable, shiftX, corner);

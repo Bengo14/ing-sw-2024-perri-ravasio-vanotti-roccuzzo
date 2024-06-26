@@ -22,7 +22,7 @@ class GoldCardTest {
     @Test
     public void testGetResourcedRequired() {
         Deck.initDeck();
-        GoldCard gold = Deck.getGoldCardsDeck().get(0);
+        GoldCard gold = Deck.getGoldCardsDeck().getFirst();
         ArrayList<Resources> requisites = new ArrayList<>();
         requisites.add(Resources.FUNGI);
         requisites.add(Resources.FUNGI);
@@ -33,7 +33,7 @@ class GoldCardTest {
     @Test
     public void testGetItemRequired(){
         Deck.initDeck();
-        GoldCard gold = Deck.getGoldCardsDeck().get(0);
+        GoldCard gold = Deck.getGoldCardsDeck().getFirst();
         assertEquals(Items.QUILL, gold.getItemRequired());
     }
 
@@ -46,7 +46,7 @@ class GoldCardTest {
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         StartingCard start = Deck.getStartingCardsDeck().get(2);
         start.setFront(true);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         main.setNumOfPlayers(2);
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
         main.setPlayerTable(1,p);
@@ -72,7 +72,7 @@ class GoldCardTest {
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(11);
         StartingCard start = Deck.getStartingCardsDeck().get(3);
         start.setFront(true);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         main.setNumOfPlayers(2);
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
         main.setPlayerTable(1,p);
@@ -95,7 +95,7 @@ class GoldCardTest {
         ResourceCard plant_2 = Deck.getResourceCardsDeck().get(10);
         StartingCard start = Deck.getStartingCardsDeck().get(2);
         start.setFront(true);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         main.setNumOfPlayers(2);
         PlayerTable p = new PlayerTable(1, "name",new ResourceCard[]{plant_1,plant_2,g});
         main.setPlayerTable(1,p);
@@ -119,10 +119,10 @@ class GoldCardTest {
     public void testGetCardPointForItems(){
         MainTable main = new MainTable();
         Deck.initDeck();
-        GoldCard g = Deck.getGoldCardsDeck().get(0);
-        StartingCard start = Deck.getStartingCardsDeck().get(0);
+        GoldCard g = Deck.getGoldCardsDeck().getFirst();
+        StartingCard start = Deck.getStartingCardsDeck().getFirst();
         start.switchFrontBack();
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         main.setNumOfPlayers(2);
         ResourceCard res_1 = Deck.getResourceCardsDeck().get(0);
         ResourceCard res_2 = Deck.getResourceCardsDeck().get(4);
@@ -144,13 +144,13 @@ class GoldCardTest {
     public void testIsNotFront(){
         MainTable main = new MainTable();
         Deck.initDeck();
-        GoldCard g = Deck.getGoldCardsDeck().get(0);
+        GoldCard g = Deck.getGoldCardsDeck().getFirst();
         StartingCard start = Deck.getStartingCardsDeck().get(1);
         start.switchFrontBack();
         main.setNumOfPlayers(2);
         PlayerTable player = new PlayerTable(1, "name", new ResourceCard[]{g});
         main.setPlayerTable(1, player);
-        Objectives obj = Deck.getObjectiveCardsDeck().get(0);
+        Objectives obj = Deck.getObjectiveCardsDeck().getFirst();
         main.setPlayerStartingCard(1, start);
         main.setPlayerSecretObjective(1,obj);
         main.playCardAndUpdatePoints(0, PlayerTable.getStartingCardPos(), PlayerTable.getStartingCardPos(), 1, 1);
@@ -159,7 +159,7 @@ class GoldCardTest {
     @Test
     public void testResourcesRequiredToString(){
         Deck.initDeck();
-        GoldCard gold = Deck.getGoldCardsDeck().get(0);
+        GoldCard gold = Deck.getGoldCardsDeck().getFirst();
         assertEquals("\u001B[0;31mF\u001B[0m\u001B[0;31mF\u001B[0m\u001B[0;34mA\u001B[0m", gold.resourcesRequiredToString());
     }
     @Test

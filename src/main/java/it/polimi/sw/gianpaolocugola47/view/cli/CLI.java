@@ -200,7 +200,7 @@ public class CLI implements View {
     /**
      * Receives a message sent from the chat. If the chat is open, the message is displayed on the console; otherwise,
      * it is saved in a buffer and eventually shown when the chat is open.
-     * @param message: object ChatMessage; it contains the body of the message as well as sender and receiver informations
+     * @param message: object ChatMessage; it contains the body of the message as well as sender and receiver information
      *               and whether the message is private or not.
      */
     @Override

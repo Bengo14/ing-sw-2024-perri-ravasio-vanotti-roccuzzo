@@ -21,7 +21,7 @@ import java.util.List;
 public class GameSaver {
     private Controller game; //goldCardOnTop and resCardOnTop are not 'MainTable' attributes, yet can be easily found once deck is loaded
     private final Gson gson;
-    public final static String CONTROLLER_FILE_PATH = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/controllerStatus.json";
+    public final static String CONTROLLER_FILE_PATH = "controllerStatus.json";
     private final String[] deckFilePaths;
     private final List<String> boardFilePaths;
 
@@ -38,10 +38,10 @@ public class GameSaver {
         this.boardFilePaths.add(CONTROLLER_FILE_PATH); //controller & main table status
         this.initPlayerTableFiles();
         this.deckFilePaths = new String[4];
-        this.deckFilePaths[0] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusResources.json";
-        this.deckFilePaths[1] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusGold.json";
-        this.deckFilePaths[2] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusStarting.json";
-        this.deckFilePaths[3] = "src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/deckStatusObjectives.json";
+        this.deckFilePaths[0] = "deckStatusResources.json";
+        this.deckFilePaths[1] = "deckStatusGold.json";
+        this.deckFilePaths[2] = "deckStatusStarting.json";
+        this.deckFilePaths[3] = "deckStatusObjectives.json";
     }
 
     /**

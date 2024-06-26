@@ -280,7 +280,7 @@ public class PlayerTable{
      * Corners 2 and 3 are the bottom corners, so the x coordinate is x + 1.
      * @param x : row coordinate of the card already present on the board.
      * @param corner : corner of the card already present on the board that is to be covered by the new card.
-     * @return : the x coordinate of the card to be placed. -1 if the input is incorrect.
+     * @return  the x coordinate of the card to be placed. -1 if the input is incorrect.
      */
     public int setXCoordinate(int x, int corner){
         if(corner==0||corner==1)
@@ -298,7 +298,7 @@ public class PlayerTable{
      * Corners 1 and 3 are the right corners, so the y coordinate is y + 1.
      * @param y : column coordinate of the card already present on the board.
      * @param corner : corner of the card already present on the board that is to be covered by the new card.
-     * @return : the y coordinate of the card to be placed. -1 if the input is incorrect.
+     * @return  the y coordinate of the card to be placed. -1 if the input is incorrect.
      */
     public int setYCoordinate(int y, int corner){
         if(corner==0||corner==2)

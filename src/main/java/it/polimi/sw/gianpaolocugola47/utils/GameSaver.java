@@ -100,7 +100,7 @@ public class GameSaver {
 
     /**
      * Loads controller and mainTable (bar playerTables attribute) statuses from a json file.
-     * @return : the controller instance of a previous save. Null if files are not found.
+     * @return  the controller instance of a previous save. Null if files are not found.
      */
     public Controller loadControllerStatus(){
         Reader reader;
@@ -126,7 +126,7 @@ public class GameSaver {
 
     /**
      * Loads the player tables of a previous save from the respective json files.
-     * @return : an array of player tables. Null if files are not found.
+     * @return  an array of player tables. Null if files are not found.
      */
     public PlayerTable[] loadPlayerTableStatus(){
         Reader[] reader = new Reader[boardFilePaths.size()-1];

@@ -258,8 +258,6 @@ class MainTableTest {
         Objectives obj_2 = Deck.getObjectiveCardsDeck().get(1);
         main.setPlayerSecretObjective(0, obj_1);
         main.setPlayerSecretObjective(1, obj_2);
-        start_1.switchFrontBack();
-        start_2.switchFrontBack();
         res_1.switchFrontBack();
         res_2.switchFrontBack();
         main.setPlayerStartingCard(0, start_1);

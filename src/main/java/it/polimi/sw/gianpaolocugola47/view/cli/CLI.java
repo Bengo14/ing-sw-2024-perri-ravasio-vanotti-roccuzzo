@@ -528,7 +528,7 @@ public class CLI implements View {
     /**
      * Checks the validity of "/showPlayerBoard" command and prints the board of the player whose nickname is passed as a parameter.
      * This method checks whether command's arguments are correct in length (=2) and content (player's nickname).
-     * @param command: input command given by the user. Parameters are (in order): the command itself and the nickname of the player whose board needs to be printed.
+     * @param command input command given by the user. Parameters are (in order): the command itself and the nickname of the player whose board needs to be printed.
      */
     private void showPlayerBoard(String command) {
         String[] nickname = command.split(" ");
@@ -643,7 +643,7 @@ public class CLI implements View {
      * -the hand position must be valid;
      * -the card is either "front" or "back" aligned.
      * If the command is valid and the card can be put in the designated position, the card is placed on the board.
-     * @param command: String; input command given by the user. Arguments are (in order): the command itself, the x and y coordinates, the card to be placed and the side of the card.
+     * @param command String; input command given by the user. Arguments are (in order): the command itself, the x and y coordinates, the card to be placed and the side of the card.
      * @return : boolean; true if the card is placed successfully, false otherwise.
      */
     private boolean placeCard(String command){
@@ -706,7 +706,7 @@ public class CLI implements View {
     /**
      * Checks the validity of the "/showCardAt" command in terms of number of arguments (=3) and their correctness.
      * The latter is defined by the following rule: the coordinates must be of a position on the board already occupied by a card.
-     * @param command : String; input command given by the user. Arguments 1 and 2 are the x and y coordinates of the card to be shown, while 0 is the command itself.
+     * @param command String; input command given by the user. Arguments 1 and 2 are the x and y coordinates of the card to be shown, while 0 is the command itself.
      */
     private void showCardAt(String command){
         String[] coordinates = command.split(" ");

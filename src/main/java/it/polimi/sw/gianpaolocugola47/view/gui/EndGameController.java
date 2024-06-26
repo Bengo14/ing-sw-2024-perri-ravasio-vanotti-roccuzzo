@@ -62,7 +62,7 @@ public class EndGameController implements Initializable {
             alert.setContentText("Are you sure you want to logout?");
             Stage dialogStage = (Stage) alert.getDialogPane().getScene().getWindow();
             dialogStage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg")));
-            alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/style.css").toExternalForm());
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/it/polimi/sw/gianpaolocugola47/css/Style.css").toExternalForm());
             alert.getDialogPane().getStyleClass().add("tooltip");
             alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
             if (alert.showAndWait().get() == ButtonType.OK) {

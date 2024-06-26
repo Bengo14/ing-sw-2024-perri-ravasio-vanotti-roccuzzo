@@ -51,7 +51,7 @@ public class GameSaver {
     private void initPlayerTableFiles(){
         if(game != null) {
             for(int i = 0; i < game.getNumOfPlayers(); i++) { //playerTable excluding board
-                this.boardFilePaths.add("src/main/resources/it/polimi/sw/gianpaolocugola47/gameStatus/playerTableStatus" + i +".json");
+                this.boardFilePaths.add("playerTableStatus" + i +".json");
             }
         }
     }

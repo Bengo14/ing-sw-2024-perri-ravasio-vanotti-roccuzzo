@@ -174,7 +174,7 @@ public class ViewGui extends Application implements View {
     }
 
     /**
-     * This method creates the logout button and the allert that asks if the user wants to log out.
+     * This method creates the logout button and the alert that asks if the user wants to log out.
      * @param primaryStage the stage of the view
      */
     public void logOut(Stage primaryStage) {

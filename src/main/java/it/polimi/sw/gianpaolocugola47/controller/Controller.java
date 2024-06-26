@@ -108,15 +108,6 @@ public class Controller { //has to include nicknames of players
     public void addModelObserver(Observer observer) {
         this.mainTable.addObserver(observer);
     }
-
-    /**
-     * Removes an observer from the mainTable.
-     * @param observer: the observer to be removed.
-     */
-    public void removeModelObserver(Observer observer) {
-        mainTable.removeObserver(observer);
-    }
-
     /**
      * Sets the number of players in the game both on the controller and on the mainTable.
      * @param num : number of players.
@@ -125,7 +116,6 @@ public class Controller { //has to include nicknames of players
         this.numOfPlayers = num;
         this.mainTable.setNumOfPlayers(num);
     }
-
     /**
      * Returns the number of players.
      * @return : number of players in the game.
@@ -133,7 +123,6 @@ public class Controller { //has to include nicknames of players
     public int getNumOfPlayers(){
         return this.numOfPlayers;
     }
-
     /**
      * Adds a client to the game.
      * Increments the number of clients connected by one.
@@ -141,7 +130,6 @@ public class Controller { //has to include nicknames of players
     public void addClientConnected(){
         this.clientsConnected++;
     }
-
     /**
      * Returns the number of clients connected to the game.
      * @return : number of clients connected to the game.
@@ -165,7 +153,6 @@ public class Controller { //has to include nicknames of players
     public void setClientsConnected(int clientsConnected) {
         this.clientsConnected = clientsConnected;
     }
-
     /**
      * Sets the number of players added to the game. Used when loading from file.
      * @param playersAdded : number of players added to the game.
@@ -173,7 +160,6 @@ public class Controller { //has to include nicknames of players
     public void setPlayersAdded(int playersAdded) {
         this.playersAdded = playersAdded;
     }
-
     /**
      * Sets the number of starting cards and objectives added to the game. Used when loading from file.
      * @param startingCardsAndObjAdded : number of starting cards and objectives added to the game.
@@ -181,7 +167,6 @@ public class Controller { //has to include nicknames of players
     public void setStartingCardsAndObjAdded(int startingCardsAndObjAdded) {
         this.startingCardsAndObjAdded = startingCardsAndObjAdded;
     }
-
     /**
      * Sets whether the current turn is the last one or not. Used when loading from file.
      * @param lastTurn : true if the current turn is the last one, false otherwise.

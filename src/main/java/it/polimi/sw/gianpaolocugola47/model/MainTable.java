@@ -144,17 +144,6 @@ public class MainTable implements Observable {
     }
 
     /**
-     * Removes an observer from the list of observers.
-     * @param observer : the observer to remove.
-     */
-    @Override
-    public void removeObserver(Observer observer) {
-        synchronized (observers) {
-            this.observers.remove(observer);
-        }
-    }
-
-    /**
      * Draws a starting card from the starting deck.
      * @return : the starting card drawn.
      */

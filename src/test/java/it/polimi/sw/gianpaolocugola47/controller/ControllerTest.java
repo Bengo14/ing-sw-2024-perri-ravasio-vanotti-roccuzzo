@@ -31,6 +31,11 @@ class ControllerTest {
         controller.addPlayer(1, "name");
         assertEquals(1, controller.getNumOfPlayersCurrentlyAdded());
     }
+    @Test
+    public void testAddClientConnected(){
+        controller.addClientConnected();
+        assertEquals(1,controller.getClientsConnected());
+    }
 
     @Test
     public void testDrawCard() {
@@ -50,9 +55,62 @@ class ControllerTest {
         MainTable main= new MainTable();
         ctrl.setMainTable(main);
         assertEquals(main,ctrl.getMainTable());
-
-//        assertEquals(0,ctrl.getNumOfPlayers());
-//        assertEquals(0,ctrl.getNumOfPlayersCurrentlyAdded());
-//        ctrl.addPlayer(0,"Mario");
+    }
+    @Test
+    public void testSetCurrentPlayerId(){
+        controller.setCurrentPlayerId(1);
+        assertEquals(1,controller.getCurrentPlayerId());
+    }
+    @Test
+    public void testSetClientConnected(){
+        controller.setClientsConnected(1);
+        assertEquals(1,controller.getClientsConnected());
+    }
+    @Test
+    public void testSetPlayersAdded(){
+        controller.setPlayersAdded(2);
+        assertEquals(2,controller.getNumOfPlayersCurrentlyAdded());
+    }
+    @Test
+    public void testSetStartingCardsAndObjAdded(){
+        controller.setStartingCardsAndObjAdded(2);
+        assertEquals(2,controller.getStartingCardsAndObjAdded());
+    }
+    @Test
+    public void testSetLastTurn(){
+        controller.setLastTurn(true);
+        assertTrue(controller.isLastTurn());
+    }
+    @Test
+    public void testGetPlayablePositions(){
+        controller.setNumOfPlayers(2);
+        controller.addPlayer(0, "name");
+        controller.addPlayer(1, "name_2");
+        controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
+        assertNotNull(controller.getPlayablePositions(0));
+        controller.drawCard(1,0);
+        controller.playCard(0,9,9,0,0,true);
+        assertNotNull(controller.getPlacedCards(0));
+    }
+    @Test
+    public void testGetResourceCounter(){
+        controller.setNumOfPlayers(2);
+        controller.addPlayer(0, "name");
+        controller.addPlayer(1, "name_2");
+        controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
+        assertNotNull(controller.getSecretObjective(0));
+        assertNotNull(controller.getResourceCounter(0));
+    }
+    @Test
+    public void testGetNicknames(){
+        controller.setNumOfPlayers(2);
+        controller.addPlayer(0, "name");
+        controller.addPlayer(1, "name_2");
+        assertNotNull(controller.getNicknames());
+        assertEquals(2,controller.getNicknames().length);
+        assertEquals("name",controller.getNicknames()[0]);
+        assertEquals("name_2",controller.getNicknames()[1]);
     }
 }

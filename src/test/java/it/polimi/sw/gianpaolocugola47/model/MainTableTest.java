@@ -36,13 +36,6 @@ class MainTableTest {
         assertNotNull(mainTable.getPlayersTables());
     }
     @Test
-    public void testRemoveObserver() {
-        MainTable mainTable = new MainTable();
-        mainTable.removeObserver(stub);
-        //the observer is in the list of observer, i?ve not rhe getObserver method
-        assertFalse(mainTable.getObservers().contains(stub));
-    }
-    @Test
     public void testSetEndGame() {
         MainTable mainTable = new MainTable();
         mainTable.setEndGame(true);

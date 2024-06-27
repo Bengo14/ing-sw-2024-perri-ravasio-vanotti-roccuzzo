@@ -70,12 +70,16 @@ public class EndGameController implements Initializable {
             alert.getDialogPane().getStyleClass().add("tooltip");
             alert.getDialogPane().lookup(".content.label").setStyle("-fx-text-fill: black;");
             if (alert.showAndWait().get() == ButtonType.OK) {
-                stage.close();
+                if (stage != null) {
+                    stage.close();
+                }
                 client.terminateLocal();
             }
         });
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resources) {}
+    public void initialize(URL url, ResourceBundle resources) {
+
+    }
 }

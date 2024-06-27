@@ -379,7 +379,7 @@ public class Controller { //has to include nicknames of players
      * Once the decks, playerTables, mainTable and controller are loaded, the respective parameters are
      * set onto the current controller and mainTable attributes. At the end of this, gameSaver's status is updated.
      */
-    public void loadGame(){
+    public void loadGame() {
         gameSaver.updateControllerStatus(this);
         Controller c = gameSaver.loadControllerStatus();
         if(c != null){
@@ -428,7 +428,7 @@ public class Controller { //has to include nicknames of players
      * @param id : player's id.
      * @return : placing order of the given player.
      */
-    public ArrayList<int[]> getPlacingOrder(int id){
+    public ArrayList<int[]> getPlacingOrder(int id) {
         return mainTable.getPlayerTable(id).getPlaceOrder();
     }
 }

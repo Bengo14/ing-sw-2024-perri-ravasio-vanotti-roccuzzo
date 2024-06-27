@@ -9,6 +9,8 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * This class is a proxy for the server, it is used to send messages to the client
@@ -398,5 +400,23 @@ public class SocketServerProxy implements VirtualServer {
             e.printStackTrace();
         }
         return new boolean[0][];
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public ArrayList<int[]> getPlacingOrder(int id) {
+        SocketMessage message = new SocketMessage();
+        message.addData("getPlacingOrder");
+        message.addData(id);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * This class is a proxy for the client, it is used to send messages to the client through the socket.
@@ -411,6 +412,16 @@ public class SocketClientProxy implements VirtualView {
         SocketMessage message = new SocketMessage();
         message.addData("getPlayPos");
         message.addData(playablePositions);
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    protected void getPlacingOrderResponse(ArrayList<int[]> order) {
+        SocketMessage message = new SocketMessage();
+        message.addData("getPlacingOrder");
+        message.addData(order);
         try {
             output.writeObject(message);
         } catch (IOException e) {

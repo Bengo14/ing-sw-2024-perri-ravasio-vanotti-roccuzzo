@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * This class represents the handler of a client connected to the server via socket.
@@ -447,6 +448,18 @@ public class SocketClientHandler implements VirtualView, VirtualServer {
     public int getNumOfPlayers() {
         synchronized (controller) {
             return this.controller.getNumOfPlayers();
+        }
+    }
+
+    /**
+     * This method gets the placing order from the model, for gui purposes.
+     * @param playerId the player's id.
+     * @return an ArrayList of coordinates (x,y), represented by arrays of int.
+     */
+    @Override
+    public ArrayList<int[]> getPlacingOrder(int playerId) {
+        synchronized (controller) {
+            return this.controller.getPlacingOrder(playerId);
         }
     }
 }

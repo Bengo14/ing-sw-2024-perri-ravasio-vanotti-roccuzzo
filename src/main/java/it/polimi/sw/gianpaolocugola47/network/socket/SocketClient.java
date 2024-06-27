@@ -11,6 +11,7 @@ import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -40,6 +41,7 @@ public class SocketClient implements VirtualView, Client {
     protected int[] getResourceCounterResponse;
     protected boolean[][] getPlayPosResponse;
     protected Objectives getSecretObjectiveResponse;
+    protected ArrayList<int[]> getPlacingOrderResponse;
 
     /**
      * Constructor of the class.
@@ -523,7 +525,22 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return nicknamesResponse;
     }
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public ArrayList<int[]> getPlacingOrder(int id) {
+        synchronized (server) {
+            server.getPlacingOrder(id);
+        }
+        while(!response)
+            Thread.onSpinWait();
 
+        response = false;
+        return getPlacingOrderResponse;
+    }
     /**
      * This method sends a message.
      * @param msg the message to send
@@ -571,6 +588,7 @@ public class SocketClient implements VirtualView, Client {
     public boolean isItMyTurn() {
         return isMyTurn;
     }
+
     /**
      * This method terminates the client locally.
      */

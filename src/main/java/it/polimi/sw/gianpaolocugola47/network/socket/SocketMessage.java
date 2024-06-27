@@ -132,6 +132,11 @@ public class SocketMessage implements Serializable {
                 client.setResponse();
             }
 
+            case "getPlacingOrder" -> {
+                client.getPlacingOrderResponse = (ArrayList<int[]>) data.removeFirst();
+                client.setResponse();
+            }
+
             default -> System.err.println("[INVALID MESSAGE]");
         }
     }
@@ -147,7 +152,7 @@ public class SocketMessage implements Serializable {
 
             case "numPlayers" -> handler.setNumOfPlayers((int) data.removeFirst());
 
-            case "addPlayer" -> handler.addPlayer((int) data.removeFirst(), (String) data.removeFirst());
+            case "addPlayer" -> handler.addPlayer(handler.id, (String) data.removeFirst());
 
             case "drawStarting" -> {
                 synchronized (handler.client) {
@@ -228,6 +233,12 @@ public class SocketMessage implements Serializable {
             case "getPlayPos" -> {
                 synchronized (handler.client) {
                     handler.client.getPlayablePositionsResponse(handler.getPlayablePositions(handler.id));
+                }
+            }
+
+            case "getPlacingOrder" -> {
+                synchronized (handler.client) {
+                    handler.client.getPlacingOrderResponse(handler.getPlacingOrder((int) data.removeFirst()));
                 }
             }
 

@@ -111,8 +111,11 @@ public class SocketMessage implements Serializable {
             case "getPlacedCards" -> {
                 PlaceableCard[][] pc = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
                 for (int i = 0; i < PlayerTable.getMatrixDimension(); i++)
-                    for (int j = 0; j < PlayerTable.getMatrixDimension(); j++)
+                    for (int j = 0; j < PlayerTable.getMatrixDimension(); j++) {
                         pc[i][j] = (PlaceableCard) data.removeFirst();
+                        if(pc[i][j] != null)
+                            pc[i][j].setFront((boolean) data.removeFirst());
+                    }
                 client.getPlacedCardsResponse = pc;
                 client.setResponse();
             }

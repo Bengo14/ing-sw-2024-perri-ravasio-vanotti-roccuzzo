@@ -329,8 +329,11 @@ public class SocketClientProxy implements VirtualView {
         SocketMessage message = new SocketMessage();
         message.addData("getPlacedCards");
         for(PlaceableCard[] p : placedCards)
-            for(PlaceableCard c : p)
+            for(PlaceableCard c : p) {
                 message.addData(c);
+                if(c != null)
+                    message.addData(c.getIsFront());
+            }
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -423,6 +426,11 @@ public class SocketClientProxy implements VirtualView {
             e.printStackTrace();
         }
     }
+
+    /**
+     *
+     * @param order
+     */
     protected void getPlacingOrderResponse(ArrayList<int[]> order) {
         SocketMessage message = new SocketMessage();
         message.addData("getPlacingOrder");

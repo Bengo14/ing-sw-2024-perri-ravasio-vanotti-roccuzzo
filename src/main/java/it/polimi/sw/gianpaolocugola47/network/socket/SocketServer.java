@@ -9,10 +9,7 @@ import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +113,11 @@ public class SocketServer implements Observer {
 
                 synchronized (this.clients) {
                     for (SocketClientHandler handler : this.clients)
-                        handler.ping();
+                        try{
+                            handler.ping();
+                        } catch (Exception e){
+                            System.out.println("Ping not responding. Client might have quit.");
+                        }
 
                     try {
                         clients.wait(5000);

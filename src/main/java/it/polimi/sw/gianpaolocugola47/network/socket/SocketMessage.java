@@ -134,7 +134,8 @@ public class SocketMessage implements Serializable {
 
             case "getPlacingOrder" -> {
                 ArrayList<int[]> placingOrder = new ArrayList<>();
-                for (int i = 0; i < data.size(); i++) {
+                int dim = data.size();
+                for (int i = 0; i < dim; i++) {
                     int[] row = new int[2];
                     row[0] = (int) data.removeFirst();
                     row[1] = (int) data.removeFirst();

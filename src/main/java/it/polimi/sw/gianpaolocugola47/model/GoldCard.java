@@ -64,7 +64,7 @@ public class GoldCard extends ResourceCard {
         if (isPointsForItems()) {
             return Character.toString(getItemRequired().getSymbol());
         } else
-            return "";
+            return "N/A";
     }
 
     /**

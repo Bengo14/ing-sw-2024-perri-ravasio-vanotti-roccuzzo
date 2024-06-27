@@ -100,12 +100,20 @@ public class SocketMessage implements Serializable {
             }
 
             case "getCardsOnHand" -> {
-                client.getCardsOnHandResponse = (ResourceCard[][]) data.removeFirst();
+                ResourceCard[][] rc = new ResourceCard[(int)data.removeFirst()][3];
+                for (int i = 0; i < rc.length; i++)
+                    for (int j = 0; j < 3; j++)
+                        rc[i][j] = (ResourceCard) data.removeFirst();
+                client.getCardsOnHandResponse = rc;
                 client.setResponse();
             }
 
             case "getPlacedCards" -> {
-                client.getPlacedCardsResponse = (PlaceableCard[][]) data.removeFirst();
+                PlaceableCard[][] pc = new PlaceableCard[PlayerTable.getMatrixDimension()][PlayerTable.getMatrixDimension()];
+                for (int i = 0; i < PlayerTable.getMatrixDimension(); i++)
+                    for (int j = 0; j < PlayerTable.getMatrixDimension(); j++)
+                        pc[i][j] = (PlaceableCard) data.removeFirst();
+                client.getPlacedCardsResponse = pc;
                 client.setResponse();
             }
 

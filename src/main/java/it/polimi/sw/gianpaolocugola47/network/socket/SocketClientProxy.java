@@ -308,7 +308,10 @@ public class SocketClientProxy implements VirtualView {
     protected void getCardsOnHandResponse(ResourceCard[][] cardsOnHand) {
         SocketMessage message = new SocketMessage();
         message.addData("getCardsOnHand");
-        message.addData(cardsOnHand);
+        message.addData(cardsOnHand.length);
+        for(ResourceCard rc[] : cardsOnHand)
+            for(ResourceCard r : rc)
+                message.addData(r);
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -325,7 +328,9 @@ public class SocketClientProxy implements VirtualView {
     protected void getPlacedCardsResponse(PlaceableCard[][] placedCards) {
         SocketMessage message = new SocketMessage();
         message.addData("getPlacedCards");
-        message.addData(placedCards);
+        for(PlaceableCard[] p : placedCards)
+            for(PlaceableCard c : p)
+                message.addData(c);
         try {
             output.writeObject(message);
         } catch (IOException e) {

@@ -85,7 +85,6 @@ public class SocketServerProxy implements VirtualServer {
     public void addPlayer(int id, String nickname) {
         SocketMessage message = new SocketMessage();
         message.addData("addPlayer");
-        message.addData(id);
         message.addData(nickname);
         try {
             output.writeObject(message);

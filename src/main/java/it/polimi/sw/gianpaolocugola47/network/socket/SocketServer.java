@@ -340,8 +340,6 @@ public class SocketServer implements Observer {
             System.out.println("Socket Server ready ---> IP: "+ ip +", Port: "+SERVER_PORT);
             SocketServer.server = new SocketServer(serverSocket, controller);
             SocketServer.server.run();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 }

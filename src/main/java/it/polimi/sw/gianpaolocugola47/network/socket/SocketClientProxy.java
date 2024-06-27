@@ -421,7 +421,10 @@ public class SocketClientProxy implements VirtualView {
     protected void getPlacingOrderResponse(ArrayList<int[]> order) {
         SocketMessage message = new SocketMessage();
         message.addData("getPlacingOrder");
-        message.addData(order);
+        for(int i = 0; i<order.size(); i++) {
+            message.addData(order.get(i)[0]);
+            message.addData(order.get(i)[1]);
+        }
         try {
             output.writeObject(message);
         } catch (IOException e) {

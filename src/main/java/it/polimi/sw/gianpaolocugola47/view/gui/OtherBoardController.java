@@ -147,15 +147,17 @@ public class OtherBoardController implements Initializable {
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+id+".png")));
 
         PlaceableCard[][] placedCards = this.gui.getPlacedCards(id);
+
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
         matrix[10][10].setMouseTransparent(false);
+
         ArrayList<int[]> array = gui.getPlacingOrder(id);
-        for(int i=0;i<array.size();i++){
+        for(int i=0; i<array.size(); i++) {
             int x = array.get(i)[0];
             int y = array.get(i)[1];
-            String frnt = placedCards[x][y].getIsFront() ? "front_" : "back_";
-            matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ frnt + placedCards[x][y].getId() + ".png")));
+            front = placedCards[x][y].getIsFront() ? "front_" : "back_";
+            matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[x][y].getId() + ".png")));
             matrix[x][y].setMouseTransparent(false);
             matrix[x][y].toFront();
         }

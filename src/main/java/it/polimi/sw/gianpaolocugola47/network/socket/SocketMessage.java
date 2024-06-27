@@ -133,7 +133,14 @@ public class SocketMessage implements Serializable {
             }
 
             case "getPlacingOrder" -> {
-                client.getPlacingOrderResponse = (ArrayList<int[]>) data.removeFirst();
+                ArrayList<int[]> placingOrder = new ArrayList<>();
+                for (int i = 0; i < data.size(); i++) {
+                    int[] row = new int[2];
+                    row[0] = (int) data.removeFirst();
+                    row[1] = (int) data.removeFirst();
+                    placingOrder.add(row);
+                }
+                client.getPlacingOrderResponse = placingOrder;
                 client.setResponse();
             }
 

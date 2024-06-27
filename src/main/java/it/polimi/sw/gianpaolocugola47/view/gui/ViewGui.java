@@ -69,7 +69,7 @@ public class ViewGui extends Application implements View {
      * This method gets the placing order of the players from the client.
      * @return the placing order of the players.
      */
-    public ArrayList<int[]> getPlacingOrder(int id){
+    public ArrayList<int[]> getPlacingOrder(int id) {
         return client.getPlacingOrder(id);
     }
 
@@ -483,9 +483,9 @@ public class ViewGui extends Application implements View {
     }
 
     /**
-     * This method gets all the placed cards of the players.
+     * This method gets all the placed cards of a player.
      * @param id the id of the player.
-     * @return all the placed cards of the players.
+     * @return all the placed cards of the player.
      */
     protected PlaceableCard[][] getPlacedCards(int id) {
         return client.getPlacedCards(id);

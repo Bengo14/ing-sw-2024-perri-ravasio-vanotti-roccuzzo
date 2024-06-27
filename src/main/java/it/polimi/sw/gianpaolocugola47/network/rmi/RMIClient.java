@@ -18,6 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -539,6 +540,24 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     public boolean isItMyTurn() {
         return isMyTurn;
     }
+
+    /**
+     * This method is used to get the card's placing order of a given player from the controller.
+     * @param id : player's id.
+     * @return : the given player's placing order.
+     */
+    @Override
+    public ArrayList<int[]> getPlacingOrder(int id) {
+        try{
+            synchronized (server){
+                return server.getPlacingOrder(id);
+            }
+        } catch(RemoteException e){
+            terminateLocal();
+        }
+        return null;
+    }
+
     /**
      * This method is used to get the number of players.
      * It calls the getNumOfPlayers method of the server and sets the numOfPlayers variable.

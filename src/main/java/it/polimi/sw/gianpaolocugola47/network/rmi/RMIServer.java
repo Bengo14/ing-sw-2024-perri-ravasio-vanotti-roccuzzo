@@ -262,6 +262,14 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             return this.controller.getPlayablePositions(playerId);
         }
     }
+
+    @Override
+    public ArrayList<int[]> getPlacingOrder(int id) throws RemoteException {
+        synchronized (controller) {
+            return this.controller.getPlacingOrder(id);
+        }
+    }
+
     /**
      * This method plays a card.
      * It is called by the clients connected.

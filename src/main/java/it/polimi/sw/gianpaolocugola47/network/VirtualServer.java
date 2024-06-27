@@ -7,6 +7,8 @@ import it.polimi.sw.gianpaolocugola47.model.StartingCard;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 /**
  * This interface is used to define the methods that the server must implement.
  * The server is the entity that manages the game and the clients.
@@ -32,5 +34,5 @@ public interface VirtualServer extends Remote {
     String[] getNicknames() throws RemoteException;
     int getNumOfPlayers() throws RemoteException;
     boolean[][] getPlayablePositions(int playerId) throws RemoteException;
-
+    ArrayList<int[]> getPlacingOrder(int id) throws RemoteException;
 }

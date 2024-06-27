@@ -88,7 +88,6 @@ public class GameController implements Initializable {
     @FXML
     private Button switch_1,switch_2,switch_3;
 
-    // Variables to track mouse position and board offset
     private double mouseX;
     private double mouseY;
     private double boardOffsetX;
@@ -105,8 +104,6 @@ public class GameController implements Initializable {
     private ImageView[] cardsOnHand;
     private Button[] buttons;
     private ImageView[] table;
-    private boolean winPoints = false;
-    private boolean lastTurn = false;
 
     /**
      * Initializes the controller class.
@@ -125,7 +122,7 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         addZoomFunctionality();
-        addDragFunctionality();
+        //addDragFunctionality();
         cardsOnHand = new ImageView[] {hand_0, hand_1, hand_2};
         buttons = new Button[] {switch_1, switch_2, switch_3};
         table = new ImageView[] {res_1, res_2, gold_1, gold_2, deck_res, deck_gold};
@@ -364,9 +361,6 @@ public class GameController implements Initializable {
             imagePath += gui.getCardsOnHand()[i].getIsFront() ? "front_" : "back_";
             imagePath += gui.getCardsOnHand()[i].getId() + ".png";
             cardsOnHand[i].setImage(new Image(getClass().getResourceAsStream(imagePath)));
-        }
-        if(lastTurn && gui.getLocalPlayerTable().getId() == gui.getNicknames().length-1) {
-            gui.setScene("endGame");
         }
     }
 

@@ -119,7 +119,7 @@ public class SocketServer implements Observer {
                         handler.ping();
 
                     try {
-                        clients.wait(500);
+                        clients.wait(5000);
                     } catch (InterruptedException _) {}
 
                     for (SocketClientHandler handler : this.clients)

@@ -600,6 +600,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
             try {
                 ip = InetAddress.getLocalHost().getHostAddress();
                 System.setProperty("java.rmi.server.hostname", ip);
+                System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000");
+                System.setProperty("sun.rmi.transport.tcp.requestTimeout", "5000");
+                System.setProperty("sun.rmi.transport.connectionTimeout", "5000");
                 RMIServer.server = new RMIServer(controller);
                 Registry registry = LocateRegistry.createRegistry(SERVER_PORT);
                 registry.rebind(name, RMIServer.server);

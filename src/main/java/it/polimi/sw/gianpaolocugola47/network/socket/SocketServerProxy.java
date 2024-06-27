@@ -9,7 +9,6 @@ import it.polimi.sw.gianpaolocugola47.network.VirtualView;
 import it.polimi.sw.gianpaolocugola47.network.ChatMessage;
 
 import java.io.*;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**

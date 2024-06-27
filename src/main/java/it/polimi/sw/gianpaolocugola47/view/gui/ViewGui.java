@@ -99,7 +99,7 @@ public class ViewGui extends Application implements View {
      * @param stage the stage of the view
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         localPlayerTable = new PlayerTable(client.getIdLocal());
         localPlayerTable.setNickname(client.getNicknameLocal());

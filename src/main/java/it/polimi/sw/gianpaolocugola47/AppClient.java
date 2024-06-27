@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola47;
 
 import it.polimi.sw.gianpaolocugola47.network.rmi.RMIClient;
 import it.polimi.sw.gianpaolocugola47.network.socket.SocketClient;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -11,9 +10,8 @@ import java.util.Scanner;
 public class AppClient {
     /**
      * This method is the main client method, it asks the user to choose the connection type and then connects to the server
-     * @throws IOException if the connection fails
      */
-    public void main() throws IOException {
+    public void main() {
 
         System.out.println("Choose the connection type: \n1 = RMI \n2 = SOCKET");
         Scanner scan = new Scanner(System.in);

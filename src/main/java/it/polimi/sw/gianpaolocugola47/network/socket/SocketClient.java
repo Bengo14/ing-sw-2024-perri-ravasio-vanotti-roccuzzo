@@ -526,9 +526,11 @@ public class SocketClient implements VirtualView, Client {
         return nicknamesResponse;
     }
     /**
-     *
-     * @param id
-     * @return
+     * This method returns the placing order of cards.
+     * It is called when loading a save file from a suspended match.
+     * It returns the placing order of cards by a player.
+     * @param id the id of the player
+     * @return order of placed cards
      */
     @Override
     public ArrayList<int[]> getPlacingOrder(int id) {
@@ -541,6 +543,7 @@ public class SocketClient implements VirtualView, Client {
         response = false;
         return getPlacingOrderResponse;
     }
+
     /**
      * This method sends a message.
      * @param msg the message to send

@@ -5,6 +5,8 @@ import it.polimi.sw.gianpaolocugola47.model.*;
 import it.polimi.sw.gianpaolocugola47.observer.Observer;
 import it.polimi.sw.gianpaolocugola47.utils.GameSaver;
 
+import java.util.ArrayList;
+
 /**
  * Controller class is the main class of the game. It is responsible for managing the game flow and the interactions between the model and the views.
  */
@@ -419,5 +421,14 @@ public class Controller { //has to include nicknames of players
      */
     public boolean isGameLoaded() {
         return isGameLoaded;
+    }
+
+    /**
+     * Returns the card's placing order of a given player. For GUI purposes.
+     * @param id : player's id.
+     * @return : placing order of the given player.
+     */
+    public ArrayList<int[]> getPlacingOrder(int id){
+        return mainTable.getPlayerTable(id).getPlaceOrder();
     }
 }

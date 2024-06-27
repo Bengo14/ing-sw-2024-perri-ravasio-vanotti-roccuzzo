@@ -90,6 +90,7 @@ class ControllerTest {
         controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
         assertNotNull(controller.getPlayablePositions(0));
         controller.drawCard(1,0);
+        assertNotNull(controller.getCardsOnHand());
         controller.playCard(0,9,9,0,0,true);
         assertNotNull(controller.getPlacedCards(0));
     }
@@ -112,5 +113,42 @@ class ControllerTest {
         assertEquals(2,controller.getNicknames().length);
         assertEquals("name",controller.getNicknames()[0]);
         assertEquals("name_2",controller.getNicknames()[1]);
+    }
+    @Test
+    public void testLoadGame(){
+        controller.setNumOfPlayers(2);
+        controller.addPlayer(0, "name");
+        controller.addPlayer(1, "name_2");
+        controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
+        controller.setStartingCardAndDrawObjectives(1,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(1,Deck.getObjectiveCardsDeck().getFirst());
+        controller.drawCard(0,0);
+        controller.drawCard(0,0);
+        controller.drawCard(0,0);
+        controller.drawCard(1,1);
+        controller.drawCard(1,1);
+        controller.drawCard(1,1);
+        controller.loadGame();
+        controller.startGameFromFile();
+        assertNotNull(controller.getMainTable());
+        assertTrue(controller.isGameLoaded());
+    }
+    @Test
+    public void testComputeWinner(){
+        controller.setNumOfPlayers(2);
+        controller.addPlayer(0, "name");
+        controller.addPlayer(1, "name_2");
+        controller.setStartingCardAndDrawObjectives(0,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(0,Deck.getObjectiveCardsDeck().getFirst());
+        controller.setStartingCardAndDrawObjectives(1,Deck.drawCardFromStartingDeck());
+        controller.setSecretObjectiveAndUpdateView(1,Deck.getObjectiveCardsDeck().getFirst());
+        controller.drawCard(0,0);
+        controller.drawCard(0,0);
+        controller.drawCard(0,0);
+        controller.drawCard(1,1);
+        controller.drawCard(1,1);
+        controller.drawCard(1,1);
+        controller.computeWinner();
     }
 }

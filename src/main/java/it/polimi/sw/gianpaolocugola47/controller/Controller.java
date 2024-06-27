@@ -336,7 +336,7 @@ public class Controller { //has to include nicknames of players
     /**
      * Computes the winner of the game. It calls the mainTable.computeWinnerAtEndGame() method.
      */
-    private void computeWinner() {
+    void computeWinner() {
         mainTable.computeWinnerAtEndGame();
     }
 

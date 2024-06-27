@@ -117,7 +117,7 @@ public class ViewGui extends Application implements View {
         stage.setX(0);
         stage.setY(0);
         stage.setResizable(true);
-        //stage.setMaximized(true);
+        stage.setMaximized(true);
         this.stage = stage;
 
         stage.setOnCloseRequest(event -> {

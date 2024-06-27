@@ -267,17 +267,17 @@ public class GameController implements Initializable {
      * This method adds the drag functionality to the board
      */
     private void addDragFunctionality() {
-        boardPane.setOnMousePressed(event -> {
+        boardScrollPane.setOnMousePressed(event -> {
             mouseX = event.getSceneX();
             mouseY = event.getSceneY();
-            boardOffsetX = boardPane.getLayoutX();
-            boardOffsetY = boardPane.getLayoutY();
+            boardOffsetX = boardScrollPane.getLayoutX();
+            boardOffsetY = boardScrollPane.getLayoutY();
         });
         boardPane.setOnMouseDragged(event -> {
             double deltaX = event.getSceneX() - mouseX;
             double deltaY = event.getSceneY() - mouseY;
-            boardPane.setLayoutX(boardOffsetX + deltaX);
-            boardPane.setLayoutY(boardOffsetY + deltaY);
+            boardScrollPane.setLayoutX(boardOffsetX + deltaX);
+            boardScrollPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
 
@@ -318,25 +318,21 @@ public class GameController implements Initializable {
             boardPositions[j].setImage(null);
 
         for(int i = 0; i<boardPoints.length; i++) {
-            if(boardPoints[i]<=29)
+            if(boardPoints[i] <= 29)
                 boardPositions[boardPoints[i]].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+i+".png")));
+            else boardPositions[29].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+i+".png")));
         }
-        if(winPoints && gui.getLocalPlayerTable().getId()==0){
-            lastTurn = true;
-            lastTurnLabel.setText("Last turn!");
-            lastTurnLabel.getStyleClass().add("lastTurn");
-        }
+
         globalPointsLabel.setText("Global points: " + globalPoints[gui.getLocalPlayerTable().getId()]);
-        if(boardPoints[gui.getLocalPlayerTable().getId()]>=20 && !winPoints){
-            winPoints = true;
-        }
-        labelAnimal.setText(" "+gui.getResourcesCounter()[0]);
-        labelPlant.setText(" "+gui.getResourcesCounter()[2]);
-        labelInsect.setText(" "+gui.getResourcesCounter()[3]);
-        labelFungi.setText(" "+gui.getResourcesCounter()[1]);
-        labelInkwell.setText(" "+gui.getResourcesCounter()[5]);
-        labelManuscript.setText(" "+gui.getResourcesCounter()[6]);
-        labelQuill.setText(" "+gui.getResourcesCounter()[4]);
+
+        int[] resourceCounter = gui.getResourcesCounter();
+        labelAnimal.setText(" "+resourceCounter[0]);
+        labelPlant.setText(" "+resourceCounter[2]);
+        labelInsect.setText(" "+resourceCounter[3]);
+        labelFungi.setText(" "+resourceCounter[1]);
+        labelInkwell.setText(" "+resourceCounter[5]);
+        labelManuscript.setText(" "+resourceCounter[6]);
+        labelQuill.setText(" "+resourceCounter[4]);
     }
 
     /**

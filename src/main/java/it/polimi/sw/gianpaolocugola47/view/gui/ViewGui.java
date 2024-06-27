@@ -65,13 +65,6 @@ public class ViewGui extends Application implements View {
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("OtherBoard", "/it/polimi/sw/gianpaolocugola47/fxml/OtherBoardFXML.fxml");
     }
-    /**
-     * This method gets the placing order of the players from the client.
-     * @return the placing order of the players.
-     */
-    public ArrayList<int[]> getPlacingOrder(int id) {
-        return client.getPlacingOrder(id);
-    }
 
     /**
      * This method sets the client of the view
@@ -172,9 +165,9 @@ public class ViewGui extends Application implements View {
                     break;
                 case "EndGame":
                     endGameController = fxmlLoader.getController();
-                    endGameController.showResults(globalPoints, nicknames, winnerId);
                     endGameController.setClient(client);
                     endGameController.setStage(stage);
+                    endGameController.showResults(globalPoints, nicknames, winnerId);
                     break;
             }
             stage.show();
@@ -519,7 +512,7 @@ public class ViewGui extends Application implements View {
      */
     protected int[] getBoardPoints() {
         if(boardPoints == null){
-            boardPoints = new int[getNicknames().length];
+            boardPoints = new int[client.getIdLocal()];
         }
         return boardPoints;
     }
@@ -529,8 +522,15 @@ public class ViewGui extends Application implements View {
      */
     protected int[] getGlobalPoints() {
         if(globalPoints == null){
-            globalPoints = new int[getNicknames().length];
+            globalPoints = new int[client.getIdLocal()];
         }
         return globalPoints;
+    }
+    /**
+     * This method gets the placing order of the players from the client.
+     * @return the placing order of the players.
+     */
+    public ArrayList<int[]> getPlacingOrder(int id) {
+        return client.getPlacingOrder(id);
     }
 }

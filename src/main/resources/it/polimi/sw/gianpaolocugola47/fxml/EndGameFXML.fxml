@@ -11,6 +11,6 @@
         <Image url="@../graphics/cards/back_89.png" />
     </ImageView>
     <Label id="titleEndGame" fx:id="winner_LBL" alignment="CENTER" layoutX="665.0" layoutY="42.0" prefHeight="64.0" prefWidth="242.0" styleClass="h4" stylesheets="@../css/Style.css" />
-    <Label id="titleEndGame" fx:id="nameWinnerLabel" layoutX="485.0" layoutY="267.0" prefHeight="113.0" prefWidth="603.0" styleClass="h2" stylesheets="@../css/Style.css" />
+    <Label id="titleEndGame" fx:id="nameWinnerLabel" layoutX="421.0" layoutY="267.0" prefHeight="113.0" prefWidth="725.0" styleClass="h2" stylesheets="@../css/Style.css" />
     <Button id="titleEndGame" fx:id="ExitGame_BTN" layoutX="749.0" layoutY="650.0" mnemonicParsing="false" onAction="#logOut" styleClass="h4" stylesheets="@../css/Style.css" text="EXIT" />
 </Pane>

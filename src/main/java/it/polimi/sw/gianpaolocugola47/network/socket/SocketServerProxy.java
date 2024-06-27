@@ -71,6 +71,7 @@ public class SocketServerProxy implements VirtualServer {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is used to add a player to the game. It creates a new SocketMessage,
      * adds the string "addPlayer", the player's id and nickname to the message data,
@@ -108,6 +109,7 @@ public class SocketServerProxy implements VirtualServer {
         }
         return null;
     }
+
     /**
      * This method is used to draw an objective card. It creates a new SocketMessage,
      * adds the string "setStarting" the playerId and the startingCard to the message data,
@@ -126,6 +128,7 @@ public class SocketServerProxy implements VirtualServer {
         }
         return new Objectives[0];
     }
+
     /**
      * This method is used to set a secret objective. It creates a new SocketMessage,
      * adds the string "setObj" the playerId and the objective to the message data,
@@ -144,6 +147,7 @@ public class SocketServerProxy implements VirtualServer {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is used to start the game from file. It creates a new SocketMessage,
      * adds the string "startFromFile" to the message data,
@@ -284,6 +288,13 @@ public class SocketServerProxy implements VirtualServer {
         return new int[0];
     }
 
+
+    /**
+     * This method is used to send a public message. It creates a new SocketMessage,
+     * adds the string "Message" and the message to the message data,
+     * then sends this message to the client through the output stream.
+     * @param msg the message to send.
+     */
     @Override
     public void sendMessage(ChatMessage msg) {
         SocketMessage message = new SocketMessage();
@@ -295,6 +306,7 @@ public class SocketServerProxy implements VirtualServer {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is used to send a private message. It creates a new SocketMessage,
      * adds the string "privateMessage" and the message to the message data,
@@ -332,6 +344,7 @@ public class SocketServerProxy implements VirtualServer {
         }
         return false;
     }
+
     /**
      * This method is used to get the nicknames. It creates a new SocketMessage,
      * adds the string "getNick" to the message data,
@@ -349,6 +362,7 @@ public class SocketServerProxy implements VirtualServer {
         }
         return new String[0];
     }
+
     /**
      * This method is used to get the number of players. It creates a new SocketMessage,
      * adds the string "getNumPlayers" to the message data,

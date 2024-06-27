@@ -642,6 +642,7 @@ public class PlayerTable{
         for(int i = 0; i < MATRIX_DIMENSION; i++){
             for(int j = 0; j < MATRIX_DIMENSION; j++){
                 if(placedCards[i][j] != null && i != STARTING_CARD_POS && j != STARTING_CARD_POS){
+                    placedCards[i][j].setFlaggedForObjective(false);
                     for(int corner = 0; corner < 4; corner++){
                         linkCards(i, j, corner);
                     }

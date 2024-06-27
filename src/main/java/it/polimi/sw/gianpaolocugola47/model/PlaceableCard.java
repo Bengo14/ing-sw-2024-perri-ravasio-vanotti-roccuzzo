@@ -6,6 +6,7 @@ import java.util.Arrays;
 /**
  * This abstract class represents all the placeable cards in the game.
  * It includes the front and back image path, the coordinates, the flag for the objective, the corners and the id of the card.
+ * The flag for the objective is used to check whether a card is used for calculating a given L-shape or diagonal pattern objective.
  * It is inherited by the StartingCard, ResourceCard and GoldCard classes.
  */
 public abstract class PlaceableCard implements Serializable {

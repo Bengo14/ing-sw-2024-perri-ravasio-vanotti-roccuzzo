@@ -211,10 +211,9 @@ public class ViewGui extends Application implements View {
                 client.terminateLocal();
             }
             otherBoardController = fxmlLoader.getController();
-            otherBoardController.start(this, id);
-
             scene = new Scene(root);
             stage.setScene(scene);
+            otherBoardController.start(this, id);
             stage.show();
         });
     }

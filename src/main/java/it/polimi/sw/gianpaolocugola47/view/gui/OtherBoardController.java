@@ -154,6 +154,7 @@ public class OtherBoardController implements Initializable {
         matrix[PlayerTable.getStartingCardPos()][PlayerTable.getStartingCardPos()].setMouseTransparent(false);
 
         ArrayList<int[]> array = gui.getPlacingOrder(id);
+
         for(int i=0; i<array.size(); i++) {
             int x = array.get(i)[0];
             int y = array.get(i)[1];

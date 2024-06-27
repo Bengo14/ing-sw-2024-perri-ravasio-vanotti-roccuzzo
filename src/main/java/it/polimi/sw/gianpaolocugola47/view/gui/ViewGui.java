@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -63,6 +64,13 @@ public class ViewGui extends Application implements View {
         scenes.put("EndGame", "/it/polimi/sw/gianpaolocugola47/fxml/EndGameFXML.fxml");
         scenes.put("Game", "/it/polimi/sw/gianpaolocugola47/fxml/GameFXML.fxml");
         scenes.put("OtherBoard", "/it/polimi/sw/gianpaolocugola47/fxml/OtherBoardFXML.fxml");
+    }
+    /**
+     * This method gets the placing order of the players from the client.
+     * @return the placing order of the players.
+     */
+    public ArrayList<int[]> getPlacingOrder(){
+        return client.getPlacingOrder(getLocalPlayerTable().getId());
     }
 
     /**

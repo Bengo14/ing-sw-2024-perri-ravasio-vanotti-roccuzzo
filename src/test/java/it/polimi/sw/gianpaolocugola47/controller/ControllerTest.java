@@ -131,6 +131,7 @@ class ControllerTest {
         controller.drawCard(1,1);
         controller.loadGame();
         controller.startGameFromFile();
+        assertEquals(2,controller.getNumOfPlayersCurrentlyAdded());
         assertNotNull(controller.getMainTable());
         assertTrue(controller.isGameLoaded());
     }

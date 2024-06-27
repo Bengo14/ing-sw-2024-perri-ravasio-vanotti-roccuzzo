@@ -145,37 +145,18 @@ public class OtherBoardController implements Initializable {
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+id+".png")));
 
-        PlaceableCard[][] placedCards = this.gui.getPlacedCards(id);
-
-        for(int k = 10; k < placedCards.length; k += 2)
-            for(int l = 10; l < placedCards.length; l++) {
-                matrix[k - (l % 2)][l].toFront();
-            }
-        for(int k = 8; k > 0; k -= 2)
-            for(int l = 10; l < placedCards.length; l++) {
-                matrix[k - (l % 2)][l].toFront();
-            }
-        for(int l = 10; l < placedCards.length; l += 2)
-            matrix[0][l].toFront();
-
-        for(int k = 10; k < placedCards.length; k += 2)
-            for(int l = 9; l >= 0; l--) {
-                matrix[k + (l % 2)][l].toFront();
-            }
-        for(int k = 9; k > 0; k -= 2)
-            for(int l = 9; l >= 0; l--) {
-                matrix[k + (l % 2) - 1][l].toFront();
-            }
-
-
-        for (int i = 0; i < placedCards.length; i++)
-            for (int j = 0; j < placedCards[i].length; j++)
-                if(placedCards[i][j] != null && matrix[i][j] != null) {
-                    String front = placedCards[i][j].getIsFront() ? "front_" : "back_";
-                    if(i == 10 && j == 10)
-                        front = placedCards[i][j].getIsFront() ? "back_" : "front_";
-                    matrix[i][j].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[i][j].getId() + ".png")));
-                }
+        PlaceableCard[][] placedCards = gui.getPlacedCards(gui.getLocalPlayerTable().getId());
+        String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
+        matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
+        matrix[10][10].setMouseTransparent(false);
+        for(int i=0;i<gui.getPlacingOrder().size();i++){
+            int x = gui.getPlacingOrder().get(i)[0];
+            int y = gui.getPlacingOrder().get(i)[1];
+            String frnt = placedCards[x][y].getIsFront() ? "front_" : "back_";
+            matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ frnt + placedCards[x][y].getId() + ".png")));
+            matrix[x][y].setMouseTransparent(false);
+            matrix[x][y].toFront();
+        }
     }
 
     /**

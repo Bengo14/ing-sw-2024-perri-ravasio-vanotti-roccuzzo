@@ -512,7 +512,7 @@ public class ViewGui extends Application implements View {
      */
     protected int[] getBoardPoints() {
         if(boardPoints == null){
-            boardPoints = new int[client.getIdLocal()];
+            boardPoints = new int[getNicknames().length];
         }
         return boardPoints;
     }
@@ -522,7 +522,7 @@ public class ViewGui extends Application implements View {
      */
     protected int[] getGlobalPoints() {
         if(globalPoints == null){
-            globalPoints = new int[client.getIdLocal()];
+            globalPoints = new int[getNicknames().length];
         }
         return globalPoints;
     }

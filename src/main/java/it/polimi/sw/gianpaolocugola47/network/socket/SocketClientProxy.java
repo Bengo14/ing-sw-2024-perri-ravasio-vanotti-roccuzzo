@@ -10,7 +10,6 @@ import java.util.ArrayList;
 /**
  * This class is a proxy for the client, it is used to send messages to the client through the socket.
  */
-@SuppressWarnings("ALL")
 public class SocketClientProxy implements VirtualView {
 
     private final ObjectOutputStream output;
@@ -35,9 +34,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(id);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -51,9 +48,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData("terminate");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -68,9 +63,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData("ping");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -86,9 +79,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(isLoaded);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -102,9 +93,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData("turn");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -120,9 +109,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(id);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -147,9 +134,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(msg);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
     /**
      * This method is used to receive a private message from the client. It creates a new SocketMessage,
@@ -164,9 +149,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(msg);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -188,9 +171,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(cardsOnTable);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -210,9 +191,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(drawPos);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -232,9 +211,7 @@ public class SocketClientProxy implements VirtualView {
             message.addData(globalPoints[i]);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -249,9 +226,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(card);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -266,9 +241,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(obj);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     protected void getSecretObjectiveResponse(Objectives obj) {
@@ -277,9 +250,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(obj);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -294,9 +265,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(bool);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -309,14 +278,12 @@ public class SocketClientProxy implements VirtualView {
         SocketMessage message = new SocketMessage();
         message.addData("getCardsOnHand");
         message.addData(cardsOnHand.length);
-        for(ResourceCard rc[] : cardsOnHand)
+        for(ResourceCard[] rc : cardsOnHand)
             for(ResourceCard r : rc)
                 message.addData(r);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -336,9 +303,7 @@ public class SocketClientProxy implements VirtualView {
             }
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -354,9 +319,7 @@ public class SocketClientProxy implements VirtualView {
             message.addData(resourceCounter[i]);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -371,9 +334,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(bool);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -388,9 +349,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(nicknames);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -405,9 +364,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(numOfPlayers);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -422,9 +379,7 @@ public class SocketClientProxy implements VirtualView {
         message.addData(playablePositions);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -440,8 +395,6 @@ public class SocketClientProxy implements VirtualView {
         }
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 }

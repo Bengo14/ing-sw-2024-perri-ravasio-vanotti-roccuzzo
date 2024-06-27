@@ -122,7 +122,6 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         addZoomFunctionality();
-        //addDragFunctionality();
         cardsOnHand = new ImageView[] {hand_0, hand_1, hand_2};
         buttons = new Button[] {switch_1, switch_2, switch_3};
         table = new ImageView[] {res_1, res_2, gold_1, gold_2, deck_res, deck_gold};
@@ -257,24 +256,6 @@ public class GameController implements Initializable {
                 boardPane.setScaleY(scaleY);
                 event.consume();
             }
-        });
-    }
-
-    /**
-     * This method adds the drag functionality to the board
-     */
-    private void addDragFunctionality() {
-        boardScrollPane.setOnMousePressed(event -> {
-            mouseX = event.getSceneX();
-            mouseY = event.getSceneY();
-            boardOffsetX = boardScrollPane.getLayoutX();
-            boardOffsetY = boardScrollPane.getLayoutY();
-        });
-        boardPane.setOnMouseDragged(event -> {
-            double deltaX = event.getSceneX() - mouseX;
-            double deltaY = event.getSceneY() - mouseY;
-            boardScrollPane.setLayoutX(boardOffsetX + deltaX);
-            boardScrollPane.setLayoutY(boardOffsetY + deltaY);
         });
     }
 
@@ -579,11 +560,11 @@ public class GameController implements Initializable {
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
         matrix[10][10].setMouseTransparent(false);
         ArrayList<int[]> array = gui.getPlacingOrder(gui.getLocalPlayerTable().getId());
-        for(int i=0;i<array.size();i++){
+        for(int i=0; i<array.size(); i++) {
             int x = array.get(i)[0];
             int y = array.get(i)[1];
-            String frnt = placedCards[x][y].getIsFront() ? "front_" : "back_";
-            matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ frnt + placedCards[x][y].getId() + ".png")));
+            front = placedCards[x][y].getIsFront() ? "front_" : "back_";
+            matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[x][y].getId() + ".png")));
             matrix[x][y].setMouseTransparent(false);
             matrix[x][y].toFront();
         }

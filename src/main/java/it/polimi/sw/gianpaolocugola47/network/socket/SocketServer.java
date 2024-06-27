@@ -113,11 +113,7 @@ public class SocketServer implements Observer {
 
                 synchronized (this.clients) {
                     for (SocketClientHandler handler : this.clients)
-                        try{
-                            handler.ping();
-                        } catch (Exception e){
-                            System.out.println("Ping not responding. Client might have quit.");
-                        }
+                        handler.ping();
 
                     try {
                         clients.wait(5000);

@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * This class is a proxy for the server, it is used to send messages to the client
  * through the socket connection.
  */
-@SuppressWarnings("ALL")
 public class SocketServerProxy implements VirtualServer {
 
     private final ObjectOutputStream output;
@@ -37,9 +36,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("ping");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -68,9 +65,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(num);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -87,9 +82,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(nickname);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -104,9 +97,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("drawStarting");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return null;
     }
 
@@ -123,9 +114,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(card);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new Objectives[0];
     }
 
@@ -143,9 +132,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(obj);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -159,9 +146,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("startFromFile");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -187,9 +172,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(isFront);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return false;
     }
     /**
@@ -206,9 +189,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(position);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /***
@@ -223,9 +204,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("getCardsOnHand");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new ResourceCard[0][];
     }
 
@@ -243,9 +222,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(playerId);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new PlaceableCard[0][];
     }
 
@@ -262,9 +239,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("getSecretObj");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return null;
     }
 
@@ -282,9 +257,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(playerId);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new int[0];
     }
 
@@ -302,9 +275,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(msg);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -320,9 +291,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(msg);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
     }
 
     /**
@@ -339,9 +308,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(nickname);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return false;
     }
 
@@ -357,9 +324,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("getNick");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new String[0];
     }
 
@@ -375,9 +340,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("getNumPlayers");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return 0;
     }
 
@@ -394,9 +357,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData("getPlayPos");
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return new boolean[0][];
     }
 
@@ -412,9 +373,7 @@ public class SocketServerProxy implements VirtualServer {
         message.addData(id);
         try {
             output.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException _) {}
         return null;
     }
 }

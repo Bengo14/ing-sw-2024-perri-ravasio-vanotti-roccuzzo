@@ -163,7 +163,6 @@ public class Deck {
     protected static ResourceCard drawCardFromResourceDeck(){
         if(resourceCardsDeck.isEmpty())
             return null;
-        resourceCardsDeck.getLast().setFront(true);
         return resourceCardsDeck.removeLast();
     }
 
@@ -174,7 +173,6 @@ public class Deck {
     protected static GoldCard drawCardFromGoldDeck(){
         if(goldCardsDeck.isEmpty())
             return null;
-        goldCardsDeck.getLast().setFront(true);
         return goldCardsDeck.removeLast();
     }
 

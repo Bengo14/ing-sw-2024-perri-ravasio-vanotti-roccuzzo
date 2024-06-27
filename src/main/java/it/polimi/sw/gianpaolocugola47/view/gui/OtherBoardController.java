@@ -12,6 +12,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -149,9 +150,10 @@ public class OtherBoardController implements Initializable {
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
         matrix[10][10].setMouseTransparent(false);
-        for(int i=0;i<gui.getPlacingOrder().size();i++){
-            int x = gui.getPlacingOrder().get(i)[0];
-            int y = gui.getPlacingOrder().get(i)[1];
+        ArrayList<int[]> array = gui.getPlacingOrder();
+        for(int i=0;i<array.size();i++){
+            int x = array.get(i)[0];
+            int y = array.get(i)[1];
             String frnt = placedCards[x][y].getIsFront() ? "front_" : "back_";
             matrix[x][y].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ frnt + placedCards[x][y].getId() + ".png")));
             matrix[x][y].setMouseTransparent(false);

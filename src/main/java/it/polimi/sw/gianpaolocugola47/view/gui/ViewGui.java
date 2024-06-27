@@ -69,8 +69,8 @@ public class ViewGui extends Application implements View {
      * This method gets the placing order of the players from the client.
      * @return the placing order of the players.
      */
-    public ArrayList<int[]> getPlacingOrder(){
-        return client.getPlacingOrder(getLocalPlayerTable().getId());
+    public ArrayList<int[]> getPlacingOrder(int id){
+        return client.getPlacingOrder(id);
     }
 
     /**

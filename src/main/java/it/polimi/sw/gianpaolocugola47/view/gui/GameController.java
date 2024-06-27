@@ -588,7 +588,7 @@ public class GameController implements Initializable {
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
         matrix[10][10].setMouseTransparent(false);
-        ArrayList<int[]> array = gui.getPlacingOrder();
+        ArrayList<int[]> array = gui.getPlacingOrder(gui.getLocalPlayerTable().getId());
         for(int i=0;i<array.size();i++){
             int x = array.get(i)[0];
             int y = array.get(i)[1];

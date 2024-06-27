@@ -1,4 +1,4 @@
-# POLIMI Ingegneria del software project 2023/2024
+# POLIMI Software Engineering Project 2023/2024
 ![](src/main/resources/it/polimi/sw/gianpaolocugola47/graphics/backGround/frontPage.jpeg)
 Codex naturalis is a game developed by Cranio Creations, as a physical board game.
 

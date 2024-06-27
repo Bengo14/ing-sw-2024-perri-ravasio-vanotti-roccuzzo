@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola47.view.gui;
 
 import it.polimi.sw.gianpaolocugola47.model.PlaceableCard;
+import it.polimi.sw.gianpaolocugola47.model.PlayerTable;
 import it.polimi.sw.gianpaolocugola47.model.ResourceCard;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -148,9 +149,9 @@ public class OtherBoardController implements Initializable {
 
         PlaceableCard[][] placedCards = this.gui.getPlacedCards(id);
 
-        String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
-        matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
-        matrix[10][10].setMouseTransparent(false);
+        String front = placedCards[PlayerTable.getStartingCardPos()][PlayerTable.getStartingCardPos()].getIsFront() ? "back_" : "front_";
+        matrix[PlayerTable.getStartingCardPos()][PlayerTable.getStartingCardPos()].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
+        matrix[PlayerTable.getStartingCardPos()][PlayerTable.getStartingCardPos()].setMouseTransparent(false);
 
         ArrayList<int[]> array = gui.getPlacingOrder(id);
         for(int i=0; i<array.size(); i++) {

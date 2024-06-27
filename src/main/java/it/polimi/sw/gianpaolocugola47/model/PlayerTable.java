@@ -424,11 +424,12 @@ public class PlayerTable{
      * @param card : the card to be placed.
      */
     private void placeCard(int x, int y, ResourceCard card) {
-        placedCards[x][y]=card;
         int[] coords = new int[2];
         coords[0] = x;
         coords[1] = y;
         placeOrder.add(coords);
+
+        placedCards[x][y]=card;
         card.setCoordinates(x,y);
         card.updateResourceCounter(getResourceCounter());
         for (int corner = 0; corner < 4; corner++)

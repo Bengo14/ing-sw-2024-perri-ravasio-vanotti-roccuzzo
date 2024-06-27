@@ -145,7 +145,7 @@ public class OtherBoardController implements Initializable {
             isFirstPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_first.png")));
         idPawn.setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/pawns/pawn_"+id+".png")));
 
-        PlaceableCard[][] placedCards = gui.getPlacedCards(gui.getLocalPlayerTable().getId());
+        PlaceableCard[][] placedCards = this.gui.getPlacedCards(id);
         String front = placedCards[10][10].getIsFront() ? "back_" : "front_";
         matrix[10][10].setImage(new Image(getClass().getResourceAsStream("/it/polimi/sw/gianpaolocugola47/graphics/cards/"+ front + placedCards[10][10].getId() + ".png")));
         matrix[10][10].setMouseTransparent(false);

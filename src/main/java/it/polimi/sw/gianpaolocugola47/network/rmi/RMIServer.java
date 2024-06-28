@@ -142,7 +142,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
 
     /**
      * This method connects a client to the server.
-     * If the connection is accepted, it adds the client to the clients list and increments the number of clients connected.ù
+     * If the connection is accepted, it adds the client to the clients list and increments the number of clients connected.
      * @param client the client to connect
      * @return the id of the client connected
      * @throws RemoteException if there is an error in the remote connection
@@ -263,6 +263,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
 
+    /**
+     * This method returns the card's placing order of a given player.
+     * @param id : player's id
+     * @return : an arraylist containing the coordinates of the placed cards, from least to most recent.
+     * @throws RemoteException : if there is an error in the remote connection.
+     */
     @Override
     public ArrayList<int[]> getPlacingOrder(int id) throws RemoteException {
         synchronized (controller) {
@@ -375,7 +381,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         SocketServer.getServer().sendMessageFromRmi(message);
     }
     /**
-     * This method sends a message to the client from a client with socket.
+     * This method sends a chat message to the client from a client with socket.
      * It is called by the clients connected.
      * @param message the message to send
      * @throws RemoteException if there is an error in the remote connection
@@ -387,7 +393,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer, Obs
         }
     }
     /**
-     * This method sends a private message to the client from another client.
+     * This method sends a private chat message to the client from another client.
      * It is called by the clients connected.
      * @param message the message to send
      * @throws RemoteException if there is an error in the remote connection

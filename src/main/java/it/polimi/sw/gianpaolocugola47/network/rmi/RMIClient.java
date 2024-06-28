@@ -45,7 +45,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         this.server = server;
     }
     /**
-     * This method is used to connect the client to the server, it also runs the CLI.
+     * This method is used to connect the client to the server, it also runs the initial CLI launcher, where
+     * the player chooses his nickname and whether or not he wants to play using a CLI or a GUI.
      * @throws RemoteException if there are issues with the connection.
      */
     private void run() throws RemoteException {
@@ -72,6 +73,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
 
     /**
      * This method is used to start the termination checker.
+     * Used to check whether a game has to terminate after one of the clients quits.
      */
     private void terminationCheckerStart() {
         new Thread(()->{
@@ -149,7 +151,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         terminateLocal();
     }
     /**
-     * This method is used to ping the server.
+     * This method is used to ping the server. On RMI it is used just to perform a liveness check.
      * @throws RemoteException if there are issues with the connection.
      */
     @Override
@@ -158,7 +160,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
     /**
      * This method is used to start the game, it creates the CLI or the GUI.
-     * @param isLoaded if the game is already loaded.
+     * @param isLoaded if the game is already loaded from a file.
      * @throws RemoteException if there are issues with the connection.
      */
     @Override
@@ -186,7 +188,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     /**
-     * This method is used to create the view.
+     * This method is used to initialize the view.
      * @param nicknames the nicknames of the players.
      * @param globalObjectives the global objectives.
      * @param cardsOnHand the cards on hand.
@@ -251,7 +253,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         return this.id;
     }
     /**
-     * This method is used to receive a message.
+     * This method is used to receive a chat message.
      * It calls the receiveMessage method of the view.
      * @param message the message received.
      * @throws RemoteException if there are issues with the connection.
@@ -263,7 +265,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         }
     }
     /**
-     * This method is used to receive a private message.
+     * This method is used to receive a private chat message.
      * It calls the receiveMessage method of the view.
      * @param message the message received.
      * @throws RemoteException if there are issues with the connection.
@@ -502,7 +504,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
 
     /**
-     * This method is used to send a message.
+     * This method is used to send a chat message.
      * It calls the sendMessage method of the server.
      * @param msg the message to send.
      */
@@ -517,7 +519,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         }
     }
     /**
-     * This method is used to send a private message.
+     * This method is used to send a private chat message.
      * It calls the sendPrivateMessage method of the server.
      * @param msg the message to send.
      */

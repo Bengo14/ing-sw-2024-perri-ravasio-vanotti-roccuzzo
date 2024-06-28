@@ -35,6 +35,11 @@ The team members are:
 | Model      | 78% (15/19)    | 98% (224/228)   | 90%(730/810)  |
 | Controller | 100% (1/1)     | 97% (37/38)     | 91%(103/112)  |
 
+## Instructions
+
+To run this project, you need to have a Java Runtime Environment (JRE) installed. This project requires Java version 19
+or later. You can check your Java version by typing `java -version` in your command prompt or terminal.
+
 ### Running the server
 
 To run the server, navigate to the `./deliverables/jar` folder where the jar file is located and run it.

@@ -16,7 +16,6 @@ import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

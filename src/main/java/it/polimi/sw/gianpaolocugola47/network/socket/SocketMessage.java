@@ -23,7 +23,7 @@ public class SocketMessage implements Serializable {
     }
     /**
      * This method adds an object to the list of data.
-     * @param o the object to add
+     * @param o the object to be added.
      */
     protected void addData(Object o) {
         this.data.add(o);
@@ -31,7 +31,7 @@ public class SocketMessage implements Serializable {
 
     /**
      * This method calls the correct method of the client based on the action that the message wants to perform.
-     * @param client the client that will receive the message
+     * @param client the client that receives the message.
      */
     protected void doAction(SocketClient client) {
         switch ((String) data.removeFirst()) {
@@ -160,7 +160,7 @@ public class SocketMessage implements Serializable {
     }
     /**
      * This method calls the correct method of the handler based on the action that the message wants to perform.
-     * @param handler the handler that will receive the message
+     * @param handler the handler that receives the message.
      */
     protected void doAction(SocketClientHandler handler) {
 

@@ -42,7 +42,6 @@ public class SocketServerProxy implements VirtualServer {
     /**
      * This method is intended to establish a connection with a client. However, in the current implementation,
      * it is not used and simply returns 0.
-     *
      * @param client The client to connect to.
      * @return Always returns 0 as the method is not implemented.
      */
@@ -362,9 +361,10 @@ public class SocketServerProxy implements VirtualServer {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * This method is used to get the sequence of moves of a given player. It adds the string
+     * "getPlacingOrder" and the id of the client to the message.
+     * @param id the client's id.
+     * @return returns always null (in socket used as a void).
      */
     @Override
     public ArrayList<int[]> getPlacingOrder(int id) {

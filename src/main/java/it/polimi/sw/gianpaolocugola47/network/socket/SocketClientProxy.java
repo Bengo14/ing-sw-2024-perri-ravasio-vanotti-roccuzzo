@@ -122,7 +122,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "message" and the provided msg to the message data, and then sends this
      * message to the client through the output stream.
      * @param msg The message to be sent to the client.
@@ -137,7 +137,7 @@ public class SocketClientProxy implements VirtualView {
         } catch (IOException _) {}
     }
     /**
-     * This method is used to receive a private message from the client. It creates a new SocketMessage,
+     * This method is used to receive a private message from the server. It creates a new SocketMessage,
      * adds the string "privateMessage" and the provided msg to the message data, and then sends this
      * message to the client through the output stream.
      * @param msg The private message to be sent to the client.
@@ -153,7 +153,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "init" and the provided nicknames, globalObjectives, cardsOnHand, and cardsOnTable
      * to the message data, and then sends this message to the client through the output stream.
      * @param nicknames the nicknames of the players.
@@ -175,7 +175,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "decks" and the provided resourceCardOnTop, goldCardOnTop, and drawPos
      * to the message data, and then sends this message to the client through the output stream.
      * @param resourceCardOnTop the resource card on top of the deck.
@@ -195,7 +195,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "points" and the provided boardPoints and globalPoints to the message data,
      * and then sends this message to the client through the output stream.
      * @param boardPoints the points of the player on the board.
@@ -215,7 +215,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "drawStarting" and the provided card to the message data, and then sends
      * this message to the client through the output stream.
      * @param card the starting card to be drawn.
@@ -230,10 +230,10 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
-     * adds the string "setStarting" and the provided obj to the message data, and then sends
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
+     * adds the string "setStarting" and the provided array of objectives to the message data, and then sends
      * this message to the client through the output stream.
-     * @param obj the objectives to be set.
+     * @param obj the objectives to be sent.
      */
     protected void setStartingCardAndDrawObjectivesResponse(Objectives[] obj) {
         SocketMessage message = new SocketMessage();
@@ -244,6 +244,12 @@ public class SocketClientProxy implements VirtualView {
         } catch (IOException _) {}
     }
 
+    /**
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
+     * adds the string "getSecretObj" and the provided objective to the message data, and then sends
+     * this message to the client through the output stream.
+     * @param obj the objective to be sent.
+     */
     protected void getSecretObjectiveResponse(Objectives obj) {
         SocketMessage message = new SocketMessage();
         message.addData("getSecretObj");
@@ -254,10 +260,10 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * add the string "play" and the provided bool to the message data, and then sends this
      * message to the client through the output stream.
-     * @param bool the boolean value to be set.
+     * @param bool the boolean value to be sent.
      */
     protected void playCardResponse(boolean bool) {
         SocketMessage message = new SocketMessage();
@@ -269,7 +275,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * add the string "getCardsOnHand" and the provided cardsOnHand to the message data, and then sends this
      * message to the client through the output stream.
      * @param cardsOnHand the cards on the hand of the player.
@@ -287,7 +293,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "getPlacedCards" and the provided placedCards to the message data, and then sends this
      * message to the client through the output stream.
      * @param placedCards the cards placed on the table.
@@ -307,7 +313,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "getResourceCounter" and the provided resourceCounter to the message data, and then sends this
      * message to the client through the output stream.
      * @param resourceCounter the resource counter of the player.
@@ -323,10 +329,10 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the sting "nickAvailable" and the provided bool to the message data, and then sends this
      * message to the client through the output stream.
-     * @param bool the boolean value to be set.
+     * @param bool the boolean value to be sent.
      */
     protected void isNicknameAvailableResponse(boolean bool) {
         SocketMessage message = new SocketMessage();
@@ -338,7 +344,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "getNick" and the provided nicknames to the message data, and then sends this
      * message to the client through the output stream.
      * @param nicknames the nicknames of the players.
@@ -353,7 +359,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "getNumPlayers" and the provided numOfPlayers to the message data, and then sends this
      * message to the client through the output stream.
      * @param numOfPlayers the number of players in the game.
@@ -368,7 +374,7 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     * This method is used to receive a message from the client. It creates a new SocketMessage,
+     * This method is used to receive a message from the server. It creates a new SocketMessage,
      * adds the string "getPlayPos" and the provided playablePositions to the message data, and then sends this
      * message to the client through the output stream.
      * @param playablePositions the playable positions on the board.
@@ -383,8 +389,9 @@ public class SocketClientProxy implements VirtualView {
     }
 
     /**
-     *
-     * @param order
+     * It sends a message to the client with a serialized ArrayList of coordinates, that represents
+     * the sequence of moves of the client, after adding to the message the string "getPlacingOrder".
+     * @param order the ArrayList to be sent.
      */
     protected void getPlacingOrderResponse(ArrayList<int[]> order) {
         SocketMessage message = new SocketMessage();

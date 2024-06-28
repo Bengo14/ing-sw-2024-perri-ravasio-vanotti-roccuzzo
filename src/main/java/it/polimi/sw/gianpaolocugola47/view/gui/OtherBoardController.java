@@ -166,7 +166,7 @@ public class OtherBoardController implements Initializable {
     }
 
     /**
-     * Handles the go back button
+     * Handles the go back button.
      */
     @FXML
     private void goBackHandler() {

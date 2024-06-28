@@ -46,7 +46,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
     }
     /**
      * This method is used to connect the client to the server, it also runs the initial CLI launcher, where
-     * the player chooses his nickname and whether or not he wants to play using a CLI or a GUI.
+     * the player chooses his nickname and whether he wants to play using a CLI or a GUI.
      * @throws RemoteException if there are issues with the connection.
      */
     private void run() throws RemoteException {
@@ -159,7 +159,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Clien
         // do nothing, liveness check only
     }
     /**
-     * This method is used to start the game, it creates the CLI or the GUI.
+     * This method is used to start the game, it creates the actual CLI or the GUI.
      * @param isLoaded if the game is already loaded from a file.
      * @throws RemoteException if there are issues with the connection.
      */

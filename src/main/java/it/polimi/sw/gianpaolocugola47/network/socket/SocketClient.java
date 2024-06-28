@@ -90,7 +90,8 @@ public class SocketClient implements VirtualView, Client {
     }
 
     /**
-     * This method sets the id attribute to the given id and runs the CLI.
+     * This method sets the id attribute to the given id. It also runs the initial CLI launcher, where
+     * the player chooses his nickname and whether he wants to play using a CLI or a GUI.
      * @param id the id to set
      */
     protected void setIdAndRunCli(int id) {
@@ -113,7 +114,7 @@ public class SocketClient implements VirtualView, Client {
         }).start();
     }
     /**
-     * This method runs the CLI.
+     * This method runs the initial CLI.
      * It asks the user to choose the interface and the number of players.
      * It also asks the user to insert the nickname.
      * @throws IOException if an I/O error occurs when reading the input
@@ -199,7 +200,7 @@ public class SocketClient implements VirtualView, Client {
 
     /**
      * This method starts the game.
-     * It initializes the deck and starts the CLI or the GUI.
+     * It initializes the deck and starts the actual CLI or the GUI.
      * It is called when the server sends a message to start the game.
      * @param isLoaded true if the game is loaded, false otherwise
      */
@@ -261,7 +262,7 @@ public class SocketClient implements VirtualView, Client {
     }
 
     /**
-     * This method receives a message and shows it.
+     * This method receives a chat message and shows it.
      * It is called when the server sends a message to receive a message.
      * It shows the message on the CLI or the GUI.
      * @param message the message to receive
@@ -274,7 +275,7 @@ public class SocketClient implements VirtualView, Client {
     }
 
     /**
-     * This method receives a private message and shows it.
+     * This method receives a private chat message and shows it.
      * It is called when the server sends a message to receive a private message.
      * It shows the private message on the CLI or the GUI.
      * @param message the private message to receive

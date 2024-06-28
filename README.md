@@ -32,7 +32,7 @@ The team members are:
 
 | Package    | Class coverage | Method coverage | Line coverage |
 |------------|----------------|-----------------|---------------|
-| Model      | 78% (15/19)    | 98% (224/228)   | 90%(731/810)  |
+| Model      | 78% (15/19)    | 98% (224/228)   | 90%(730/810)  |
 | Controller | 100% (1/1)     | 97% (37/38)     | 91%(103/112)  |
 
 ### Running the server

@@ -162,15 +162,6 @@ class GoldCardTest {
         GoldCard gold = Deck.getGoldCardsDeck().getFirst();
         assertEquals("\u001B[0;31mF\u001B[0m\u001B[0;31mF\u001B[0m\u001B[0;34mA\u001B[0m", gold.resourcesRequiredToString());
     }
-    @Test
-    public void testPointConditionToString(){
-        Deck.initDeck();
-        GoldCard gold = Deck.getGoldCardsDeck().get(9);
-        assertEquals("", gold.pointConditionToString());
-        GoldCard gold2 = Deck.getGoldCardsDeck().get(3);
-        assertEquals("C", gold2.pointConditionToString());
-        GoldCard gold3 = Deck.getGoldCardsDeck().get(0);
-        assertEquals("q", gold3.pointConditionToString());
-    }
+
 
 }

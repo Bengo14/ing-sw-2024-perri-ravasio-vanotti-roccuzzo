@@ -1,0 +1,12 @@
+module:it.polimi.sw.gianpaolocugola47
+it.polimi.sw.gianpaolocugola47
+it.polimi.sw.gianpaolocugola47.controller
+it.polimi.sw.gianpaolocugola47.model
+it.polimi.sw.gianpaolocugola47.network
+it.polimi.sw.gianpaolocugola47.network.rmi
+it.polimi.sw.gianpaolocugola47.network.socket
+it.polimi.sw.gianpaolocugola47.observer
+it.polimi.sw.gianpaolocugola47.utils
+it.polimi.sw.gianpaolocugola47.view
+it.polimi.sw.gianpaolocugola47.view.cli
+it.polimi.sw.gianpaolocugola47.view.gui

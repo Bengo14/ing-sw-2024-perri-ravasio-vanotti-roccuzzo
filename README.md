@@ -37,7 +37,7 @@ The team members are:
 
 ## Instructions
 
-To run this project, you need to have a Java Runtime Environment (JRE) installed. This project requires Java version 19
+To run this project, you need to have a Java Runtime Environment (JRE) installed. This project requires Java version 21
 or later. You can check your Java version by typing `java -version` in your command prompt or terminal.
 
 ### Running the server
